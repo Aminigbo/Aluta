@@ -1,0 +1,74 @@
+
+/*************************** start of  smaller screen *******************/
+@media only screen and (max-width: 690px) {
+   .top-nav-pills-holder{
+      /* height:60px; */
+      width:60px;
+      background-color: none ;
+      position:relative;
+      text-align: center; 
+      display: inline-block;
+      padding-top:20px
+   }
+
+   .top-nav-pills{
+      background-color: lightgray; 
+      padding:8px 5px;
+      border-radius:20px;
+      color:black
+   }
+
+.top-nav-pills-title{
+      color:black;
+      font-size: 10px;
+      margin-top:6px
+   }
+
+   .top-nav-holder{
+      /* background-color: blue; */
+   }
+
+   .create{
+      /* background-color: green; */
+      display: block; 
+   }
+
+}
+
+
+
+
+
+
+
+/*************************** start of  larger screen *******************/
+@media only screen and (min-width: 690px) {
+
+   .top-nav-pills-holder{
+      /* height:60px; */
+      width:60px;
+      background-color: none ;
+      position:relative;
+      text-align: center; 
+      display: inline-block;
+      padding-top:20px
+   }
+
+   .top-nav-pills{
+      background-color: lightgray; 
+      padding:8px 5px;
+      border-radius:20px;
+      color:black
+   }
+
+.top-nav-pills-title{
+      color:black;
+      font-size: 10px;
+      margin-top:6px
+   }
+
+   .top-nav-holder{
+      /* background-color: blue; */
+   }
+   
+}

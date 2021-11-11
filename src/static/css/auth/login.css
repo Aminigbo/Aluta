@@ -1,0 +1,150 @@
+body{
+   background-color: #FFFDF2;
+}
+
+/*************************** start of  smaller screen *******************/
+@media only screen and (max-width: 690px) {
+   #formHolder{
+      position: absolute;
+      width: 95%;
+      height: 432px;
+      left: 2.5%;
+      top: 100px;
+      padding:50px 10px;
+      background: #FFFFFF;
+      border: 1px solid rgba(1, 0, 26, 0.36);
+      box-sizing: border-box;
+      box-shadow: -1px 1px 10px rgba(1, 0, 26, 0.36);
+      border-radius: 5px;
+      text-align: center;
+      justify-content: center;
+   }
+
+   #welcomeBack{ 
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 28px;
+      line-height: 45px; 
+      /* identical to box height */
+
+      
+
+      color: #959595;
+   }
+
+   #input{
+      width:250px; 
+      height: 10px;
+      outline:none !important; 
+   }
+
+   .form{
+      margin-top:-15px;
+      width:100%; 
+      text-align: center;
+      /* background-color: #01001A; */
+   }
+
+   #primary-btn{
+      background-color: #01001A;
+      color:white
+   }
+
+   .option{
+      position: absolute;
+      bottom: 10px;
+      text-align: center;
+      width: 100%;
+   }
+
+   .action{
+      color:#01001A;
+      text-decoration: none;
+   }
+
+   
+}
+
+
+
+.inactive{
+      opacity: 0.4;
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*************************** start of  larger screen  ******************/
+@media only screen and (min-width: 690px) {
+   #formHolder{
+      position: absolute;
+      width: 30%;
+      height: 432px;
+      left: 35%;
+      top: 133px;
+      padding:50px 10px;
+      background: #FFFFFF;
+      border: 1px solid rgba(1, 0, 26, 0.36);
+      box-sizing: border-box;
+      box-shadow: -1px 1px 10px rgba(1, 0, 26, 0.36);
+      border-radius: 5px;
+      text-align: center;
+      justify-content: center;
+   }
+
+   #welcomeBack{ 
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 28px;
+      line-height: 45px; 
+      /* identical to box height */
+
+      
+
+      color: #959595;
+   }
+
+   #input{
+      width:250px; 
+      height: 10px;
+      outline:none !important; 
+   }
+
+   .form{
+      margin-top:-15px;
+      width:100%; 
+      text-align: center;
+      /* background-color: #01001A; */
+   }
+
+   #primary-btn{
+      background-color: #01001A;
+      color:white
+   }
+
+   .option{
+      position: absolute;
+      bottom: 10px;
+      text-align: center;
+      width: 100%;
+   }
+
+   .action{
+      color:#01001A;
+      text-decoration: none;
+   }
+}

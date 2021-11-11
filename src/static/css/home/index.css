@@ -1,0 +1,3247 @@
+span{
+   color:gray
+} 
+
+
+
+.div{
+   width:100%;
+   height: 300px;
+   background-color: #01001A;
+}
+
+.child{
+   position:absolute;
+}
+
+.stickey{
+   position: -webkit-sticky;
+   position: sticky;
+   top:0px; 
+   background-color: red;
+}
+
+
+
+
+.pointer{
+   cursor:pointer
+}
+
+
+
+.predictionHistoryHolder{
+   padding:0px 10px; 
+   /* background-color: #4e7a97; */
+   margin-top:-40px
+}
+
+.predictionList{
+   background-color: lightgrey;
+   margin:10px;
+   padding:7px;
+   border-radius:4px;
+   cursor:pointer
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ .img_loader{
+    text-align: center;
+ }
+
+.loader{
+   position:fixed;
+   top:0px;
+   height:100%;
+   width:100%;
+   left:0px;
+   background-color:rgb(0,0,0,0.6);
+   z-index:300000
+}
+.links{
+   color:#000000DE;
+   text-decoration:none;
+}
+.body{
+   /* background-color: #f4f6f7 */
+   /* background-color: #121212; */
+}
+
+
+.partner{
+   width:180px
+}
+
+.matchesWinner{
+   border:1px solid rgb(51, 138, 90)
+}
+
+.boxshadow{
+   box-shadow: inset 2px -2px 10px rgb(51, 138, 90)
+}
+
+
+
+.primartBtn{
+  background-color: rgb(51, 138, 90); 
+  margin-left: 15px;
+  color: #f2edd7;
+  border-radius: 3px;
+  margin-top:5px;
+  border: none;
+  padding: 2px 6px;
+  font-weight:bold;
+}
+
+
+ .points{
+      font-size: 16px;
+      font-weight: bold;
+      color:white; 
+      background-color: #01001A;
+      width: 30px;
+      height: 30px;
+      border-radius: 30px;
+      padding:2px 0px;
+      position:absolute;
+      top:0px;
+      right:0px;
+      text-align:center
+   }
+
+   .winnerPoints{
+      font-size: 16px;
+      font-weight: bold;
+      color:white; 
+      background-color: rgb(51, 138, 90);
+      width: 30px;
+      height: 30px;
+      border-radius: 30px;
+      padding:2px 0px;
+      position:absolute;
+      top:0px;
+      right:0px;
+      text-align:center
+   }
+
+   .cashOut{
+      font-size: 16px;
+      font-weight: bold;
+      color:white; 
+      background-color: rgb(51, 138, 90); 
+      padding:2px 10px;  
+      text-align:center;
+      float:right;
+      border:none;
+      border-radius: 4px;
+   }
+
+
+.primary{
+   color:rgb(51, 138, 90)
+}
+
+.secondary{
+   color:orange
+}
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   .feed{
+      /* background-color:#f4f6f7;  */
+      box-shadow: inset 2px -2px 5px #f2edd7;
+      width:100%;
+      /* left:5%; */
+      position:relative;
+      padding:15px;
+      font-size: 14px;
+      color:gray
+   }
+
+
+
+/*************************** start of  smaller screen *******************/
+@media only screen and (max-width: 690px) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   .desktop{
+      display:none;
+   }
+   .breadcrumb_pill_holder{
+      text-align: center;
+      margin-top:-15px;
+      /* position:-webkit-sticky; */
+      /* position:sticky; */
+      top:0px;
+      background-color:#f4f6f7 ;
+      padding:20px 0px
+   }
+   .breadcrumb_pill{  
+      /* background-color: #01001A; */
+      background-color:#f4f6f7; 
+      margin:2px; 
+      border-radius:10px; 
+      color:gray; 
+      text-align: center; 
+      padding:5px;
+      font-size: 13px;
+      text-decoration: none;
+   }
+   /* .breadcrumb_pill:hover{
+      color:white;
+      background-color: #01001A;
+   } */
+   .bal{
+      /* float:right; */
+      margin-left:0%;
+      font-size:12px; 
+   }
+   .logout{
+      font-size: 14px;
+      float: right;
+      margin-right:15px;
+      margin-top:5px;
+      color:orange
+   }
+   .explore{
+      padding:10px 15px;
+      font-size: 17px;
+      font-weight:bolder;
+      /* color:lightgray */
+   }
+   .pill_holder{
+      height: 110px;
+      /* background-color: #01001A; */
+      padding:1px 10px;
+      position:relative;
+      
+   }
+   .pill1{
+      width:90px;
+      height:100px;
+      background-color: rgb(165, 125, 50);
+      display: inline-block;
+      margin:5px;
+      border-radius:4px;
+      padding:20px 3px;
+      text-align: center;
+      color:white;
+   }
+
+   .pill2{
+      width:105px;
+      height:47px;
+      background-color: rgb(51, 138, 90);
+      display: inline-block;
+      margin:5px;
+      position:absolute;
+      border-radius:4px;
+      color:white;
+      text-align: center;
+      padding:10px 3px;
+   }
+
+   .pill3{ 
+      width:105px;
+      height:47px;
+      background-color: rgba(173, 91, 36, 0.527);
+      display: inline-block;
+      margin:5px;
+      position:absolute;
+      top:55px;
+      border-radius:4px;
+      color:white;
+      text-align: center;
+      padding:10px 3px;
+   }
+
+   .pill4{ 
+      width:105px;
+      height:47px;
+      background-color: #9e9518;
+      display: inline-block;
+      margin:5px;
+      position:absolute;
+      top:55px;
+      right:20px;
+      border-radius:4px;
+      color:white;
+      text-align: center;
+      padding:10px 3px;
+   }
+
+   .pill5{ 
+      width:105px;
+      height:47px;
+      background-color: #4e7a97;
+      display: inline-block;
+      margin:5px;
+      position:absolute; 
+      right:20px;
+      border-radius:4px;
+      color:white;
+      text-align: center;
+      padding:10px 3px;
+   }
+
+   .pill6, .pill7, .pill8, .pill9{
+      display:none
+   }
+
+   .adsPanel{
+      display:none;
+   }
+
+   .paypanel{
+      width:90%;
+      /* height:400px; */
+      /* background-color: #4e7a97; */
+      display: inline-block;
+      margin:5px;
+      position:relative; 
+      left:10px;
+      border-radius:4px;
+      border:0.5px solid #4e7a97;
+      margin-top: 30px;
+   }
+
+   .withdrawpanel{
+      width:90%;
+      height:300px;
+      /* background-color: #4e7a97; */
+      display: inline-block;
+      margin:5px;
+      position:relative; 
+      left:10px;
+      border-radius:4px;
+      border:0.5px solid #4e7a97;
+   }
+
+   #icon{
+      width:55px
+   }
+
+   .sectionLabels{
+      padding:0px 15px;
+      margin-bottom:5px
+   }
+   .menu{
+      float:right;
+      margin-right:10px;
+      margin-top:10px;
+      width:900px;
+      color:black
+   }
+
+  #searchIcon{
+      /* margin-right:30px; */
+      font-size: 25px;
+   }
+
+   .searchForm{
+      display: inline-block;
+      width: 180px; 
+      color:orange;
+      /* background-color: rgb(165, 125, 50); */
+   }
+   .searchFormInput{
+      width: 80%; 
+      outline: none;
+      border:0.5px solid lightgray;
+      border-radius:5px;
+   }
+
+   .searchButton{
+      background-color: #f4f6f7;
+      border:none;
+      font-size: 20px;
+   }
+
+
+
+   #bottomNav{
+      position:fixed;
+      bottom:0px;
+      left:0px;
+      width:100%;
+      background-color: #f4f6f7;
+      color:white;
+      border-top:0.5px solid lightgray;
+      z-index:1000;
+      height:50px;
+      text-align:center
+   }
+   .bottomnatChildren{
+      /* position:absolute; */
+      width:20%;
+      display:inline-block;
+      /* background:red; */
+      /* margin-right:10px; */
+      height:100%;
+      top:0px;
+      text-align:center;
+      color:grey;
+      border:0.5px solid white
+   }
+
+   .bottomIconActive{
+      /* position:absolute; */
+      width:25%;
+      display:inline-block;
+      background:#f4f6f7;
+      /* margin-right:10px; */
+      height:100%;
+      top:0px;
+      text-align:center;
+      color: gray
+   }
+
+   .inline{
+      display:inline-block;
+      font-size:12px;
+   }
+
+
+
+   #topNav{
+      position:relative;
+      top:0px;
+      left:0px;
+      width:100%;
+      background-color: #f4f6f7;
+      color:white;
+      height:50px;
+      z-index:1000
+   }
+
+   .bottom_nav_link{
+      color:white;
+      font-size:90px;
+      
+   }
+
+   body{
+      /* margin-top:50px; */
+      margin-bottom:50px; 
+   }
+
+   
+
+   .carosel_banner{
+      background-color:pink;
+      /* border:0.5px solid pink; */
+      height:200px
+   }
+
+
+   div.scrollmenu { 
+      /* overflow: auto; */
+      white-space: nowrap;
+      overflow-y: hidden;
+      height: 140px;
+      margin-bottom:0px;
+   
+   } 
+    
+   .heightHolder{
+      position:relative;
+      height: 135px;  
+      width:43%;
+      background: rgba(54, 12, 58, 0.14);
+      display: inline-block;
+      color: white;
+      text-align: left;
+      text-decoration: none;
+      padding:5px;
+      margin-right:10px; 
+      
+   }
+
+
+ 
+
+
+
+
+
+
+
+   .leagues{ 
+      /* width: 150px; */
+      cursor: pointer;
+      position:relative;
+      height: 140px;  
+      width:43%;
+      /* background: #F0F0F0; */
+      border-radius: 4px;
+      margin-left:17px;
+      margin-top:15px;
+      display:inline-block;
+      color:#01001A;
+      background: linear-gradient(180deg, rgba(60, 83, 153, 0.15) 0%, rgba(97, 162, 68, 0.15) 46.47%, rgba(213, 124, 44, 0.15) 100%);
+   }
+
+   .one_on_one{ 
+      /* width: 150px; */
+      position:relative;
+      height: 140px;  
+      width:43%;
+      /* background: #F0F0F0; */
+      border-radius: 4px;
+      margin-left:15px;
+      margin-top:15px;
+      display:inline-block;
+      color:#01001A;
+      background: rgba(54, 12, 58, 0.14);
+   }
+
+
+   .stakes{
+      position:absolute;
+      height:55px;
+      width:60px;
+      top:-7px;
+      right:-4px;
+      /* background:black; */
+      text-align:center;
+      padding:8px; 
+      /* font-weight:bolder; */
+      border-radius:13px;
+      font-size: 13px;
+   }
+
+   .stakes2{
+      position:absolute;
+      height:55px;
+      width:60px;
+      top:4px;
+      left:4px;
+      /* background:black; */
+      text-align:center;
+      padding:8px;
+      color:#01001A !important;
+      /* font-weight:bolder; */
+      border-radius:13px;
+      font-size: 13px;
+   }
+
+   .stakes_price{
+      position:absolute;
+      /* height:40px; */
+      width:87%;
+      top:50px;
+      left:10px;
+      /* background:black; */
+      text-align:left;
+      padding:8px;
+      color:orange !important;
+      font-size:15px 
+   }  
+   .stakes_price2{
+      position:absolute;
+      /* height:40px; */
+      width:87%;
+      top:20px;
+      left:10px;
+      /* background:black; */
+      text-align:left;
+      padding:8px;
+      color:orange !important;
+      font-size:15px 
+   }
+
+   .stakeBtn{
+      position:absolute;
+      /* height:40px; */
+      width:100%;
+      bottom:0px;
+      left:0px;
+      background:rgb(51, 138, 90);
+      text-align:center;
+      padding:6px;
+      color:white !important;
+      font-size:15px ;
+      font-weight: bold;
+   }
+   .stakeBtn2{
+      position:absolute;
+      /* height:40px; */
+      width:100%;
+      bottom:0px;
+      left:0px;
+      background:orange;
+      text-align:center;
+      padding:6px;
+      color:white !important;
+      font-size:15px ;
+      font-weight: bold;
+   }
+
+   .oneXone{
+      margin-top:-6px;
+      color:black;
+      color:orange
+   }
+
+   .matches_count{
+      color:gray
+   } 
+   .small{
+      color:orange
+   }
+
+   .oneXoneCode{
+      position: absolute;
+      top:0px;
+      right:10px;
+      color:orange
+   }
+
+
+
+
+   /* .bottomnatChildren:hover{
+      color:red;
+   } */
+
+
+   /* matches component =============================================================================*/
+
+   .matches{
+      width:95%;
+      height:80px;
+      /* background-color:#F8F8F8; */
+      margin:2.5%;
+      border-radius:3px;
+      position:relative;
+      box-shadow: inset 2px -2px 10px #f2edd7
+      /* box-shadow:0px 0px 10px 0px lightgray; */
+      /* #f2edd7 */
+   }
+   .select_prediction_btn_holder{
+      background-color:orange;
+      position:absolute;
+      right:5px;
+      top:20px;
+      width:100px;
+      text-align: center;
+      padding:4px;
+      color:white;
+      border-radius: 4px;
+      cursor: pointer;
+   }
+
+   .select_prediction_btn_holder2{
+      /* background-color:orange; */
+      position:absolute;
+      right:5px;
+      top:10px;
+      /* width:400px; */
+      text-align: center;
+      padding:4px;
+      color:white;
+      border-radius: 4px;
+      cursor: pointer;
+   }
+
+   .select_prediction_btn{
+      border:none;
+      background:lightgray;
+      margin:3px;
+      padding:3px 10px;
+      border-radius:3px;
+   }
+   .active{
+      border:none;
+      background:#01001A;
+      margin:3px;
+      padding:3px 10px;
+      border-radius:3px;
+      color:white
+   } 
+
+   .select_prediction_logo_holder{
+      /* background-color:red; */
+      position:absolute;
+      left:15px;
+      top:20px;
+   }
+
+   .club_logo{
+      width:25px;
+      height:25px; 
+   }
+
+   .preview_btn_holder{
+      padding-right:2.5%;
+      margin-bottom:40px;
+      margin-top:20px
+   }
+   .preview_btn{
+      float:right;
+      width:100px;
+      
+   }
+
+   .preview_btn_alert{
+      float:right;
+      width:100px; 
+      opacity:0.4
+   } 
+   .alert_btn{
+      float:right;
+      width:100px;
+      background:crimson; 
+   }
+
+   .previewHolder{
+      position:fixed;
+      width:100%;
+      height:100%;
+      left:0px;
+      top:0px;
+      background-color:rgb(0,0,0,0.9);
+      z-index:200000;
+      overflow:auto
+   }
+
+   .previewHolderChild{
+      position:fixed;
+      width:100%;
+      height:90%;
+      left:0px;
+      top:0px;
+      background-color:#f4f6f7;
+      z-index:200000;
+      overflow:auto
+   }
+   .stakeBtnHolder{
+      position:fixed;
+      width:100%;
+      height:9.8%;
+      left:0px;
+      bottom:0px;
+      background-color:#f4f6f7;
+      padding:10px 20px
+   }
+
+   .totalMatches_amount{
+      position:absolute;
+      width:30%; 
+      height:100%;
+      left:0px;
+      top:0px;
+      padding:5px 10px
+   }
+
+
+
+
+
+
+   /* profile ( Account ) styleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+   .profile_holder{
+      height:200px;
+      width:95%;
+      left:2.5%;
+      position:relative;
+      /* background-color:red; */
+      top:100px;
+      margin-bottom:20px
+   }
+
+   .avater_holder{
+      position:absolute;
+      width:100px;
+      height:60%;
+      /* background:green; */
+      left:10px;
+      top:5px;
+      text-align:center;
+   }
+   .details_holder{
+      position:absolute;
+      width:210px;
+      height:70%;
+      /* background:green; */
+      right:10px;
+      top:5px;
+      font-size: 20px;
+   }
+
+   .avater{
+      width:70px;
+      height:70px;
+      /* margin-left:15%; */
+   }
+   .balance{
+      color:black !important;
+      /* margin-left:15%; */
+      margin-top:5px
+   } 
+
+   .accountNav{
+      position:absolute;
+      width:100%;
+      /* height:25%; */
+      /* background:green; */
+      /* left:10px; */
+      bottom:0px;
+      text-align:center;
+      padding:5px
+   }
+
+   .StyledBreadcrumb{
+      padding:3px 10px;
+      background-color:#01001A;
+      color:white;
+      border-radius:4px;
+      margin:0px 5px;
+      font-size:14px
+   }
+
+
+   /* =================================================== board style */
+
+   .see_slip{
+      /* background-color:red; */
+      position:absolute;
+      right:10px;
+      top:10px;
+      width:50%;
+      text-align: right;
+   }
+   .view_slip{ 
+      border:none;
+      color:orange;
+      font-size: 15px;
+      font-weight: bold;   
+      position:absolute;
+      top:45px;
+      right:0px;
+      border-radius: 3px;
+      cursor:pointer
+   }
+   .predicted_time{
+      text-align: left;
+      color:red;
+   }
+   .predictor{
+      font-weight: bolder;
+   }
+  
+
+
+
+
+
+
+
+
+
+
+    /* =================================================================================================================================== */
+
+    .expectedWin{
+      text-align: center;
+      position: absolute;
+      bottom:40px; 
+      width:100%;
+      /* background-color: #01001A; */
+      left:0px;
+      /* padding:0px 10px; */
+      font-size:10px
+   }
+
+   .create1X1Modal1{
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      left: 0px;
+      bottom: 0px;
+      background-color: rgb(0,0,0,0.6);
+      z-index: 10000;
+   }
+   .create1X1Modal2{
+      position: fixed;
+      width: 100%;
+      height: 88%;
+      left: 0%;
+      bottom: 5%;
+      top: 8%;
+      background-color:white;
+      z-index: 11000;
+      overflow: auto;
+   }
+   .create1X1Modaltitle{
+      position: fixed;
+      width: 100%;
+      height: 8%;
+      left: 0%;
+      top: 0%;
+      background-color:white;
+      z-index: 11000;
+      padding:14px 10px 
+   }
+
+   .close{
+      float:right;
+      cursor: pointer;
+      color:crimson
+   }
+
+   .challangeHolder{
+      padding:10px;
+      border-bottom:1px solid lightgray
+   }
+
+   .says{
+      /* width: 150px; */
+      position:relative;
+      height: 100px;  
+      width:100%;
+      /* background: #F0F0F0; */
+      border-radius: 4px;
+      margin-left:0%;
+      margin-top:15px;
+      display:inline-block;
+      color:#01001A;
+      padding:20px;
+      background: linear-gradient(180deg, rgba(60, 83, 153, 0.15) 0%, rgba(97, 162, 68, 0.15) 46.47%, rgba(213, 124, 44, 0.15) 100%);
+   }
+
+   .saysPrice{
+      position: absolute;
+      right:20px;
+      bottom:10px;
+   }
+
+   .createTitle{
+      text-align: center;
+   }
+
+
+
+
+
+
+   
+
+   /* confirm modal =========================================================*/
+   .create1X1Modal1_2{
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      left: 0px;
+      bottom: 0px;
+      background-color: rgb(0,0,0,0.6);
+      z-index: 25000;
+   }
+   .create1X1Modal2_2{
+      position: fixed;
+      width: 100%;
+      height: 80%;
+      left: 0%;
+      bottom: 10%;
+      padding:50px 20px;
+      background-color:white;
+      z-index: 15000;
+      overflow: auto;
+   }
+   
+   .create1X1Modaltitle_2{
+      position: fixed;
+      width: 100%;
+      height: 7%;
+      left: 0%;
+      top:10%;
+      background-color:white;
+      z-index: 11000;
+      padding:4px 20px;
+      border-bottom:1px solid lightgray;
+   }
+
+   /* ================ */
+   .child_one{
+      top:50px;
+      position:relative;
+      height: 290px;
+      background-color: white;
+   }
+
+   .homeImg{
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border-radius: 70px;
+      top:25px;
+      left:5%;
+      background-color: black;
+   }
+
+   .awayImg{
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border-radius: 70px;
+      top:25px;
+      right:5%;
+      background-color: black;
+   }
+
+   .vsHolder{
+      position: absolute;
+      width: 40%;
+      /* height: 70px; */
+      top:25px;
+      left:96px;
+      /* background-color: black; */
+      text-align: center;
+   }
+
+   .kickoff_holder{
+      position: absolute;
+      width: 78%;
+      height: 20px;
+      top:120px;
+      left:37px;
+      text-align: center;
+      font-size: 13px;
+      /* background-color: black; */
+   }
+   
+   .createButtonHolder{
+      position: absolute;
+      width: 100%;
+      /* height: 50px; */
+      top:210px;
+      left:0px;
+      /* background-color: black; */
+      text-align: center;
+   }
+   #entPriceer{
+      width:100px;
+      height: 30px;
+      border-radius: 4px;
+      margin-right:10px;
+      border:0.5px solid lightgrey;
+      outline:none;
+      font-size: 14px;
+   }
+   .disclaimer{
+      position: absolute;
+      width: 100%;
+      height: 50px;
+      bottom:30px;
+      font-size: 12px;
+      padding: 5px;
+      text-align: center;
+      left:0px;
+      color:crimson
+      /* background-color: lightblue; */
+   }
+
+   
+
+   
+
+
+
+
+
+   /* ==============================  betlip modal */ /* =============================================         Betslip */
+   .betslipModal{
+      position:fixed;
+      background-color: #f4f6f7;
+      height:100%;
+      width:100%;
+      left:0px;
+      top:0px;
+      z-index:12000;
+      overflow: auto;
+   }
+
+   .closeModal{
+      position:absolute;
+      right:20px;
+      top:10px;
+      background-color:crimson;
+      padding:2px 5px;
+      color:white;
+      border-radius:5px;
+   }
+
+   .betslipAmount{
+      position:absolute;
+      left:20px;
+      top:10px;
+      background-color:#01001A;
+      padding:2px 5px;
+      color:white;
+      border-radius:5px;
+   }
+
+   .usernameHolder{
+      padding: 10px 20px;
+      /* background-color: #06b600; */
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      width:100%;
+      text-align: center;
+      border-bottom:0.5px solid lightgray;
+      z-index: 14000;
+      background-color: #f4f6f7;
+
+   }
+
+   .betslipPoints{
+      color:#01001A; 
+      border:0.5px solid #01001A;
+      padding: 3px 5px;
+      border-radius: 10px;
+   }
+
+   .betslipDate{
+      font-size: 15px;
+   }
+
+   .username{
+      font-size: 20px;;
+   }
+   .betslip_first{
+      margin-top:17px;
+   }
+
+
+   .betslipMatchesHolder{
+      /* height: 100px; */
+      position:relative;
+      /* background-color: red; */
+      top:23%;
+      /* padding: 40px; */
+      overflow: auto;
+   }
+   
+
+   .breadcrumb_pill_holder3{
+      text-align: center; 
+      /* background-color:red;   */
+      padding:10px;
+      z-index: 8000;
+      margin-top:50px;
+   }
+
+
+
+
+
+
+
+
+
+/* =============================realtime */
+
+
+
+.realtime{
+   position:fixed;
+   height: 100%;
+   width: 100%;
+   background-color: rgb(0,0,0,0.6);
+   z-index:13000;
+   top:0px;
+   left:0px;
+}
+
+.realtimeParent{
+   width:90%;
+   position:relative;
+   top:26%;
+   /* height:200px; */
+   background-color: white;
+   left:5%;
+}
+
+.feedParent{
+   width:100%;
+   position:relative;
+   top:26%;
+   /* height:200px; */
+   background-color: white;
+   /* left:5%; */
+}
+
+.realtimeHeader{
+    /* background: linear-gradient(180deg, rgba(60, 83, 153, 0.15) 0%, rgba(97, 162, 68, 0.15) 46.47%, rgba(213, 124, 44, 0.15) 100%); */
+    padding:10px;
+    text-align: center;
+    background:#01001A;
+
+}
+.description{
+   /* padding:5px 15px; */
+   margin-top:20px;
+   font-size:13px
+}
+
+
+.realtimeBody{
+   padding:15px;
+
+}
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*************************** start of  larger screen *******************/
+@media only screen and (min-width: 690px) { 
+   .noMobile{
+      display: none;
+   }
+   .mobile{ 
+      width:45%;
+      margin-left:27.5%;
+      /* background-color: lightgray; */
+      /* height: 100%;
+      position:fixed */
+   } 
+
+   /* .pill4, .pill5, .pill3, .pill2, .pill1{
+      display:none;
+   } */
+
+   .pill1{
+      width:90px;
+      height:100px;
+      background-color: rgb(165, 125, 50);
+      display: inline-block;
+      margin:5px;
+      border-radius:4px;
+      padding:25px 3px;
+      text-align: center;
+      color:white;
+      font-size:12px;
+      cursor:pointer;
+   }
+
+   .pill2{
+      width:105px;
+      height:47px;
+      background-color: #9e9518;
+      display: inline-block;
+      margin:5px;
+      position:absolute;
+      border-radius:4px;
+      color:white;
+      text-align: center;
+      padding:10px 3px;
+      font-size:12px;
+      cursor:pointer;
+   }
+
+   .pill3{ 
+      width:105px;
+      height:47px;
+      background-color: rgba(173, 91, 36, 0.527);
+      display: inline-block;
+      margin:5px;
+      position:absolute;
+      top:55px;
+      border-radius:4px;
+      color:white;
+      text-align: center;
+      padding:10px 3px;
+      font-size:12px;
+      cursor:pointer;
+   }
+
+   .pill4{ 
+      width:105px;
+      height:47px;
+      background-color: #9e9518;
+      display: inline-block;
+      margin:5px;
+      position:absolute;
+      top:55px;
+      right:20px;
+      border-radius:4px;
+      color:white;
+      text-align: center;
+      padding:10px 3px;
+      font-size:12px;
+      cursor:pointer;
+   }
+
+   .pill5{ 
+      width:105px;
+      height:47px;
+      background-color: #4e7a97;
+      display: inline-block;
+      margin:5px;
+      position:absolute; 
+      right:20px;
+      border-radius:4px;
+      color:white;
+      text-align: center;
+      padding:10px 3px;
+      font-size:12px;
+      cursor:pointer;
+   }
+   .pill6{
+      width:105px;
+      height:47px;
+      background-color:rgba(173, 91, 36, 0.527);
+      display: inline-block;
+      margin:5px;
+      position:absolute;
+      border-radius:4px;
+      color:white;
+      text-align: center;
+      padding:10px 0px;
+      right:140px;
+      font-size:12px;
+      cursor:pointer;
+   }
+   .pill7{
+      width:105px;
+      height:47px;
+      background-color: rgb(51, 138, 90);
+      display: inline-block;
+      margin:5px;
+      position:absolute;
+      top:55px;
+      right:20px;
+      border-radius:4px;
+      color:white;
+      text-align: center;
+      padding:10px 3px;
+      right:140px;
+      font-size:12px;
+      cursor:pointer;
+   }
+
+   .pill8{
+      width:105px;
+      height:47px;
+      background-color: #4e7a97;
+      display: inline-block;
+      margin:5px;
+      position:absolute;
+      top:55px;
+      right:20px;
+      border-radius:4px;
+      color:white;
+      text-align: center;
+      padding:10px 3px;
+      right:260px;
+      font-size:12px;
+      cursor:pointer;
+   }
+
+   .pill9{
+      width:105px;
+      height:47px;
+      background-color: rgb(51, 138, 90);
+      display: inline-block;
+      margin:5px;
+      position:absolute;
+      border-radius:4px;
+      color:white;
+      text-align: center;
+      padding:10px 3px;
+      right:260px;
+      font-size:12px;
+      cursor:pointer;
+   }
+
+   .header_footer{
+      display:none;
+   } 
+
+   .fixedTab{
+      position:fixed;
+      height:100%;
+      width:20%;
+      left:50px;
+      top:0px;
+      background-color:#f4f6f7;
+      border-right:0.5px solid #f2edd7;
+      box-shadow:-10px 0px 10px 0px #f2edd7;
+   }
+   .fixedAdsTab{
+      position:fixed;
+      height:100%;
+      width:19%;
+      right:50px;
+      top:0px;
+      background-color:#f4f6f7;
+      border-left:0.5px solid #f2edd7;
+      padding:0px 10px; 
+      box-shadow:10px 0px 10px 0px #f2edd7;
+   }
+
+   .breadcrumb_pill_holder{
+      /* display: none; */
+      text-align: center;
+      top:0px;
+      /* position: -webkit-sticky; */
+      /* position: sticky; */
+      background-color:#f4f6f7;
+      z-index:1000;
+      padding-bottom: 10px;
+   }
+  
+   .breadcrumb_pill_holder3{
+      text-align: center; 
+      /* background-color: #cac7b6; */  
+      padding:10px;
+      z-index: 8000;
+      margin-top:50px;
+      width: 100%; 
+   }
+   .breadcrumb_pill{  
+      /* background-color: #01001A; */
+      background-color:#f4f6f7; 
+      margin:2px; 
+      border-radius:10px; 
+      color:gray; 
+      text-align: center; 
+      padding:5px;
+      font-size: 13px;
+      text-decoration: none;
+   }
+   .desktop_explore{
+      margin-top:50px;
+   }
+   .bal{
+      /* float:right; */
+      margin-left:30%;
+      margin-top:10px;
+      width:900px;
+      color:black
+   }
+   .logout{
+      font-size: 14px;
+      float: right;
+      margin-right:15px;
+      margin-top:5px;
+      color:orange;
+      cursor:pointer
+   }
+   .explore{
+      padding:10px 15px;
+      font-size: 17px;
+      font-weight:bolder;
+      color:lightgray; 
+   }
+   .pill_holder{
+      height: 110px;
+      /* background-color: #01001A; */
+      padding:1px 10px;
+      position:relative;
+      
+   } 
+
+   
+   .slider{
+      position: absolute; 
+      left:0px;
+      top: 0px;
+      height: 100%;
+      width: 100%; 
+   }
+   .slider1{
+      position: absolute; 
+      left:10%;
+      top: 0px;
+      height: 100%;
+      width: 80%; 
+   }
+   .adsPane2{
+      /* position: relative; */
+      height: 100%;
+      width: 100%;
+      left:0px;
+      top: 0px;
+   }
+
+
+   .paypanel{
+      width:50%;
+      /* height:400px; */
+      /* background-color: #4e7a97; */
+      display: inline-block;
+      margin:5px;
+      position:relative; 
+      left:25%;
+      border-radius:4px;
+      border:0.5px solid #4e7a97;
+      margin-top:70px;
+   }
+   
+
+   .withdrawpanel{
+      width:50%;
+      height:300px;
+      /* background-color: #4e7a97; */
+      display: inline-block;
+      margin:5px;
+      position:relative; 
+      left:25%;
+      border-radius:4px;
+      border:0.5px solid #4e7a97;
+      margin-top:50px;
+   }
+
+   #icon{
+      width:55px
+   }
+
+   .sectionLabels{
+      padding:0px 15px;
+      margin-bottom:5px
+   }
+   .menu{
+      float:right;
+      margin-right:10px;
+      margin-top:10px;
+      width:900px;
+      color:black
+   }
+
+   #searchIcon{
+      margin-right:40px
+   }
+
+
+   #bottomNav{
+      position:fixed;
+      bottom:0px;
+      left:0px;
+      width:100%;
+      background-color: #f4f6f7;
+      color:white;
+      border-top:0.5px solid lightgray;
+      z-index:1000;
+      height:50px;
+      text-align:center
+   }
+   .bottomnatChildren{
+      /* position:absolute; */
+      width:25%;
+      display:inline-block;
+      background:#f4f6f7;
+      /* margin-right:10px; */
+      height:100%;
+      top:0px;
+      text-align:center;
+      color:grey
+   }
+
+   .bottomIconActive{
+      /* position:absolute; */
+      width:25%;
+      display:inline-block;
+      background:#f4f6f7;
+      /* margin-right:10px; */
+      height:100%;
+      top:0px;
+      text-align:center;
+      color: gray
+   }
+
+   .inline{
+      display:inline-block;
+      font-size:12px;
+   }
+
+
+
+   #topNav{
+      position:relative;
+      top:0px;
+      left:0px;
+      width:100%;
+      background-color: #f4f6f7;
+      color:white;
+      height:50px;
+      z-index:1000
+   }
+
+   .bottom_nav_link{
+      color:white;
+      font-size:90px;
+      
+   }
+
+   body{
+      /* margin-top:50px; */
+      margin-bottom:50px; 
+   }
+
+   
+
+   .carosel_banner{
+      background-color:pink;
+      /* border:0.5px solid pink; */
+      height:200px
+   }
+
+
+   div.scrollmenu { 
+      /* overflow: auto; */
+      white-space: nowrap;
+      overflow-y: hidden;
+      height: 140px;
+      margin-bottom:0px;
+   
+   } 
+    
+   .heightHolder{
+      position:relative;
+      height: 135px;  
+      width:43%;
+      background: rgba(54, 12, 58, 0.14);
+      display: inline-block;
+      color: white;
+      text-align: left;
+      text-decoration: none;
+      padding:5px;
+      margin-right:10px; 
+      
+   }
+
+
+ 
+
+
+
+
+
+
+
+   .leagues{ 
+      /* width: 150px; */
+      cursor: pointer;
+      position:relative;
+      height: 140px;  
+      width:22%;
+      /* background: #F0F0F0; */
+      border-radius: 4px;
+      margin-left:17px;
+      margin-top:15px;
+      display:inline-block;
+      color:#01001A;
+      background: linear-gradient(180deg, rgba(60, 83, 153, 0.15) 0%, rgba(97, 162, 68, 0.15) 46.47%, rgba(213, 124, 44, 0.15) 100%);
+   }
+
+   .one_on_one{ 
+      /* width: 150px; */
+      position:relative;
+      height: 140px;  
+      width:43%;
+      /* background: #F0F0F0; */
+      border-radius: 4px;
+      margin-left:15px;
+      margin-top:15px;
+      display:inline-block;
+      color:#01001A;
+      background: rgba(54, 12, 58, 0.14);
+   }
+
+
+   .stakes{
+      position:absolute;
+      height:55px;
+      width:60px;
+      top:-7px;
+      right:-4px;
+      /* background:black; */
+      text-align:center;
+      padding:8px; 
+      /* font-weight:bolder; */
+      border-radius:13px;
+      font-size: 13px;
+   }
+
+   .stakes2{
+      position:absolute;
+      height:55px;
+      width:60px;
+      top:4px;
+      left:4px;
+      /* background:black; */
+      text-align:center;
+      padding:8px;
+      color:#01001A !important;
+      /* font-weight:bolder; */
+      border-radius:13px;
+      font-size: 13px;
+   }
+
+   .stakes_price{
+      position:absolute;
+      /* height:40px; */
+      width:87%;
+      top:50px;
+      left:10px;
+      /* background:black; */
+      text-align:left;
+      padding:8px;
+      color:orange !important;
+      font-size:15px 
+   } 
+   .stakes_price2{
+      position:absolute;
+      /* height:40px; */
+      width:87%;
+      top:20px;
+      left:10px;
+      /* background:black; */
+      text-align:left;
+      padding:8px;
+      color:orange !important;
+      font-size:15px 
+   } 
+
+
+   .stakeBtn{
+      position:absolute;
+      /* height:40px; */
+      width:100%;
+      bottom:0px;
+      left:0px;
+      background:rgb(51, 138, 90);
+      text-align:center;
+      padding:6px;
+      color:white !important;
+      font-size:15px ;
+      font-weight: bold;
+   } 
+
+   .stakeBtn2{
+      position:absolute;
+      /* height:40px; */
+      width:100%;
+      bottom:0px;
+      left:0px;
+      background:orange;
+      text-align:center;
+      padding:6px;
+      color:white !important;
+      font-size:15px ;
+      font-weight: bold;
+   } 
+
+   .oneXone{
+      margin-top:-6px;
+      color:black;
+      color:orange;
+      font-size: 16px;
+   }
+
+   .matches_count{
+      color:gray
+   } 
+   .small{
+      color:orange; 
+   }
+
+   .oneXoneCode{
+      position: absolute;
+      top:0px;
+      right:10px;
+      color:orange
+   }
+
+
+
+
+
+
+   /* .bottomnatChildren:hover{
+      color:red;
+   } */
+
+
+   /* matches component =============================================================================*/
+
+   .matches{
+      width:95%;
+      height:80px;
+      /* background-color:#F8F8F8; */
+      margin:2.5%;
+      border-radius:3px;
+      position:relative;
+      /* box-shadow:-10px 0px 10px 0px #f2edd7; */
+      box-shadow: inset 2px -2px 10px #f2edd7
+   }
+   .select_prediction_btn_holder2{
+      /* background-color:orange; */
+      position:absolute;
+      right:5px;
+      top:10px;
+      /* width:400px; */
+      text-align: center;
+      padding:4px;
+      color:white;
+      border-radius: 4px;
+      cursor: pointer;
+   }
+
+   .select_prediction_btn_holder{
+      background-color:orange;
+      position:absolute;
+      right:5px;
+      top:20px;
+      width:100px;
+      text-align: center;
+      padding:4px;
+      color:white;
+      border-radius: 4px;
+      cursor: pointer;
+   }
+   .select_prediction_btn{
+      border:none;
+      background:lightgray;
+      margin:3px;
+      padding:3px 10px;
+      border-radius:3px;
+   }
+   .active{
+      border:none;
+      background:#01001A;
+      margin:3px;
+      padding:3px 10px;
+      border-radius:3px;
+      color:white
+   } 
+
+   .select_prediction_logo_holder{
+      /* background-color:red; */
+      position:absolute;
+      left:15px;
+      top:20px;
+   }
+
+   .club_logo{
+      width:25px;
+      height:25px; 
+   }
+
+   .preview_btn_holder{
+      padding-right:2.5%;
+      margin-bottom:40px;
+      margin-top:20px
+   }
+   .preview_btn{
+      float:right;
+      width:100px;
+      
+   }
+
+   .preview_btn_alert{
+      float:right;
+      width:100px; 
+      opacity:0.4
+   } 
+   .alert_btn{
+      float:right;
+      width:100px;
+      background:crimson; 
+   }
+
+   .previewHolder{
+      position:fixed;
+      width:100%;
+      height:100%;
+      left:0px;
+      top:0px;
+      background-color:rgb(0,0,0,0.8);
+      z-index:200000;
+      overflow:auto
+   }
+
+   .previewHolderChild{
+      position:fixed;
+      width:50%;
+      height:90%;
+      left:25%;
+      top:0px;
+      background-color:#f4f6f7;
+      z-index:200000;
+      overflow:auto
+   }
+   .stakeBtnHolder{
+      position:fixed;
+      width:50%;
+      height:9.8%;
+      left:25%;
+      bottom:0px;
+      background-color:#f4f6f7;
+      padding:10px 20px
+   }
+
+   .totalMatches_amount{
+      position:absolute;
+      width:30%; 
+      height:100%;
+      left:0px;
+      top:0px;
+      padding:5px 10px
+   }
+
+
+
+
+
+
+   /* profile ( Account ) styleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+   .profile_holder{
+      height:200px;
+      width:95%;
+      left:2.5%;
+      position:relative;
+      /* background-color:red; */
+      top:20px;
+      margin-bottom:20px
+   }
+
+   .avater_holder{
+      position:absolute;
+      width:100px;
+      height:60%;
+      /* background:green; */
+      left:10px;
+      top:5px;
+      text-align:center;
+   }
+   .details_holder{
+      position:absolute;
+      width:210px;
+      height:70%;
+      /* background:green; */
+      left:35%;
+      top:5px
+   }
+
+   .avater{
+      width:70px;
+      height:70px;
+      /* margin-left:15%; */
+   }
+   .balance{
+      color:black !important;
+      /* margin-left:15%; */
+      margin-top:5px
+   } 
+
+   .accountNav{
+      position:absolute;
+      width:100%;
+      /* height:25%; */
+      /* background:green; */
+      /* left:10px; */
+      bottom:0px;
+      text-align:center;
+      padding:5px
+   }
+
+   .StyledBreadcrumb{
+      padding:3px 10px;
+      background-color:#01001A;
+      color:white;
+      border-radius:4px;
+      margin:0px 5px;
+      font-size:14px
+   }
+
+
+   /* =================================================== board style */
+
+   .see_slip{
+      /* background-color:red; */
+      position:absolute;
+      right:10px;
+      top:10px;
+      width:50%;
+      text-align: right;
+   }
+   .view_slip{ 
+      border:none;
+      color:orange;
+      font-size: 15px;
+      font-weight: bold;   
+      position:absolute;
+      top:45px;
+      right:0px;
+      border-radius: 3px;
+      cursor: pointer;
+   }
+   .predicted_time{
+      text-align: left;
+      color:red;
+   }
+   .predictor{
+      font-weight: bolder;
+   }
+   .points{
+      font-size: 16px;
+      font-weight: bold;
+      color:white; 
+      background-color: #01001A;
+      width: 30px;
+      height: 30px;
+      border-radius: 30px;
+      padding:2px 0px;
+      position:absolute;
+      top:0px;
+      right:0px;
+      text-align:center
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+   /* =================================================================================================================================== */
+   .expectedWin{
+      text-align: center;
+      position: absolute;
+      bottom:20px; 
+      width:100%;
+      /* background-color: #01001A; */
+      left:0px
+   }
+   .create1X1Modal1{
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      left: 0px;
+      bottom: 0px;
+      background-color: rgb(0,0,0,0.6);
+      z-index: 10000;
+   }
+   .create1X1Modal2{
+      position: fixed;
+      width: 35%;
+      height: 90%;
+      left: 32.5%;
+      bottom: 2%;
+      background-color:white;
+      z-index: 11000;
+      overflow: auto;
+   }
+   .create1X1Modaltitle{
+      position: fixed;
+      width: 35%;
+      height: 8%;
+      left: 32.5%;
+      top: 0%;
+      background-color:white;
+      z-index: 11000;
+      padding:4px 20px ;
+       border-bottom:1px solid lightgray;
+   }
+
+   .close{
+      float:right;
+      cursor: pointer;
+      color:crimson
+   }
+
+   .challangeHolder{
+      padding:10px
+   }
+
+   .says{
+      /* width: 150px; */
+      position:relative;
+      height: 100px;  
+      width:90%;
+      /* background: #F0F0F0; */
+      border-radius: 4px;
+      margin-left:5%;
+      margin-top:15px;
+      display:inline-block;
+      color:#01001A;
+      padding:20px;
+      background: linear-gradient(180deg, rgba(60, 83, 153, 0.15) 0%, rgba(97, 162, 68, 0.15) 46.47%, rgba(213, 124, 44, 0.15) 100%);
+   }
+
+   .saysPrice{
+      position: absolute;
+      right:20px;
+      bottom:10px;
+   }
+
+   .createTitle{
+      text-align: center;
+   }
+
+
+   /* confirm modal =========================================================*/
+   .create1X1Modal1_2{
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      left: 0px;
+      bottom: 0px;
+      background-color: rgb(0,0,0,0.6);
+      z-index: 14000;
+   }
+   .create1X1Modal2_2{
+      position: fixed;
+      width: 40%;
+      height: 70%;
+      left: 30%;
+      bottom: 20%;
+      padding:50px 20px;
+      background-color:white;
+      z-index: 15000;
+      overflow: auto;
+   }
+   
+   .create1X1Modaltitle_2{
+      position: fixed;
+      width: 40%;
+      height: 7%;
+      left: 30%;
+      top:10%;
+      background-color:white;
+      z-index: 11000;
+      padding:4px 20px;
+      border-bottom:1px solid lightgray;
+   }
+
+   /* ================ */
+   .child_one{
+      top:50px;
+      position:relative;
+      height: 290px;
+      background-color: white;
+   }
+
+   .homeImg{
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border-radius: 70px;
+      top:25px;
+      left:55px;
+      background-color: black;
+   }
+
+   .awayImg{
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border-radius: 70px;
+      top:25px;
+      right:55px;
+      background-color: black;
+   }
+
+   .vsHolder{
+      position: absolute;
+      width: 40%;
+      height: 70px;
+      top:25px;
+      left:140px;
+      /* background-color: red; */
+      text-align: center;
+      font-size: 13px;
+   }
+
+   .kickoff_holder{
+      position: absolute;
+      width: 78%;
+      height: 20px;
+      top:90px;
+      left:55px;
+      text-align: center;
+      font-size: 13px;
+   }
+   
+   .createButtonHolder{
+      position: absolute;
+      width: 100%;
+      /* height: 50px; */
+      top:190px;
+      left:0px;
+      /* background-color: red; */
+      text-align: center;
+   }
+   #entPriceer{
+      width:110px;
+      height: 28px;
+      border-radius: 4px;
+      margin-right:20px;
+      border:0.5px solid lightgrey;
+      outline:none;
+      text-align: center;
+      font-size: 12px;
+   }
+   .disclaimer{
+      position: absolute;
+      width: 100%;
+      height: 50px;
+      bottom:0px;
+      font-size: 14px;
+      padding: 5px;
+      text-align: center;
+      /* background-color: lightblue; */
+      left:0px;
+      color:crimson
+   }
+
+
+
+   /* ========================================== */
+   .avaterHolder{
+      position:relative;  
+      text-align: center;
+   }
+
+   
+   .adsPanel{
+      width:100.8%;
+      height:300px; 
+      display: inline-block;
+      /* margin:2px;  */
+      /* border-radius:4px;   */
+      position:absolute;
+      bottom:-10px;
+      left: -2px;
+      background-color: #f4f6f7;
+   }
+
+
+   .predictorlogo{
+      position:absolute;
+      top:0px;
+      left:0px;
+      width: 30%;
+   }
+
+
+    .breadcrumb_pill_holder2{
+      position:absolute;
+      top:25px;
+      left:30%;
+   }
+
+   .balanceHolder{
+      position: relative;
+      width: 100%;
+      left: 0%;  
+      top: 15%; 
+      outline:none;
+      padding:15px; 
+      /* height:95px; */
+      color: #01001A;
+      font-size: 30px;
+   }
+
+   .searchHolder{
+      position: relative;
+      width: 100%;
+      left: 0%;  
+      top: 18%;
+      /* border-bottom:0.5px solid lightgray; */
+      outline:none;
+      padding:15px; 
+      height:180px;
+      /* background-color: #01001A; */
+   }
+   .walletTitle{
+      margin-bottom:-10px;
+      font-size:16px;
+   }
+
+   .searchTitle{
+      position: absolute;
+      width: 90%;
+      left: 5%;  
+      top: 9%; 
+      font-size: 12px;
+   }
+   .searchInput{
+      position: absolute;
+      width: 90%;
+      left: 5%;  
+      top: 23%;
+      /* border-bottom:0.5px solid lightgray;
+      border-top:none;
+      border-left:none;
+      border-right:none; */
+      outline:none;
+      padding:7px 15px;
+      border-radius:5px;
+      border:0.5px solid #f2edd7;
+      text-transform: uppercase;
+      font-size:"3px"
+   }
+   
+   .searchButton{
+      position: absolute;
+      /* width: 10%; */
+      left: 5%;
+      /* height: 70px; */
+      /* background-color: #01001A; */
+      background-color: orange;
+      bottom: 19%;
+      padding:4px 25px;
+      border:none;
+      outline:none;
+      color:white;
+      border-radius:5px;
+
+   }
+
+
+   /* ==============ads */
+   .unboxAd{
+      width: 100%;
+   }
+
+   .unboxAds{
+      width: 20%;
+      position:fixed;
+      right:60px;
+      top:10px;
+   }
+
+   .ogapredcitor{
+      width: 20%;
+      position:fixed;
+      right:60px;
+      bottom:50px;
+   }
+
+   .unboxAdLabelHolder{
+      text-align: center;
+   }
+   .unboxAdLabel{
+      font-size: 20px;
+   }
+
+   /* ========= */
+   .desktopAvater{
+      /* position:absolute;
+      width: 100%; 
+      bottom:0px; */
+
+      /* left:20px */
+      /* background-color: red;  */
+      width: 25%;
+      position:fixed;
+      left:18px;
+      bottom:-40px;
+
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /* ==============================  betlip modal */ /* =============================================         Betslip */
+   .betslipModal{
+      position:fixed;
+      background-color: #f4f6f7;
+      height:100%;
+      width:50%;
+      left:25%;
+      top:0px;
+      z-index:12000;
+      overflow: auto;
+   }
+
+   .betslipModal2{
+      position:fixed;
+      background-color:rgb(0,0,0,0.6);
+      height:100%;
+      width:100%;
+      left:0%;
+      top:0px;
+      z-index:17000;
+      overflow: auto;
+   }
+
+   .closeModal{
+      position:absolute;
+      right:20px;
+      top:10px;
+      background-color:crimson;
+      padding:2px 5px;
+      color:white;
+      border-radius:5px;
+      cursor:pointer
+   }
+
+   .betslipAmount{
+      position:absolute;
+      left:20px;
+      top:10px;
+      background-color:#01001A;
+      padding:2px 5px;
+      color:white;
+      border-radius:5px;
+   }
+
+   .usernameHolder{
+      padding: 10px 20px;
+      /* background-color: #06b600; */
+      position: fixed;
+      top: 0px;
+      left: 25%;
+      width:50%;
+      text-align: center;
+      border-bottom:0.5px solid lightgray;
+      z-index: 14000;
+      background-color: #f4f6f7;
+
+   }
+
+   .betslipPoints{
+      color:#01001A; 
+      border:0.5px solid #01001A;
+      padding: 3px 5px;
+      border-radius: 10px;
+   }
+
+   .betslipDate{
+      font-size: 15px;
+   }
+
+   .username{
+      font-size: 20px;;
+   }
+   .betslip_first{
+      margin-top:17px;
+   }
+
+
+   .betslipMatchesHolder{
+      /* height: 100px; */
+      position:relative;
+      /* background-color: red; */
+      top:23%;
+      /* padding: 40px; */
+      overflow: auto;
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =============================realtime */
+
+
+
+.realtime{
+   position:fixed;
+   height: 100%;
+   width: 100%;
+   background-color: rgb(0,0,0,0.6);
+   z-index:13000;
+   top:0px;
+   left:0px;
+}
+
+.realtimeParent{
+   width:30%;
+   position:relative;
+   top:26%;
+   /* height:200px; */
+   background-color: white;
+   left:35%;
+}
+
+.realtimeHeader{
+    /* background: linear-gradient(180deg, rgba(60, 83, 153, 0.15) 0%, rgba(97, 162, 68, 0.15) 46.47%, rgba(213, 124, 44, 0.15) 100%); */
+    padding:10px;
+    text-align: center;
+    background:#01001A;
+
+}
+.description{
+   /* padding:5px 15px; */
+   margin-top:20px;
+   font-size:13px
+}
+
+
+.realtimeBody{
+   padding:15px;
+
+}
+
+
+
+
+
+
+
+
+
+.feedParent{
+   width:100%;
+   position:relative;
+   top:26%;
+   /* height:200px; */
+   background-color: white;
+   /* left:35%; */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+   /* ================================================================================================================== ADMIN */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.leagueModal{
+   background-color: rgb(0,0,0,0.6);
+   position: fixed;
+   height: 100%;
+   width: 100%;
+   left: 0px;
+   top: 0px;
+}
+
+.leaguemodal1{
+   height: 95%;
+   width: 50%;
+   background-color: #f4f6f7;
+   position: relative;
+   left: 25%;
+   top:10px;
+   /* background-color: mediumseagreen; */
+}
+
+.leaguemodalClose{
+   position: absolute;
+   top: 4px;
+   right: 10px;
+   background-color: crimson;
+   color: white;
+   padding: 1px 9px;
+   border-radius: 7px;
+   cursor: pointer;
+}
+
+.leagueModalHeader{
+   padding: 15px;
+   text-align: center;
+}
+
+.actionHolder{
+   padding: 10px 20px;
+   /* background-color: crimson; */
+   text-align: center;
+}
+
+.actionBtn{
+   background-color:#4e7a97 ;
+   color:white;
+}
+
+.actionBtn:hover{
+   background-color:gray ;
+   color:white;
+}
+
+.actionBtn_active{
+   background-color:gray ;
+   color:white;
+}
+
+
+/* leagueModalDefaultleagueModalDefaultleagueModalDefaultleagueModalDefault */
+.leagueModalDefault{
+   top:30px;
+   width:90% ;
+   left: 5%;
+   position: relative;
+   /* background-color: mediumseagreen; */
+   overflow: auto;
+   height: 65%;
+}
+.leagueModalNoOfPredictions, .leagueModalNoOfCategories, .leagueModalActiveMatches{
+   background-color:#cbe7f7; 
+   width: 100%; 
+   /* text-align: center; */
+   font-size: 20px;
+   font-weight: bold;
+   padding: 30px 0px 30px 30px;
+   color:#1f4258 ;
+   margin-bottom: 30px;
+   border-radius:5px
+} 
+
+.kickoffDateMain{
+   width: 150px;
+   height: 30px;
+   border:0.5px solid lightgray;
+   margin-right:10px 
+}
+.kickoffDate{
+   width: 70px;
+   height: 30px;
+   border:0.5px solid lightgray;
+   margin:10px 10px   
+}
+
+
+   .addMatchForm{
+      position: relative;
+      /* height:200px; */
+      /* background-color: #c0c0c0; */
+      padding: 10px;
+      border-radius: 6px;
+      border:0.5px solid lightgray
+   }
+
+   .addMatchForm input{
+      border-radius: 4px;
+      border:0.5px solid lightgray
+   }
+
+   .addMatchForm select{
+      border-radius: 4px;
+      border:0.5px solid lightgray
+   }
+
+   .homeClub{
+      padding:5px;
+      margin-right:20px;
+      width:200px;
+   }
+
+   .awayClub{
+      padding:5px;
+      float:right;
+      width:200px;
+   }
+
+   .stageMatchBtn{
+      background-color: #1f4258;
+      color:white;
+      padding:5px 10px
+   }
+
+   .previewMatches{
+      border-radius: 4px;
+      border:0.5px solid lightgray;
+      float: right;
+      background-color: crimson;
+      color: white;
+   }
+
+   .Matches{
+      background-color: #1f4258;
+      border-radius: 4px;
+      border:0.5px solid lightgray;
+      /* float: right;  */
+      margin-left:10px;
+      color: white;
+   }
+
+   /* early kick-off */ 
+   .early_kickoff{ 
+      border-radius: 4px;
+      border:0.5px solid lightgray;
+      margin-right:10px;
+      padding:2px 7px;
+
+   } 
+
+
+
+
+   .closePreview{
+      background-color: orange;
+      border-radius: 4px;
+      border:0.5px solid lightgray;
+      float: left; 
+      color: white;
+   }
+
+   .closePreviewBack{
+      background-color: crimson;
+      border-radius: 4px;
+      border:0.5px solid lightgray;
+      float: left; 
+      color: white;
+      margin-left: 50px;
+   }
+
+
+   .deactivate{
+      background-color: crimson;
+   }
+
+   .activate{
+      background-color: mediumseagreen;
+   }
+
+
+
+
+
+
+   
+   
+}

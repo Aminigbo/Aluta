@@ -1,0 +1,616 @@
+span{
+   color:gray
+} 
+
+.loader{
+   position:fixed;
+   top:0px;
+   height:100%;
+   width:100%;
+   left:0px;
+   background-color:rgb(0,0,0,0.6);
+   z-index:300000
+}
+.links{
+   color:#000000DE;
+   text-decoration:none;
+}
+.bg{
+   background-color: #FFFDF2;
+}
+
+/*************************** start of  smaller screen *******************/
+@media only screen and (max-width: 690px) {
+   .admin{
+      display:none;
+   }
+   .breadcrumb_pill_holder{
+      text-align: center;
+   }
+   .breadcrumb_pill{  
+      /* background-color: #01001A; */
+      background-color:#f4f6f7; 
+      margin:2px; 
+      border-radius:10px; 
+      color:gray; 
+      text-align: center; 
+      padding:3px 5px;
+      font-size: 13px;
+      text-decoration: none;
+   }
+   /* .breadcrumb_pill:hover{
+      color:white;
+      background-color: #01001A;
+   } */
+   .bal{
+      /* float:right; */
+      margin-left:30%;
+      margin-top:10px;
+      width:900px;
+      color:black
+   }
+   .logout{
+      font-size: 14px;
+      float: right;
+      margin-right:15px;
+      margin-top:5px;
+      color:orange
+   }
+   .explore{
+      padding:10px 15px;
+      font-size: 17px;
+      font-weight:bolder;
+      /* color:lightgray */
+   }
+   .pill_holder{
+      height: 110px;
+      /* background-color: #01001A; */
+      padding:1px 10px;
+      position:relative;
+   }
+   .pill1{
+      width:90px;
+      height:100px;
+      background-color: rgb(165, 125, 50);
+      display: inline-block;
+      margin:5px;
+      border-radius:4px;
+   }
+
+   .pill2{
+      width:105px;
+      height:47px;
+      background-color: rgb(51, 138, 90);
+      display: inline-block;
+      margin:5px;
+      position:absolute;
+      border-radius:4px;
+   }
+
+   .pill3{ 
+      width:105px;
+      height:47px;
+      background-color: rgba(173, 91, 36, 0.527);
+      display: inline-block;
+      margin:5px;
+      position:absolute;
+      top:55px;
+      border-radius:4px;
+   }
+
+   .pill4{ 
+      width:105px;
+      height:47px;
+      background-color: #9e9518;
+      display: inline-block;
+      margin:5px;
+      position:absolute;
+      top:55px;
+      right:20px;
+      border-radius:4px;
+   }
+
+   .pill5{ 
+      width:105px;
+      height:47px;
+      background-color: #4e7a97;
+      display: inline-block;
+      margin:5px;
+      position:absolute; 
+      right:20px;
+      border-radius:4px;
+   }
+
+   .paypanel{
+      width:90%;
+      height:400px;
+      /* background-color: #4e7a97; */
+      display: inline-block;
+      margin:5px;
+      position:relative; 
+      left:10px;
+      border-radius:4px;
+      border:0.5px solid #4e7a97
+   }
+
+   .withdrawpanel{
+      width:90%;
+      height:300px;
+      /* background-color: #4e7a97; */
+      display: inline-block;
+      margin:5px;
+      position:relative; 
+      left:10px;
+      border-radius:4px;
+      border:0.5px solid #4e7a97
+   }
+
+   #icon{
+      width:55px
+   }
+
+   .sectionLabels{
+      padding:0px 15px;
+      margin-bottom:5px
+   }
+   .menu{
+      float:right;
+      margin-right:10px;
+      margin-top:10px;
+      width:900px;
+      color:black
+   }
+
+   #searchIcon{
+      margin-right:40px
+   }
+
+
+   #bottomNav{
+      position:fixed;
+      bottom:0px;
+      left:0px;
+      width:100%;
+      background-color: #FFFDF2;
+      color:white;
+      border-top:0.5px solid lightgray;
+      z-index:30000;
+      height:50px;
+      text-align:center
+   }
+   .bottomnatChildren{
+      /* position:absolute; */
+      width:25%;
+      display:inline-block;
+      background:#FFFDF2;
+      /* margin-right:10px; */
+      height:100%;
+      top:0px;
+      text-align:center;
+      color:grey
+   }
+
+   .bottomIconActive{
+      /* position:absolute; */
+      width:25%;
+      display:inline-block;
+      background:#FFFDF2;
+      /* margin-right:10px; */
+      height:100%;
+      top:0px;
+      text-align:center;
+      color: gray
+   }
+
+   .inline{
+      display:inline-block;
+      font-size:12px;
+   }
+
+
+
+   #topNav{
+      position:relative;
+      top:0px;
+      left:0px;
+      width:100%;
+      background-color: #FFFDF2;
+      color:white;
+      height:50px;
+      z-index:1000
+   }
+
+   .bottom_nav_link{
+      color:white;
+      font-size:90px;
+      
+   }
+
+   body{
+      /* margin-top:50px; */
+      margin-bottom:50px; 
+   }
+
+   
+
+   .carosel_banner{
+      background-color:pink;
+      /* border:0.5px solid pink; */
+      height:200px
+   }
+
+
+   div.scrollmenu { 
+      /* overflow: auto; */
+      white-space: nowrap;
+      overflow-y: hidden;
+      height: 140px;
+      margin-bottom:0px;
+   
+   } 
+    
+   .heightHolder{
+      position:relative;
+      height: 135px;  
+      width:43%;
+      background: rgba(54, 12, 58, 0.14);
+      display: inline-block;
+      color: white;
+      text-align: left;
+      text-decoration: none;
+      padding:5px;
+      margin-right:10px; 
+      
+   }
+
+
+ 
+
+
+
+
+
+
+
+   .leagues{ 
+      /* width: 150px; */
+      position:relative;
+      height: 140px;  
+      width:43%;
+      /* background: #F0F0F0; */
+      border-radius: 4px;
+      margin-left:17px;
+      margin-top:15px;
+      display:inline-block;
+      color:#01001A;
+      background: linear-gradient(180deg, rgba(60, 83, 153, 0.15) 0%, rgba(97, 162, 68, 0.15) 46.47%, rgba(213, 124, 44, 0.15) 100%);
+   }
+
+   .one_on_one{ 
+      /* width: 150px; */
+      position:relative;
+      height: 140px;  
+      width:43%;
+      /* background: #F0F0F0; */
+      border-radius: 4px;
+      margin-left:15px;
+      margin-top:15px;
+      display:inline-block;
+      color:#01001A;
+      background: rgba(54, 12, 58, 0.14);
+   }
+
+
+   .stakes{
+      position:absolute;
+      height:45px;
+      width:75px;
+      top:10px;
+      left:10px;
+      /* background:black; */
+      text-align:center;
+      padding:8px;
+      color:#01001A !important;
+      font-weight:bolder;
+      border-radius:13px;
+   }
+
+   .stakes_price{
+      position:absolute;
+      /* height:40px; */
+      width:87%;
+      top:50px;
+      left:10px;
+      /* background:black; */
+      text-align:left;
+      padding:8px;
+      color:orange !important;
+      font-size:15px 
+   }  
+
+   .oneXone{
+      margin-top:-6px;
+      color:black
+   }
+
+   .matches_count{
+      color:gray
+   } 
+
+
+
+
+
+
+   /* .bottomnatChildren:hover{
+      color:red;
+   } */
+
+
+   /* matches component =============================================================================*/
+
+   .matches{
+      width:95%;
+      height:80px;
+      background-color:#F8F8F8;
+      margin:2.5%;
+      border-radius:3px;
+      position:relative;
+   }
+   .select_prediction_btn_holder{
+      /* background-color:red; */
+      position:absolute;
+      right:5px;
+      top:10px;
+   }
+   .select_prediction_btn{
+      border:none;
+      background:lightgray;
+      margin:3px;
+      padding:3px 10px;
+      border-radius:3px;
+   }
+   .active{
+      border:none;
+      background:#01001A;
+      margin:3px;
+      padding:3px 10px;
+      border-radius:3px;
+      color:white
+   } 
+
+   .select_prediction_logo_holder{
+      /* background-color:red; */
+      position:absolute;
+      left:5px;
+      top:20px;
+   }
+
+   .club_logo{
+      width:25px;
+      height:25px; 
+   }
+
+   .preview_btn_holder{
+      padding-right:2.5%;
+      margin-bottom:40px;
+      margin-top:20px
+   }
+   .preview_btn{
+      float:right;
+      width:100px;
+      
+   }
+
+   .preview_btn_alert{
+      float:right;
+      width:100px; 
+      opacity:0.4
+   } 
+   .alert_btn{
+      float:right;
+      width:100px;
+      background:crimson; 
+   }
+
+   .previewHolder{
+      position:fixed;
+      width:100%;
+      height:100%;
+      left:0px;
+      top:0px;
+      background-color:rgb(0,0,0,0.9);
+      z-index:200000;
+      overflow:auto
+   }
+
+   .previewHolderChild{
+      position:fixed;
+      width:100%;
+      height:90%;
+      left:0px;
+      top:0px;
+      background-color:#FFFDF2;
+      z-index:200000;
+      overflow:auto
+   }
+   .stakeBtnHolder{
+      position:fixed;
+      width:100%;
+      height:9.8%;
+      left:0px;
+      bottom:0px;
+      background-color:#FFFDF2;
+      padding:10px 20px
+   }
+
+   .totalMatches_amount{
+      position:absolute;
+      width:30%; 
+      height:100%;
+      left:0px;
+      top:0px;
+      padding:5px 10px
+   }
+
+
+
+
+
+
+   /* profile ( Account ) styleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+   .profile_holder{
+      height:200px;
+      width:95%;
+      left:2.5%;
+      position:relative;
+      /* background-color:red; */
+      top:20px;
+      margin-bottom:20px
+   }
+
+   .avater_holder{
+      position:absolute;
+      width:100px;
+      height:60%;
+      /* background:green; */
+      left:10px;
+      top:5px;
+      text-align:center;
+   }
+   .details_holder{
+      position:absolute;
+      width:210px;
+      height:70%;
+      /* background:green; */
+      right:10px;
+      top:5px
+   }
+
+   .avater{
+      width:70px;
+      height:70px;
+      /* margin-left:15%; */
+   }
+   .balance{
+      color:black !important;
+      /* margin-left:15%; */
+      margin-top:5px
+   } 
+
+   .accountNav{
+      position:absolute;
+      width:100%;
+      /* height:25%; */
+      /* background:green; */
+      /* left:10px; */
+      bottom:0px;
+      text-align:center;
+      padding:5px
+   }
+
+   .StyledBreadcrumb{
+      padding:3px 10px;
+      background-color:#01001A;
+      color:white;
+      border-radius:4px;
+      margin:0px 5px;
+      font-size:14px
+   }
+
+
+   /* =================================================== board style */
+
+   .see_slip{
+      /* background-color:red; */
+      position:absolute;
+      right:10px;
+      top:10px;
+      width:50%;
+      text-align: right;
+   }
+   .view_slip{ 
+      border:none;
+      color:orange;
+      font-size: 13px;
+      font-weight: bold;   
+      position:absolute;
+      top:45px;
+      right:0px;
+      border-radius: 3px;
+   }
+   .predicted_time{
+      text-align: left;
+      color:red;
+   }
+   .predictor{
+      font-weight: bolder;
+   }
+   .points{
+      font-size: 16px;
+      font-weight: bold;
+      color:white; 
+      background-color: #01001A;
+      width: 30px;
+      height: 30px;
+      border-radius: 30px;
+      padding:2px 0px;
+      position:absolute;
+      top:0px;
+      right:0px;
+      text-align:center
+   }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*************************** start of  larger screen *******************/
+@media only screen and (min-width: 690px) {
+   .crumb{
+      height: 100px;
+      width:100%;
+      background-color: #01001A;
+      margin-left:0%;
+      position:relative
+   }
+}
