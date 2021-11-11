@@ -39,14 +39,14 @@ function Home({ appState, loadFeeds, walletAdd }) {
   let history = useHistory();
   const state = appState;
 
- 
-
+  const allGiveAwayPosts = state.feeds.filter((e) => e.postType == "GIVE AWAY");
   function renderFeeds(allFeeds) {
     allFeeds.sort(function (a, b) {
       return parseFloat(b.id) - parseFloat(a.id);
     });
 
-    return allFeeds.map((feeds) => {
+    console.log(allGiveAwayPosts);
+    return allGiveAwayPosts.map((feeds) => {
       return (
         <ALLPOSTS
           loading={false}
@@ -83,15 +83,10 @@ function Home({ appState, loadFeeds, walletAdd }) {
       );
       history.push(`/reaction/${postToComment}`);
     }
-  }; 
+  };
 
   const [comment, setComment] = useState("");
   const [postToComment, setPostToComment] = useState("");
-  const [active, setActive] = useState(false);
-  const [postText, setPostText] = useState("")
-  const [blob, setBlob] = useState("")
-  const [postType, setPostType] = useState("POST")
-
 
   ALLPOSTS.propTypes = {
     loading: PropTypes.bool,
@@ -106,12 +101,6 @@ function Home({ appState, loadFeeds, walletAdd }) {
 
   React.useEffect((compState) => {
     window.scrollTo(0, 0);
-    // setStates({ ...compState, loader: true})
-    // setTimeout(() => setStates({ ...compState, loader: false }), 500);
-
-    // fetch_feeds()
-    loadFeeds(state.feeds);
-    //  loadFeeds(posts)   
   }, []);
 
   const [compState, setStates] = useState("");
@@ -213,7 +202,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
       <div className="mobile">
         <div className="header_footer">
           <Footer />
-          <Header />
+          {/* <Header /> */}
         </div>
         <div>
           <div>
@@ -229,7 +218,12 @@ function Home({ appState, loadFeeds, walletAdd }) {
             >
               <Toppills />
             </div>
-            {createPanel(history,setPostText,postText,'', setActive, active,setBlob,blob,setPostType, postType)}
+
+            {allGiveAwayPosts.length > 0 && (
+              <div style={{ padding: "0px 10px" }}>
+                <span>All give aways</span>
+              </div>
+            )}
 
             <React.Fragment key="bottom">
               <Drawer
@@ -244,11 +238,17 @@ function Home({ appState, loadFeeds, walletAdd }) {
             {compState.loader != true ? (
               <div className="" style={{ background: " " }}>
                 {renderFeeds(state.feeds)}
+
+                {allGiveAwayPosts.length < 1 && (
+                             <div style={{ textAlign: "center", marginTop: "40%" }}>No avilable give away ! <br /><br />
+                                <Link style={{textDecoration:"none"}} to="/create" >Create one</Link>
+                  
+                             </div>
+                )}
               </div>
             ) : (
               <ALLPOSTS loading />
             )}
-            <Pills />
           </div>
           <br />
         </div>

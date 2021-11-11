@@ -91,6 +91,16 @@ function Home({ appState, loadFeeds, walletAdd }) {
 
   function Media(props) {
     const { loading = false, data } = props;
+    let label = "" 
+    if (data) {
+    if (data.postType == "GIVE AWAY") {
+   label = `GIVE AWAY  -  NGN ${data.post.meta.giveaway.amount}`
+  } else if (data.postType == "POST") {
+    
+  } else if(data.postType == "EVENT") {
+    label = `EVENT  -   ${data.post.meta.event.date} |  ${data.post.meta.event.time}`
+  }
+  }
     return (
       <>
         <CardHeader
@@ -137,7 +147,10 @@ function Home({ appState, loadFeeds, walletAdd }) {
             ) : (
                    <> <small>@{data.poster.school}</small> <span style={{ fontSize: "12px" }}> &nbsp;&nbsp;
                       {/* {commentDuration(data.post.time)} */}
-                   </span>.<PublicOutlined style={{ fontSize: "15px" }} /> </>
+                </span>.<PublicOutlined style={{ fontSize: "15px" }} />
+                <br />
+                  <b style={{ color: "black", fontSize: "14px" }}>{label}</b> <br />
+                </>
             )
           }
         />
@@ -327,7 +340,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
                 position: "sticky",
                 top: "0px",
                 zIndex: "1000",
-                padding: "0px 20px",
+                padding: "0px",
               }}
             >
               <Toppills />
@@ -346,7 +359,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
                 {renderFeeds(state.feeds)}
 
                 <div style={{ margin: "10px" }}>
-                  <small>comments</small>
+                  <small>comment</small>
                 </div>
 
                 {allComments(state.feeds)}

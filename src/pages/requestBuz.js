@@ -213,7 +213,7 @@ function Home({ appState, walletAdd, logout }) {
                 position: "sticky",
                 top: "0px",
                 zIndex: "1000",
-                padding: "0px 20px",
+                padding: "0px",
               }}
             >
               {" "}

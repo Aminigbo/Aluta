@@ -97,7 +97,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
     }
   const postBody = {
     postType, 
-       id: "3",
+       id: new Date().getTime(),
       postText,
       poster: {
         name: "Ojims Kolinda",
@@ -151,7 +151,7 @@ if (blob == "" && postText == "") {
     let image = document.getElementById("upload");
 
     var imageResize = new ImageResize({
-      quality: 0.8,
+      quality: 18,
     });
     imageResize
       .play(image)
@@ -517,9 +517,12 @@ if (blob == "" && postText == "") {
                             });
                           }}
                         >
-                          <MenuItem value={10}>Ten</MenuItem>
-                          <MenuItem value={20}>Twenty</MenuItem>
-                          <MenuItem value={30}>Thirty</MenuItem>
+                          <MenuItem value={1}>1</MenuItem>
+                          <MenuItem value={2}>2</MenuItem>
+                            <MenuItem value={5}>5</MenuItem>
+                            <MenuItem value={10}>10</MenuItem>
+                          <MenuItem value={20}>20</MenuItem>
+                          <MenuItem value={50}>50</MenuItem>
                         </Select>
                       </FormControl>
                     </div>
@@ -554,9 +557,9 @@ if (blob == "" && postText == "") {
                             });
                           }}
                         >
-                          <MenuItem value={10}>Ten</MenuItem>
-                          <MenuItem value={20}>Twenty</MenuItem>
-                          <MenuItem value={30}>Thirty</MenuItem>
+                          <MenuItem value={30}>30</MenuItem>
+                          <MenuItem value={45}>45</MenuItem>
+                          <MenuItem value={60}>60</MenuItem>
                         </Select>
                       </FormControl>
                     </div>

@@ -13,7 +13,7 @@ import Register from "./pages/register"
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Matches from "./components/matches.js"
-import Leagues from "./components/leagues.js"
+import Events from "./pages/events.js"
 import Jackpots from "./components/jackpots.js"
 import Account from "./components/account.js"
 import Board from "./components/board.js"
@@ -21,7 +21,7 @@ import Topup from "./components/topup"
 import Withdraw from "./components/withdraw"
 import Otp from "./components/otp"
 import Admin from "./components/admin"
-import Onexone from "./components/1x1"
+import Giveaway from "./pages/giveaway"
 import Terms from "./components/tc"
 import Responsible from "./components/responsible"
 import Search from "./components/search"
@@ -71,8 +71,8 @@ export default function App() {
               <Route path="/otp">
                 <Otp />
               </Route>
-              <Route path="/oneXone">
-                <Onexone />
+              <Route path="/giveaway">
+                <Giveaway />
               </Route>
 
               {/* rout admin */}
@@ -81,8 +81,8 @@ export default function App() {
               </Route>
               
               {/* admin view users  AdminUsers*/}
-              <Route path="/predict">
-                <Leagues />
+              <Route path="/events">
+                <Events />
               </Route>
               
               <Route path="/withdrawal/user/:username/:userId">

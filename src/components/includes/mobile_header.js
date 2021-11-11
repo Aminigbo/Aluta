@@ -132,7 +132,8 @@ function Header({appState,log_out,getOneOnOne}) {
           <b className="bal"><Naira>{state.wallet}</Naira></b>
       <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose} >
         
-        <MenuItem onClick={() => { setStates({ ...compState, copy: true }); navigator.clipboard.writeText(state.loggedInUser.user.OgPin) }}
+        <MenuItem
+          onClick={() => { setStates({ ...compState, copy: true }); navigator.clipboard.writeText(state.loggedInUser.user.OgPin) }}
           style={select}>ID: {state.loggedInUser.user.OgPin} &nbsp;&nbsp;
           {compState.copy == true ?  <LibraryAddCheckOutlined  style={selected}/>: <FileCopyOutlined/> }
         </MenuItem>
