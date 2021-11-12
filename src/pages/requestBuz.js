@@ -3,32 +3,35 @@ import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import "../static/css/home/index.css";
 
-import Footer from "../components/includes/mobile_footer.js";
+// import Footer from "../components/includes/mobile_footer.js";
 import Header from "../components/includes/mobile_header.js";
 import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
-
-import Realtime from "../components/includes/realtime";
-import { Link } from "react-router-dom";
 import { LinearProgress } from "@material-ui/core";
 import { supabase } from "../configurations";
 import { add_wallet, logOut } from "../redux";
-import { EmojiEmotions } from "@material-ui/icons";
 import Toppills from "../components/includes/topdesktoppills";
-import { ToastContainer, toast, Bounce } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { resetPin } from "../functions/controllers/resetPin";
+import { 
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
 
 const rec_inputs = {
   margin: "5%",
   width: "90%",
   padding: "4px 2px",
   border: "5px",
-  height: "30px",
+  height: "60px",
   borderBottom: "0.5px solid grey",
   backgroundColor: "#f4f6f7",
   color: "#4e7a97",
   outline: "none",
   fontSize: "13px",
+  resize: "none",
 };
 
 const rec_inputs3 = {
@@ -58,14 +61,14 @@ const paymentTitle = {
   paddingTop: "20px",
   color: "gray",
   fontFamily: "Aclonica",
-//   color: "#fa983a",
-  color:"#2C3A47"
+  //   color: "#fa983a",
+  color: "#2C3A47",
 };
 
 let action_btn_success2 = {
-   // background:"#1e272e",
+  // background:"#1e272e",
   backgroundColor: "#2C3A47",
-   // background:"#58B19F",
+  // background:"#58B19F",
   padding: "2px 14px",
   marginLeft: "15px",
   color: "white",
@@ -102,6 +105,7 @@ function Home({ appState, walletAdd, logout }) {
 
   const [amount, setAMOUNT] = useState("");
   const [reason, setReason] = useState("");
+  const[privacy, setPrivacy] = useState("")
 
   const infoToast = (res) => {
     toast.info(res, {
@@ -245,7 +249,8 @@ function Home({ appState, walletAdd, logout }) {
 
                   <br />
                   <textarea
-                    cols="20"
+                    cols="40"
+                    rows="20"
                     onChange={(e) => {
                       setReason(e.target.value);
                     }}
@@ -253,6 +258,30 @@ function Home({ appState, walletAdd, logout }) {
                     style={rec_inputs}
                     placeholder="Enter your request reason *"
                   ></textarea>
+
+                  
+                    <FormControl
+                      style={{margin:"0px 10px", marginBottom:"10px"}}
+                        id="postArea1"
+                        variant="standard"
+                        sx={{ m: 0, minWidth: 185 }}
+                      >
+                        <InputLabel id="demo-simple-select-label">
+                          Who can see this
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={privacy}
+                          label="Age"
+                          onChange={(e) => {
+                            setPrivacy(e.target.value);
+                          }}
+                        >
+                          <MenuItem value={0}>Only me</MenuItem>
+                          <MenuItem value={1}>Public</MenuItem> 
+                        </Select>
+                      </FormControl>
 
                   {compState.resolved != true && (
                     <div style={modal_footer2_btn_holder}>

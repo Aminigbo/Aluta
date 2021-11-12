@@ -26,10 +26,7 @@ import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import IconButton from "@mui/material/IconButton";
-import MoreVertIcon from "@mui/material/IconButton";
-// import MoreVertIcon from '@mui/icons-material/IconButton';
+import CardMedia from "@mui/material/CardMedia"; 
 import Skeleton from "@mui/material/Skeleton";
 import "../static/css/feed.css";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
@@ -42,11 +39,51 @@ function Home({ appState, loadFeeds, walletAdd }) {
   const state = appState;
   const { postId } = useParams();
 
-  function renderFeeds(allFeeds) {
-    const post_to_comment = allFeeds.filter((e) => e.id == postId)[0];
+  const post_to_comment = state.feeds.filter((e) => e.id == postId)[0];
 
+  function renderFeeds(allFeeds) { 
+    console.log(post_to_comment)
     return <Media loading={false} data={post_to_comment} />;
   }
+
+  
+
+  // claim give away
+  const claim = () => {
+    console.log(post_to_comment)
+  }
+  
+
+
+  const [isClaim, setIsClaim] = useState(false)
+  function timeout() {
+    let delaysecond = ""
+    if (post_to_comment.postType == "GIVE AWAY") {
+      delaysecond = post_to_comment.post.meta.giveaway.delaysecond 
+    } else {
+      delaysecond =""
+    } 
+
+    var timeleft = delaysecond;
+  var downloadTimer = setInterval(function(){
+    if(timeleft <1){
+      clearInterval(downloadTimer);
+      console.log('delaysecond')
+      setIsClaim(true)
+      
+    } else { 
+      document.getElementById("progressBar").innerHTML =`- ${ timeleft}`;
+      timeleft -= 1;
+      
+    }
+  }, 1000);
+    
+
+
+  }
+      
+
+
 
   // render all comments
   const allComments = (allFeeds) => {
@@ -245,7 +282,8 @@ function Home({ appState, loadFeeds, walletAdd }) {
                     document.getElementById("commentInput").focus();
                   }}
                 />
-                <div style={{ fontSize: "11px" }}>{data.comments.length}</div>
+                  <div style={{ fontSize: "11px" }}>{data.comments.length}</div>
+                  
               </div>
               <div
                 style={{
@@ -260,13 +298,28 @@ function Home({ appState, loadFeeds, walletAdd }) {
                   marginLeft: "10px",
                 }}
               >
-                <small>10mins ago</small>
+                  {/* <small id="progressBar">
+                    <progress value="0" max="10" id="progressBar"></progress>
+                  </small> */}
+                  
+
+              {data.postType == "GIVE AWAY" &&     
                 <b
-                  className="link"
+                    className="link"
+                   id="clainHolder"
                   style={{ float: "right", fontSize: "15px" }}
-                >
-                  AMC - 110
-                </b>
+                  >
+
+                    {isClaim == true ? <button
+                      id="claimBTN"
+                      onClick={() => {
+                        claim()
+                      }} 
+                    >Claim </button> : <>   AMC  <b  id="progressBar"></b> </>}
+                    
+                    
+                 
+                </b>}
               </div>
             </Typography>
           )}
@@ -287,16 +340,12 @@ function Home({ appState, loadFeeds, walletAdd }) {
   };
 
   React.useEffect((compState) => {
-    window.scrollTo(0, 0);
-    // setStates({ ...compState, loader: true})
-    // setTimeout(() => setStates({ ...compState, loader: false }), 500);
+    // window.scrollTo(0, 0); 
+    // loadFeeds(state.feeds); 
 
-    // fetch_feeds()
-    loadFeeds(state.feeds);
-    // loadFeeds(posts)
-    // window.scrollTo(0,document.body.scrollHeight);
-    // document.getElementById("bottomDiv").scrollIntoView(false)
-  }, []);
+    timeout()
+  }, []); 
+  
 
   const [compState, setStates] = useState("");
 
@@ -348,7 +397,10 @@ function Home({ appState, loadFeeds, walletAdd }) {
                 Rivers State University
               </b>
 
-              <Toppills />
+                <Toppills />
+                
+                <br /><br />
+                
             </div>
 
             {compState.loader != true ? (

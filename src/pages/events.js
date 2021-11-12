@@ -201,7 +201,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
 
       <div className="mobile">
         <div className="header_footer">
-          <Footer />
+          {/* <Footer /> */}
           {/* <Header /> */}
         </div>
         <div>
@@ -248,8 +248,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
             ) : (
               <ALLPOSTS loading />
             )}
-          </div>
-          <br />
+          </div> 
         </div>
       </div>
 

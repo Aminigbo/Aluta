@@ -255,7 +255,9 @@ export function ALLPOSTS(props) {
               <Link className="link">@{data.poster.name} </Link>
             </b>
             &nbsp; &nbsp;
-            <span style={{ fontFamily: "" }}>
+            <span onClick={() => {
+            history.push(`/reaction/${data.id}`);
+          }} style={{ fontFamily: "" }}>
               {data.post.text}
             </span>
             <br />

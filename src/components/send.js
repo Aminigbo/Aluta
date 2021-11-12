@@ -345,7 +345,7 @@ function Home({ appState, walletAdd, logout }) {
                     }}
                     value={amount}
                     style={rec_inputs}
-                    placeholder=" Enter Amount to Transfer "
+                    placeholder=" Enter Amount to Buz "
                   />
 
                   <br />
