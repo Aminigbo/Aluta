@@ -18,6 +18,7 @@ import {
   CommentOutlined,
   ThumbDownOutlined,
   Send,
+  
 } from "@material-ui/icons";
 import PropTypes from "prop-types";
 import {
@@ -29,10 +30,13 @@ import {
   Skeleton,
   TextareaAutosize,
 } from "@mui/material";
-import "../static/css/feed.css";
-import { List, Drawer, Box, Avatar, Typography } from "@mui/material";
+import "../static/css/feed.css"; 
 import { addComment } from "../functions/controllers/comments"; // importing all the comment controllers
 import { handleAddLike, handleUnlike } from "../functions/controllers/likes"; // importing likes controllers
+
+
+import {List,ListItem,ListItemText,ListItemAvatar,Avatar,Divider,Typography,Box,Drawer} from "@mui/material"; 
+
 
 function Home({ appState, loadFeeds, walletAdd }) {
   let history = useHistory();
@@ -106,14 +110,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
     //  loadFeeds(posts)
   }, []);
 
-  const [compState, setStates] = useState("");
-
-  // show loader when rerouting
-  let reroute = (category) => {
-    // history.push(`./leagues/${category.id}`)
-    setStates({ ...compState, loader: true });
-    setTimeout(() => history.push(`./leagues/${category.id}`), 500);
-  };
+  const [compState, setStates] = useState(""); 
 
   const [drawerState, setDrawerState] = React.useState({
     bottom: false,
@@ -215,10 +212,19 @@ function Home({ appState, loadFeeds, walletAdd }) {
                 zIndex: "1000",
                 padding: "0px  ",
               }}
-            >
-              <b style={{ color: "#0a3d62", padding: "0px 10px" }}>
-                Rivers State University
-              </b>
+            > 
+                <ListItem 
+                >
+                  <ListItemAvatar>
+                    <Avatar>
+                      <img style={{width:"40px"}} src={"https://tethys-engineering.pnnl.gov/sites/default/files/styles/large/public/taxonomy-images/riversstate.png?itok=Y8Oyls7d"} />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={'Rivers State University'}
+                    // secondary="+99 new activities"
+                  />
+                </ListItem>
               <Toppills />
             </div>
 

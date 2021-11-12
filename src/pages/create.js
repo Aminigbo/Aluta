@@ -84,6 +84,18 @@ function Home({ appState, loadFeeds, walletAdd }) {
 
   const makePost = () => {
     let photo = ""
+    let type = ""
+    if (postType == "GIVE AWAY" && giveaway.beneficiaries == null || giveaway.amount == null || giveaway.delaysecond == null) { 
+    } else {
+      type = postType
+    }
+
+    if (postType == "EVENT" && event.date == null || event.time == null ) { 
+    } else {
+      type = postType
+    }
+
+
     if (blob == "") {
       photo = null
     } else {
@@ -92,7 +104,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
         }]
     }
   const postBody = {
-    postType, 
+    postType:type, 
        id: new Date().getTime(),
       postText,
       poster: {

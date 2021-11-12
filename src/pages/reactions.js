@@ -32,7 +32,10 @@ import "../static/css/feed.css";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { Avatar, Typography, Grid, Paper } from "@mui/material";
 import { handleAddLike, handleUnlike, likedPost } from "../functions/controllers/likes"; // importing likes controllers 
-import {commentDuration} from "../functions/utils/index"
+import { commentDuration } from "../functions/utils/index"
+
+// import giveaway claim controller
+import {claimGiveaway} from "../functions/controllers/giveaway"
 
 function Home({ appState, loadFeeds, walletAdd }) {
   let history = useHistory();
@@ -43,6 +46,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
 
   function renderFeeds(allFeeds) { 
     console.log(post_to_comment)
+    
     return <Media loading={false} data={post_to_comment} />;
   }
 
@@ -50,7 +54,9 @@ function Home({ appState, loadFeeds, walletAdd }) {
 
   // claim give away
   const claim = () => {
-    console.log(post_to_comment)
+    claimGiveaway(post_to_comment).then(res => {
+      console.log(res)
+    })
   }
   
 
@@ -70,6 +76,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
       clearInterval(downloadTimer);
       console.log('delaysecond')
       setIsClaim(true)
+      clearInterval()
       
     } else { 
       document.getElementById("progressBar").innerHTML =`- ${ timeleft}`;
@@ -77,6 +84,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
       
     }
   }, 1000);
+    clearInterval()
     
 
 
@@ -198,12 +206,16 @@ function Home({ appState, loadFeeds, walletAdd }) {
             variant="rectangular"
           />
         ) : (
-          <CardMedia
-            component="img"
-            height=" "
-            image={data.post.photo[0].image}
-            alt="image"
-          />
+          
+            <div>{data.post.photo != null &&
+           <CardMedia 
+          component="img"
+          // height="220"
+          image ={data.post.photo[0].image}
+          alt="image"
+            />
+            }</div>
+            
         )}
 
         <CardContent>
@@ -311,11 +323,13 @@ function Home({ appState, loadFeeds, walletAdd }) {
                   >
 
                     {isClaim == true ? <button
+                       id="progressBar"
+                      style={{background:"#0a3d62", color:"white",border:"none",outline:"none",borderRadius:"6px"}}
                       id="claimBTN"
                       onClick={() => {
                         claim()
                       }} 
-                    >Claim </button> : <>   AMC  <b  id="progressBar"></b> </>}
+                    >Claim </button> : <>   <b  id="progressBar"></b> </>}
                     
                     
                  
@@ -397,9 +411,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
                 Rivers State University
               </b>
 
-                <Toppills />
-                
-                <br /><br />
+                <Toppills /> 
                 
             </div>
 
@@ -432,7 +444,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
                   }}
                 >
                   <TextareaAutosize
-                    autoFocus
+                    // autoFocus
                     id="commentInput"
                     onChange={(e) => {
                       setComment(e.target.value);

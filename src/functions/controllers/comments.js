@@ -60,7 +60,7 @@ export function renderComments(
 ) {
   const post_to_comment = posts.filter((e) => e.id == postId);
   post_to_comment[0].comments.sort(function (a, b) {
-    return parseFloat(b.id) - parseFloat(a.id);
+    return parseFloat(b.id) + parseFloat(a.id);
   });
 
   return post_to_comment[0].comments.map((comments) => {
