@@ -40,15 +40,15 @@ function Desktopright({ appState,log_out,set_session}) {
    const [compState, setStates] = useState('')
    
    return ( 
-     <div className="breadcrumb_pill_holder3" style={{marginBottom:"20px"}}> 
+     <div className=" " style={{marginBottom:"0px",textAlign:"center"}}> 
        
-       <div  className="breadcrumb_pill_holder">
+       {/* <div  className="breadcrumb_pill_holder">
           <Link   onClick={()=>{history.push("/responsible")}} className="breadcrumb_pill" id="topup" >Ads Policies</Link>
           <Link className="breadcrumb_pill" id="withdraw" > User Policy</Link>
           <Link  onClick={()=>{history.push("/terms")}} className="breadcrumb_pill" id="jackpots" >  Terms</Link>
           <Link className="breadcrumb_pill" id="sell-ads" > Support</Link> 
           <Link className="breadcrumb_pill" id="sell-ads" > Ads</Link>
-       </div> 
+       </div>  */}
 
        <span style={right}>
          <small>Copyright @ Aluta Meter <small onClick={() => { history.push("/admin") }}>2021-2023.</small> All rights reserved</small>

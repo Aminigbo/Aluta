@@ -327,7 +327,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
 
       <div className="mobile">
         <div className="header_footer">
-          <Footer />
+          {/* <Footer /> */}
           {/* <Header /> */}
           {/* <ArrowBackIosOutlined /> */}
         </div>
@@ -342,7 +342,12 @@ function Home({ appState, loadFeeds, walletAdd }) {
                 zIndex: "1000",
                 padding: "0px",
               }}
-            >
+              >
+                
+                <b style={{ color: "#0a3d62", padding: "0px 10px" }}>
+                Rivers State University
+              </b>
+
               <Toppills />
             </div>
 
@@ -416,10 +421,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
               <Media loading />
             )}
             {/* <Pills /> */}
-          </div>
-          <br />
-          <br />
-          <div id="bottomDiv"></div>
+          </div>  
         </div>
       </div>
 

@@ -17,6 +17,7 @@ import {
   FavoriteBorderOutlined,
   CommentOutlined,
   ThumbDownOutlined,
+  ArrowRightOutlined,
   Send,
 } from "@material-ui/icons";
 import PropTypes from "prop-types";
@@ -33,7 +34,7 @@ import "../static/css/feed.css";
 import { List, Drawer, Box, Avatar, Typography } from "@mui/material";
 import { addComment } from "../functions/controllers/comments"; // importing all the comment controllers
 import { handleAddLike, handleUnlike } from "../functions/controllers/likes"; // importing likes controllers
-import { createPanel } from "./create";
+import { createPanel } from "../components/create";
 
 function Home({ appState, loadFeeds, walletAdd }) {
   let history = useHistory();
@@ -212,7 +213,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
 
       <div className="mobile">
         <div className="header_footer">
-          <Footer />
+          {/* <Footer /> */}
           <Header />
         </div>
         <div>
@@ -227,7 +228,11 @@ function Home({ appState, loadFeeds, walletAdd }) {
                 padding: "0px  ",
               }}
             >
-              <Toppills />
+                <Toppills />
+                <div style={{marginTop:"-5px"}}>
+                  <Link to="giveaway" style={{marginLeft:"10px",fontSize:"10px",color:"#0a3d62",textDecoration:"none"}}>GIVE AWAYS<ArrowRightOutlined style={{marginLeft:"-4px"}}/></Link>
+                  <Link to="events" style={{marginLeft:"10px",fontSize:"10px",color:"#0a3d62",textDecoration:"none"}}>EVENTS<ArrowRightOutlined style={{marginLeft:"-4px"}}/></Link>
+                </div>
             </div>
             {createPanel(history,setPostText,postText,'', setActive, active,setBlob,blob,setPostType, postType)}
 

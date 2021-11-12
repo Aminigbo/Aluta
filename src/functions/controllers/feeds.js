@@ -158,7 +158,7 @@ export function ALLPOSTS(props) {
 
   let label = ""
 
-  if (data.postType == "GIVE AWAY") {
+  if (data.postType == "GIVE AWAY" && data.post.meta.giveaway.amount != null) {
    label = `GIVE AWAY  -  NGN ${data.post.meta.giveaway.amount}`
   } else if (data.postType == "POST") {
     

@@ -96,8 +96,8 @@ function Home({ appState, walletAdd, logout }) {
 
   React.useEffect((compState) => {
     window.scrollTo(0, 0);
-    setStates({ ...compState, loader: true });
-    setTimeout(() => setStates({ ...compState, loader: false }), 500);
+    // setStates({ ...compState, loader: true });
+    // setTimeout(() => setStates({ ...compState, loader: false }), 500);
   }, []);
 
   const [amount, setAMOUNT] = useState("");
@@ -199,7 +199,7 @@ function Home({ appState, walletAdd, logout }) {
         {/* {state.realtime.length > 0 && <Realtime />} */}
         {/* <Realtime /> */}
         <div className="header_footer">
-          <Footer />
+          {/* <Footer /> */}
           <Header />
         </div>
 

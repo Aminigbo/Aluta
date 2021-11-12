@@ -5,7 +5,7 @@ import {React,useState} from 'react';
 import { connect } from 'react-redux'
 import {logOut} from '../../redux' 
 import {useHistory,Link} from "react-router-dom";
-import {LocalAtm,Person,ExitToApp, EmojiTransportationOutlined, CardGiftcardOutlined, ForumOutlined,HomeOutlined,StorefrontOutlined,SportsSoccer, CloseOutlined} from '@material-ui/icons';
+import {LocalAtm,Person,AddBoxOutlined, EmojiTransportationOutlined, CardGiftcardOutlined, ForumOutlined,HomeOutlined,StorefrontOutlined,SportsSoccer, CloseOutlined} from '@material-ui/icons';
 
 
 //  function that checkes if the user is still using the default transaction pin
@@ -56,7 +56,14 @@ function Desktopright({ appState,logout}) {
      <>
         {split != "account" && <div> {resetPin(state, history, smile)}  </div>}
        
-        <div id=" " className="top-nav-holder">
+       <div id=" " className="top-nav-holder">
+         
+         <div onClick={() => { window.scrollTo(0, 0);; history.push("/")}}  className="top-nav-pills-holder">
+            <span  className="top-nav-pills" >  <HomeOutlined/> </span>
+            <p  className="top-nav-pills-title"> Home</p>
+         </div>
+
+
         <div onClick={()=>{history.push("/transfer")}} className="top-nav-pills-holder">
             <span  className="top-nav-pills" >  <LocalAtm /> </span>
             <p className="top-nav-pills-title">Buz Me</p>
@@ -67,25 +74,25 @@ function Desktopright({ appState,logout}) {
             <p className="top-nav-pills-title">Request Buz</p>
             </div>
 
-            <div className="top-nav-pills-holder">
+            <div   onClick={()=>{history.push("/tour")}} className="top-nav-pills-holder">
             <span  className="top-nav-pills" >  <EmojiTransportationOutlined/> </span>
             <p className="top-nav-pills-title">Tour</p>
             </div>
 
-            <div className="top-nav-pills-holder">
+            {/* <div className="top-nav-pills-holder">
             <span  className="top-nav-pills" >  <ForumOutlined/> </span>
             <p className="top-nav-pills-title">Forum</p>
-            </div>
+            </div> */}
 
-            <div className="top-nav-pills-holder">
+            <div   onClick={() => { history.push("/listmart")}}  className="top-nav-pills-holder">
             <span  className="top-nav-pills" >  <StorefrontOutlined/> </span>
-            <p  className="top-nav-pills-title"> Aluta</p>
+            <p  className="top-nav-pills-title"> Aluta Mart</p>
          </div>
-
-         <div className="top-nav-pills-holder">
-            <span  className="top-nav-pills" >  <StorefrontOutlined/> </span>
-            <p  className="top-nav-pills-title"> Aluta Market</p>
-         </div>
+         
+         <div  onClick={() => { history.push("/create")}} className="top-nav-pills-holder">
+            <span  className="top-nav-pills" >  <AddBoxOutlined/> </span>
+            <p  className="top-nav-pills-title"> CREATE</p>
+         </div> 
          
           {/* <div  style={{fontSize:"15px",marginTop:"-11px",color:"orange"}}><b>@RiversStateUniversity</b></div> */}
 

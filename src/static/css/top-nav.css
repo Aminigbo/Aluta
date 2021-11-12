@@ -15,11 +15,11 @@
       background-color: lightgray; 
       padding:8px 5px;
       border-radius:20px;
-      color:black
+      color:#0a3d62
    }
 
 .top-nav-pills-title{
-      color:black;
+      color:gray;
       font-size: 10px;
       margin-top:6px
    }
