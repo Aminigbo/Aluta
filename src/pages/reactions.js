@@ -65,26 +65,34 @@ function Home({ appState, loadFeeds, walletAdd }) {
   function timeout() {
     let delaysecond = ""
     if (post_to_comment.postType == "GIVE AWAY") {
-      delaysecond = post_to_comment.post.meta.giveaway.delaysecond 
-    } else {
-      delaysecond =""
-    } 
+      delaysecond = post_to_comment.post.meta.giveaway.delaysecond
+      
 
-    var timeleft = delaysecond;
+      var timeleft = delaysecond;
   var downloadTimer = setInterval(function(){
     if(timeleft <1){
       clearInterval(downloadTimer);
       console.log('delaysecond')
-      setIsClaim(true)
-      clearInterval()
+      setIsClaim(true) 
       
-    } else { 
-      document.getElementById("progressBar").innerHTML =`- ${ timeleft}`;
+    } else {
+      
+      if (document.getElementById("progressBar") == null) {
+        clearInterval(downloadTimer);
+      } else { 
+        document.getElementById("progressBar").innerHTML =`- ${ timeleft}`;
+      }
       timeleft -= 1;
       
     }
-  }, 1000);
-    clearInterval()
+  }, 1000); 
+      
+
+    } else {
+      delaysecond =""
+    } 
+
+    
     
 
 
@@ -355,9 +363,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
 
   React.useEffect((compState) => {
     // window.scrollTo(0, 0); 
-    // loadFeeds(state.feeds); 
-
-    timeout()
+    // loadFeeds(state.feeds);  
   }, []); 
   
 
@@ -392,7 +398,8 @@ function Home({ appState, loadFeeds, walletAdd }) {
         <div className="header_footer">
           {/* <Footer /> */}
           {/* <Header /> */}
-          {/* <ArrowBackIosOutlined /> */}
+            {/* <ArrowBackIosOutlined /> */}
+            {timeout()}
         </div>
         <div>
           <div>

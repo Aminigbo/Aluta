@@ -13,12 +13,18 @@ import { add_wallet, logOut } from "../redux";
 import Toppills from "../components/includes/topdesktoppills";
 import { ToastContainer, toast } from "react-toastify";
 import { resetPin } from "../functions/controllers/resetPin";
-import { 
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+
+import {
+  VpnLockOutlined,
+  PeopleAltOutlined,
+  PublicOutlined,
+  LockOutlined,
+} from "@material-ui/icons";
+
+import Selects from "react-select";
+import AsyncSelect from "react-select/async";
+import makeAnimated from "react-select/animated";
 
 const rec_inputs = {
   margin: "5%",
@@ -27,6 +33,20 @@ const rec_inputs = {
   border: "5px",
   height: "60px",
   borderBottom: "0.5px solid grey",
+  backgroundColor: "#f4f6f7",
+  color: "#4e7a97",
+  outline: "none",
+  fontSize: "13px",
+  resize: "none",
+};
+
+const rec_inputs2 = {
+  margin: "3px 5%",
+  width: "90%",
+  padding: "4px 2px",
+  border: "5px",
+  height: "60px",
+  // borderBottom: "0.5px solid grey",
   backgroundColor: "#f4f6f7",
   color: "#4e7a97",
   outline: "none",
@@ -105,7 +125,8 @@ function Home({ appState, walletAdd, logout }) {
 
   const [amount, setAMOUNT] = useState("");
   const [reason, setReason] = useState("");
-  const[privacy, setPrivacy] = useState("")
+  const [privacy, setPrivacy] = useState("");
+  const [sendTo, setSendTo] = useState("");
 
   const infoToast = (res) => {
     toast.info(res, {
@@ -135,11 +156,18 @@ function Home({ appState, walletAdd, logout }) {
 
   //   ?@==========================
   async function placeRequest(reason) {
+    console.log(privacy)
+    console.log(sendTo) 
     if (amount < 100) {
       infoToast("minimum amount is 100 Buz");
     } else if (amount > 5000) {
       infoToast("Maximum amount exceeded");
-    } else {
+    } else if (privacy == 1 && sendTo.length < 1) {
+      infoToast("Add who receives the request or changethe request privacy");
+      document.getElementById("sendto").focus()
+    }
+    
+    else { 
       if (reason.length > 10) {
         setStates({ ...compState, loader: true }); //  set loader to true
         const meta = { response: [] };
@@ -184,6 +212,33 @@ function Home({ appState, walletAdd, logout }) {
       }
     }
   }
+
+  const animatedComponents = makeAnimated();
+
+  const options = [
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "Stanly", label: "Stanly" },
+    { value: "sister", label: "sister" },
+    { value: "vanilla", label: "Vanilla" },
+  ];
+
+  const filterColors = (inputValue) => {
+    return options.filter((i) =>
+      i.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
+  };
+
+  const loadOptions = (inputValue, callback) => {
+    setTimeout(() => {
+      callback(filterColors(inputValue));
+    }, 1000);
+  };
+
+  let handleInputChange = (newValue) => {
+    const inputValue = newValue;
+    setSendTo(inputValue); 
+  };
 
   return state.loggedIn === false ? (
     <div>
@@ -259,35 +314,76 @@ function Home({ appState, walletAdd, logout }) {
                     placeholder="Enter your request reason *"
                   ></textarea>
 
-                  
+                  <FormControl
+                    style={{
+                      margin: "0px 10px",
+                      marginBottom: "10px",
+                      background: "  ",
+                      borderBottom: "none",
+                    }}
+                    id="postArea1"
+                    variant="standard"
+                    style={rec_inputs2}
+                  >
+                    <InputLabel id="demo-simple-select-label">
+                      Who can see this &nbsp; &nbsp; <VpnLockOutlined />
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={privacy}
+                      label="Age"
+                        onChange={(e) => {
+                          if (e.target.value != 2) {
+                          setSendTo(''); 
+                        }
+                        setPrivacy(e.target.value);
+                      }}
+                    >
+                      <MenuItem value={0}>
+                        Only me &nbsp; &nbsp; <LockOutlined />{" "}
+                      </MenuItem>
+                      <MenuItem value={1}>
+                        Friend(s) &nbsp; &nbsp; <PeopleAltOutlined />{" "}
+                      </MenuItem>
+                      <MenuItem value={2}>
+                        Public &nbsp; &nbsp; <PublicOutlined />{" "}
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+
+                  {privacy == 1 && (
                     <FormControl
-                      style={{margin:"0px 10px", marginBottom:"10px"}}
-                        id="postArea1"
-                        variant="standard"
-                        sx={{ m: 0, minWidth: 185 }}
-                      >
-                        <InputLabel id="demo-simple-select-label">
-                          Who can see this
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={privacy}
-                          label="Age"
-                          onChange={(e) => {
-                            setPrivacy(e.target.value);
-                          }}
-                        >
-                          <MenuItem value={0}>Only me</MenuItem>
-                          <MenuItem value={1}>Public</MenuItem> 
-                        </Select>
-                      </FormControl>
+                      style={{
+                        margin: "0px 1px",
+                        marginBottom: "10px",
+                        background: "green ",
+                        height: "55px",
+                      }}
+                      id="postArea1"
+                      variant="standard"
+                      style={rec_inputs2}
+                    >
+                        <AsyncSelect
+                          id="sendto"
+                        style={rec_inputs}
+                        closeMenuOnSelect={false}
+                        components={animatedComponents}
+                        // defaultValue={[options[0], options[1]]}
+                        isMulti
+                        loadOptions={loadOptions}
+                        onChange={(e) => {
+                          handleInputChange(e);
+                        }}
+                      />
+                    </FormControl>
+                  )}
 
                   {compState.resolved != true && (
                     <div style={modal_footer2_btn_holder}>
                       <button
                         onClick={(e) => {
-                          placeRequest(reason);
+                          placeRequest(reason); 
                         }}
                         style={action_btn_success2}
                       >
@@ -300,9 +396,7 @@ function Home({ appState, walletAdd, logout }) {
 
                   <div style={secured_env}>
                     {" "}
-                    <small>
-                      You can only request maximum of 5000 Buz per day.
-                    </small>
+                    <small>Maximum of 5000 Buz per day.</small>
                   </div>
                 </div>
               </div>
