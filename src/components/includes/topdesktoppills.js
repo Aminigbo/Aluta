@@ -49,6 +49,26 @@ function Desktopright({ appState,logout}) {
   
   const resetTPin = () => {
     console.log(pins)
+    let {first, second} = pins
+
+    let user = state.loggedInUser.user;
+    let newUser = {
+      ...user,
+      meta: { ...user.meta, transactionPin: first },
+    };
+    let payload = {
+      email: user.email,
+      newUser,
+    };
+
+    const data = {
+      user: newUser,
+      meta: state.loggedInUser.meta,
+    };
+
+    // call a async function to reset the userpin in the database
+
+
   }
   
 
@@ -58,7 +78,7 @@ function Desktopright({ appState,logout}) {
    return (
      <>
        {split != "setschool" && <div>
-         {/* {resetPin(state, resetTPin,smile,setPins, pins)} */}
+         {resetPin(state, resetTPin,smile,setPins, pins)}
          {trigger(state, history, smile)}
        </div>}
        

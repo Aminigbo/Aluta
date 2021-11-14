@@ -90,6 +90,7 @@ function Register({ appState, login_suc, walletAdd }) {
         };
         login_suc(data);
         walletAdd(2000);
+        history.push("");
         // console.log(res.data)
         // setStates({ ...compState, loader: false})
         
