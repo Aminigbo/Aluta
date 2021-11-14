@@ -7,7 +7,7 @@ span{
 .div{
    width:100%;
    height: 300px;
-   background-color: #01001A;
+   background-color: #0a3d62;
 }
 
 .child{
@@ -115,7 +115,7 @@ span{
       font-size: 16px;
       font-weight: bold;
       color:white; 
-      background-color: #01001A;
+      background-color: #0a3d62;
       width: 30px;
       height: 30px;
       border-radius: 30px;
@@ -259,7 +259,7 @@ span{
       padding:20px 0px
    }
    .breadcrumb_pill{  
-      /* background-color: #01001A; */
+      /* background-color: #0a3d62; */
       background-color:#f4f6f7; 
       margin:2px; 
       border-radius:10px; 
@@ -271,7 +271,7 @@ span{
    }
    /* .breadcrumb_pill:hover{
       color:white;
-      background-color: #01001A;
+      background-color: #0a3d62;
    } */
    .bal{
       /* float:right; */
@@ -293,7 +293,7 @@ span{
    }
    .pill_holder{
       height: 110px;
-      /* background-color: #01001A; */
+      /* background-color: #0a3d62; */
       padding:1px 10px;
       position:relative;
       
@@ -559,7 +559,7 @@ span{
       margin-left:17px;
       margin-top:15px;
       display:inline-block;
-      color:#01001A;
+      color:#0a3d62;
       background: linear-gradient(180deg, rgba(60, 83, 153, 0.15) 0%, rgba(97, 162, 68, 0.15) 46.47%, rgba(213, 124, 44, 0.15) 100%);
    }
 
@@ -573,7 +573,7 @@ span{
       margin-left:15px;
       margin-top:15px;
       display:inline-block;
-      color:#01001A;
+      color:#0a3d62;
       background: rgba(54, 12, 58, 0.14);
    }
 
@@ -601,7 +601,7 @@ span{
       /* background:black; */
       text-align:center;
       padding:8px;
-      color:#01001A !important;
+      color:#0a3d62 !important;
       /* font-weight:bolder; */
       border-radius:13px;
       font-size: 13px;
@@ -735,7 +735,7 @@ span{
    }
    .active{
       border:none;
-      background:#01001A;
+      background:#0a3d62;
       margin:3px;
       padding:3px 10px;
       border-radius:3px;
@@ -875,7 +875,7 @@ span{
 
    .StyledBreadcrumb{
       padding:3px 10px;
-      background-color:#01001A;
+      background-color:#0a3d62;
       color:white;
       border-radius:4px;
       margin:0px 5px;
@@ -929,7 +929,7 @@ span{
       position: absolute;
       bottom:40px; 
       width:100%;
-      /* background-color: #01001A; */
+      /* background-color: #0a3d62; */
       left:0px;
       /* padding:0px 10px; */
       font-size:10px
@@ -987,7 +987,7 @@ span{
       margin-left:0%;
       margin-top:15px;
       display:inline-block;
-      color:#01001A;
+      color:#0a3d62;
       padding:20px;
       background: linear-gradient(180deg, rgba(60, 83, 153, 0.15) 0%, rgba(97, 162, 68, 0.15) 46.47%, rgba(213, 124, 44, 0.15) 100%);
    }
@@ -1157,7 +1157,7 @@ span{
       position:absolute;
       left:20px;
       top:10px;
-      background-color:#01001A;
+      background-color:#0a3d62;
       padding:2px 5px;
       color:white;
       border-radius:5px;
@@ -1178,8 +1178,8 @@ span{
    }
 
    .betslipPoints{
-      color:#01001A; 
-      border:0.5px solid #01001A;
+      color:#0a3d62; 
+      border:0.5px solid #0a3d62;
       padding: 3px 5px;
       border-radius: 10px;
    }
@@ -1258,7 +1258,7 @@ span{
     /* background: linear-gradient(180deg, rgba(60, 83, 153, 0.15) 0%, rgba(97, 162, 68, 0.15) 46.47%, rgba(213, 124, 44, 0.15) 100%); */
     padding:10px;
     text-align: center;
-    background:#01001A;
+    background:#0a3d62;
 
 }
 .description{
@@ -1622,7 +1622,7 @@ span{
       width: 100%; 
    }
    .breadcrumb_pill{  
-      /* background-color: #01001A; */
+      /* background-color: #0a3d62; */
       background-color:#f4f6f7; 
       margin:2px; 
       border-radius:10px; 
@@ -1658,7 +1658,7 @@ span{
    }
    .pill_holder{
       height: 110px;
-      /* background-color: #01001A; */
+      /* background-color: #0a3d62; */
       padding:1px 10px;
       position:relative;
       
@@ -1853,7 +1853,7 @@ span{
       margin-left:17px;
       margin-top:15px;
       display:inline-block;
-      color:#01001A;
+      color:#0a3d62;
       background: linear-gradient(180deg, rgba(60, 83, 153, 0.15) 0%, rgba(97, 162, 68, 0.15) 46.47%, rgba(213, 124, 44, 0.15) 100%);
    }
 
@@ -1867,7 +1867,7 @@ span{
       margin-left:15px;
       margin-top:15px;
       display:inline-block;
-      color:#01001A;
+      color:#0a3d62;
       background: rgba(54, 12, 58, 0.14);
    }
 
@@ -1895,7 +1895,7 @@ span{
       /* background:black; */
       text-align:center;
       padding:8px;
-      color:#01001A !important;
+      color:#0a3d62 !important;
       /* font-weight:bolder; */
       border-radius:13px;
       font-size: 13px;
@@ -2032,7 +2032,7 @@ span{
    }
    .active{
       border:none;
-      background:#01001A;
+      background:#0a3d62;
       margin:3px;
       padding:3px 10px;
       border-radius:3px;
@@ -2171,7 +2171,7 @@ span{
 
    .StyledBreadcrumb{
       padding:3px 10px;
-      background-color:#01001A;
+      background-color:#0a3d62;
       color:white;
       border-radius:4px;
       margin:0px 5px;
@@ -2211,7 +2211,7 @@ span{
       font-size: 16px;
       font-weight: bold;
       color:white; 
-      background-color: #01001A;
+      background-color: #0a3d62;
       width: 30px;
       height: 30px;
       border-radius: 30px;
@@ -2240,7 +2240,7 @@ span{
       position: absolute;
       bottom:20px; 
       width:100%;
-      /* background-color: #01001A; */
+      /* background-color: #0a3d62; */
       left:0px
    }
    .create1X1Modal1{
@@ -2294,7 +2294,7 @@ span{
       margin-left:5%;
       margin-top:15px;
       display:inline-block;
-      color:#01001A;
+      color:#0a3d62;
       padding:20px;
       background: linear-gradient(180deg, rgba(60, 83, 153, 0.15) 0%, rgba(97, 162, 68, 0.15) 46.47%, rgba(213, 124, 44, 0.15) 100%);
    }
@@ -2469,7 +2469,7 @@ span{
       outline:none;
       padding:15px; 
       /* height:95px; */
-      color: #01001A;
+      color: #0a3d62;
       font-size: 30px;
    }
 
@@ -2482,7 +2482,7 @@ span{
       outline:none;
       padding:15px; 
       height:180px;
-      /* background-color: #01001A; */
+      /* background-color: #0a3d62; */
    }
    .walletTitle{
       margin-bottom:-10px;
@@ -2518,7 +2518,7 @@ span{
       /* width: 10%; */
       left: 5%;
       /* height: 70px; */
-      /* background-color: #01001A; */
+      /* background-color: #0a3d62; */
       background-color: orange;
       bottom: 19%;
       padding:4px 25px;
@@ -2621,7 +2621,7 @@ span{
       position:absolute;
       left:20px;
       top:10px;
-      background-color:#01001A;
+      background-color:#0a3d62;
       padding:2px 5px;
       color:white;
       border-radius:5px;
@@ -2642,8 +2642,8 @@ span{
    }
 
    .betslipPoints{
-      color:#01001A; 
-      border:0.5px solid #01001A;
+      color:#0a3d62; 
+      border:0.5px solid #0a3d62;
       padding: 3px 5px;
       border-radius: 10px;
    }
@@ -2780,7 +2780,7 @@ span{
     /* background: linear-gradient(180deg, rgba(60, 83, 153, 0.15) 0%, rgba(97, 162, 68, 0.15) 46.47%, rgba(213, 124, 44, 0.15) 100%); */
     padding:10px;
     text-align: center;
-    background:#01001A;
+    background:#0a3d62;
 
 }
 .description{

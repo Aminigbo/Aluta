@@ -1,7 +1,7 @@
 import React from "react";
-import {Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { supabase } from "../configs/index";
-import { error, success } from "../utils/index"; 
+import { error, success } from "../utils/index";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
@@ -10,20 +10,48 @@ import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/material/IconButton";
 // import MoreVertIcon from '@mui/icons-material/IconButton';
 import Skeleton from "@mui/material/Skeleton";
-import {Avatar, Typography } from "@mui/material";
+import { Avatar, Typography } from "@mui/material";
 import { likedPost } from "./likes";
 import {
-  FavoriteBorderOutlined, 
+  FavoriteBorderOutlined,
   CommentOutlined,
-   ThumbDownOutlined,
-   PublicOutlined,
-  MoreHorizOutlined
+  ThumbDownOutlined,
+  PublicOutlined,
+  MoreHorizOutlined,
+  PostAdd,
 } from "@material-ui/icons";
 
-import { commentDuration } from "../utils/index" 
+import { commentDuration, API_URL } from "../utils/index";
+
+import { fetchAllFeeds } from "../models/index";
+
 let new_supabase = supabase();
 
 // fetch feeds from database
+export async function returnFeeds(school, loadFeeds) {
+  fetchAllFeeds(school).then((res) => {
+    let arry = [];
+    if (res.body != null) {
+      res.body.map((posts) => {
+        let new_feeds = {
+          ...posts.data,
+          comments: posts.comments,
+          likes: posts.post_likes,
+          unlikes: posts.unlikes,
+          feed_id: posts.data.id,
+          id: posts.id,
+        };
+        arry.push(new_feeds);
+      });
+      loadFeeds(arry);
+    }
+    // console.log(res)
+  });
+  return {
+    success: true,
+  };
+}
+
 export async function fetchFeeds(loadFeeds) {
   let loadedData = null;
   return new_supabase
@@ -141,11 +169,6 @@ const respondToBuzRequest = (
   }
 };
 
-
-
-
-
-
 export function ALLPOSTS(props) {
   const {
     loading = false,
@@ -154,16 +177,16 @@ export function ALLPOSTS(props) {
     handleLike,
     history,
     toggleDrawer,
+    state,
   } = props;
 
-  let label = ""
+  let label = "";
 
   if (data.postType == "GIVE AWAY" && data.post.meta.giveaway.amount != null) {
-   label = `GIVE AWAY  -  NGN ${data.post.meta.giveaway.amount}`
+    label = `GIVE AWAY  -  NGN ${data.post.meta.giveaway.amount}`;
   } else if (data.postType == "POST") {
-    
-  } else if(data.postType == "EVENT") {
-    label = `EVENT  -   ${data.post.meta.event.date} |  ${data.post.meta.event.time}`
+  } else if (data.postType == "EVENT") {
+    label = `EVENT  -   ${data.post.meta.event.date} |  ${data.post.meta.event.time}`;
   }
   return (
     <Card
@@ -191,7 +214,10 @@ export function ALLPOSTS(props) {
         }
         action={
           loading ? null : (
-            <> <MoreHorizOutlined style={{fontSize:" 30px"}} /> </>
+            <>
+              {" "}
+              <MoreHorizOutlined style={{ fontSize: " 30px" }} />{" "}
+            </>
           )
         }
         title={
@@ -212,30 +238,36 @@ export function ALLPOSTS(props) {
           loading ? (
             <Skeleton animation="wave" height={10} width="40%" />
           ) : (
-                 <> <small>@{data.poster.school}</small> <span style={{ fontSize: "12px" }}> &nbsp;&nbsp;
-                    {commentDuration(data.post.time)}
-              </span>.<PublicOutlined style={{ fontSize: "15px" }} /> <br />
-                <b style={{ color: "black",fontSize:"14px" }}>{label}</b> <br />
-              </>
+            <>
+              {" "}
+              <small>@{data.poster.school}</small>{" "}
+              <span style={{ fontSize: "12px" }}>
+                {" "}
+                &nbsp;&nbsp;
+                {commentDuration(data.post.time)}
+              </span>
+              .<PublicOutlined style={{ fontSize: "15px" }} /> <br />
+              <b style={{ color: "black", fontSize: "14px" }}>{label}</b> <br />
+            </>
           )
         }
       />
       {loading ? (
         <Skeleton sx={{ height: 190 }} animation="wave" variant="rectangular" />
       ) : (
-
-          <div>{data.post.photo != null &&
-           <CardMedia
-          onClick={() => {
-            history.push(`/reaction/${data.id}`);
-          }}
-          component="img"
-          // height="220"
-          image ={data.post.photo[0].image}
-          alt="image"
+        <div>
+          {data.post.photo != null && (
+            <CardMedia
+              onClick={() => {
+                history.push(`/reaction/${data.id}`);
+              }}
+              component="img"
+              // height="220"
+              image={`${API_URL}images/posts/${data.post.photo}`}
+              alt="image"
             />
-          }</div>
-       
+          )}
+        </div>
       )}
 
       <CardContent>
@@ -250,14 +282,16 @@ export function ALLPOSTS(props) {
           </React.Fragment>
         ) : (
           <Typography variant="body2" color="text.secondary" component="p">
-              
             <b>
               <Link className="link">@{data.poster.name} </Link>
             </b>
             &nbsp; &nbsp;
-            <span onClick={() => {
-            history.push(`/reaction/${data.id}`);
-          }} style={{ fontFamily: "" }}>
+            <span
+              onClick={() => {
+                history.push(`/reaction/${data.id}`);
+              }}
+              style={{ fontFamily: "" }}
+            >
               {data.post.text}
             </span>
             <br />
@@ -274,7 +308,9 @@ export function ALLPOSTS(props) {
               }}
             >
               <FavoriteBorderOutlined
-                style={{ color: likedPost(data.likes) == true ? "red" : "" }}
+                style={{
+                  color: likedPost(data.likes, state) == true ? "red" : "",
+                }}
                 onClick={() => {
                   handleLike(data.id);
                 }}
@@ -294,7 +330,9 @@ export function ALLPOSTS(props) {
               }}
             >
               <ThumbDownOutlined
-                style={{ color: likedPost(data.unlikes) == true ? "red" : "" }}
+                style={{
+                  color: likedPost(data.unlikes, state) == true ? "red" : "",
+                }}
                 onClick={() => {
                   handleUnlikes(data.id);
                 }}
@@ -340,32 +378,105 @@ export function ALLPOSTS(props) {
             </div>
           </Typography>
         )}
-        <div
-          style={{
-            position: "relative",
-            height: "44px",
-            background: " #f0f0f0",
-            borderRadius: "27px",
-            padding: " 8px 13px",
-            marginTop: "6px",
-          }}
-          onClick={toggleDrawer("bottom", true, { data })}
-        >
-          <span>Write a comment....</span>
-        </div>
+        {props.loading ? (
+          ""
+        ) : (
+          <div
+            style={{
+              position: "relative",
+              height: "44px",
+              background: " #f0f0f0",
+              borderRadius: "27px",
+              padding: " 8px 13px",
+              marginTop: "6px",
+            }}
+            onClick={toggleDrawer("bottom", true, { data })}
+          >
+            <span>Write a comment....</span>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
 }
 
-
-
-
-
-
-
+// CREATE POST
 export async function handleCreatePost(payload, state, loadFeeds) {
-  state.feeds.push(payload)
-  loadFeeds(state.feeds)
-  return success("Done", null)
+  let { gender, school } = state.loggedInUser.user.meta;
+  let name = state.loggedInUser.user.fullname;
+  let id = state.loggedInUser.meta.id;
+  let postId = new Date().getTime() + "@" + id + "@" + new Date().getTime();
+  let poster = {
+    name,
+    school,
+    gender,
+    id,
+  };
+
+  
+// @====================  CHECK IF USER IS POSTING WITH IMAGE
+  let setPostPrivacy = ""
+  if (payload.postType != "BUZ REQUEST") {
+    setPostPrivacy = {privacy:"ALL"}
+  } else {
+    setPostPrivacy = payload.postPrivacy
+  }
+  
+  let new_payload = { ...payload, poster, id: postId,setPostPrivacy };
+  if (payload.post.file === undefined) {
+    // !====user is not posting with image
+    return new_supabase
+      .from("feeds")
+      .insert([
+        {
+          feed_id: postId,
+          poster: poster,
+          school: poster.school,
+          data: new_payload,
+          time: JSON.stringify(payload.post.time),
+          privacy:setPostPrivacy
+        },
+      ])
+      .then((res) => {
+        let newData = {
+          ...res.body[0].data,
+          likes: [],
+          unlikes: [],
+          comments: [],
+          success: true,
+        };
+        state.feeds.push(newData);
+        loadFeeds(state.feeds);
+        console.log(res.body[0]);
+        return success("Done", { success: true });
+      })
+      .catch((error) => {
+        return success("Done", { success: false });
+      });
+  } else {
+    // @======   user is posting with image
+    // @==========  AT THIS POINT, MAKE A AXIOS CALL TO THE BACKEND TO UPLOAD THE IMAGE AND REPLACE THE URL
+
+    var formdata = new FormData();
+    formdata.append("payload", JSON.stringify(new_payload));
+    formdata.append("postimage", payload.post.file);
+    var requestOptions = {
+      method: "POST",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    return fetch("http://localhost:1100/api/v1/post/createPost", requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        let responseData = JSON.parse(result);
+        if (responseData.success == true) {
+          state.feeds.push(responseData);
+          loadFeeds(state.feeds);
+          console.log(responseData);
+          return success("Done", { success: true });
+        }
+      })
+      .catch((error) => console.log("error", error));
+  }
 }

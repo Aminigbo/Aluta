@@ -33,7 +33,7 @@ function Realtime({ appState,getBoxed,walletAdd}) {
    const mySubscription = () => { 
 
       new_supabase
-      .from(`boxme:to=eq.${state.loggedInUser.user.OgPin}`)
+      .from(`boxme:to=eq.${state.loggedInUser.user.meta.beneficiaryId}`)
        .on('INSERT', payload => {
           getBoxed([payload.new])
           console.log(payload)
@@ -44,7 +44,7 @@ function Realtime({ appState,getBoxed,walletAdd}) {
 
 
    const check = () => {
-      new_supabase.from("boxme").select("*").eq("to", state.loggedInUser.user.OgPin).eq("ack", 0).then(res => {
+      new_supabase.from("boxme").select("*").eq("to", state.loggedInUser.user.meta.transactionPin).eq("ack", 0).then(res => {
          // console.log(res.body)
          // if (res.body.length > 0) {
          //    getBoxed([res.body[0]])

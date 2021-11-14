@@ -117,27 +117,22 @@ function Home({ appState, loadFeeds, walletAdd }) {
       post: {
         time: new Date(),
         text: postText,
-        // photo: blob.file,
+        file: blob.file,
         photo,
         meta: {
           event,
           giveaway
         }
-      },
-      comments: [ 
-      ],
-      likes: [ 
-      ],
-
-      unlikes: [ 
-      ],
+      }, 
       time: new Date(),
     }
 if (blob == "" && postText == "") {
       console.log("dont post")
     } else {
   handleCreatePost(postBody, state, loadFeeds).then(res => {
-        history.push("/")
+    if (res.success == true) {
+          history.push("/") 
+        }
       })
     }
     
@@ -218,11 +213,11 @@ if (blob == "" && postText == "") {
   };
 
   // fetch feeds from db
-  const fetch_feeds = () => {
-    fetchFeeds(loadFeeds).then((fetched) => {
-      console.log(fetched);
-    });
-  };
+  // const fetch_feeds = () => {
+  //   fetchFeeds(loadFeeds).then((fetched) => {
+  //     console.log(fetched);
+  //   });
+  // };
 
   React.useEffect((compState) => {
     window.scrollTo(0, 0);

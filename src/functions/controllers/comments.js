@@ -1,6 +1,8 @@
 // import utility functions
-import { commentDuration } from "../utils/index";
+import { commentDuration,code } from "../utils/index";
 
+// @============  importing add comment models
+import { addComments } from "../models/index";
 // comments like and unlike controller
 import { handleCommentLikes, handleCommentsUnlike, likedPost } from "./likes";
 const sessionUser = {
@@ -18,6 +20,7 @@ export async function addComment(
   loadFeeds,
   state
 ) {
+  
   if (comment.length != 0) {
     // make sure you dont send empty comment
     let commentBody = {
@@ -38,6 +41,27 @@ export async function addComment(
     state.feeds[actualPostPosition].comments.push(commentBody);
     loadFeeds(state.feeds);
     setComment("");
+
+  const user = {
+    name: state.loggedInUser.user.fullname,
+    id: "HJekidHGKofhGf87563jck",
+    school: "RiversStateUniversity",
+    gender: state.loggedInUser.user.meta.gender,
+    badge: state.loggedInUser.user.meta.badge,
+    avater:state.loggedInUser.user.meta.avater,
+  };
+  const comment_id = code(state.loggedInUser.meta.access_token+new Date().getTime()) + new Date().getTime()
+  const post = actualPost.id
+  const meta = {
+    time: new Date(),
+    actualPost
+  }
+
+    let payload = { post, comment_id, user, comment,meta };
+
+    addComments(payload).then((res) => {
+      console.log(res)
+    });
   }
 
   return {
@@ -99,7 +123,8 @@ export function renderComments(
             </Typography>
           </Grid>
         </Grid>
-        <div
+        {console.log(comments)}
+        {/* <div
           style={{
             marginTop: "10px",
             fontSize: "12px",
@@ -138,7 +163,7 @@ export function renderComments(
             }}
           />
           <div style={{ fontSize: "11px" }}>{comments.unlikes.length}</div>
-        </div>
+        </div> */}
       </Paper>
     );
   });

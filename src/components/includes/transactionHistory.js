@@ -42,7 +42,7 @@ function Transactions({ appState }) {
 
    const getPredictions = () => {
       setStates({ ...compState, loader: true })
-      new_supabase.from("boxme").select("*").or(`from.eq.${state.loggedInUser.user.OgPin}, to.eq.${state.loggedInUser.user.OgPin}`).then(fetched => {
+      new_supabase.from("boxme").select("*").or(`from.eq.${state.loggedInUser.user.meta.beneficiaryId}, to.eq.${state.loggedInUser.user.meta.beneficiaryId}`).then(fetched => {
          setStates({...compState, transactions:fetched.body, fetched:true,loader:false})
       })
    }

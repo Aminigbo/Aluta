@@ -9,7 +9,7 @@ import {LocalAtm,Person,AddBoxOutlined, EmojiTransportationOutlined, CardGiftcar
 
 
 //  function that checkes if the user is still using the default transaction pin
-import {resetPin} from "../../functions/controllers/resetPin"
+import {trigger, resetPin} from "../../functions/controllers/resetPin"
 const livescore = {
   backgroundColor:"#ff8a00"
 }
@@ -38,23 +38,29 @@ const smile2 = {
 
 function Desktopright({ appState,logout}) {
    let history = useHistory();
-   const state = appState
+  const state = appState
+  
+  const [pins, setPins] = useState({
+    first: "",
+    second:""
+  })
    
-   let reroute = ()=>{
-      setStates({ ...compState, loader: true}) 
+  
+  
+  const resetTPin = () => {
+    console.log(pins)
   }
   
-  
 
-   const reroute_breadcrumb = (link) => {
-      history.push(`/${link}`)
-   }
    const [compState, setStates] = useState('')
   let pathname = window.location.pathname
   let split = pathname.split("/")[1]
    return (
      <>
-        {split != "account" && <div> {resetPin(state, history, smile)}  </div>}
+       {split != "setschool" && <div>
+         {/* {resetPin(state, resetTPin,smile,setPins, pins)} */}
+         {trigger(state, history, smile)}
+       </div>}
        
        <div id=" " className="top-nav-holder">
          

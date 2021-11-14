@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import {TextField,Button } from '@material-ui/core'; 
 import { Link } from "react-router-dom";
 import { Redirect,useHistory } from "react-router-dom";
-import {loginSuc,add_wallet,disp_session} from '../redux' 
+import {loginSuc,add_wallet,disp_session,logOut} from '../redux' 
 import { supabase } from '../functions/configs/index'; 
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import loaderImg from "../static/logos/animation.gif"
@@ -33,7 +33,7 @@ const logoStyle = {
 
 }
 
-function Login({appState,login_suc,walletAdd,set_session}) {
+function Login({appState,login_suc,walletAdd,set_session,log_out}) {
   // initialize supabase
   const new_supabase = supabase()
   let history = useHistory();
@@ -61,7 +61,8 @@ function Login({appState,login_suc,walletAdd,set_session}) {
    React.useEffect((compState) => {  
       window.scrollTo(0, 0); 
       setStates({ ...compState, loader: true})
-      setTimeout(() => setStates({ ...compState, loader: false}), 500);
+     setTimeout(() => setStates({ ...compState, loader: false }), 500);
+    //  log_out()
    }, []);
 
   const [email, setEmail] = useState("")
@@ -84,8 +85,10 @@ function Login({appState,login_suc,walletAdd,set_session}) {
         errorToast("Please you have to fill out all forms")
       } else {
           return new_supabase
-          .from('user')
-          .select(`*, transactions (*), predictions (*), challenge (*)`)
+          .from('users')
+          // .select(`*, transactions (*), predictions (*), challenge (*)`)
+          .select("*")
+            
           .eq('email', email) 
           .then(response2 => {
             if(response2.body.length < 1){
@@ -130,7 +133,7 @@ function Login({appState,login_suc,walletAdd,set_session}) {
   
 
 
-   return state.loggedIn === true ? (
+   return state.loggedIn == true ? (
     <div>
           <Redirect to="/" />  
     </div>
@@ -190,6 +193,7 @@ const mapDispatchToProps = (dispatch,encoded) => {
     login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)), 
     walletAdd: (wallet) => dispatch(add_wallet(wallet)),
     set_session: (time) => dispatch(disp_session(time)),
+     log_out: () => dispatch(logOut()),
   }
 }
 

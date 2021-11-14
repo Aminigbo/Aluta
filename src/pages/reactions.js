@@ -32,7 +32,7 @@ import "../static/css/feed.css";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { Avatar, Typography, Grid, Paper } from "@mui/material";
 import { handleAddLike, handleUnlike, likedPost } from "../functions/controllers/likes"; // importing likes controllers 
-import { commentDuration } from "../functions/utils/index"
+import { commentDuration, API_URL } from "../functions/utils/index"
 
 // import giveaway claim controller
 import {claimGiveaway} from "../functions/controllers/giveaway"
@@ -219,7 +219,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
            <CardMedia 
           component="img"
           // height="220"
-          image ={data.post.photo[0].image}
+          image ={`${API_URL}images/posts/${data.post.photo}`}
           alt="image"
             />
             }</div>
@@ -257,7 +257,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
                 }}
               >
                 <FavoriteBorderOutlined
-                  style={{ color: likedPost(data.likes) == true ? "red" : "" }}
+                  style={{ color: likedPost(data.likes,state) == true ? "red" : "" }}
                   onClick={() => {
                     handleLike(data.id);
                   }}
@@ -277,7 +277,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
                 }}
               >
                 <ThumbDownOutlined
-                  style={{ color: likedPost(data.unlikes) == true ? "red" : "" }}
+                  style={{ color: likedPost(data.unlikes,state) == true ? "red" : "" }}
                   onClick={() => {
                     handleUnlikes(data.id);
                   }}
@@ -382,7 +382,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
     </div>
   ) : (
     <div id="body bg">
-      {console.log(state)}
+      {/* {console.log(state)} */}
       {/* {state.realtime.length > 0 && <Realtime />} */}
       <Realtime />
 

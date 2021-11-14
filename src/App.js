@@ -15,8 +15,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Tour from "./pages/tour.js"
 import Events from "./pages/events.js"
 import Touring from "./pages/touring.js"
-import Account from "./components/account.js"
-import Board from "./components/board.js"
+import Account from "./pages/account.js"
+import Setschool from "./pages/setschool.js"
 import Topup from "./components/topup"
 import Withdraw from "./components/withdraw"
 import Otp from "./components/otp"
@@ -25,7 +25,7 @@ import Giveaway from "./pages/giveaway"
 import Terms from "./components/tc"
 import Responsible from "./components/responsible"
 import Search from "./components/search"
-import Send from "./components/send"
+import Buz from "./pages/buz"
 import Marketproducts from "./pages/marketproducts"
 import Listmart from "./pages/marketlist"
 import Requestbuz from "./pages/requestBuz"
@@ -112,8 +112,8 @@ export default function App() {
               <Route path="/account/:userId">
                 <Account />  
               </Route>
-              <Route path="/board/:league/:categoryId/:amount">
-                <Board />  
+              <Route path="/setschool">
+                <Setschool />  
               </Route>
               <Route path="/terms">
                 <Terms />  
@@ -122,7 +122,7 @@ export default function App() {
                 <Responsible />  
               </Route>
                <Route path="/transfer">
-                <Send />  
+                <Buz />  
               </Route>
               <Route path="/search/:challangeId">
                 <Search />  

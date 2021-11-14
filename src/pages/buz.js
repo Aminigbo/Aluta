@@ -3,21 +3,21 @@ import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import "../static/css/home/index.css";
 
-import Footer from "./includes/mobile_footer.js";
-import Header from "./includes/mobile_header.js";
-import Desktopleft from "./includes/desktopleft";
-import Desktopright from "./includes/desktopright";
+import Footer from "../components/includes/mobile_footer.js";
+import Header from "../components/includes/mobile_header.js";
+import Desktopleft from "../components/includes/desktopleft";
+import Desktopright from "../components/includes/desktopright";
 
-import Realtime from "./includes/realtime";
+import Realtime from "../components/includes/realtime";
 import { Link } from "react-router-dom";
 import { LinearProgress } from "@material-ui/core";
 import { supabase } from "../configurations";
 import { add_wallet, logOut } from "../redux";
 import { CreditCardOutlined } from "@material-ui/icons";
-import Toppills from "./includes/topdesktoppills";
+import Toppills from "../components/includes/topdesktoppills";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 
-import Pills from "./includes/desktoppillsholder";
+import Pills from "../components/includes/desktoppillsholder";
 
 import { resetPin } from "../functions/controllers/resetPin";
 
@@ -287,7 +287,7 @@ function Home({ appState, walletAdd, logout }) {
     </div>
   ) : (
     <div id="body bg">
-      {resetPin(state, history, smile)}
+      {/* {resetPin(state, history, smile)} */}
       <ToastContainer autoClose={2000} />
       <div className="mobile">
         {compState.loader && (

@@ -117,7 +117,7 @@ function Desktopleft({ appState,getOneOnOne }) {
          </form>
        </div>
          <div  className="breadcrumb_pill_holder2"> 
-         <div style={ogPin}>ID: {state.loggedInUser.user.OgPin}</div>
+         <div style={ogPin}>ID:  {state.loggedInUser.user.meta.beneficiaryId}</div>
          {compState.copy == true ?  <LibraryAddCheckOutlined   onClick={() => { setStates({ ...compState, copy: true }); navigator.clipboard.writeText(state.loggedInUser.user.OgPin) }} style={selected}/>: <FileCopyOutlined  onClick={() => { setStates({ ...compState, copy: true }); navigator.clipboard.writeText(state.loggedInUser.user.OgPin) }}/> }
          </div>
       </div> 

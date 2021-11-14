@@ -9,19 +9,19 @@ import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
 import { LinearProgress } from "@material-ui/core";
 import { supabase } from "../configurations";
-import { add_wallet, logOut } from "../redux";
+import { add_wallet, logOut, disp_feeds } from "../redux";
 import Toppills from "../components/includes/topdesktoppills";
 import { ToastContainer, toast } from "react-toastify";
 import { resetPin } from "../functions/controllers/resetPin";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
-
+import { fetchUsersOfUniversity } from "../functions/models/index";
 import {
   VpnLockOutlined,
   PeopleAltOutlined,
   PublicOutlined,
   LockOutlined,
 } from "@material-ui/icons";
-
+import { handleCreatePost } from "../functions/controllers/feeds";
 import Selects from "react-select";
 import AsyncSelect from "react-select/async";
 import makeAnimated from "react-select/animated";
@@ -112,21 +112,41 @@ const smile = {
   fontSize: "30px",
 };
 
-function Home({ appState, walletAdd, logout }) {
+function Home({ appState, walletAdd, logout, loadFeeds }) {
   let history = useHistory();
   const state = appState;
   const new_supabase = supabase();
+  const loggedInUserSchool = state.loggedInUser.user.meta.school;
+  const { fullname, email, phone } = state.loggedInUser.user;
+  const userId = state.loggedInUser.meta.user.id;
+
+  const [compState, setStates] = useState({
+    filterOption: [],
+  });
+  const [amount, setAMOUNT] = useState("");
+  const [reason, setReason] = useState("");
+  const [privacy, setPrivacy] = useState("");
+  const [sendTo, setSendTo] = useState("");
 
   React.useEffect((compState) => {
     window.scrollTo(0, 0);
     // setStates({ ...compState, loader: true });
     // setTimeout(() => setStates({ ...compState, loader: false }), 500);
+    let filterOpt = [];
+    fetchUsersOfUniversity(loggedInUserSchool).then((res) => {
+      res.body.map((resp) => {
+        let prepared = {
+          value: resp.meta.beneficiaryId,
+          label: resp.fullname,
+          email: resp.email,
+          phone: resp.phone,
+        };
+        filterOpt.push(prepared);
+      });
+      console.log(filterOpt);
+      setStates({ ...compState, filterOption: filterOpt });
+    });
   }, []);
-
-  const [amount, setAMOUNT] = useState("");
-  const [reason, setReason] = useState("");
-  const [privacy, setPrivacy] = useState("");
-  const [sendTo, setSendTo] = useState("");
 
   const infoToast = (res) => {
     toast.info(res, {
@@ -152,92 +172,91 @@ function Home({ appState, walletAdd, logout }) {
     history.push(`/${link}`);
   };
 
-  const [compState, setStates] = useState("");
-
   //   ?@==========================
   async function placeRequest(reason) {
-    console.log(privacy)
-    console.log(sendTo) 
     if (amount < 100) {
       infoToast("minimum amount is 100 Buz");
     } else if (amount > 5000) {
       infoToast("Maximum amount exceeded");
     } else if (privacy == 1 && sendTo.length < 1) {
-      infoToast("Add who receives the request or changethe request privacy");
-      document.getElementById("sendto").focus()
-    }
-    
-    else { 
+      infoToast("Add who receives the request or change the request privacy");
+      document.getElementById("sendto").focus();
+    } else {
       if (reason.length > 10) {
-        setStates({ ...compState, loader: true }); //  set loader to true
-        const meta = { response: [] };
-        const feedMeta = {
-          requster: state.loggedInUser.user.OgPin,
-          reason,
-          amount,
-        };
-        new_supabase
-          .from("requsts")
-          .insert([
-            {
-              user: state.loggedInUser.user.username,
-              amount,
-              reason,
-              userpin: state.loggedInUser.user.OgPin,
-              meta,
+        let split = reason.split(" ")[1];
+        if (split === undefined) {
+          errorToast("Give a clear reason");
+        } else {
+          let postPrivacy = "";
+
+          if (privacy == 1) {
+            postPrivacy = { sendTo, privacy: "LISTED" };
+          } else if (privacy == 0) {
+            postPrivacy = { privacy: "ONLY ME" };
+          } else if (privacy == 2) {
+            postPrivacy = { privacy: "ALL" };
+          }
+          let payload = {
+            sendTo,
+            privacy: postPrivacy,
+            reason,
+            amount,
+            from: {
+              fullname,
+              email,
+              phone,
+              userId,
+              school: loggedInUserSchool,
             },
-          ])
-          .then((resolve) => {
-            new_supabase
-              .from("feeds")
-              .insert([
-                {
-                  type: "NEW BUZ REQUEST",
-                  from: state.loggedInUser.user.username,
-                  to: "ALL",
-                  req_id: resolve.body[0].id,
-                  meta: feedMeta,
-                },
-              ])
-              .then((insert_response) => {
-                setStates({ ...compState, loader: false });
-                successToast("Your requst has been placed successfully");
-              });
-          })
-          .catch((error) => {
-            setStates({ ...compState, loader: false });
-          });
+          };
+          const postBody = {
+            postPrivacy,
+            postType: "BUZ REQUEST",
+            id: new Date().getTime(),
+            postText: reason,
+            poster: {},
+            post: {
+              time: new Date(),
+              text: reason,
+              file: undefined,
+              meta: {
+                payload,
+                event: null,
+                giveaway: null,
+              },
+            },
+            time: new Date(),
+          };
+
+          handleCreatePost(postBody, state, loadFeeds).then((res) => {
+            if (res.success == true) {
+              history.push("/");
+            }
+          }); 
+        } 
       } else {
-        alert("Give a clear reason");
+        errorToast("Give a clear reason");
       }
     }
   }
 
   const animatedComponents = makeAnimated();
 
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "Stanly", label: "Stanly" },
-    { value: "sister", label: "sister" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
-
-  const filterColors = (inputValue) => {
-    return options.filter((i) =>
+  const filterSchoolMates = (inputValue) => {
+    return compState.filterOption.filter((i) =>
       i.label.toLowerCase().includes(inputValue.toLowerCase())
     );
   };
 
   const loadOptions = (inputValue, callback) => {
     setTimeout(() => {
-      callback(filterColors(inputValue));
+      callback(filterSchoolMates(inputValue));
     }, 1000);
   };
 
   let handleInputChange = (newValue) => {
     const inputValue = newValue;
-    setSendTo(inputValue); 
+    setSendTo(inputValue);
   };
 
   return state.loggedIn === false ? (
@@ -246,7 +265,7 @@ function Home({ appState, walletAdd, logout }) {
     </div>
   ) : (
     <div id="body bg">
-      {resetPin(state, history, smile)}
+      {/* {resetPin(state, history, smile)} */}
       <ToastContainer autoClose={2000} />
       <div className="mobile">
         {compState.loader && (
@@ -333,9 +352,9 @@ function Home({ appState, walletAdd, logout }) {
                       id="demo-simple-select"
                       value={privacy}
                       label="Age"
-                        onChange={(e) => {
-                          if (e.target.value != 2) {
-                          setSendTo(''); 
+                      onChange={(e) => {
+                        if (e.target.value != 2) {
+                          setSendTo("");
                         }
                         setPrivacy(e.target.value);
                       }}
@@ -364,8 +383,8 @@ function Home({ appState, walletAdd, logout }) {
                       variant="standard"
                       style={rec_inputs2}
                     >
-                        <AsyncSelect
-                          id="sendto"
+                      <AsyncSelect
+                        id="sendto"
                         style={rec_inputs}
                         closeMenuOnSelect={false}
                         components={animatedComponents}
@@ -383,7 +402,7 @@ function Home({ appState, walletAdd, logout }) {
                     <div style={modal_footer2_btn_holder}>
                       <button
                         onClick={(e) => {
-                          placeRequest(reason); 
+                          placeRequest(reason);
                         }}
                         style={action_btn_success2}
                       >
@@ -423,6 +442,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, encoded) => {
   return {
     walletAdd: (wallet) => dispatch(add_wallet(wallet)),
+    loadFeeds: (payload) => dispatch(disp_feeds(payload)),
     logout: () => dispatch(logOut()),
   };
 };

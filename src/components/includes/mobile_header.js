@@ -129,12 +129,12 @@ function Header({appState,log_out,getOneOnOne}) {
          <form  onSubmit={(e)=>{search(e)}} className="searchForm">
         <b style={{fontSize:"15px"}}>Aluta Meter</b>
          </form>
-          <b className="bal"><Naira>{state.wallet}</Naira></b>
+          <b className="bal"><Naira>{state.loggedInUser.user.meta.wallet}</Naira></b>
       <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose} >
         
         <MenuItem
           onClick={() => { setStates({ ...compState, copy: true }); navigator.clipboard.writeText(state.loggedInUser.user.OgPin) }}
-          style={select}>ID: {state.loggedInUser.user.OgPin} &nbsp;&nbsp;
+          style={select}>ID: {state.loggedInUser.user.meta.beneficiaryId} &nbsp;&nbsp;
           {compState.copy == true ?  <LibraryAddCheckOutlined  style={selected}/>: <FileCopyOutlined/> }
         </MenuItem>
           <MenuItem style={menu} onClick={() => { history.push(`/account/${state.loggedInUser.user.username}`)}}>Account</MenuItem>

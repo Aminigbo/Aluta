@@ -3,15 +3,19 @@ import "../static/css/auth/register.css";
 import { connect } from "react-redux";
 import { TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link, useHistory } from "react-router-dom"; 
+import { Link, useHistory } from "react-router-dom";
 import loaderImg from "../static/logos/animation.gif";
 import { loginSuc, add_wallet } from "../redux";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import { Helmet } from "react-helmet";
 import logo from "../static/logos/logo2.png";
-import { validatePhoneNumber, validateEmail, code, generateOTP } from "../functions/utils/index"
-import { handleRegister } from "../functions/controllers/auth/register"
-
+import {
+  validatePhoneNumber,
+  validateEmail,
+  code,
+  generateOTP,
+} from "../functions/utils/index";
+import { handleRegister } from "../functions/controllers/auth/register";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,24 +65,39 @@ function Register({ appState, login_suc, walletAdd }) {
     });
   };
 
- 
-
   // form states
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [compState, setStates] = useState("");
- 
 
   // register user
-   async function registerUser() {
-      let formData = {
-        email, phone, password, name
-     }
-     handleRegister(formData).then(res => {
-       console.log(res)
-    })
+  async function registerUser() {
+    let formData = {
+      email,
+      phone,
+      password,
+      name,
+    };
+    setStates({ ...compState, loader: true})
+    handleRegister(formData).then((res) => {
+      if (res.success == true) {
+        successToast("Registration successful");
+        const data = {
+          user: res.data[0],
+          meta:res.data[1],
+        };
+        login_suc(data);
+        walletAdd(2000);
+        // console.log(res.data)
+        // setStates({ ...compState, loader: false})
+        
+      } else {
+        setStates({ ...compState, loader: false})
+        errorToast(res.message)
+      }
+    });
   }
 
   // reroute function
@@ -119,7 +138,7 @@ function Register({ appState, login_suc, walletAdd }) {
             }}
             value={name}
             required
-            label="Choose Username"
+            label="Your fullname"
             type="search"
             variant="outlined"
           />

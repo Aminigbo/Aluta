@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Redirect, useHistory, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import "../static/css/home/index.css";
-import Footer from "../components/includes/mobile_footer.js";
 import Header from "../components/includes/mobile_header.js";
 import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
@@ -10,37 +9,24 @@ import Pills from "../components/includes/desktoppillsholder";
 import Toppills from "../components/includes/topdesktoppills";
 import Realtime from "../components/includes/realtime";
 import { logOut, disp_feeds, add_wallet } from "../redux";
-import { fetchFeeds, ALLPOSTS } from "../functions/controllers/feeds";
+import { ALLPOSTS } from "../functions/controllers/feeds";
 import { Helmet } from "react-helmet";
 import logo from "../static/logos/logo2.png";
-import {
-  FavoriteBorderOutlined,
-  CommentOutlined,
-  ThumbDownOutlined,
-  ArrowRightOutlined,
-  Send,
-} from "@material-ui/icons";
+import { ArrowRightOutlined, Send } from "@material-ui/icons";
 import PropTypes from "prop-types";
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardMedia,
-  IconButton,
-  Skeleton,
-  TextareaAutosize,
-} from "@mui/material";
+import { TextareaAutosize } from "@mui/material";
 import "../static/css/feed.css";
-import { List, Drawer, Box, Avatar, Typography } from "@mui/material";
+import { List, Drawer, Box } from "@mui/material";
 import { addComment } from "../functions/controllers/comments"; // importing all the comment controllers
 import { handleAddLike, handleUnlike } from "../functions/controllers/likes"; // importing likes controllers
 import { createPanel } from "../components/create";
 
+// @== import from feeds controller
+import { returnFeeds } from "../functions/controllers/feeds";
+
 function Home({ appState, loadFeeds, walletAdd }) {
   let history = useHistory();
   const state = appState;
-
- 
 
   function renderFeeds(allFeeds) {
     allFeeds.sort(function (a, b) {
@@ -56,6 +42,8 @@ function Home({ appState, loadFeeds, walletAdd }) {
           handleLike={handleLike}
           history={history}
           toggleDrawer={toggleDrawer}
+          setDrawerState={setDrawerState}
+          state={state}
         />
       );
     });
@@ -84,16 +72,15 @@ function Home({ appState, loadFeeds, walletAdd }) {
       );
       history.push(`/reaction/${postToComment}`);
     }
-  }; 
+  };
 
   const [comment, setComment] = useState("");
   const [postToComment, setPostToComment] = useState("");
   const [active, setActive] = useState(false);
-  const [postText, setPostText] = useState("")
-  const [blob, setBlob] = useState("")
-  const [postType, setPostType] = useState("POST")
-
-
+  const [postText, setPostText] = useState("");
+  const [blob, setBlob] = useState("");
+  const [postType, setPostType] = useState("POST");
+  const [compState, setStates] = useState("");
   ALLPOSTS.propTypes = {
     loading: PropTypes.bool,
   };
@@ -107,15 +94,27 @@ function Home({ appState, loadFeeds, walletAdd }) {
 
   React.useEffect((compState) => {
     window.scrollTo(0, 0);
-    // setStates({ ...compState, loader: true})
+    setStates({ ...compState, loader: true})
     // setTimeout(() => setStates({ ...compState, loader: false }), 500);
-
+    if (state.loggedIn == true) {
+      returnFeeds(
+      state.loggedInUser.user.meta.school,
+      loadFeeds,
+      state.feeds,
+      setStates, 
+    ).then(res => {
+     setStates({ ...compState, loader: false})
+      // setTimeout(() => setStates({ ...compState, loader: false }), 4000);
+    })
+    }
     // fetch_feeds()
     loadFeeds(state.feeds);
-    //  loadFeeds(posts)   
+    if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+      console.info("This page is reloaded");
+    } else {
+      console.info("This page is not reloaded");
+    }
   }, []);
-
-  const [compState, setStates] = useState("");
 
   // show loader when rerouting
   let reroute = (category) => {
@@ -129,6 +128,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
   });
 
   const toggleDrawer = (anchor, open, post) => (event) => {
+    console.log('okk')
     if (post != false) {
       setPostToComment(post.data.id);
     }
@@ -228,13 +228,46 @@ function Home({ appState, loadFeeds, walletAdd }) {
                 padding: "0px  ",
               }}
             >
-                <Toppills />
-                <div style={{marginTop:"-5px"}}>
-                  <Link to="giveaway" style={{marginLeft:"10px",fontSize:"10px",color:"#0a3d62",textDecoration:"none"}}>GIVE AWAYS<ArrowRightOutlined style={{marginLeft:"-4px"}}/></Link>
-                  <Link to="events" style={{marginLeft:"10px",fontSize:"10px",color:"#0a3d62",textDecoration:"none"}}>EVENTS<ArrowRightOutlined style={{marginLeft:"-4px"}}/></Link>
-                </div>
+              <Toppills />
+              <div style={{ marginTop: "-5px" }}>
+                <Link
+                  to="giveaway"
+                  style={{
+                    marginLeft: "10px",
+                    fontSize: "10px",
+                    color: "#0a3d62",
+                    textDecoration: "none",
+                  }}
+                >
+                  GIVE AWAYS
+                  <ArrowRightOutlined style={{ marginLeft: "-4px" }} />
+                </Link>
+                <Link
+                  to="events"
+                  style={{
+                    marginLeft: "10px",
+                    fontSize: "10px",
+                    color: "#0a3d62",
+                    textDecoration: "none",
+                  }}
+                >
+                  EVENTS
+                  <ArrowRightOutlined style={{ marginLeft: "-4px" }} />
+                </Link>
+              </div>
             </div>
-            {createPanel(history,setPostText,postText,'', setActive, active,setBlob,blob,setPostType, postType)}
+            {createPanel(
+              history,
+              setPostText,
+              postText,
+              "",
+              setActive,
+              active,
+              setBlob,
+              blob,
+              setPostType,
+              postType
+            )}
 
             <React.Fragment key="bottom">
               <Drawer
@@ -251,7 +284,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
                 {renderFeeds(state.feeds)}
               </div>
             ) : (
-              <ALLPOSTS loading />
+              <ALLPOSTS loading data={[]}  />
             )}
             <Pills />
           </div>
