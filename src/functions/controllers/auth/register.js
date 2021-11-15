@@ -35,14 +35,13 @@ export async function handleRegister(formData) {
             if (res3.body.length != 0) { 
               
               return (loadedData = success("Registration successful", [
-                {...res3.body[0]}, {...res2.user}
+                {...res3.body[0]}, {...res2.data}
               ]));
             } else {
               return (loadedData = error("register error"));
             }
           });
-        } else {
-          console.log("hmmm");
+        } else { 
           return (loadedData = error("Signup error"));
         }
       });

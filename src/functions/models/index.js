@@ -15,7 +15,7 @@ export async function createUser(email, password) {
   return new_supabase.auth.signUp({
     email,
     password,
-  });
+  })
 }
 
 // SAVE USER DATA TO PUBLIC USER TABLE
@@ -32,7 +32,14 @@ export async function registerUser(data) {
 }
 
 // @==============  LOGIN USER
-export async function signInUser() {}
+export async function signInUser(email, password) {
+  return new_supabase.auth.signIn({
+        email,
+        password,
+      });
+}
+
+
 
 // @=================  CREATE comment
 export async function addComments(payload) {
@@ -121,7 +128,7 @@ export async function addUnlike(payload) {
     });
 }
 
-export async function updateUserSchool(payload) {
+export async function updateUserMeta(payload) {
   let {email, newUser } = payload;
 
   return new_supabase.from("users").update([{ meta: newUser }]).eq("email", email).then(res => {
@@ -133,8 +140,11 @@ export async function updateUserSchool(payload) {
     } else {
       return {
         success: true,
-        message:"school added"
+        message:"successful"
       }
     }
   })
 }
+
+
+ 

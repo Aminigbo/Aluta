@@ -14,8 +14,13 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import { allUniversities } from "../functions/utils/index";
-import { updateUserSchool } from "../functions/models/index";
+import { updateUserMeta } from "../functions/models/index";
 import Search from "search-react-input";
+
+const smile = {
+  color: "white",
+  fontSize: "20px",
+};
 
 function Home({ appState, login_suc }) {
   const countries = allUniversities();
@@ -50,13 +55,13 @@ function Home({ appState, login_suc }) {
       ...compState,
       loader: true,
     });
-    updateUserSchool(payload).then((res) => {
+    updateUserMeta(payload).then((res) => {
       if (res.success == true) {
         login_suc(data);
-          setTimeout(() => history.push("/"), 2000);
-         setStates({
+        setTimeout(() => history.push("/"), 2000);
+        setStates({
           ...compState,
-            done: true,
+          done: true,
           loader: true,
         });
       } else {
@@ -87,7 +92,9 @@ function Home({ appState, login_suc }) {
     </div>
   ) : (
     <div id="body bg">
-      <div className="mobile">
+        {state.loggedInUser.user.meta.school !== null ? history.push("/") :
+      <>
+        <div className="mobile">
         <div className="header_footer">
           {/* <Footer /> */}
           <Header />
@@ -109,29 +116,44 @@ function Home({ appState, login_suc }) {
               {" "}
               <Toppills />
             </div>{" "}
-            <br />
-            <div
-              style={{
-                marginTop: "60px",
-                width: "80%",
-                marginLeft: "5%",
-                backgroundColor: " ",
-                textAlign: "center",
-              }}
-            >
-              <Search
-                width="90vw"
-                spellcheck={true}
-                placeholder="Search for your school..."
-                options={countries}
-                onChange={(option, e) => setCapturedSearch(option)}
-              />{" "}
+            <div className=" " style={{marginTop:"20px"}}>
+              <div className="realtimeParent">
+                <div className="realtimeHeader" style={smile}>
+                  Add your university
+                </div>
+                <div className="realtimeBody">
+                  <b> Welcome {state.loggedInUser.user.fullname}</b> <br />
+                  <br />
+                  Add your university to get in touch with your schoolmates .
+                  <div className="description">
+                    Get the latest happening around the univers
+                  </div>{" "} 
+                  <div
+                    style={{
+                      marginTop: "20px",
+                      // width: "80%",
+                      // marginLeft: "5%",
+                      background: " ",
+                      textAlign: "center",
+                    }}
+                    >
+                      <br />
+                    <Search
+                      width="80vw"
+                      spellcheck={true}
+                      placeholder="Search for your school..."
+                      options={countries}
+                      onChange={(option, e) => setCapturedSearch(option)}
+                    />{" "}
+                  </div> <br /> 
+                </div>
+              </div>
             </div>
             <br />
             <br />
             <div
               style={{
-                marginTop: "10px",
+                marginTop: "-10px",
                 width: "90%",
                 marginLeft: "5%",
                 backgroundColor: " ",
@@ -182,6 +204,8 @@ function Home({ appState, login_suc }) {
 
       <Desktopleft />
       <Desktopright />
+      </>
+      }
     </div>
   );
 }

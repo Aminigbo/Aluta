@@ -1,40 +1,15 @@
-import {allUniversities} from "../utils/index"
+import { allUniversities } from "../utils/index";
 
 export function trigger(state, history, smile) {
-   
-  return (
-    <div>
-      {state.loggedInUser.user.meta.school === null && (
-        <div className="realtime">
-          <div className="realtimeParent">
-            <div className="realtimeHeader" style={smile}>
-              Add your university
-            </div>
-            <div className="realtimeBody">
-            <b>  Hi {state.loggedInUser.user.fullname}</b> <br />
-              <br />
-              Add your university to get in touch with your schoolmates .
-              <div className="description">
-                Get the latest happening around the univers
-              </div>{" "}
-              <br />
-              <button
-                onClick={() => {
-                  history.push(`/setschool`);
-                }}
-                className="active"
-              >
-                ADD
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+
+  if (state.loggedInUser.user.meta.school === null) {
+    history.push("/setschool")
+  } else if (state.loggedInUser.user.meta.gender === null || state.loggedInUser.user.meta.DOB === null) {
+    history.push("/updateprofile")
+  } 
 }
 
-export function resetPin(state, resetTPin,smile, setPins,pins) {
+export function resetPin(state, resetTPin, smile, setPins, pins) {
   return (
     <div>
       {state.loggedInUser.user.meta.transactionPin == "0000" && (
@@ -43,35 +18,60 @@ export function resetPin(state, resetTPin,smile, setPins,pins) {
             <div className="realtimeHeader" style={smile}>
               Reset your Pin
             </div>
-            <div className="realtimeBody">
-              Hi!! <br />
+            <div className="realtimeBody"> 
               It appeared that you are currently using the default transaction
-                    pin <b>0000</b> .  <br /><br />
-                    
-                    <div style={{color:"gray",textAlign:"center"}}><b>Reset you pin</b> </div><br />
-              <div className="description" style={{textAlign:"center"}}>
-                       <input
-                          onChange={(e) => {
-                             setPins({
-                                ...pins, first:e.target.value
-                             })
-                          }}
-                          value={pins.first}
-                          style={{ border: "none", borderBottom: "1px solid lightgray", width: "40%", margin: "0px 6px", textAlign: "left" }} placeholder="New pin" />
-                       <input
-                          onChange={(e) => {
-                             setPins({
-                                ...pins, second:e.target.value
-                             })
-                          }}
-                          value={pins.second}
-                          style={{ border: "none", borderBottom: "1px solid lightgray", width: "40%", margin: "0px 6px", textAlign: "left" }} placeholder="New pin again" />
-                       
-              </div>{" "}
+              pin <b>0000</b> . <br />
+              
+              <div style={{ color: "gray", textAlign: "center", marginTop:"20px" }}>
+                <b>Reset you pin</b>{" "}
+              </div> 
+              <div className="description" style={{ textAlign: "center" }}>
+                <input
+                  onChange={(e) => {
+                    setPins({
+                      ...pins,
+                      first: e.target.value,
+                    });
+                  }}
+                  value={pins.first}
+                  style={{
+                    border: "none",
+                    borderBottom: "1px solid lightgray",
+                    width: "40%",
+                    margin: "0px 6px",
+                    textAlign: "left",
+                    padding:"6px",outline:"none"
+                  }}
+                  placeholder="New pin"
+                />
+                <input
+                  onChange={(e) => {
+                    setPins({
+                      ...pins,
+                      second: e.target.value,
+                    });
+                  }}
+                  value={pins.second}
+                  style={{
+                    border: "none",
+                    borderBottom: "1px solid lightgray",
+                    width: "40%",
+                    margin: "0px 6px",
+                    textAlign: "left",
+                    padding:"6px",outline:"none"
+                  }}
+                  placeholder="New pin again"
+                />
+              </div>
+              <div style={{textAlign:"center"}}>
+                 <small style={{fontSize:"10px",color:"orange"}}>
+                {"This pin will be required for every financial transaction "}
+              </small>
+             </div>
               <br />
               <button
                 onClick={() => {
-                  resetTPin()
+                  resetTPin();
                 }}
                 className="active"
               >

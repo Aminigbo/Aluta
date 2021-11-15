@@ -237,7 +237,8 @@ export async function handleUnlike(state, postId, loadFeeds) {
 
 
 // ?==============  CHECK IF USER ALREADY LIKED A POST
-export function likedPost(postLikesArr,state) {
+export function likedPost(postLikesArr, state) {
+  let id=""
   const sessionUser = {
     name: state.loggedInUser.user.fullname,
     id: state.loggedInUser.meta.user.id,

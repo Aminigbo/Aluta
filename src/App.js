@@ -24,7 +24,7 @@ import Admin from "./components/admin"
 import Giveaway from "./pages/giveaway"
 import Terms from "./components/tc"
 import Responsible from "./components/responsible"
-import Search from "./components/search"
+import Updateprofile from "./pages/profileupdate"
 import Buz from "./pages/buz"
 import Marketproducts from "./pages/marketproducts"
 import Listmart from "./pages/marketlist"
@@ -124,8 +124,8 @@ export default function App() {
                <Route path="/transfer">
                 <Buz />  
               </Route>
-              <Route path="/search/:challangeId">
-                <Search />  
+              <Route path="/updateprofile">
+                <Updateprofile />  
               </Route>
               <Route path="/reaction/:postId">
                 <Reactions />  
