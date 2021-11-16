@@ -29,14 +29,14 @@ function Home({ appState }) {
 
   let listOfSchools = () => {
     allUniversities().sort(function (a, b) {
-      return parseFloat(b.school) - parseFloat(a.school);
+      return parseFloat(b.label) - parseFloat(a.label);
     });
-    return allUniversities().map(schl => {
+    return allUniversities().map(schl => { 
       return (
         <>
           <ListItem
                   onClick={() => {
-                    history.push(`touring/${schl.code}`);
+                    history.push(`touring/${schl.value}`);
                   }}
                 >
                   <ListItemAvatar>
@@ -45,7 +45,7 @@ function Home({ appState }) {
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText
-                    primary={schl.name}
+                    primary={schl.label}
                     // secondary="+99 new activities"
                   />
                 </ListItem>

@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import "../static/css/auth/register.css";
 import { connect } from "react-redux";
 import { TextField, Button } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 import { Link, useHistory } from "react-router-dom";
 import loaderImg from "../static/logos/animation.gif";
 import { loginSuc, add_wallet } from "../redux";
-import { ToastContainer, toast, Bounce } from "react-toastify";
 import { Helmet } from "react-helmet";
-import logo from "../static/logos/logo2.png";
+import logo from "../static/logos/aluta.png";
 import {
   validatePhoneNumber,
   validateEmail,
@@ -17,24 +15,13 @@ import {
 } from "../functions/utils/index";
 import { handleRegister } from "../functions/controllers/auth/register";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    "& .MuiTextField-root": {
-      margin: theme.spacing(1),
-      width: "25ch",
-      marginTop: theme.spacing(2),
-    },
-    width: "100%",
-    "& > * + *": {
-      marginTop: theme.spacing(2),
-    },
-  },
-}));
+// @=== import success response from worker function
+import { alert } from "../functions/workers_functions/alert";
 
 const logoStyle = {
   position: "absolute",
-  top: "0px",
-  left: "0px",
+  top: "20px",
+  left: "10px",
   width: "25%",
 };
 
@@ -47,30 +34,25 @@ function Register({ appState, login_suc, walletAdd }) {
     setTimeout(() => setStates({ ...compState, loader: false }), 500);
   }, []);
 
-  const errorToast = (message) => {
-    toast.error(message, {
-      position: toast.POSITION.TOP_CENTER,
-      // onClose: () => { console.log("Redirect") },
-      transition: Bounce,
-    });
-  };
-
-  const successToast = (message) => {
-    toast.success(message, {
-      position: toast.POSITION.TOP_CENTER,
-      onClose: () => {
-        history.push("");
-      },
-      transition: Bounce,
-    });
-  };
-
   // form states
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [compState, setStates] = useState("");
+  const [stateAlert, setStateAlert] = useState("");
+
+  let successPayload = {
+    title: "SUCCESS",
+    msg: compState.alertMsg,
+    error: false,
+  };
+
+  let errorPayload = {
+    title: "error",
+    msg: compState.alertMsg,
+    error: true,
+  };
 
   // register user
   async function registerUser() {
@@ -80,25 +62,69 @@ function Register({ appState, login_suc, walletAdd }) {
       password,
       name,
     };
-    setStates({ ...compState, loader: true})
-    handleRegister(formData).then((res) => {
-      if (res.success == true) {
-        successToast("Registration successful");
-        const data = {
-          user: res.data[0],
-          meta:res.data[1],
-        };
-        login_suc(data);
-        walletAdd(2000);
-        history.push("");
-        // console.log(res.data)
-        // setStates({ ...compState, loader: false})
-        
-      } else {
-        setStates({ ...compState, loader: false})
-        errorToast(res.message)
-      }
-    });
+    if (
+      !name ||
+      name.length < 5 ||
+      email.length < 5 ||
+      phone.length < 10 ||
+      password.length < 5
+    ) {
+      setStateAlert(false);
+      setStates({
+        ...compState,
+        loader: false,
+        alertMsg: "Please you have to fill out all forms",
+      });
+    } else if (validateEmail(email) === false) {
+      setStateAlert(false);
+      setStates({
+        ...compState,
+        loader: false,
+        alertMsg: "Please provide a valid email address",
+      });
+    } else if (validatePhoneNumber(phone) === false) {
+      setStateAlert(false);
+      setStates({
+        ...compState,
+        loader: false,
+        alertMsg: "Please provide a valid phone number",
+      });
+    } else {
+      setStates({ ...compState, loader: true });
+      handleRegister(formData)
+        .then((res) => {
+          if (res.success == true) {
+            const data = {
+              user: res.data[0],
+              meta: res.data[1],
+            };
+            login_suc(data);
+            walletAdd(2000);
+            setStateAlert(true);
+            setStates({
+              ...compState,
+              loader: false,
+              alertMsg:
+                "You have successfully created an account. OK to complete the process.",
+            });
+          } else {
+            setStateAlert(false);
+            setStates({
+              ...compState,
+              loader: false,
+              alertMsg: "Please you have to fill out all forms",
+            });
+          }
+        })
+        .catch((error) => {
+          setStateAlert(false);
+          setStates({
+            ...compState,
+            loader: false,
+            alertMsg: "Sorry, a network error occured",
+          });
+        });
+    }
   }
 
   // reroute function
@@ -108,9 +134,12 @@ function Register({ appState, login_suc, walletAdd }) {
 
   return (
     <div>
+      {stateAlert === null && <small>{history.push("/")}</small>}
+      {stateAlert === true && alert(successPayload, setStateAlert)}
+      {stateAlert === false && alert(errorPayload, setStateAlert)}
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Ogapredictor</title>
+        <title>Aluta Meter</title>
         <link rel="icon" href={logo} />
       </Helmet>
 
@@ -119,8 +148,6 @@ function Register({ appState, login_suc, walletAdd }) {
         <div id="">
           <b> Register for free</b>
         </div>
-
-        <ToastContainer autoClose={2000} />
 
         <form
           className="regform"
@@ -141,7 +168,7 @@ function Register({ appState, login_suc, walletAdd }) {
             required
             label="Your fullname"
             type="search"
-            variant="outlined"
+            variant="standard"
           />
           <br />
           <br />
@@ -154,7 +181,7 @@ function Register({ appState, login_suc, walletAdd }) {
             required
             label="Enter email"
             type="email"
-            variant="outlined"
+            variant="standard"
           />
           <br />
           <br />
@@ -167,13 +194,13 @@ function Register({ appState, login_suc, walletAdd }) {
             required
             label="Enter phone number"
             type="text"
-            variant="outlined"
+            variant="standard"
           />
-          <div>
+          {/* <div>
             <small style={{ fontSize: "12px" }}>
               You will recieve an OTP to verify your number
             </small>{" "}
-          </div>
+          </div> */}
           {/* <br /><br />
                <TextField id="input" onChange={(e)=>{ setDob(e.target.value)  }} value={dob} required label="" type="date" variant="outlined" /> */}
           <br />
@@ -186,16 +213,16 @@ function Register({ appState, login_suc, walletAdd }) {
             required
             label="Provide password"
             type="password"
-            variant="outlined"
+            variant="standard"
           />{" "}
           <br />
           <br />
           {compState.loader != true ? (
             <Button
+              style={{background:"#0a3d62", color:"white"}}
               type="submit"
               variant=" "
-              id=" "
-              style={{ background: "#2C3A47", color: "white" }}
+              id=" " 
             >
               {" "}
               Register{" "}
@@ -213,7 +240,7 @@ function Register({ appState, login_suc, walletAdd }) {
               to="/login"
             >
               {" "}
-              <b className="action">Login</b>
+              <b style={{color:"#0a3d62"}}>Login</b>
             </Link>
           </div>
         </form>

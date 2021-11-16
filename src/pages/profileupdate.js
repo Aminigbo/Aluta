@@ -9,78 +9,146 @@ import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
 import { add_wallet, logOut, loginSuc } from "../redux";
 import Toppills from "../components/includes/topdesktoppills";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
 import { allUniversities } from "../functions/utils/index";
 import { updateUserMeta } from "../functions/models/index";
-import Search from "search-react-input";
+import { LanguageOutlined } from "@material-ui/icons";
 
+// @=== import success response from worker function
+import { alert } from "../functions/workers_functions/alert";
 const smile = {
   color: "white",
   fontSize: "20px",
 };
 
 function Home({ appState, login_suc }) {
-  const countries = allUniversities();
   const [compState, setStates] = useState({
     data: [],
     value: "",
     done: false,
   });
-  const [capturedSearch, setCapturedSearch] = useState(null);
 
-  React.useEffect((compState) => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const setSchool = (school) => {
-    let user = state.loggedInUser.user;
-    let newUser = {
-      ...user,
-      meta: { ...user.meta, school: school.label },
-    };
-    let payload = {
-      email: user.email,
-      newUser,
-    };
-
-    const data = {
-      user: newUser,
-      meta: state.loggedInUser.meta,
-    };
-
-    setStates({
-      ...compState,
-      loader: true,
-    });
-    updateUserMeta(payload).then((res) => {
-      if (res.success == true) {
-        login_suc(data);
-        setTimeout(() => history.push("/"), 2000);
-        setStates({
-          ...compState,
-          done: true,
-          loader: true,
-        });
-      } else {
-        setStates({
-          ...compState,
-          done: true,
-        });
-      }
-    });
-  };
-
-  const style = {
-    width: "100%",
-    maxWidth: 360,
-    bgcolor: "background.paper",
-  };
+  const [stateAlert, setStateAlert] = useState("");
 
   let history = useHistory();
   const state = appState;
+  const [startDate, setStartDate] = useState(new Date());
+
+  const year = () => {
+    let mins = [];
+    for (let i = 1970; i < 2006; i++) {
+      mins.push(i);
+    }
+    // console.log(mins);
+    return mins.map((MM) => {
+      return <option>{MM}</option>;
+    });
+  };
+
+  const month = () => {
+    let mins = [];
+    for (let i = 1; i < 32; i++) {
+      mins.push(i);
+    }
+    // console.log(mins);
+    return mins.map((MM) => {
+      return <option>{MM}</option>;
+    });
+  };
+
+  const day = () => {
+    let mins = [];
+    for (let i = 1; i < 32; i++) {
+      mins.push(i);
+    }
+    // console.log(mins);
+    return mins.map((MM) => {
+      return <option>{MM}</option>;
+    });
+  };
+
+  const [update, setUpdate] = useState({
+    day: null,
+    month: null,
+    year: null,
+    newPhone: null,
+    gender: null,
+    error: false,
+  });
+
+  const updateBtn = () => {
+    if (
+      update.day == null ||
+      update.year == null ||
+      update.month == null ||
+      update.gender == null
+    ) {
+      setUpdate({
+        ...update,
+        error: true,
+      });
+
+      setStates({
+        ...compState,
+        loader: false,
+        alertMsg: "Please fill out all fields to continue",
+      });
+
+      setStateAlert(false);
+    } else {
+      let DOB = update.day + "-" + update.month + "-" + update.year;
+      let user = state.loggedInUser.user;
+      let newUser = {
+        ...user,
+        meta: { ...user.meta, DOB: DOB, gender: update.gender },
+      };
+      let payload = {
+        email: user.email,
+        newUser,
+      };
+
+      const data = {
+        user: newUser,
+        meta: state.loggedInUser.meta,
+      };
+      setStates({
+        ...compState,
+        loader: true,
+      });
+      updateUserMeta(payload).then((res) => {
+        if (res.success == true) {
+          login_suc(data);
+          // setTimeout(() => history.push("/"), 2000);
+          setStateAlert(true);
+          setStates({
+            ...compState,
+            alertMsg:
+              "Your profile if set and ready to be recognized. Have fun while you explore Aluta Meter",
+          });
+        } else {
+          setStateAlert(false);
+          setStates({
+            ...compState,
+            loader: false,
+            alertMsg:
+              "We could not complete this action due to network failure",
+          });
+          console.log(res);
+        }
+      });
+    }
+  };
+
+  let successPayload = {
+    title: "SUCCESS",
+    msg: compState.alertMsg,
+    error: false,
+  };
+
+  let errorPayload = {
+    title: "error",
+    msg: compState.alertMsg,
+    error: true,
+  };
 
   React.useEffect((compState) => {
     window.scrollTo(0, 0);
@@ -91,60 +159,72 @@ function Home({ appState, login_suc }) {
       <Redirect to="/login" />
     </div>
   ) : (
-    <div id="body bg">
-      <div className="mobile">
-        <div className="header_footer">
-          {/* <Footer /> */}
-          <Header />
-        </div>
+    <div>
+      <div id="body bg">
+        {stateAlert === null && <span>{history.push("/")}</span>}
+        {stateAlert === true && alert(successPayload, setStateAlert)}
+        {stateAlert === false && alert(errorPayload, setStateAlert)}
+        <div className="mobile">
+          <div className="header_footer">
+            {console.log(compState)}
+            <Header />
+          </div>
 
-        <div>
           <div>
-            <div
-              style={{
-                textAlign: "center",
-                marginTop: "10px",
-                background: " #f4f6f7",
-                position: "sticky",
-                top: "0px",
-                zIndex: "1000",
-                padding: "0px",
-              }}
-            >
-              {" "}
-              <Toppills />
-            </div>{" "}
-            <div className=" " style={{ marginTop: "10px" }}>
-              <div className="realtimeParent">
-                <div className="realtimeHeader" style={smile}>
-                  Update your profile
-                </div>
-                <div className="realtimeBody" style={{fontSize:"13px"}}>
-                  Update your details, this will help us serve you with the right contents .
-                  <div className="description">
-                    {/* @+============= set phone number */}
-                    <div
-                      style={{
-                        padding: "10px",
-                        background: "#f3f3f3",
-                        borderRadius: "6px",
-                        height: " ",
-                      }}
-                    >
-                      <div>
-                        <b>CONTACT</b>
-                      </div>{" "}
-                      <div style={{ marginTop: "10px" }}>
-                        <b style={{ fontSize: "17px" }}>
-                          {state.loggedInUser.user.phone}
-                        </b>{" "}
-                        <br />
-                        <b style={{ fontSize: "17px" }}>
-                          {state.loggedInUser.user.email}
-                        </b>{" "}
-                        <br />
-                        <br />
+            <div>
+              <div
+                style={{
+                  textAlign: "center",
+                  marginTop: "10px",
+                  background: " #f4f6f7",
+                  position: "sticky",
+                  top: "0px",
+                  zIndex: "1000",
+                  padding: "0px",
+                }}
+              >
+                {" "}
+                <Toppills />
+              </div>{" "}
+              <div className=" " style={{ marginTop: "10px" }}>
+                <div className="realtimeParent">
+                  <div className="realtimeHeader" style={smile}>
+                    Update your profile
+                  </div>
+                  <div className="realtimeBody" style={{ fontSize: "13px" }}>
+                    Update your details, this will help us serve you with the
+                    right contents .
+                    <div className="description">
+                      {/* @+============= set phone number */}
+                      <div
+                        style={{
+                          padding: "10px",
+                          background: "#f3f3f3",
+                          borderRadius: "6px",
+                          height: " ",
+                        }}
+                      >
+                        <div>
+                          <b>CONTACT</b>
+                        </div>{" "}
+                        <div style={{ marginTop: "10px", color: "gray" }}>
+                          <span style={{ fontSize: "17px", color: "gray" }}>
+                            {state.loggedInUser.user.phone}
+                          </span>{" "}
+                          <br />
+                          <span style={{ fontSize: "17px" }}>
+                            {state.loggedInUser.user.email}
+                          </span>{" "}
+                          <br />
+                          {/* <br />
                         <input
+                          onChange={(e) => {
+                            setUpdate({
+                              ...update,
+                              newPhone: e.target.value,
+                              error: false,
+                            });
+                          }}
                           placeholder="Add phone number"
                           style={{
                             margin: "7px 0px",
@@ -152,136 +232,193 @@ function Home({ appState, login_suc }) {
                             borderBottom: "1px solid lightgray",
                             padding: "6px",
                             borderRadius: "6px",
-                             width: "100%",
-                            outline:"none"
+                            width: "100%",
+                            outline: "none",
                           }}
-                        />
-                      </div>
-                    </div>{" "}
-                    <br />
-                    {/* @=========  date of birth section */}
-                    <div
-                      style={{
-                        padding: "10px",
-                        background: "#f3f3f3",
-                        borderRadius: "6px",
-                        height: " ",
-                      }}
-                    >
-                      {console.log(state.loggedInUser.user)}
-                      <div>
-                        <b>DATE OF BIRTH</b>
-                      </div>{" "}
-                      <div style={{ marginTop: "10px" }}>
-                        {state.loggedInUser.user.meta.DOB === null ? (
-                          <>
-                            <input
-                              type="date"
-                              style={{
-                                margin: "7px",
-                                border: "none",
-                                borderBottom: "1px solid lightgray",
-                                padding: "6px",
-                                 borderRadius: "6px",
-                                 outline:"none"
-                              }}
-                            />
-                            <select
-                              style={{
-                                margin: "7px",
-                                border: "none",
-                                borderBottom: "1px solid lightgray",
-                                padding: "6px",
-                                                  borderRadius: "6px",
-                                 outline:"none"
-                              }}
-                            >
-                              <option>Privacy</option>
-                              <option>Only me</option>
-                              <option>Public</option>
-                            </select>{" "}
-                          </>
-                        ) : (
-                          <>
-                            {" "}
-                            <br />{" "}
-                            <span
-                              style={{
-                                margin: "7px",
-                                border: "none",
-                                borderBottom: "1px solid lightgray",
-                                padding: "10px 60px",
-                                borderRadius: "6px",
-                                background: "gray",
-                                color: "white",
-                                fontSize: "20px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              21-05-2021
-                            </span>{" "}
-                            <br />
-                            <br />{" "}
-                          </>
-                        )}
-                      </div>
-                    </div>{" "}
-                    <br />
-                    {/* @============== gender section */}
-                    <div
-                      style={{
-                        padding: "10px",
-                        background: "#f3f3f3",
-                        borderRadius: "6px",
-                        height: " ",
-                      }}
-                    >
-                      <div>
-                        <b>GENDER</b>
-                      </div>{" "}
-                      <div style={{ marginTop: "10px" }}>
-                        {state.loggedInUser.user.meta.gender !== null ? (
-                          <>
-                            <div>
-                              <br />
-                              <span
-                                style={{
-                                  margin: "7px",
-                                  border: "none",
-                                  borderBottom: "1px solid lightgray",
-                                  padding: "6px 20px",
-                                  borderRadius: "6px",
-                                  background: "#0a3d62",
-                                  color: "white",
-                                }}
-                              >
-                                {state.loggedInUser.user.meta.gender}
-                              </span>{" "}
-                              <br /> <br />
-                            </div>
-                          </>
-                        ) : (
-                          <>
-                            <select
-                              style={{
-                                margin: "7px 0px",
-                                border: "none",
-                                borderBottom: "1px solid lightgray",
-                                padding: "6px",
-                                borderRadius: "6px",
-                                                     width: "100%",
-                                 outline:"none"
-                              }}
-                            >
-                              <option>Your gender</option>
-                              <option>Male</option>
-                              <option>Female</option>
-                            </select>
-                          </>
-                        )}
+                        /> */}
+                        </div>
                       </div>{" "}
                       <br />
+                      {/* @=========  date of birth section */}
+                      <div
+                        style={{
+                          padding: "10px",
+                          background: "#f3f3f3",
+                          borderRadius: "6px",
+                          height: " ",
+                        }}
+                      >
+                        {console.log(state.loggedInUser.user)}
+                        <div>
+                          <b>DATE OF BIRTH</b>
+                        </div>{" "}
+                        <div style={{ marginTop: "10px" }}>
+                          {state.loggedInUser.user.meta.DOB === null ? (
+                            <>
+                              <select
+                                onChange={(e) => {
+                                  setUpdate({
+                                    ...update,
+                                    year: e.target.value,
+                                  });
+                                }}
+                                type="number"
+                                style={{
+                                  margin: "7px 4px",
+                                  border: "none",
+                                  borderBottom: "1px solid lightgray",
+                                  padding: "4px",
+                                  borderRadius: "6px",
+                                  outline: "none",
+                                  width: "65px",
+                                }}
+                              >
+                                <option>Year</option>
+                                {year()}
+                              </select>
+                              <select
+                                onChange={(e) => {
+                                  setUpdate({
+                                    ...update,
+                                    month: e.target.value,
+                                  });
+                                }}
+                                type="number"
+                                style={{
+                                  margin: "7px 4px",
+                                  border: "none",
+                                  borderBottom: "1px solid lightgray",
+                                  padding: "4px",
+                                  borderRadius: "6px",
+                                  outline: "none",
+                                  width: "70px",
+                                }}
+                              >
+                                <option>Month</option>
+                                {month()}
+                              </select>
+                              <select
+                                onChange={(e) => {
+                                  setUpdate({
+                                    ...update,
+                                    day: e.target.value,
+                                  });
+                                }}
+                                type="number"
+                                style={{
+                                  margin: "7px 4px",
+                                  border: "none",
+                                  borderBottom: "1px solid lightgray",
+                                  padding: "4px",
+                                  borderRadius: "6px",
+                                  outline: "none",
+                                  width: "60px",
+                                }}
+                              >
+                                <option>Day</option>
+                                {day()}
+                              </select>
+                              {/* <LanguageOutlined
+                              style={{
+                                marginLeft: "22px",
+                                border: "none",
+                                borderBottom: "1px solid lightgray",
+                                padding: "0px",
+                                borderRadius: "6px",
+                                outline: "none",
+                                width: "",
+                              }}
+                            />{" "} */}
+                            </>
+                          ) : (
+                            <>
+                             <div>
+                                <br />
+                                <span
+                                  style={{
+                                    margin: "7px",
+                                    border: "none",
+                                    borderBottom: "1px solid lightgray",
+                                    padding: "6px 20px",
+                                    borderRadius: "6px",
+                                    background: "gray",
+                                    color: "white",
+                                  }}
+                                >
+                                  {state.loggedInUser.user.meta.DOB}
+                                </span>{" "}
+                                <br /> <br />
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </div>{" "}
+                      <br />
+                      {/* @============== gender section */}
+                      <div
+                        style={{
+                          padding: "10px",
+                          background: "#f3f3f3",
+                          borderRadius: "6px",
+                          height: " ",
+                        }}
+                      >
+                        <div>
+                          <b>GENDER</b>
+                        </div>{" "}
+                        <div style={{ marginTop: "10px" }}>
+                          {state.loggedInUser.user.meta.gender !== null ? (
+                            <>
+                              <div>
+                                <br />
+                                <span
+                                  style={{
+                                    margin: "7px",
+                                    border: "none",
+                                    borderBottom: "1px solid lightgray",
+                                    padding: "6px 20px",
+                                    borderRadius: "6px",
+                                    background: "gray",
+                                    color: "white",
+                                  }}
+                                >
+                                  {state.loggedInUser.user.meta.gender}
+                                </span>{" "}
+                                <br /> <br />
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <select
+                                onChange={(e) => {
+                                  setUpdate({
+                                    ...update,
+                                    gender: e.target.value,
+                                  });
+                                }}
+                                style={{
+                                  margin: "7px 0px",
+                                  border: "none",
+                                  borderBottom: "1px solid lightgray",
+                                  padding: "6px",
+                                  borderRadius: "6px",
+                                  width: "100%",
+                                  outline: "none",
+                                }}
+                              >
+                                <option>Your gender</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                              </select>
+                            </>
+                          )}
+                        </div>{" "}
+                      </div>
+                      <br />
                       <button
+                        onClick={() => {
+                          updateBtn();
+                        }}
                         style={{
                           margin: "10px 0px",
                           width: "100%",
@@ -289,25 +426,44 @@ function Home({ appState, login_suc }) {
                           border: "none",
                           borderRadius: "6px",
                           background: "#0a3d62",
-                                         color: "white",
-                           outline:"none"
+                          color: "white",
+                          outline: "none",
                         }}
                       >
                         UPDATE
                       </button>
+                    </div>{" "}
+                    <br />
+                  </div>
+
+                  {compState.loader && (
+                    <div className="loader">
+                      {" "}
+                      <LinearProgress />
+                      {compState.done == true && (
+                        <div
+                          style={{
+                            position: "relative",
+                            top: "40%",
+                            color: "white",
+                            textAlign: "center",
+                          }}
+                        >
+                          You have successfully updated your school
+                        </div>
+                      )}
                     </div>
-                  </div>{" "}
-                  <br />
+                  )}
                 </div>
               </div>
+              <br />
             </div>
-            <br />
           </div>
         </div>
-      </div>
 
-      <Desktopleft />
-      <Desktopright />
+        <Desktopleft />
+        <Desktopright />
+      </div>
     </div>
   );
 }

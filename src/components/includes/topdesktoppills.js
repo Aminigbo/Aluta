@@ -21,6 +21,9 @@ import { updateUserMeta } from "../../functions/models/index";
 //  function that checkes if the user is still using the default transaction pin
 import { trigger, resetPin } from "../../functions/controllers/resetPin";
 
+// @=== import success response from worker function
+import { alert } from "../../functions/workers_functions/alert";
+
 const smile = {
   color: "white",
   fontSize: "20px",
@@ -33,20 +36,32 @@ function Desktopright({ appState, login_suc }) {
     first: "",
     second: "",
   });
+  const [stateAlert, setStateAlert] = useState("");
+  const [compState, setStates] = useState("");
 
   const resetTPin = () => {
     if (pins.first.length != 4 || pins.second.length != 4) {
-      alert("Invalid pin");
-    } else if (pins.first !== pins.second) {
-      alert("Pin doesn't match");
-    } else if (pins.first == "0000" || pins.second == "0000") {
-      alert("You can not use  the default pin");
-    } else {
+      setStateAlert(false);
       setStates({
         ...compState,
-        loader: true,
+        loader: false,
+        alertMsg: "Invalid pin selected",
       });
-
+    } else if (pins.first !== pins.second) {
+      setStateAlert(false);
+      setStates({
+        ...compState,
+        loader: false,
+        alertMsg: "Sorry, you first and second pin does not match",
+      });
+    } else if (pins.first == "0000" || pins.second == "0000") {
+      setStateAlert(false);
+      setStates({
+        ...compState,
+        loader: false,
+        alertMsg: "Sorry, you can not use the default pin.",
+      });
+    } else {
       let { first, second } = pins;
 
       let user = state.loggedInUser.user;
@@ -64,39 +79,54 @@ function Desktopright({ appState, login_suc }) {
         meta: state.loggedInUser.meta,
       };
       // call a async function to reset the userpin in the database
-      updateUserMeta(payload).then((res) => {
-        if (res.success == true) {
-          login_suc(data);
-          setTimeout(() => history.push("/"), 2000);
+      updateUserMeta(payload)
+        .then((res) => {
+          if (res.success == true) {
+            login_suc(data);
+            setStateAlert(true);
+            setStates({
+              ...compState,
+              loader: false,
+              alertMsg: "Your pin is ready for transactions.",
+            });
+          } else {
+            setStateAlert(false);
+            setStates({
+              ...compState,
+              loader: false,
+              alertMsg: "Sorry, a network error occured",
+            });
+          }
+        })
+        .catch((errer) => {
+          alert("A network error occured");
           setStates({
             ...compState,
-            done: true,
             loader: false,
           });
-        } else {
-          setStates({
-            ...compState,
-            done: false,
-          });
-        }
-      }).catch(errer => {
-        alert("A network error occured")
-        setStates({
-            ...compState, 
-            loader: false,
-          });
-      })
+        });
     }
   };
 
-  const [compState, setStates] = useState("");
+  let successPayload = {
+    title: "SUCCESS",
+    msg: compState.alertMsg,
+    error: false,
+  };
+
+  let errorPayload = {
+    title: "error",
+    msg: compState.alertMsg,
+    error: true,
+  };
+
   let pathname = window.location.pathname;
   let split = pathname.split("/")[1];
-  let allow = ""
+  let allow = "";
   if (split == "setschool" || split == "updateprofile") {
-    allow = true
+    allow = true;
   } else {
-    allow = false
+    allow = false;
   }
   return (
     <>
@@ -108,6 +138,10 @@ function Desktopright({ appState, login_suc }) {
       )}
 
       <div id=" " className="top-nav-holder">
+        {stateAlert === null && <span>{history.push("/")}</span>}
+        {stateAlert === true && alert(successPayload, setStateAlert)}
+        {stateAlert === false && alert(errorPayload, setStateAlert)}
+
         <div
           onClick={() => {
             window.scrollTo(0, 0);

@@ -26,6 +26,9 @@ import Selects from "react-select";
 import AsyncSelect from "react-select/async";
 import makeAnimated from "react-select/animated";
 
+// @=== import success response from worker function
+import { alert } from "../functions/workers_functions/alert";
+
 const rec_inputs = {
   margin: "5%",
   width: "90%",
@@ -127,65 +130,78 @@ function Home({ appState, walletAdd, logout, loadFeeds }) {
   const [reason, setReason] = useState("");
   const [privacy, setPrivacy] = useState("");
   const [sendTo, setSendTo] = useState("");
+  const [stateAlert, setStateAlert] = useState("");
 
   React.useEffect((compState) => {
     window.scrollTo(0, 0);
     // setStates({ ...compState, loader: true });
     // setTimeout(() => setStates({ ...compState, loader: false }), 500);
     let filterOpt = [];
-    fetchUsersOfUniversity(loggedInUserSchool).then((res) => {
-      res.body.map((resp) => {
-        let prepared = {
-          value: resp.meta.beneficiaryId,
-          label: resp.fullname,
-          email: resp.email,
-          phone: resp.phone,
-        };
-        filterOpt.push(prepared);
+    fetchUsersOfUniversity(loggedInUserSchool)
+      .then((res) => {
+        res.body.map((resp) => {
+          let prepared = {
+            value: resp.meta.beneficiaryId,
+            label: resp.fullname,
+            email: resp.email,
+            phone: resp.phone,
+          };
+          filterOpt.push(prepared);
+        });
+        console.log(filterOpt);
+        setStates({ ...compState, filterOption: filterOpt });
+      })
+      .catch((error) => {
+        alert("network error");
       });
-      console.log(filterOpt);
-      setStates({ ...compState, filterOption: filterOpt });
-    });
   }, []);
 
-  const infoToast = (res) => {
-    toast.info(res, {
-      position: toast.POSITION.TOP_CENTER,
-      // onClose: () => {history.push(`/`)}
-    });
-  };
-  const errorToast = (res) => {
-    toast.error(res, {
-      position: toast.POSITION.TOP_CENTER,
-    });
-  };
-  const successToast = (res) => {
-    toast.success(res, {
-      position: toast.POSITION.TOP_CENTER,
-      onClose: () => {
-        history.push(`/`);
-      },
-    });
+  let successPayload = {
+    title: "SUCCESS",
+    msg: compState.alertMsg,
+    error: false,
   };
 
-  const reroute_breadcrumb = (link) => {
-    history.push(`/${link}`);
+  let errorPayload = {
+    title: "error",
+    msg: compState.alertMsg,
+    error: true,
   };
 
   //   ?@==========================
   async function placeRequest(reason) {
     if (amount < 100) {
-      infoToast("minimum amount is 100 Buz");
+      setStateAlert(false);
+      setStates({
+        ...compState,
+        loader: false,
+        alertMsg: "Sorry, your minimum request amount is NGN 100",
+      });
     } else if (amount > 5000) {
-      infoToast("Maximum amount exceeded");
+      setStateAlert(false);
+      setStates({
+        ...compState,
+        loader: false,
+        alertMsg: "Sorry, you have exceeded you maximum request amount",
+      });
     } else if (privacy == 1 && sendTo.length < 1) {
-      infoToast("Add who receives the request or change the request privacy");
+      setStateAlert(false);
+      setStates({
+        ...compState,
+        loader: false,
+        alertMsg: "Add who receives the request or change the request privacy",
+      });
       document.getElementById("sendto").focus();
     } else {
       if (reason.length > 10) {
         let split = reason.split(" ")[1];
         if (split === undefined) {
-          errorToast("Give a clear reason");
+          setStateAlert(false);
+          setStates({
+            ...compState,
+            loader: false,
+            alertMsg: "Please give a clear reason for your request",
+          });
         } else {
           let postPrivacy = "";
 
@@ -227,15 +243,41 @@ function Home({ appState, walletAdd, logout, loadFeeds }) {
             },
             time: new Date(),
           };
+          setStates({ ...compState, loader: true });
+          var timeleft = 75;
+          var downloadTimer = setInterval(function () {
+            if (timeleft > 96) {
+              clearInterval(downloadTimer);
+            } else {
+              if (document.getElementById("progressBar") == null) {
+                clearInterval(downloadTimer);
+              } else {
+                document.getElementById("progressBar").value = timeleft;
+              }
 
+              timeleft += 20;
+            }
+          }, 1000);
           handleCreatePost(postBody, state, loadFeeds).then((res) => {
             if (res.success == true) {
-              history.push("/");
+              document.getElementById("progressBar").value = 100;
+              setStateAlert(true);
+              setStates({
+                ...compState,
+                loader: false,
+                success: true,
+                alertMsg: "You request have been placed successfully",
+              });
             }
-          }); 
-        } 
+          });
+        }
       } else {
-        errorToast("Give a clear reason");
+        setStateAlert(false);
+        setStates({
+          ...compState,
+          loader: false,
+          alertMsg: "Please give a clear reason for your request",
+        });
       }
     }
   }
@@ -265,15 +307,13 @@ function Home({ appState, walletAdd, logout, loadFeeds }) {
     </div>
   ) : (
     <div id="body bg">
-      {/* {resetPin(state, history, smile)} */}
-      <ToastContainer autoClose={2000} />
+      {stateAlert === true && alert(successPayload, setStateAlert)}
+      {stateAlert === false && alert(errorPayload, setStateAlert)}
+      {compState.success === true && (
+        <span>{stateAlert === null && <span>{history.push("/")}</span>}</span>
+      )}
+
       <div className="mobile">
-        {compState.loader && (
-          <div className="loader">
-            {" "}
-            <LinearProgress />{" "}
-          </div>
-        )}
         {/* {state.realtime.length > 0 && <Realtime />} */}
         {/* <Realtime /> */}
         <div className="header_footer">
@@ -302,9 +342,18 @@ function Home({ appState, walletAdd, logout, loadFeeds }) {
 
             <div animateIn="fadeIn">
               <div className="leagues_holder">
-                <div style={explore} className="explore">
-                  <span>Topup</span> <span className="logout">History</span>
-                </div>
+                {compState.loader === true && (
+                  <progress
+                    style={{
+                      width: "100%",
+                      borderRadius: "0px",
+                      height: "5px",
+                    }}
+                    value="40"
+                    max="100"
+                    id="progressBar"
+                  ></progress>
+                )}
 
                 <div className="paypanel">
                   <div style={paymentTitle}>
@@ -345,7 +394,7 @@ function Home({ appState, walletAdd, logout, loadFeeds }) {
                     style={rec_inputs2}
                   >
                     <InputLabel id="demo-simple-select-label">
-                      Who can see this &nbsp; &nbsp; <VpnLockOutlined />
+                      Private request &nbsp; &nbsp; <VpnLockOutlined />
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-label"

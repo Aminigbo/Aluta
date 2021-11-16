@@ -48,7 +48,9 @@ export async function handleRegister(formData) {
     } else { 
       return loadedData = error("Credentials already belongs to a user");
     }
-  });
+  }).catch(error => {
+    return loadedData = error("A network error occured");
+  })
 
   // return loadedData
 }

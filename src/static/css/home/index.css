@@ -3,6 +3,11 @@ span{
 } 
 
 
+progress::-moz-progress-bar { background: #0a3d62; }
+progress::-webkit-progress-value { background: #0a3d62; }
+progress { color: #0a3d62; }
+
+
 
 .div{
    width:100%;

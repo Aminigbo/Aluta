@@ -117,7 +117,7 @@ const sendOTP=(sendTo, message)=>{
 
                var config = {
                method: 'post',
-               url: 'https://ogapredictor.herokuapp.com/api/v1/user/recover-pwd',
+               url: 'https://Aluta Meter.herokuapp.com/api/v1/user/recover-pwd',
                headers: { 
                   'Content-Type': 'application/json'
                },
@@ -164,7 +164,7 @@ const sendOTP=(sendTo, message)=>{
          {console.log(state)}
         <Helmet>
           <meta charSet="utf-8" />
-          <title>Ogapredictor</title>
+          <title>Aluta Meter</title>
           <link rel="icon" href={logo} />
          </Helmet>
          

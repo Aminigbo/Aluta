@@ -390,7 +390,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
       <checkSession />
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Ogapredictor</title>
+        <title>Aluta Meter</title>
         <link rel="icon" href={logo} />
       </Helmet>
 

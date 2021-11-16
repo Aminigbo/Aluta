@@ -131,8 +131,8 @@ export async function addUnlike(payload) {
 export async function updateUserMeta(payload) {
   let {email, newUser } = payload;
 
-  return new_supabase.from("users").update([{ meta: newUser }]).eq("email", email).then(res => {
-    if (res.body.length < 1) {
+  return new_supabase.from("users").update([{ meta: newUser }]).eq("email", email).then(res => {console.log(res)
+    if (res.body == null) {
       return {
         success: false,
         message:"A network error occured"
@@ -143,7 +143,14 @@ export async function updateUserMeta(payload) {
         message:"successful"
       }
     }
+  }).catch(error => {
+     return {
+        success: false,
+        message:error
+      }
   })
+
+  
 }
 
 

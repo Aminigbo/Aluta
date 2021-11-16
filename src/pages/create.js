@@ -10,7 +10,11 @@ import Pills from "../components/includes/desktoppillsholder";
 import Toppills from "../components/includes/topdesktoppills";
 import Realtime from "../components/includes/realtime";
 import { logOut, disp_feeds, add_wallet } from "../redux";
-import { fetchFeeds, ALLPOSTS ,handleCreatePost} from "../functions/controllers/feeds";
+import {
+  fetchFeeds,
+  ALLPOSTS,
+  handleCreatePost,
+} from "../functions/controllers/feeds";
 import { Helmet } from "react-helmet";
 import logo from "../static/logos/logo2.png";
 import {
@@ -56,12 +60,16 @@ import {
   CloseOutlined,
 } from "@material-ui/icons";
 
-function Home({ appState, loadFeeds, walletAdd }) { 
+// @=== import success response from worker function
+import { alert } from "../functions/workers_functions/alert";
+
+function Home({ appState, loadFeeds, walletAdd }) {
   const [postText, setPostText] = useState("");
   const [blob, setBlob] = useState("");
   const [postType, setPostType] = useState("POST");
-
-  const [giveaway, setGiveaway] = useState({ 
+  const [stateAlert, setStateAlert] = useState("");
+  const [compState, setStates] = useState("");
+  const [giveaway, setGiveaway] = useState({
     amount: null,
     delaysecond: null,
     beneficiaries: null,
@@ -72,48 +80,47 @@ function Home({ appState, loadFeeds, walletAdd }) {
     time: null,
   });
 
-  let allowSend =""
+  let allowSend = "";
 
   if (blob == "" && postText == "") {
-      allowSend = false
-    } else {
-      allowSend = true
-    }
-   
-
+    allowSend = false;
+  } else {
+    allowSend = true;
+  }
 
   const makePost = () => {
-    let photo = ""
-    let type = ""
-    if (postType == "GIVE AWAY" && giveaway.beneficiaries == null || giveaway.amount == null || giveaway.delaysecond == null) { 
+   
+
+    let photo = "";
+    let type = "";
+    if (
+      (postType == "GIVE AWAY" && giveaway.beneficiaries == null) ||
+      giveaway.amount == null ||
+      giveaway.delaysecond == null
+    ) {
     } else {
-      type = postType
+      type = postType;
     }
 
-    if (postType == "EVENT" && event.date == null || event.time == null ) { 
+    if ((postType == "EVENT" && event.date == null) || event.time == null) {
     } else {
-      type = postType
+      type = postType;
     }
-
 
     if (blob == "") {
-      photo = null
+      photo = null;
     } else {
-      photo = [{
-          image:blob.url2
-        }]
+      photo = [
+        {
+          image: blob.url2,
+        },
+      ];
     }
-  const postBody = {
-    postType:type, 
-       id: new Date().getTime(),
+    const postBody = {
+      postType: type,
+      id: new Date().getTime(),
       postText,
-      poster: {
-        name: "Ojims Kolinda",
-        school: "RiversStateUniversity",
-        gender: "male",
-        id: "DF87efHJSG",
-        badge: "SUPREME",
-      },
+      poster: {},
       post: {
         time: new Date(),
         text: postText,
@@ -121,31 +128,48 @@ function Home({ appState, loadFeeds, walletAdd }) {
         photo,
         meta: {
           event,
-          giveaway
-        }
-      }, 
+          giveaway,
+        },
+      },
       time: new Date(),
-    }
-if (blob == "" && postText == "") {
-      console.log("dont post")
+    };
+    if (blob == "" && postText == "") {
+      console.log("dont post");
     } else {
-  handleCreatePost(postBody, state, loadFeeds).then(res => {
-    if (res.success == true) {
-          history.push("/") 
+
+       var timeleft = 75;
+    var downloadTimer = setInterval(function () {
+      if (timeleft > 96) {
+        clearInterval(downloadTimer);
+      } else {
+        if (document.getElementById("progressBar") == null) {
+          clearInterval(downloadTimer);
+        } else {
+          document.getElementById("progressBar").value = timeleft;
         }
-      })
+
+        timeleft += 20;
+      }
+    }, 1000);
+      
+
+      handleCreatePost(postBody, state, loadFeeds)
+        .then((res) => {
+          if (res.success == true) {
+            document.getElementById("progressBar").value = 100;
+            history.push("/");
+          }
+        })
+        .catch((error) => {
+          setStateAlert(false);
+          setStates({
+            ...compState,
+            loader: false,
+            alertMsg: "Sorry, a network error occured",
+          });
+        });
     }
-    
-
-
   };
-
-
-
-
-   
-   
- 
 
   const preview = (event) => {
     let files = event.target.files[0];
@@ -184,12 +208,11 @@ if (blob == "" && postText == "") {
       });
   };
 
-
   let url = blob.url2;
 
   // clear file input
   const clear = () => {
-    setBlob('');
+    setBlob("");
   };
 
   let placeholder = "";
@@ -206,8 +229,6 @@ if (blob == "" && postText == "") {
   let history = useHistory();
   const state = appState;
 
- 
- 
   ALLPOSTS.propTypes = {
     loading: PropTypes.bool,
   };
@@ -235,12 +256,17 @@ if (blob == "" && postText == "") {
     }
   }, []);
 
-  const [compState, setStates] = useState("");
+  let successPayload = {
+    title: "SUCCESS",
+    msg: compState.alertMsg,
+    error: false,
+  };
 
- 
- 
-  
- 
+  let errorPayload = {
+    title: "error",
+    msg: compState.alertMsg,
+    error: true,
+  };
 
   return state.loggedIn === false ? (
     <div>
@@ -250,13 +276,14 @@ if (blob == "" && postText == "") {
     <div id="body bg">
       {console.log(state)}
       {/* {state.realtime.length > 0 && <Realtime />} */}
+      {stateAlert === false && alert(errorPayload, setStateAlert)}
       <Realtime />
 
       {/* user session */}
       <checkSession />
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Ogapredictor</title>
+        <title>Aluta-Mate</title>
         <link rel="icon" href={logo} />
       </Helmet>
 
@@ -280,7 +307,14 @@ if (blob == "" && postText == "") {
               <Toppills />
             </div>
 
-            <div style={{ marginTop: "10px" }}>
+            <div>
+              {compState.loading === true && <progress
+                style={{ width: "100%", borderRadius: "0px", height: "5px",  }}
+                value="40"
+                max="100"
+                  id="progressBar"
+                  
+              ></progress>}
               <div
                 style={{
                   height: "",
@@ -458,7 +492,7 @@ if (blob == "" && postText == "") {
                           }}
                         />
                       </FormControl>
-                    </div> 
+                    </div>
 
                     <div
                       style={{
@@ -492,8 +526,8 @@ if (blob == "" && postText == "") {
                         >
                           <MenuItem value={1}>1</MenuItem>
                           <MenuItem value={2}>2</MenuItem>
-                            <MenuItem value={5}>5</MenuItem>
-                            <MenuItem value={10}>10</MenuItem>
+                          <MenuItem value={5}>5</MenuItem>
+                          <MenuItem value={10}>10</MenuItem>
                           <MenuItem value={20}>20</MenuItem>
                           <MenuItem value={50}>50</MenuItem>
                         </Select>
@@ -726,26 +760,34 @@ if (blob == "" && postText == "") {
                         <p className="top-nav-pills-title"> Event</p>
                       </div>
 
-                        {allowSend == true && <div
-                        onClick={() => {
-                          makePost();
+                      {allowSend == true && (
+                          <div
+                            onClick={() => {
+                              makePost();
+                              setStates({
+                                ...compState, loading:true
+                              })
+                              window.scrollTo(0, 0);
                           }}
-                          style={{marginRight:"20px",float:"right",color:"#0a3d62"}}
-                        id="postArea1"
-                        className="top-nav-pills-holder"
-                      >
-                        <span
+                          style={{
+                            marginRight: "20px",
+                            float: "right",
+                            color: "#0a3d62",
+                          }}
                           id="postArea1"
-                          style={{ background: "none", color: "#0a3d62" }}
-                          className="top-nav-pills"
+                          className="top-nav-pills-holder"
                         >
-                          {" "}
-                          <Send id="postArea1" />{" "}
-                        </span>
-                        <p className="top-nav-pills-title"> MAKE POST</p>
-                      </div>}
-
-                      
+                          <span
+                            id="postArea1"
+                            style={{ background: "none", color: "#0a3d62" }}
+                            className="top-nav-pills"
+                          >
+                            {" "}
+                            <Send id="postArea1" />{" "}
+                          </span>
+                          <p className="top-nav-pills-title"> MAKE POST</p>
+                        </div>
+                      )}
                     </div>
                   </>
 

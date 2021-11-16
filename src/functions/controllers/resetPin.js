@@ -64,7 +64,7 @@ export function resetPin(state, resetTPin, smile, setPins, pins) {
                 />
               </div>
               <div style={{textAlign:"center"}}>
-                 <small style={{fontSize:"10px",color:"orange"}}>
+                 <small style={{fontSize:"12px",color:"orange"}}>
                 {"This pin will be required for every financial transaction "}
               </small>
              </div>
