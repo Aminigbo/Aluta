@@ -14,6 +14,7 @@ import {
   ForumOutlined,
   HomeOutlined,
   StorefrontOutlined,
+  
 } from "@material-ui/icons";
 
 import { updateUserMeta } from "../../functions/models/index";
@@ -28,7 +29,14 @@ const smile = {
   color: "white",
   fontSize: "20px",
 };
-function Desktopright({ appState, login_suc }) {
+
+
+const active = {
+  background: "#0a3d62",
+  color:"white"
+}
+
+function Desktopright({ appState, login_suc },props) {
   let history = useHistory();
   const state = appState;
 
@@ -138,10 +146,11 @@ function Desktopright({ appState, login_suc }) {
       )}
 
       <div id=" " className="top-nav-holder">
+        {console.log(split)}
         {stateAlert === null && <span>{history.push("/")}</span>}
         {stateAlert === true && alert(successPayload, setStateAlert)}
         {stateAlert === false && alert(errorPayload, setStateAlert)}
-
+       
         <div
           onClick={() => {
             window.scrollTo(0, 0);
@@ -162,7 +171,7 @@ function Desktopright({ appState, login_suc }) {
           }}
           className="top-nav-pills-holder"
         >
-          <span className="top-nav-pills">
+          <span  style={{background:split == "transfer" && "#0a3d62",color:split == "transfer" && "white"}} className="top-nav-pills">
             {" "}
             <LocalAtm />{" "}
           </span>
@@ -175,7 +184,7 @@ function Desktopright({ appState, login_suc }) {
           }}
           className="top-nav-pills-holder"
         >
-          <span className="top-nav-pills">
+          <span  style={{background:split == "request" && "#0a3d62",color:split == "request" && "white"}} className="top-nav-pills">
             {" "}
             <CardGiftcardOutlined />{" "}
           </span>
@@ -183,36 +192,21 @@ function Desktopright({ appState, login_suc }) {
         </div>
 
         <div
+         
           onClick={() => {
             history.push("/tour");
           }}
+          
           className="top-nav-pills-holder"
         >
-          <span className="top-nav-pills">
+          <span style={{background:split == "tour" && "#0a3d62",color:split == "tour" && "white"}} className="top-nav-pills">
             {" "}
             <EmojiTransportationOutlined />{" "}
           </span>
           <p className="top-nav-pills-title">Tour</p>
         </div>
 
-        {compState.loader && (
-          <div className="loader">
-            {" "}
-            <LinearProgress />
-            {compState.done == true && (
-              <div
-                style={{
-                  position: "relative",
-                  top: "40%",
-                  color: "white",
-                  textAlign: "center",
-                }}
-              >
-                You have successfully updated your school
-              </div>
-            )}
-          </div>
-        )}
+        
 
         {/* <div className="top-nav-pills-holder">
             <span  className="top-nav-pills" >  <ForumOutlined/> </span>
@@ -225,7 +219,7 @@ function Desktopright({ appState, login_suc }) {
           }}
           className="top-nav-pills-holder"
         >
-          <span className="top-nav-pills">
+          <span  style={{background:split == "listmart" && "#0a3d62",color:split == "listmart" && "white"}} className="top-nav-pills">
             {" "}
             <StorefrontOutlined />{" "}
           </span>
@@ -238,14 +232,14 @@ function Desktopright({ appState, login_suc }) {
           }}
           className="top-nav-pills-holder"
         >
-          <span className="top-nav-pills">
+          <span  style={{background:split == "create" && "#0a3d62",color:split == "create" && "white"}} className="top-nav-pills">
             {" "}
             <AddBoxOutlined />{" "}
           </span>
-          <p className="top-nav-pills-title"> CREATE</p>
+          <p className="top-nav-pills-title"> Make post</p>
         </div>
 
-        {/* <div  style={{fontSize:"15px",marginTop:"-11px",color:"orange"}}><b>@RiversStateUniversity</b></div> */}
+        
       </div>
     </>
   );

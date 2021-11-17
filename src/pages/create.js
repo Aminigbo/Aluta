@@ -9,7 +9,7 @@ import Desktopright from "../components/includes/desktopright";
 import Pills from "../components/includes/desktoppillsholder";
 import Toppills from "../components/includes/topdesktoppills";
 import Realtime from "../components/includes/realtime";
-import { logOut, disp_feeds, add_wallet } from "../redux";
+import { draft, disp_feeds, add_wallet } from "../redux";
 import {
   fetchFeeds,
   ALLPOSTS,
@@ -63,7 +63,7 @@ import {
 // @=== import success response from worker function
 import { alert } from "../functions/workers_functions/alert";
 
-function Home({ appState, loadFeeds, walletAdd }) {
+function Home({ appState, loadFeeds, disp_draft }) {
   const [postText, setPostText] = useState("");
   const [blob, setBlob] = useState("");
   const [postType, setPostType] = useState("POST");
@@ -148,26 +148,25 @@ function Home({ appState, loadFeeds, walletAdd }) {
           document.getElementById("progressBar").value = timeleft;
         }
 
-        timeleft += 20;
+        timeleft += 15;
       }
     }, 1000);
       
 
-      handleCreatePost(postBody, state, loadFeeds)
-        .then((res) => {
+      handleCreatePost(postBody, state, loadFeeds,disp_draft)
+        .then(res => {
           if (res.success == true) {
             document.getElementById("progressBar").value = 100;
             history.push("/");
-          }
-        })
-        .catch((error) => {
-          setStateAlert(false);
+          } else { 
+            setStateAlert(false);
           setStates({
             ...compState,
             loader: false,
-            alertMsg: "Sorry, a network error occured",
+            alertMsg: res.message,
           });
-        });
+          }
+        }) 
     }
   };
 
@@ -817,7 +816,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, encoded) => {
   return {
-    logout: () => dispatch(logOut()),
+    disp_draft: (payload) => dispatch(draft(payload)),
     loadFeeds: (payload) => dispatch(disp_feeds(payload)),
     walletAdd: (wallet) => dispatch(add_wallet(wallet)),
   };

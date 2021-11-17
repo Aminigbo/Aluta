@@ -12,9 +12,8 @@ import {
    ALL_ONE_ON_ONE,
    WINNER,
    STAGGED_MATCHES,
-   LEAGUE_STATUS,
-   MATCH_REFRESH,
-   CATEGORIES,
+   ISSIGNAL,
+   DRAFT, 
    CASHOUT,
    oneXoneResults,
    JACKPOT,
@@ -48,18 +47,18 @@ const initialState = {
    WALLET: 0,
    allOneOnOne: [],
    winner: [],
-   stagged: [],
-   league_status: '',
+   stagged: [], 
    refresh: [],
-   categories: [],
+   loading: [],
    cashout: "NO",
    oneXone_results: [],
    realtime: [],
-   jackpots: [],
+   draft: [],
    session: '',
    betslip: [],
    withdrawal: [],
-   feeds:[],
+   feeds: [],
+   signal:"",
    
    // admin withdrawal request noti
    withdrawal_request_noti: [], 
@@ -113,7 +112,7 @@ const reducer = (state = initialState, action) => {
          allOneOnOne: [],
          stagged: [],
          refresh: [],
-         categories: [],
+         loading: false,
          jackpots: [],
          session: -0.1,
          betslip: [],
@@ -163,21 +162,16 @@ const reducer = (state = initialState, action) => {
             stagged:action.stagged
          }
       
-      case LEAGUE_STATUS:
+      case ISSIGNAL:
          return {
             ...state,
-            league_status:action.status
+            signal:action.signal
          }
-      case MATCH_REFRESH:
+      case DRAFT:
          return {
             ...state,
-            refresh:action.refresh
-         }
-      case CATEGORIES:
-         return {
-            ...state,
-            categories:action.categories
-         }
+            draft:action.payload
+         } 
       
       case CASHOUT:
          return {

@@ -6,8 +6,7 @@ import {  PersistGate } from 'redux-persist/integration/react'
 import Home from "./pages/feeds"
 import Login from "./pages/login";
 import Reset from "./pages/reset_pwd"
-import Create from "./pages/create"
-import Categories from "./components/categories.js"
+import Create from "./pages/create" 
 import Register from "./pages/register"
 
 
@@ -104,11 +103,7 @@ export default function App() {
               
               <Route path="/touring/:school">
                 <Touring />  
-              </Route> 
-
-               <Route path="/leagues/:league">
-                <Categories />  
-              </Route>
+              </Route>  
               <Route path="/account/:userId">
                 <Account />  
               </Route>

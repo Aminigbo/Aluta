@@ -13,9 +13,8 @@ import {
    COMPARED_RESULT,
    WINNER,
    STAGGED_MATCHES,
-   LEAGUE_STATUS,
-   MATCH_REFRESH,
-   CATEGORIES,
+   ISSIGNAL,
+   DRAFT, 
    CASHOUT,
    oneXoneResults,
    JACKPOT,
@@ -142,28 +141,22 @@ export const stage_match = (stagged) => {
    }
 }
 
-export const league_status = (status) => {
+export const isSignal = (signal) => {
    return {
-      type: LEAGUE_STATUS,
-      status
+      type: ISSIGNAL,
+      signal
    }
 }
 
-export const match_refresh = (refresh) => {
+export const draft = (payload) => {
    return {
-      type: MATCH_REFRESH,
-      refresh
+      type: DRAFT,
+      payload
    }
 }
 
 
-
-export const disp_categories = (categories) => {
-   return {
-      type: CATEGORIES,
-      categories
-   }
-}
+ 
 
 export const disp_cashout = (cashout) => {
    return {

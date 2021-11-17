@@ -1,172 +1,327 @@
- import  "../../static/css/home/index.css"
-import React, { useState } from 'react' 
-// import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import logo from "../../static/logos/logo2.png"
-import {Dehaze,Search} from '@material-ui/icons'; 
-import { connect } from 'react-redux'
-import {logOut,alloneonone} from '../../redux' 
-import Naira from 'react-naira'
-import {useHistory,Link } from "react-router-dom";
-import {FileCopyOutlined,LibraryAddCheckOutlined} from '@material-ui/icons';
-
-import { ToastContainer, toast, Bounce } from 'react-toastify';
-import { supabase } from '../../configurations/index';  
- 
+import "../../static/css/home/index.css";
+import React, { useState } from "react";
+import logo from "../../static/logos/aluta.png";
+import { Dehaze, Search } from "@material-ui/icons";
+import { connect } from "react-redux";
+import { logOut, alloneonone } from "../../redux";
+import Naira from "react-naira";
+import { useHistory, Link } from "react-router-dom";
 
 import {
-  Container,
-  Grid,
-  useMediaQuery,
-  IconButton,
+  LocalAtm,
+  Money,
+  EmojiTransportationOutlined,
+  CardGiftcardOutlined,
+  StorefrontOutlined,
+  HowToVote,
+  EventNote,
+  AccountBalanceWallet,
+  Receipt,
+  StarOutlined,
+  DraftsOutlined,
+  FiberManualRecord,
+  SignalCellularConnectedNoInternet1BarOutlined,
+  FileCopyOutlined,LibraryAddCheckOutlined
+} from "@material-ui/icons";
+
+import avar from "../../static/logos/logo2.png";
+import { supabase } from "../../configurations/index";
+import {
   List,
   ListItem,
-  ListItemText,
   Divider,
-  SwipeableDrawer,
+  ListItemAvatar,
+  Box,
+  Drawer,
+  Avatar,
 } from "@mui/material";
 
 
-const link = {
-  textDecoration:"none"
-}
-
 const select = {
-  backgroundColor: "#01001A",
-  color:"white"
+  backgroundColor: "#0a3d62",
+  color: "white",
+  textAlign:"center"
 }
 
 const selected = {
   color: "mediumseagreen", 
 }
 
-const menu = { 
-  borderBottom:"0.5px solid lightgray"
-}
- 
 
-function Header({appState,log_out,getOneOnOne}) {
-  const state = appState
+
+function Header({ appState, log_out, getOneOnOne }) {
+  const state = appState;
   let history = useHistory();
 
+  const new_supabase = supabase();
 
+  const [drawerState, setDrawerState] = React.useState({
+    bottom: false,
+  });
+    const [compState, setStates] = useState("")
 
-   const new_supabase = supabase()
-  
-   const reroute_breadcrumb = (link) => {
-      history.push(`/${link}`)
-   }
-  
-  const errorToast = (message) => { 
-    toast.error(message, {
-        position: toast.POSITION.TOP_CENTER,
-        // onClose: () => { console.log("Redirect") },
-        transition: Bounce 
-    });
-  }
-
-  
-
-
-
-   const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  
-  const [searchinput, setsesrchinput] = useState("")
-  const [compState, setStates] = useState("")
-
-
-    const search = (e) => {
-      e.preventDefault()
-      console.log("hello")
-    if (searchinput.length < 1) {
-      errorToast("Kindly enter challange code")
-    } else {
-      setStates({ ...compState, loader: true })
-      
-      new_supabase
-      .from('challenge')
-      .select('*')
-      .eq('code', searchinput)
-      .then(response => { 
-          if (response.body.length < 1) {
-            errorToast("Challange do not exist")
-            setStates({ ...compState, loader: false}) 
-          } else {
-            console.log(response.body)
-            getOneOnOne(response.body)  // save all active one on one to redux
-            history.push(`/search/${searchinput}`)
-            console.log(searchinput)
-            setStates({ ...compState, loader: false}) 
-        } 
-      })
-      .catch(error => {
-        errorToast("A network error occured")
-        setStates({ ...compState, loader: false}) 
-      })
-
+  const toggleDrawer = (anchor, open, post) => (event) => {
+    console.log("okk");
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
     }
-  }
-  
+
+    setDrawerState({ ...drawerState, [anchor]: open });
+  };
+
+  const list = (anchor) => (
+    <Box sx={{ width: 270, height: "400px" }} role="presentation">
+      <List>
+        <img alt="Aluta Meter" style={{ width: "120px" }} src={logo} />
+        <small style={{ float: "right", marginRight: "30px" , color: "crimson"}}> 
+          <DraftsOutlined /> <br />
+          <small>Draft</small>
+        </small>
+        <div
+          style={{ padding: "0px 10px", fontSize: "13px", color: "#0a3d62" }}
+        >
+          <b>@{state.loggedInUser.user.meta.school}</b>
+        </div>
+      </List>
+      <Divider />
+
+      <List
+        style={{ padding: "5px" }}
+        onClick={() => {
+          setDrawerState({ ...drawerState, ["left"]: false });
+        }}
+      >
+        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
+        <div
+          style={{
+            width: " ",
+            padding: "3px",
+            background: " ",
+            display: "inline-block",
+          }}
+        >
+          <Avatar
+            style={{ float: " " }}
+            alt="Remy Sharp"
+            src="/static/images/avatar/1.jpg"
+          >
+            {state.loggedInUser.user.fullname[0]}
+          </Avatar>
+        </div>
+        &nbsp;&nbsp;<span>{state.loggedInUser.user.fullname}</span> <br />
+        
+      </List>
+
+      <Divider />
+
+      <List
+        style={select}
+      >  
+        <b onClick={() => { setStates({ ...compState, copy: true }); navigator.clipboard.writeText(state.loggedInUser.user.meta.beneficiaryId) }}
+          >  {state.loggedInUser.user.meta.beneficiaryId} &nbsp;&nbsp;
+          {compState.copy == true ?  <LibraryAddCheckOutlined  style={selected}/>: <FileCopyOutlined/> }</b>
+      </List>
 
 
+      <Divider />
+      <List
+        onClick={() => {
+          setDrawerState({ ...drawerState, ["left"]: false });
+          history.push("/giveaway");
+        }}
+        style={{ padding: "15px" }}
+      >
+        <Money /> &nbsp;
+        <b>Give away</b>
+        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
+      </List>
+      <Divider />
+      <List
+        onClick={() => {
+          setDrawerState({ ...drawerState, ["left"]: false });
+          history.push("/events");
+        }}
+        style={{ padding: "15px" }}
+      >
+        <EventNote /> &nbsp;
+        <b>Events</b>
+        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
+      </List>
+      <Divider />
+      <List
+        onClick={() => {
+          setDrawerState({ ...drawerState, ["left"]: false });
+          history.push("/listmart");
+        }}
+        style={{ padding: "15px" }}
+      >
+        <StorefrontOutlined /> &nbsp;
+        <b>Aluta market</b>
+        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
+      </List>
+      <Divider />
+      <List
+        onClick={() => {
+          setDrawerState({ ...drawerState, ["left"]: false });
+          history.push("/tour");
+        }}
+        style={{ padding: "15px" }}
+      >
+        <EmojiTransportationOutlined /> &nbsp;
+        <b>Campus tour</b>
+        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
+      </List>
+      <Divider />
+      <List
+        onClick={() => {
+          setDrawerState({ ...drawerState, ["left"]: false });
+          history.push("/transfer");
+        }}
+        style={{ padding: "15px" }}
+      >
+        <LocalAtm /> &nbsp;
+        <b>Buz me</b>
+        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
+      </List>
+      <Divider />
+      <List
+        onClick={() => {
+          setDrawerState({ ...drawerState, ["left"]: false });
+          history.push("/request");
+        }}
+        style={{ padding: "15px" }}
+      >
+        <CardGiftcardOutlined /> &nbsp;
+        <b>Request buz</b>
+        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
+      </List>
+      <Divider />
+      <List
+        onClick={() => {
+          setDrawerState({ ...drawerState, ["left"]: false });
+          // history.push("/giveaway");
+        }}
+        style={{ padding: "15px" }}
+      >
+        <HowToVote /> &nbsp;
+        <b>Contests</b>
+        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
+      </List>
+      <Divider />
+      <List
+        onClick={() => {
+          setDrawerState({ ...drawerState, ["left"]: false });
+          // history.push("/giveaway");
+        }}
+        style={{ padding: "15px" }}
+      >
+        <AccountBalanceWallet /> &nbsp;
+        <b>Add cash</b>
+        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
+      </List>
+      <Divider />
+      <List
+        onClick={() => {
+          setDrawerState({ ...drawerState, ["left"]: false });
+          // history.push("/giveaway");
+        }}
+        style={{ padding: "15px" }}
+      >
+        <Receipt /> &nbsp;
+        <b>Withdraw</b>
+        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
+      </List>
+    </Box>
+  );
 
   return (
-     <div id="topNav">
-         <Link style={link} to="/"><img alt="hello" id="icon" src={logo}/> </Link>  
-         
-         <Dehaze  className="menu"  onClick={handleClick}  />
-         
-         <form  onSubmit={(e)=>{search(e)}} className="searchForm">
-        <b style={{fontSize:"15px"}}>Aluta Meter</b>
-         </form>
-          <b className="bal"><Naira>{state.loggedInUser.user.meta.wallet}</Naira></b>
-      <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose} >
-        
-        <MenuItem
-          onClick={() => { setStates({ ...compState, copy: true }); navigator.clipboard.writeText(state.loggedInUser.user.OgPin) }}
-          style={select}>ID: {state.loggedInUser.user.meta.beneficiaryId} &nbsp;&nbsp;
-          {compState.copy == true ?  <LibraryAddCheckOutlined  style={selected}/>: <FileCopyOutlined/> }
-        </MenuItem>
-          <MenuItem style={menu} onClick={() => { history.push(`/account/${state.loggedInUser.user.username}`)}}>Account</MenuItem>
-          <MenuItem style={menu} onClick={ ()=>{history.push("/topup")}} >Top Up</MenuItem>
-          <MenuItem style={menu}  onClick={() => { history.push(`/withdraw`)}} >Withdraw</MenuItem>
-          <MenuItem style={menu}  onClick={() => { history.push(`/terms`)}}>Terms & Conditions</MenuItem> 
-          <MenuItem style={menu} onClick={() => { history.push(`/responsible`) }} >Responsible gambling</MenuItem>
-          <MenuItem style={menu} onClick={() => { handleClose(); history.push(`/predict`)}} >Predict</MenuItem>
-          <MenuItem onClick={() => { log_out(); history.push("/")}}>Logout</MenuItem>
-          
-      </Menu>
-      
-      
+    <div>
+      <div
+       
+      >
+         {state.signal == false && 
+        <div
+          style={{
+            padding: " ",
+            background: "crimson",
+            position: "sticky",
+            top: "0px",
+            zIndex: "1000",
+            color: "white",
+            textAlign: "center",
+            fontSize:"14px"
+          }}
+        >
+          You are currently offline &nbsp; <SignalCellularConnectedNoInternet1BarOutlined />
+        </div>}
+        <ListItem style={{
+          marginTop: "0px",
+          background: " #0a3d62",
+          position: "sticky",
+          top: "0px",
+          zIndex: "1000",
+          padding: "15px 0px",
+          color: "white",
+        }}>
+          <ListItemAvatar>
+            {/* <img alt="Aluta Meter" style={{width:"70px"}}  src={logo}/>  */}
+            <img alt="Aluta Meter" style={{ width: "40px" }} src={logo} />
+          </ListItemAvatar>{" "}
+          &nbsp;&nbsp;
+          {/* <b><ListItemText
+            style={{color:"white"}}
+                  primary={state.loggedInUser.user.meta.school}
+                  secondary="+99 new activities"
+          /></b> */}
+          <b style={{ color: "white", fontSize: "15px" }}>
+            @{state.loggedInUser.user.meta.school}
+          </b>
+          <Dehaze
+            style={{ color: "white", position: " absolute", right: "10px" }}
+            className="menu"
+            onClick={toggleDrawer("left", true)}
+          />
+          {state.draft.length > 0 && (
+            <span
+               onClick={toggleDrawer("left", true)}
+              style={{
+                color: "crimson",
+                position: " absolute",
+                right: "10px",
+                fonrSize: "30px",
+                top: "0px",
+              }}
+            ><FiberManualRecord /></span>
+          )}
+        </ListItem>
+      </div>
 
-     </div> 
+      <React.Fragment key="left">
+        <Drawer
+          anchor="left"
+          open={drawerState["left"]}
+          onClose={toggleDrawer("left", false, false)}
+        >
+          {list("left")}
+        </Drawer>
+      </React.Fragment>
+    </div>
   );
 }
-const mapStateToProps = state => { 
+const mapStateToProps = (state) => {
   return {
-    appState: state.user
-  }
-}
+    appState: state.user,
+  };
+};
 
-
-const mapDispatchToProps = (dispatch,encoded) => {
+const mapDispatchToProps = (dispatch, encoded) => {
   return {
     log_out: () => dispatch(logOut()),
     getOneOnOne: (data) => dispatch(alloneonone(data)),
-  }
-}
+  };
+};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Header)
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

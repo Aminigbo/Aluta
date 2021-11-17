@@ -8,7 +8,7 @@ import Desktopright from "../components/includes/desktopright";
 import Pills from "../components/includes/desktoppillsholder";
 import Toppills from "../components/includes/topdesktoppills";
 import Realtime from "../components/includes/realtime";
-import { logOut, disp_feeds, add_wallet } from "../redux";
+import { logOut, disp_feeds, add_wallet, isSignal } from "../redux";
 import { ALLPOSTS } from "../functions/controllers/feeds";
 import { Helmet } from "react-helmet";
 import logo from "../static/logos/logo2.png";
@@ -24,16 +24,18 @@ import { createPanel } from "../components/create";
 // @== import from feeds controller
 import { returnFeeds } from "../functions/controllers/feeds";
 
-function Home({ appState, loadFeeds, walletAdd }) {
+function Home({ appState, loadFeeds, disp_signal }) {
   let history = useHistory();
   const state = appState;
-
+  const schoolFeeds = state.feeds.filter(
+    (e) => e.poster.school == state.loggedInUser.user.meta.school
+  );
   function renderFeeds(allFeeds) {
     allFeeds.sort(function (a, b) {
       return parseFloat(b.id) - parseFloat(a.id);
     });
 
-    return allFeeds.map((feeds) => {
+    return schoolFeeds.map((feeds) => {
       return (
         <ALLPOSTS
           loading={false}
@@ -94,18 +96,16 @@ function Home({ appState, loadFeeds, walletAdd }) {
 
   React.useEffect((compState) => {
     window.scrollTo(0, 0);
-    setStates({ ...compState, loader: true})
+    // setStates({ ...compState, loader: true });
     // setTimeout(() => setStates({ ...compState, loader: false }), 500);
     if (state.loggedIn == true) {
       returnFeeds(
-      state.loggedInUser.user.meta.school,
-      loadFeeds,
-      state.feeds,
-      setStates, 
-    ).then(res => {
-     setStates({ ...compState, loader: false})
-      // setTimeout(() => setStates({ ...compState, loader: false }), 4000);
-    })
+        state.loggedInUser.user.meta.school,
+        loadFeeds,
+        disp_signal,
+        setStates,
+        compState
+      ) 
     }
     // fetch_feeds()
     loadFeeds(state.feeds);
@@ -116,19 +116,12 @@ function Home({ appState, loadFeeds, walletAdd }) {
     }
   }, []);
 
-  // show loader when rerouting
-  let reroute = (category) => {
-    // history.push(`./leagues/${category.id}`)
-    setStates({ ...compState, loader: true });
-    setTimeout(() => history.push(`./leagues/${category.id}`), 500);
-  };
-
   const [drawerState, setDrawerState] = React.useState({
     bottom: false,
   });
 
   const toggleDrawer = (anchor, open, post) => (event) => {
-    console.log('okk')
+    console.log("okk");
     if (post != false) {
       setPostToComment(post.data.id);
     }
@@ -253,7 +246,8 @@ function Home({ appState, loadFeeds, walletAdd }) {
                 >
                   EVENTS
                   <ArrowRightOutlined style={{ marginLeft: "-4px" }} />
-                </Link>
+                </Link>{" "}
+                <br />
               </div>
             </div>
             {createPanel(
@@ -284,7 +278,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
                 {renderFeeds(state.feeds)}
               </div>
             ) : (
-              <ALLPOSTS loading data={[]}  />
+              <ALLPOSTS loading data={[]} />
             )}
             <Pills />
           </div>
@@ -312,6 +306,8 @@ const mapDispatchToProps = (dispatch, encoded) => {
     logout: () => dispatch(logOut()),
     loadFeeds: (payload) => dispatch(disp_feeds(payload)),
     walletAdd: (wallet) => dispatch(add_wallet(wallet)),
+    disp_signal: (signal) => dispatch(isSignal(signal)),
+    // isSignal
   };
 };
 

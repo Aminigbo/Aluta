@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect, useHistory,Link } from "react-router-dom";
 import { connect } from "react-redux";
 import "../static/css/home/index.css";
 
@@ -9,7 +9,7 @@ import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
 import { add_wallet, logOut } from "../redux";
 import Toppills from "../components/includes/topdesktoppills";
-
+import { AddBoxOutlined, Send } from "@material-ui/icons";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -130,17 +130,30 @@ function Home({ appState }) {
           <div>
             <div
               style={{
-                textAlign: "center",
                 marginTop: "10px",
                 background: " #f4f6f7",
                 position: "sticky",
                 top: "0px",
                 zIndex: "1000",
-                padding: "0px",
+                padding: "0px  ",
               }}
             >
-              {" "}
               <Toppills />
+              <div style={{ marginTop: "-5px" }}>
+                <Link
+                  to="giveaway"
+                  style={{
+                    marginLeft: "10px",
+                    fontSize: "13px",
+                    color: "#0a3d62",
+                    textDecoration: "none",
+                  }}
+                >
+                  Create store &nbsp;
+                  <AddBoxOutlined style={{ marginLeft: "-4px" }} />
+                </Link> 
+                <br /><br />
+              </div>
             </div>
 
             <div animateIn="fadeIn">

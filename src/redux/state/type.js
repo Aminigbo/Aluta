@@ -23,11 +23,9 @@ export const WINNER = "WINNER"
 
 export const STAGGED_MATCHES = "STAGGED_MATCHES"
 
-export const LEAGUE_STATUS = "LEAGUE_STATUS"
+export const ISSIGNAL = "ISSIGNAL"
 
-export const MATCH_REFRESH = "MATCH_REFRESH"
-
-export const CATEGORIES = "CATEGORIES"
+export const DRAFT = "DRAFT" 
 
 export const CASHOUT = "CASHOUT"
 

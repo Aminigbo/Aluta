@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Redirect, useHistory, Link } from "react-router-dom";
+import { Redirect, useHistory, useParams, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import "../static/css/home/index.css";
 import Footer from "../components/includes/mobile_footer.js";
@@ -18,7 +18,6 @@ import {
   CommentOutlined,
   ThumbDownOutlined,
   Send,
-  
 } from "@material-ui/icons";
 import PropTypes from "prop-types";
 import {
@@ -30,24 +29,40 @@ import {
   Skeleton,
   TextareaAutosize,
 } from "@mui/material";
-import "../static/css/feed.css"; 
+import "../static/css/feed.css";
 import { addComment } from "../functions/controllers/comments"; // importing all the comment controllers
 import { handleAddLike, handleUnlike } from "../functions/controllers/likes"; // importing likes controllers
 
+import {
+  List,
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+  Avatar,
+  Divider,
+  Typography,
+  Box,
+  Drawer,
+} from "@mui/material";
 
-import {List,ListItem,ListItemText,ListItemAvatar,Avatar,Divider,Typography,Box,Drawer} from "@mui/material"; 
+import { allUniversities } from "../functions/utils/index";
+
 
 
 function Home({ appState, loadFeeds, walletAdd }) {
   let history = useHistory();
   const state = appState;
+  const { school } = useParams();
+  const allSCHOOLS = allUniversities();
+  const TOUREDSCHOOL = allSCHOOLS.filter(e => e.label == school)[0]
 
+  const schoolFeeds = state.feeds.filter((e) => e.poster.school == school);
   function renderFeeds(allFeeds) {
     allFeeds.sort(function (a, b) {
       return parseFloat(b.id) - parseFloat(a.id);
     });
 
-    return allFeeds.map((feeds) => {
+    return schoolFeeds.map((feeds) => {
       return (
         <ALLPOSTS
           loading={false}
@@ -109,9 +124,10 @@ function Home({ appState, loadFeeds, walletAdd }) {
     // fetch_feeds()
     loadFeeds(state.feeds);
     //  loadFeeds(posts)
+    console.log(school);
   }, []);
 
-  const [compState, setStates] = useState(""); 
+  const [compState, setStates] = useState("");
 
   const [drawerState, setDrawerState] = React.useState({
     bottom: false,
@@ -213,19 +229,21 @@ function Home({ appState, loadFeeds, walletAdd }) {
                 zIndex: "1000",
                 padding: "0px  ",
               }}
-            > 
-                <ListItem 
-                >
-                  <ListItemAvatar>
-                    <Avatar>
-                      <img style={{width:"40px"}} src={"https://tethys-engineering.pnnl.gov/sites/default/files/styles/large/public/taxonomy-images/riversstate.png?itok=Y8Oyls7d"} />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={'Rivers State University'}
-                    // secondary="+99 new activities"
-                  />
-                </ListItem>
+            >
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <img
+                      style={{ width: "40px" }}
+                      src={TOUREDSCHOOL.img}
+                    />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary={school}
+                  // secondary="+99 new activities"
+                />
+              </ListItem>
               <Toppills />
             </div>
 
@@ -245,8 +263,14 @@ function Home({ appState, loadFeeds, walletAdd }) {
               </div>
             ) : (
               <ALLPOSTS loading />
-            )}
-            <Pills />
+              )}
+              
+              {schoolFeeds.length < 1 && 
+              <div style={{textAlign:"center", marginTop:"40%"}}>No avilable feed from <br /> <b>{school}</b> !  <br /><br />
+                      <Link style={{ textDecoration: "none" }} to="/tour" >Check other school</Link>
+                </div>
+              }
+            {/* <Pills /> */}
           </div>
           <br />
         </div>

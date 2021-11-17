@@ -18,24 +18,28 @@ import {
   FavoriteBorderOutlined,
   CommentOutlined,
   ThumbDownOutlined,
-   Send,
-   PublicOutlined,
-  MoreHorizOutlined
+  Send,
+  PublicOutlined,
+  MoreHorizOutlined,
 } from "@material-ui/icons";
 import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia"; 
+import CardMedia from "@mui/material/CardMedia";
 import Skeleton from "@mui/material/Skeleton";
 import "../static/css/feed.css";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { Avatar, Typography, Grid, Paper } from "@mui/material";
-import { handleAddLike, handleUnlike, likedPost } from "../functions/controllers/likes"; // importing likes controllers 
-import { commentDuration, API_URL } from "../functions/utils/index"
+import {
+  handleAddLike,
+  handleUnlike,
+  likedPost,
+} from "../functions/controllers/likes"; // importing likes controllers
+import { commentDuration, API_URL } from "../functions/utils/index";
 
 // import giveaway claim controller
-import {claimGiveaway} from "../functions/controllers/giveaway"
+import { claimGiveaway } from "../functions/controllers/giveaway";
 
 function Home({ appState, loadFeeds, walletAdd }) {
   let history = useHistory();
@@ -44,62 +48,44 @@ function Home({ appState, loadFeeds, walletAdd }) {
 
   const post_to_comment = state.feeds.filter((e) => e.id == postId)[0];
 
-  function renderFeeds(allFeeds) { 
-    console.log(post_to_comment)
-    
+  function renderFeeds(allFeeds) {
+    console.log(post_to_comment);
+
     return <Media loading={false} data={post_to_comment} />;
   }
 
-  
-
   // claim give away
   const claim = () => {
-    claimGiveaway(post_to_comment).then(res => {
-      console.log(res)
-    })
-  }
-  
+    claimGiveaway(post_to_comment).then((res) => {
+      console.log(res);
+    });
+  };
 
-
-  const [isClaim, setIsClaim] = useState(false)
+  const [isClaim, setIsClaim] = useState(false);
   function timeout() {
-    let delaysecond = ""
+    let delaysecond = "";
     if (post_to_comment.postType == "GIVE AWAY") {
-      delaysecond = post_to_comment.post.meta.giveaway.delaysecond
-      
+      delaysecond = post_to_comment.post.meta.giveaway.delaysecond;
 
       var timeleft = delaysecond;
-  var downloadTimer = setInterval(function(){
-    if(timeleft <1){
-      clearInterval(downloadTimer);
-      console.log('delaysecond')
-      setIsClaim(true) 
-      
+      var downloadTimer = setInterval(function () {
+        if (timeleft < 1) {
+          clearInterval(downloadTimer);
+          console.log("delaysecond");
+          setIsClaim(true);
+        } else {
+          if (document.getElementById("progressBar") == null) {
+            clearInterval(downloadTimer);
+          } else {
+            document.getElementById("progressBar").innerHTML = `- ${timeleft}`;
+          }
+          timeleft -= 1;
+        }
+      }, 1000);
     } else {
-      
-      if (document.getElementById("progressBar") == null) {
-        clearInterval(downloadTimer);
-      } else { 
-        document.getElementById("progressBar").innerHTML =`- ${ timeleft}`;
-      }
-      timeleft -= 1;
-      
+      delaysecond = "";
     }
-  }, 1000); 
-      
-
-    } else {
-      delaysecond =""
-    } 
-
-    
-    
-
-
   }
-      
-
-
 
   // render all comments
   const allComments = (allFeeds) => {
@@ -141,19 +127,19 @@ function Home({ appState, loadFeeds, walletAdd }) {
   };
 
   const [comment, setComment] = useState("");
-
+  const [school, setSchool] = useState("") 
   function Media(props) {
     const { loading = false, data } = props;
-    let label = "" 
+    let label = "";
     if (data) {
-    if (data.postType == "GIVE AWAY") {
-   label = `GIVE AWAY  -  NGN ${data.post.meta.giveaway.amount}`
-  } else if (data.postType == "POST") {
-    
-  } else if(data.postType == "EVENT") {
-    label = `EVENT  -   ${data.post.meta.event.date} |  ${data.post.meta.event.time}`
-  }
-  }
+      if (data.postType == "GIVE AWAY") {
+        label = `GIVE AWAY  -  NGN ${data.post.meta.giveaway.amount}`;
+      } else if (data.postType == "POST") {
+      } else if (data.postType == "EVENT") {
+        label = `EVENT  -   ${data.post.meta.event.date} |  ${data.post.meta.event.time}`;
+      }
+    }
+    setSchool(data.poster.school)
     return (
       <>
         <CardHeader
@@ -171,13 +157,16 @@ function Home({ appState, loadFeeds, walletAdd }) {
                   console.log("hello");
                 }}
                 alt="Ted talk"
-                src="https://www.slazzer.com/static/images/home-page/banner-orignal-image.jpg"
+                 src={data.poster.avater}
               />
             )
           }
           action={
             loading ? null : (
-               <> <MoreHorizOutlined style={{fontSize:" 30px"}} /> </>
+              <>
+                {" "}
+                <MoreHorizOutlined style={{ fontSize: " 30px" }} />{" "}
+              </>
             )
           }
           title={
@@ -198,12 +187,19 @@ function Home({ appState, loadFeeds, walletAdd }) {
             loading ? (
               <Skeleton animation="wave" height={10} width="40%" />
             ) : (
-                   <> <small>@{data.poster.school}</small> <span style={{ fontSize: "12px" }}> &nbsp;&nbsp;
-                      {/* {commentDuration(data.post.time)} */}
-                </span>.<PublicOutlined style={{ fontSize: "15px" }} />
+              <>
+                {" "}
+                <small>@{data.poster.school}</small>{" "}
+                <span style={{ fontSize: "12px" }}>
+                  {" "}
+                  &nbsp;&nbsp;
+                  {/* {commentDuration(data.post.time)} */}
+                </span>
+                .<PublicOutlined style={{ fontSize: "15px" }} />
                 <br />
-                  <b style={{ color: "black", fontSize: "14px" }}>{label}</b> <br />
-                </>
+                <b style={{ color: "black", fontSize: "14px" }}>{label}</b>{" "}
+                <br />
+              </>
             )
           }
         />
@@ -214,16 +210,16 @@ function Home({ appState, loadFeeds, walletAdd }) {
             variant="rectangular"
           />
         ) : (
-          
-            <div>{data.post.photo != null &&
-           <CardMedia 
-          component="img"
-          // height="220"
-          image ={`${API_URL}images/posts/${data.post.photo}`}
-          alt="image"
-            />
-            }</div>
-            
+          <div>
+            {data.post.photo != null && (
+              <CardMedia
+                component="img"
+                // height="220"
+                image={`${API_URL}images/posts/${data.post.photo}`}
+                alt="image"
+              />
+            )}
+          </div>
         )}
 
         <CardContent>
@@ -257,7 +253,9 @@ function Home({ appState, loadFeeds, walletAdd }) {
                 }}
               >
                 <FavoriteBorderOutlined
-                  style={{ color: likedPost(data.likes,state) == true ? "red" : "" }}
+                  style={{
+                    color: likedPost(data.likes, state) == true ? "red" : "",
+                  }}
                   onClick={() => {
                     handleLike(data.id);
                   }}
@@ -277,7 +275,9 @@ function Home({ appState, loadFeeds, walletAdd }) {
                 }}
               >
                 <ThumbDownOutlined
-                  style={{ color: likedPost(data.unlikes,state) == true ? "red" : "" }}
+                  style={{
+                    color: likedPost(data.unlikes, state) == true ? "red" : "",
+                  }}
                   onClick={() => {
                     handleUnlikes(data.id);
                   }}
@@ -302,8 +302,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
                     document.getElementById("commentInput").focus();
                   }}
                 />
-                  <div style={{ fontSize: "11px" }}>{data.comments.length}</div>
-                  
+                <div style={{ fontSize: "11px" }}>{data.comments.length}</div>
               </div>
               <div
                 style={{
@@ -318,30 +317,42 @@ function Home({ appState, loadFeeds, walletAdd }) {
                   marginLeft: "10px",
                 }}
               >
-                  {/* <small id="progressBar">
+                {/* <small id="progressBar">
                     <progress value="0" max="10" id="progressBar"></progress>
                   </small> */}
-                  
 
-              {data.postType == "GIVE AWAY" &&     
-                <b
+                {data.postType == "GIVE AWAY" && (
+                  <b
                     className="link"
-                   id="clainHolder"
-                  style={{ float: "right", fontSize: "15px" }}
+                    id="clainHolder"
+                    style={{ float: "right", fontSize: "15px" }}
                   >
-
-                    {isClaim == true ? <button
-                       id="progressBar"
-                      style={{background:"#0a3d62", color:"white",border:"none",outline:"none",borderRadius:"6px"}}
-                      id="claimBTN"
-                      onClick={() => {
-                        claim()
-                      }} 
-                    >Claim </button> : <>   <b  id="progressBar"></b> </>}
-                    
-                    
-                 
-                </b>}
+                    {isClaim == true ? (
+                      <button
+                        id="progressBar"
+                        style={{
+                          background: "#0a3d62",
+                          color: "white",
+                          border: "none",
+                          outline: "none",
+                          borderRadius: "6px",
+                          padding:"5px 10px"
+                        }}
+                        id="claimBTN"
+                        onClick={() => {
+                          claim();
+                        }}
+                      >
+                        Claim{" "}
+                      </button>
+                    ) : (
+                      <>
+                        {" "}
+                        <b id="progressBar"></b>{" "}
+                      </>
+                    )}
+                  </b>
+                )}
               </div>
             </Typography>
           )}
@@ -362,10 +373,9 @@ function Home({ appState, loadFeeds, walletAdd }) {
   };
 
   React.useEffect((compState) => {
-    // window.scrollTo(0, 0); 
-    // loadFeeds(state.feeds);  
-  }, []); 
-  
+    // window.scrollTo(0, 0);
+    // loadFeeds(state.feeds);
+  }, []);
 
   const [compState, setStates] = useState("");
 
@@ -398,8 +408,8 @@ function Home({ appState, loadFeeds, walletAdd }) {
         <div className="header_footer">
           {/* <Footer /> */}
           {/* <Header /> */}
-            {/* <ArrowBackIosOutlined /> */}
-            {timeout()}
+          {/* <ArrowBackIosOutlined /> */}
+          {timeout()}
         </div>
         <div>
           <div>
@@ -412,14 +422,12 @@ function Home({ appState, loadFeeds, walletAdd }) {
                 zIndex: "1000",
                 padding: "0px",
               }}
-              >
-                
-                <b style={{ color: "#0a3d62", padding: "0px 10px" }}>
-                Rivers State University
+            >
+              <b style={{ color: "#0a3d62", padding: "0px 10px" }}>
+                {school}
               </b>
 
-                <Toppills /> 
-                
+              <Toppills />
             </div>
 
             {compState.loader != true ? (
@@ -492,7 +500,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
               <Media loading />
             )}
             {/* <Pills /> */}
-          </div>  
+          </div>
         </div>
       </div>
 

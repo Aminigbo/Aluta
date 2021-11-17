@@ -60,7 +60,7 @@ export async function fetchAllFeeds(payload) {
   return new_supabase
     .from("feeds")
     .select(`*, comments(*), post_likes(*), unlikes(*)`)
-    .eq("school", payload);
+    // .eq("school", payload);
 }
 
 // @============  GET USERS OF A PARTICULAY UNIVERSITY
@@ -96,7 +96,12 @@ export async function addLikes(payload) {
           .eq("post", payload.post)
           .eq("userId", payload.userId);
       }
-    });
+    }).catch(error => {
+      return {
+        error: true,
+        message:"A network error occured"
+      }
+    })
 }
 
 // @====== ADD UNLIKE
@@ -125,7 +130,12 @@ export async function addUnlike(payload) {
           .eq("post", payload.post)
           .eq("userId", payload.userId);
       }
-    });
+    }).catch(error => {
+      return {
+        error: true,
+        message:"A network error occured"
+      }
+    })
 }
 
 export async function updateUserMeta(payload) {

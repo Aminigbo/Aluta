@@ -9,10 +9,8 @@ import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
 import { LinearProgress } from "@material-ui/core";
 import { supabase } from "../configurations";
-import { add_wallet, logOut, disp_feeds } from "../redux";
-import Toppills from "../components/includes/topdesktoppills";
-import { ToastContainer, toast } from "react-toastify";
-import { resetPin } from "../functions/controllers/resetPin";
+import { add_wallet, logOut, disp_feeds, draft } from "../redux";
+import Toppills from "../components/includes/topdesktoppills"; 
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { fetchUsersOfUniversity } from "../functions/models/index";
 import {
@@ -115,7 +113,7 @@ const smile = {
   fontSize: "30px",
 };
 
-function Home({ appState, walletAdd, logout, loadFeeds }) {
+function Home({ appState, disp_draft, logout, loadFeeds }) {
   let history = useHistory();
   const state = appState;
   const new_supabase = supabase();
@@ -258,18 +256,27 @@ function Home({ appState, walletAdd, logout, loadFeeds }) {
               timeleft += 20;
             }
           }, 1000);
-          handleCreatePost(postBody, state, loadFeeds).then((res) => {
-            if (res.success == true) {
-              document.getElementById("progressBar").value = 100;
-              setStateAlert(true);
-              setStates({
-                ...compState,
-                loader: false,
-                success: true,
-                alertMsg: "You request have been placed successfully",
-              });
+          handleCreatePost(postBody, state, loadFeeds, disp_draft).then(
+            (res) => {
+              if (res.success == true) {
+                document.getElementById("progressBar").value = 100;
+                setStateAlert(true);
+                setStates({
+                  ...compState,
+                  loader: false,
+                  success: true,
+                  alertMsg: res.message,
+                });
+              } else {
+                setStateAlert(false);
+                setStates({
+                  ...compState,
+                  loader: false,
+                  alertMsg: res.message,
+                });
+              }
             }
-          });
+          );
         }
       } else {
         setStateAlert(false);
@@ -490,6 +497,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, encoded) => {
   return {
+    disp_draft: (payload) => dispatch(draft(payload)),
     walletAdd: (wallet) => dispatch(add_wallet(wallet)),
     loadFeeds: (payload) => dispatch(disp_feeds(payload)),
     logout: () => dispatch(logOut()),

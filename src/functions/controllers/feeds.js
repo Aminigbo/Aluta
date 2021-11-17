@@ -28,49 +28,38 @@ import { fetchAllFeeds } from "../models/index";
 let new_supabase = supabase();
 
 // fetch feeds from database
-export async function returnFeeds(school, loadFeeds) {
-  fetchAllFeeds(school).then((res) => {
-    let arry = [];
-    if (res.body != null) {
-      res.body.map((posts) => {
-        let new_feeds = {
-          ...posts.data,
-          comments: posts.comments,
-          likes: posts.post_likes,
-          unlikes: posts.unlikes,
-          feed_id: posts.data.id,
-          id: posts.id,
-        };
-        arry.push(new_feeds);
-      });
-      loadFeeds(arry);
-    }
-    // console.log(res)
-  });
-  return {
-    success: true,
-  };
-}
-
-export async function fetchFeeds(loadFeeds) {
-  let loadedData = null;
-  return new_supabase
-    .from("feeds")
-    .select(`*, requsts(*)`)
-    .neq("type", "NEW BUZ")
-    .eq("isActive", true)
-    .then((fetched) => {
-      if (fetched.body.length < 1) {
-        loadFeeds([]);
-        return (loadedData = error("No feed found"));
+export async function returnFeeds(school, loadFeeds, disp_signal, setStates, compState) {
+  setStates({ ...compState, loader: true });
+  fetchAllFeeds(school)
+    .then((res) => {
+      let arry = [];
+      if (res.body != null) {
+        res.body.map((posts) => {
+          let new_feeds = {
+            ...posts.data,
+            comments: posts.comments,
+            likes: posts.post_likes,
+            unlikes: posts.unlikes,
+            feed_id: posts.data.id,
+            id: posts.id,
+          };
+          arry.push(new_feeds);
+        });
+        loadFeeds(arry);
+        disp_signal(true);
+        setStates({ ...compState, loader: false });
       } else {
-        loadFeeds(fetched.body);
-        return (loadedData = success("Feeds fetched", fetched.body));
+        disp_signal(false);
+        setStates({ ...compState, loader: false });
       }
     })
-    .catch((errors) => {
-      return (loadedData = error("A network error occured"));
+    .catch((error) => {
+      disp_signal(false);
+      setStates({ ...compState, loader: false });
     });
+}
+
+export async function fetchFeeds(loadFeeds) { 
 }
 
 //  respond to all Buz request
@@ -208,7 +197,7 @@ export function ALLPOSTS(props) {
                 console.log("hello");
               }}
               alt="Ted talk"
-              src="https://www.slazzer.com/static/images/home-page/banner-orignal-image.jpg"
+              src={data.poster.avater}
             />
           )
         }
@@ -216,7 +205,7 @@ export function ALLPOSTS(props) {
           loading ? null : (
             <>
               {" "}
-              <MoreHorizOutlined style={{ fontSize: " 30px" }} />{" "}
+              {/* <MoreHorizOutlined style={{ fontSize: " 30px" }} />{" "} */}
             </>
           )
         }
@@ -307,6 +296,7 @@ export function ALLPOSTS(props) {
                 display: "inline-block",
               }}
             >
+              &nbsp;{" "}
               <FavoriteBorderOutlined
                 style={{
                   color: likedPost(data.likes, state) == true ? "red" : "",
@@ -315,7 +305,7 @@ export function ALLPOSTS(props) {
                   handleLike(data.id);
                 }}
               />
-              <div style={{ fontSize: "11px" }}>{data.likes.length}</div>
+              <span style={{ fontSize: "11px" }}>{data.likes.length}</span>
             </div>
             <div
               style={{
@@ -329,6 +319,7 @@ export function ALLPOSTS(props) {
                 display: "inline-block",
               }}
             >
+              &nbsp;{" "}
               <ThumbDownOutlined
                 style={{
                   color: likedPost(data.unlikes, state) == true ? "red" : "",
@@ -337,7 +328,7 @@ export function ALLPOSTS(props) {
                   handleUnlikes(data.id);
                 }}
               />
-              <div style={{ fontSize: "11px" }}>{data.unlikes.length}</div>
+              <span style={{ fontSize: "11px" }}>{data.unlikes.length}</span>
             </div>
             <div
               style={{
@@ -351,12 +342,13 @@ export function ALLPOSTS(props) {
                 display: "inline-block",
               }}
             >
+              &nbsp;{" "}
               <CommentOutlined
                 onClick={() => {
                   history.push(`/reaction/${data.id}`);
                 }}
               />
-              <div style={{ fontSize: "11px" }}>{data.comments.length}</div>
+              <span style={{ fontSize: "11px" }}>{data.comments.length}</span>
             </div>
             <div
               style={{
@@ -401,28 +393,29 @@ export function ALLPOSTS(props) {
 }
 
 // CREATE POST
-export async function handleCreatePost(payload, state, loadFeeds) {
+export async function handleCreatePost(payload, state, loadFeeds, disp_draft) {
   let { gender, school } = state.loggedInUser.user.meta;
   let name = state.loggedInUser.user.fullname;
   let id = state.loggedInUser.meta.id;
+  let avater = state.loggedInUser.user.meta.avater
   let postId = new Date().getTime() + "@" + id + "@" + new Date().getTime();
   let poster = {
     name,
     school,
     gender,
     id,
+    avater
   };
 
-  
-// @====================  CHECK IF USER IS POSTING WITH IMAGE
-  let setPostPrivacy = ""
+  // @====================  CHECK IF USER IS POSTING WITH IMAGE
+  let setPostPrivacy = "";
   if (payload.postType != "BUZ REQUEST") {
-    setPostPrivacy = {privacy:"ALL"}
+    setPostPrivacy = { privacy: "ALL" };
   } else {
-    setPostPrivacy = payload.postPrivacy
+    setPostPrivacy = payload.postPrivacy;
   }
-  
-  let new_payload = { ...payload, poster, id: postId,setPostPrivacy };
+
+  let new_payload = { ...payload, poster, id: postId, setPostPrivacy };
   if (payload.post.file === undefined) {
     // !====user is not posting with image
     return new_supabase
@@ -434,24 +427,37 @@ export async function handleCreatePost(payload, state, loadFeeds) {
           school: poster.school,
           data: new_payload,
           time: JSON.stringify(payload.post.time),
-          privacy:setPostPrivacy
+          privacy: setPostPrivacy,
         },
       ])
       .then((res) => {
-        let newData = {
-          ...res.body[0].data,
-          likes: [],
-          unlikes: [],
-          comments: [],
-          success: true,
-        };
-        state.feeds.push(newData);
-        loadFeeds(state.feeds);
-        console.log(res.body[0]);
-        return success("Done", { success: true });
+        if (res.body === null) {
+          console.log(res);
+          state.draft.push(new_payload);
+          disp_draft(state.draft);
+          return error(
+            "Your operation could not be completed due to network error. Your post has been save to draft."
+          );
+        } else {
+          let newData = {
+            ...res.body[0].data,
+            likes: [],
+            unlikes: [],
+            comments: [],
+            success: true,
+          };
+          state.feeds.push(newData);
+          loadFeeds(state.feeds);
+          console.log(res.body[0]);
+          return success("Done", { success: true });
+        }
       })
       .catch((error) => {
-        return success("Done", { success: false });
+        state.draft.push(new_payload);
+        disp_draft(state.draft);
+        return error(
+          "Your operation could not be completed due to network error. Your post has been save to draft."
+        );
       });
   } else {
     // @======   user is posting with image
@@ -477,6 +483,8 @@ export async function handleCreatePost(payload, state, loadFeeds) {
           return success("Done", { success: true });
         }
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => {
+        return error("Done");
+      });
   }
 }

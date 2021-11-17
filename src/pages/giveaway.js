@@ -55,6 +55,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
           handleLike={handleLike}
           history={history}
           toggleDrawer={toggleDrawer}
+          state={state}
         />
       );
     });

@@ -1,59 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import "../static/css/home/index.css";
 
 import Header from "../components/includes/mobile_header.js";
-import Footer from "../components/includes/mobile_footer.js";
+import { LinearProgress } from "@material-ui/core";
 import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
-import { add_wallet, logOut } from "../redux";
+import { add_wallet, logOut, loginSuc } from "../redux";
 import Toppills from "../components/includes/topdesktoppills";
-
-// import {ListItem,List,ListItemText,Divider} from '@mui/material/ListItem';
-// import List from "@mui/material/List";
-// import ListItem from "@mui/material/ListItem";
-// import ListItemText from "@mui/material/ListItemText";
-// import Divider from "@mui/material/Divider";
-
-import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar"; 
-import Divider from "@mui/material/Divider";
-import {allUniversities} from "../functions/utils/index"
-function Home({ appState }) {
+import Avatar from "@mui/material/Avatar";
+import { allUniversities } from "../functions/utils/index";
+import { updateUserMeta } from "../functions/models/index";
+import Search from "search-react-input";
 
+const smile = {
+  color: "white",
+  fontSize: "20px",
+  background:"#f3f3f3"
+};
 
+function Home({ appState, login_suc }) {
+  const countries = allUniversities();
+  const [compState, setStates] = useState({
+    data: [],
+    value: "",
+    done: false,
+  });
+  const [capturedSearch, setCapturedSearch] = useState(null);
 
-  let listOfSchools = () => {
-    allUniversities().sort(function (a, b) {
-      return parseFloat(b.label) - parseFloat(a.label);
+  React.useEffect((compState) => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const setSchool = (school) => {
+    let user = state.loggedInUser.user;
+    let newUser = {
+      ...user,
+      meta: { ...user.meta, school: school.label },
+    };
+    let payload = {
+      email: user.email,
+      newUser,
+    };
+
+    const data = {
+      user: newUser,
+      meta: state.loggedInUser.meta,
+    };
+
+    setStates({
+      ...compState,
+      loader: true,
     });
-    return allUniversities().map(schl => { 
-      return (
-        <>
-          <ListItem
-                  onClick={() => {
-                    history.push(`touring/${schl.value}`);
-                  }}
-                >
-                  <ListItemAvatar>
-                    <Avatar>
-                      <img style={{width:"40px"}} src={schl.img} />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={schl.label}
-                    // secondary="+99 new activities"
-                  />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-          </>
-      )
-    })
-  }
+    updateUserMeta(payload).then((res) => {
+      if (res.success == true) {
+        login_suc(data);
+        setTimeout(() => history.push("/"), 2000);
+        setStates({
+          ...compState,
+          done: true,
+          loader: true,
+        });
+      } else {
+        setStates({
+          ...compState,
+          done: true,
+        });
+      }
+    });
+  };
 
   const style = {
     width: "100%",
@@ -73,8 +92,9 @@ function Home({ appState }) {
       <Redirect to="/login" />
     </div>
   ) : (
-    <div id="body bg">
-      <div className="mobile">
+    <div id="body bg"> 
+      <>
+        <div className="mobile">
         <div className="header_footer">
           {/* <Footer /> */}
           <Header />
@@ -95,21 +115,67 @@ function Home({ appState }) {
             >
               {" "}
               <Toppills />
-            </div>
-
-            <div animateIn="fadeIn">
-              <div style={{ padding: "5px 10px",color:"lightgray" }}>
-                <b>Take a tour round other universities</b>
+            </div>{" "}
+            <div className=" " style={{marginTop:"20px"}}>
+              <div className="realtimeParent">
+                {/* <div className="realtimeHeader" style={smile}>
+                  CAMPUS TOUR
+                </div> */}
+                <div className="realtimeBody">
+                  <b> Welcome to Campus Tour</b> <br />
+                  <br />
+                  Search for the university you want to take a tour to and we will take you there 
+                  <div
+                    style={{
+                      marginTop: "20px",
+                      // width: "80%",
+                      // marginLeft: "5%",
+                      background: " ",
+                      textAlign: "center",
+                    }}
+                    >
+                      <br />
+                    <Search
+                      width="80vw"
+                      spellcheck={true}
+                      placeholder="Search for your school..."
+                      options={countries}
+                      onChange={(option, e) => setCapturedSearch(option)}
+                    />{" "}
+                  </div> <br />  <br /> 
+                </div>
               </div>
-              <List
-                sx={{
-                  width: "100%",
-                  maxWidth: 360,
-                  bgcolor: "background.paper",
-                }}
-              >
-                 {listOfSchools()}
-              </List>
+            </div>
+            <br />
+            <br />
+            <div
+              style={{
+                marginTop: "-10px",
+                width: "90%",
+                marginLeft: "5%",
+                backgroundColor: " ",
+                textAlign: "center",
+              }}
+            >
+              {capturedSearch && (
+                // "Hello and welcome to " + capturedSearch.label}
+                <ListItem
+                  style={{ background: "lightgray", borderRadius: "4px" }}
+                  onClick={() => {
+                    history.push(`touring/${capturedSearch.label}`);
+                  }}
+                > 
+                  <ListItemAvatar>
+                    <Avatar>
+                      <img style={{ width: "40px" }} src={capturedSearch.img} />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={capturedSearch.label}
+                    // secondary="+99 new activities"
+                  />
+                </ListItem>
+              )}
             </div>
           </div>
         </div>
@@ -117,6 +183,8 @@ function Home({ appState }) {
 
       <Desktopleft />
       <Desktopright />
+      </>
+      
     </div>
   );
 }
@@ -131,6 +199,7 @@ const mapDispatchToProps = (dispatch, encoded) => {
   return {
     walletAdd: (wallet) => dispatch(add_wallet(wallet)),
     logout: () => dispatch(logOut()),
+    login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
   };
 };
 

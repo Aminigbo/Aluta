@@ -14,7 +14,7 @@ import { supabase } from '../configurations';
 import { Link } from "react-router-dom";  
 import {WhoLoggedIn} from "./admin/controllers/session" 
 import {LinearProgress } from '@material-ui/core'; 
-import {logOut,allMatches,stage_match,league_status,seePredicted} from '../redux'  
+import {logOut,allMatches,stage_match,seePredicted} from '../redux'  
 
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 
@@ -1625,9 +1625,9 @@ function Home({ appState,logout,disp_allMatches, disp_stage_match,disp_league_st
           setStates({ ...compState,default:false, addMatch: false,seePredictions: false,addResult: false,addCategory:true}) }}>Add category</Link> 
           
           
-           {state.league_status == 'ACTIVE' ? <Link className="breadcrumb_pill actionBtn deactivate" id="" onClick={()=>{
+           {/* {state.league_status == 'ACTIVE' ? <Link className="breadcrumb_pill actionBtn deactivate" id="" onClick={()=>{
              deactivateLeague()
-           }} >DEACTIVE LEAGUES</Link> :''}
+           }} >DEACTIVE LEAGUES</Link> :''} */}
           
           
       </div>
@@ -1790,7 +1790,7 @@ const mapDispatchToProps = (dispatch,encoded) => {
     logout: () => dispatch(logOut()),
     disp_allMatches: (all_matches) => dispatch(allMatches(all_matches)),
     disp_stage_match: (stagged) => dispatch(stage_match(stagged)),
-    disp_league_state: (status) => dispatch(league_status(status)),
+    // disp_league_state: (status) => dispatch(league_status(status)),
     disp_predicted: (predicted) => dispatch(seePredicted(predicted)),
   }
 }

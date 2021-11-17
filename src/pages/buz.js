@@ -17,9 +17,8 @@ import { CreditCardOutlined } from "@material-ui/icons";
 import Toppills from "../components/includes/topdesktoppills";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 
-import Pills from "../components/includes/desktoppillsholder";
-
-import { resetPin } from "../functions/controllers/resetPin";
+// @=== import success response from worker function
+import { alert } from "../functions/workers_functions/alert";
 
 const rec_inputs = {
   margin: "5%",
@@ -115,36 +114,20 @@ function Home({ appState, walletAdd, logout }) {
   const [beneficiary, setbeneficiary] = useState("");
   const [pin, setPin] = useState("");
   const [desc, setDesc] = useState("");
-
-  const infoToast = (res) => {
-    toast.info(res, {
-      position: toast.POSITION.TOP_CENTER,
-      // onClose: () => {history.push(`/`)}
-    });
-  };
-  const errorToast = (res) => {
-    toast.error(res, {
-      position: toast.POSITION.TOP_CENTER,
-    });
-  };
-  const boxedToast = (res) => {
-    toast.success(res, {
-      position: toast.POSITION.TOP_CENTER,
-      // onClose: () => {history.push(`/`)}
-    });
-  };
-
-  const reroute_breadcrumb = (link) => {
-    history.push(`/${link}`);
-  };
-
   const [compState, setStates] = useState("");
+  const [stateAlert, setStateAlert] = useState("");
 
   //  ONKEYUP,  CONFIRM IF THERE IS A USER WITH SUCH BENEFICIARY ID
   async function verifyBeneficiary(beneficiaryID) {
     if (beneficiaryID.length == 10) {
       if (amount.length < 1 || amount < 50) {
-        infoToast("Enter a valid amount");
+        // infoToast("Enter a valid amount");
+        setStateAlert(false);
+        setStates({
+          ...compState,
+          loader: false,
+          alertMsg: "Enter a valid amount",
+        });
       } else {
         document.getElementById("beneficiary").blur(); // deactivate the input
         setStates({ ...compState, loader: true }); //  set loader to true
@@ -157,11 +140,23 @@ function Home({ appState, walletAdd, logout }) {
             // console.log(resolve)
             if (resolve.body.length < 1) {
               setStates({ ...compState, resolved: false, loader: false });
-              infoToast("Beneficiary not resolved");
+              // infoToast("Beneficiary not resolved");
+              setStateAlert(false);
+              setStates({
+                ...compState,
+                loader: false,
+                alertMsg: "Beneficiary not found",
+              });
             } else {
               let beneficiary = resolve.body[0];
               if (beneficiary.id == state.loggedInUser.user.id) {
-                infoToast("Sorry, you can't Buz yourself some cash");
+                // infoToast("Sorry, you can't Buz yourself some cash");
+                setStateAlert(false);
+                setStates({
+                  ...compState,
+                  loader: false,
+                  alertMsg: "Sorry, you can not buz yourself",
+                });
                 setStates({ ...compState, resolved: false });
               } else {
                 setStates({
@@ -177,12 +172,24 @@ function Home({ appState, walletAdd, logout }) {
           })
           .catch((error) => {
             setStates({ ...compState, loader: false });
+            setStateAlert(false);
+            setStates({
+              ...compState,
+              loader: false,
+              alertMsg:
+                "Your operation could not be completed due to network error",
+            });
           });
       }
     } else {
       setStates({ ...compState, loader: false, resolved: false });
-      infoToast("Provide beneficiary");
-      console.log(beneficiaryID);
+      // infoToast("Provide beneficiary");
+      setStateAlert(false);
+      setStates({
+        ...compState,
+        loader: false,
+        alertMsg: "Please provide a valid beneficiary ID",
+      });
     }
   }
 
@@ -196,18 +203,42 @@ function Home({ appState, walletAdd, logout }) {
 
   const initiateTransaction = () => {
     if (!desc || !pin || !amount || !beneficiary) {
-      infoToast("Provide all fields");
+      // infoToast("Provide all fields");
+      setStateAlert(false);
+      setStates({
+        ...compState,
+        loader: false,
+        alertMsg: "Please fill out all fields",
+      });
     } else if (amount < 50) {
-      infoToast("Amount below minimum Box limit");
+      // infoToast("Amount below minimum Box limit");
+      setStateAlert(false);
+      setStates({
+        ...compState,
+        loader: false,
+        alertMsg: "The amount you entered is below minimum Buz me linit",
+      });
     } else {
       if (parseInt(amount) > parseInt(state.wallet)) {
-        infoToast("Insufficient balance");
+        // infoToast("Insufficient balance");
+        setStateAlert(false);
+        setStates({
+          ...compState,
+          loader: false,
+          alertMsg: "You have insufficient wallet balance",
+        });
       } else {
         setStates({ ...compState, loader: true });
         let newBenefWallet = parseInt(amount) + parseInt(compState.benefWallet);
         let newBoxerWallet = parseInt(state.wallet) - parseInt(amount);
         if (pin != state.loggedInUser.user.pin) {
-          infoToast("Incorrect transaction pin");
+          // infoToast("Incorrect transaction pin");
+          setStateAlert(false);
+          setStates({
+            ...compState,
+            loader: false,
+            alertMsg: "Please provide your correct transaction pin",
+          });
           setStates({ ...compState, resolved: false, loader: false });
           setbeneficiary("");
         } else {
@@ -259,9 +290,15 @@ function Home({ appState, walletAdd, logout }) {
                         ])
                         .then((insert_response) => {
                           walletAdd(newBoxerWallet);
-                          boxedToast(
-                            `Yeahh!!!  you buzzed ${amount} to ${compState.benef}`
-                          );
+                          // boxedToast(
+                          //   `Yeahh!!!  you buzzed ${amount} to ${compState.benef}`
+                          // );
+                          setStateAlert(true);
+                          setStates({
+                            ...compState,
+                            loader: false,
+                            alertMsg: `Yeahh!!!  you buzzed ${amount} to ${compState.benef}`,
+                          });
                           setStates({
                             ...compState,
                             resolved: false,
@@ -274,11 +311,30 @@ function Home({ appState, walletAdd, logout }) {
                 });
             })
             .catch((error) => {
-              errorToast("A network error occured");
+              // errorToast("A network error occured");
+              setStateAlert(false);
+              setStates({
+                ...compState,
+                loader: false,
+                alertMsg:
+                  "Your operation could not be completed due to network error",
+              });
             });
         }
       }
     }
+  };
+
+  let successPayload = {
+    title: "SUCCESS",
+    msg: compState.alertMsg,
+    error: false,
+  };
+
+  let errorPayload = {
+    title: "error",
+    msg: compState.alertMsg,
+    error: true,
   };
 
   return state.loggedIn === false ? (
@@ -287,6 +343,11 @@ function Home({ appState, walletAdd, logout }) {
     </div>
   ) : (
     <div id="body bg">
+      {stateAlert === true && alert(successPayload, setStateAlert)}
+      {stateAlert === false && alert(errorPayload, setStateAlert)}
+      {compState.success === true && (
+        <span>{stateAlert === null && <span>{history.push("/")}</span>}</span>
+      )}
       {/* {resetPin(state, history, smile)} */}
       <ToastContainer autoClose={2000} />
       <div className="mobile">
@@ -328,7 +389,7 @@ function Home({ appState, walletAdd, logout }) {
                   <span>Topup</span> <span className="logout">History</span>
                 </div>
 
-                <div style={{borderColor:"#2C3A47"}} className="paypanel">
+                <div style={{ borderColor: "#2C3A47" }} className="paypanel">
                   <div style={paymentTitle}>
                     <p>
                       BUZ ME &nbsp; <CreditCardOutlined style={smile} />

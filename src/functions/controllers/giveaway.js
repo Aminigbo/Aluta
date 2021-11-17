@@ -9,5 +9,5 @@ const sessionUser = {
 };
 
 export async function claimGiveaway(data, user) {
-   // return error("You claimed", data)
+   return error("You claimed", data)
 }
