@@ -165,3 +165,7 @@ export async function updateUserMeta(payload) {
 
 
  
+//  @============  fetch user profile
+export async function fetchUserProfile(payload) {
+  return new_supabase.from("users").select(`*, feeds(*)`).eq('id', payload)
+}

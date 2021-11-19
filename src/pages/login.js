@@ -126,7 +126,7 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
                       user:{...response2.body[0],meta:response2.body[0].meta},
                       meta: signin_response.data,
                     };
-                    walletAdd(data.user.wallet);
+                    walletAdd(data.user.meta.wallet);
                     login_suc(data); 
               
                   }

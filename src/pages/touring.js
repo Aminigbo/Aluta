@@ -47,15 +47,62 @@ import {
 
 import { allUniversities } from "../functions/utils/index";
 
-
+import { fetchAllFeeds } from "../functions/models/index";
 
 function Home({ appState, loadFeeds, walletAdd }) {
   let history = useHistory();
   const state = appState;
   const { school } = useParams();
   const allSCHOOLS = allUniversities();
-  const TOUREDSCHOOL = allSCHOOLS.filter(e => e.label == school)[0]
+  const TOUREDSCHOOL = allSCHOOLS.filter((e) => e.label == school)[0];
 
+  
+  const [comment, setComment] = useState("");
+  const [postToComment, setPostToComment] = useState("");
+const [compState, setStates] = useState("");
+
+  const [drawerState, setDrawerState] = React.useState({
+    bottom: false,
+  });
+  ALLPOSTS.propTypes = {
+    loading: PropTypes.bool,
+  };
+
+  React.useEffect((compState) => {
+    window.scrollTo(0, 0);
+    setStates({ ...compState, loader: true})
+    // setTimeout(() => setStates({ ...compState, loader: false }), 500);
+
+    // fetch_feeds()
+    loadFeeds(state.feeds);
+
+    fetchAllFeeds(school).then((res) => {
+      let arry = [];
+      if (res.body != null) {
+        res.body.map((posts) => {
+          let new_feeds = {
+            ...posts.data,
+            comments: posts.comments,
+            likes: posts.post_likes,
+            unlikes: posts.unlikes,
+            feed_id: posts.data.id,
+            id: posts.id,
+          };
+          arry.push(new_feeds);
+        });
+        loadFeeds(arry);
+        // disp_signal(true);
+        setStates({ ...compState, loader: false });
+      } else {
+        // disp_signal(false);
+        setStates({ ...compState, loader: false });
+      }
+    });
+  }, []);
+
+  
+
+  
   const schoolFeeds = state.feeds.filter((e) => e.poster.school == school);
   function renderFeeds(allFeeds) {
     allFeeds.sort(function (a, b) {
@@ -102,36 +149,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
     }
   };
 
-  const [comment, setComment] = useState("");
-  const [postToComment, setPostToComment] = useState("");
-
-  ALLPOSTS.propTypes = {
-    loading: PropTypes.bool,
-  };
-
-  // fetch feeds from db
-  const fetch_feeds = () => {
-    // fetchFeeds(loadFeeds).then((fetched) => {
-    //   console.log(fetched);
-    // });
-  };
-
-  React.useEffect((compState) => {
-    window.scrollTo(0, 0);
-    // setStates({ ...compState, loader: true})
-    // setTimeout(() => setStates({ ...compState, loader: false }), 500);
-
-    // fetch_feeds()
-    loadFeeds(state.feeds);
-    //  loadFeeds(posts)
-    console.log(school);
-  }, []);
-
-  const [compState, setStates] = useState("");
-
-  const [drawerState, setDrawerState] = React.useState({
-    bottom: false,
-  });
+  
 
   const toggleDrawer = (anchor, open, post) => (event) => {
     if (post != false) {
@@ -233,10 +251,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
               <ListItem>
                 <ListItemAvatar>
                   <Avatar>
-                    <img
-                      style={{ width: "40px" }}
-                      src={TOUREDSCHOOL.img}
-                    />
+                    <img style={{ width: "40px" }} src={TOUREDSCHOOL.img} />
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
@@ -262,14 +277,18 @@ function Home({ appState, loadFeeds, walletAdd }) {
                 {renderFeeds(state.feeds)}
               </div>
             ) : (
-              <ALLPOSTS loading />
-              )}
-              
-              {schoolFeeds.length < 1 && 
-              <div style={{textAlign:"center", marginTop:"40%"}}>No avilable feed from <br /> <b>{school}</b> !  <br /><br />
-                      <Link style={{ textDecoration: "none" }} to="/tour" >Check other school</Link>
-                </div>
-              }
+              <ALLPOSTS loading data={[]}  />
+            )}
+
+            {schoolFeeds.length < 1 && (
+              <div style={{ textAlign: "center", marginTop: "40%" }}>
+                No avilable feed from <br /> <b>{school}</b> ! <br />
+                <br />
+                <Link style={{ textDecoration: "none" }} to="/tour">
+                  Check other school
+                </Link>
+              </div>
+            )}
             {/* <Pills /> */}
           </div>
           <br />

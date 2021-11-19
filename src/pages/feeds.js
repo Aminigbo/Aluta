@@ -257,9 +257,9 @@ function Home({ appState, loadFeeds, disp_signal }) {
                 >
                   {/* <AccountBalanceWalletOutlined
                     style={{ marginLeft: "" }}
-                  /> */}
-                   
-                    <b  style={{color: "#0a3d62",fontSize:"14px"}} >NGN - {state.loggedInUser.user.meta.wallet}</b> 
+                  /> */} 
+                  
+                    <b  style={{ color: "#0a3d62", fontSize: "14px" }}>{state.loggedInUser.user.meta.wallet} <s>BUZ</s></b>
                 </Link>{" "}
                 <br />
               </div>

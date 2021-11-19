@@ -401,7 +401,7 @@ export function ALLPOSTS(props) {
 export async function handleCreatePost(payload, state, loadFeeds, disp_draft) {
   let { gender, school } = state.loggedInUser.user.meta;
   let name = state.loggedInUser.user.fullname;
-  let id = state.loggedInUser.meta.id;
+  let id = state.loggedInUser.user.id;
   let avater = state.loggedInUser.user.meta.avater;
   let postId = new Date().getTime() + "@" + id + "@" + new Date().getTime();
   let poster = {
@@ -429,6 +429,7 @@ export async function handleCreatePost(payload, state, loadFeeds, disp_draft) {
         {
           feed_id: postId,
           poster: poster,
+          posterId:id,
           school: poster.school,
           data: new_payload,
           time: JSON.stringify(payload.post.time),
@@ -506,6 +507,7 @@ export async function handleCreatePost(payload, state, loadFeeds, disp_draft) {
                 feed_id: postId,
                 poster: poster,
                 school: poster.school,
+                posterId:id,
                 data: newDataToUpload,
                 time: JSON.stringify(payload.post.time),
                 privacy: setPostPrivacy,

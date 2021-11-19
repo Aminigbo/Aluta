@@ -93,6 +93,7 @@ function Header({ appState, log_out, getOneOnOne }) {
         style={{ padding: "5px" }}
         onClick={() => {
           setDrawerState({ ...drawerState, ["left"]: false });
+           history.push(`profile/${state.loggedInUser.user.fullname}/${state.loggedInUser.user.id}`)
         }}
       >
         {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
@@ -112,7 +113,10 @@ function Header({ appState, log_out, getOneOnOne }) {
             {state.loggedInUser.user.fullname[0]}
           </Avatar>
         </div>
-        &nbsp;&nbsp;<span>{state.loggedInUser.user.fullname}</span> <br />
+        &nbsp;&nbsp;<span>{state.loggedInUser.user.fullname}</span> 
+       <div style={{textAlign:"center"}}>
+           <b  style={{ color: "#0a3d62", fontSize: "14px" }}>{state.loggedInUser.user.meta.wallet} <s>BUZ</s></b>
+       </div>
         
       </List>
 

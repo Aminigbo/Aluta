@@ -18,8 +18,7 @@ import Account from "./pages/account.js"
 import Setschool from "./pages/setschool.js"
 import Topup from "./components/topup"
 import Withdraw from "./components/withdraw"
-import Otp from "./components/otp"
-import Admin from "./components/admin"
+import Otp from "./components/otp" 
 import Giveaway from "./pages/giveaway"
 import Terms from "./components/tc"
 import Responsible from "./components/responsible"
@@ -30,8 +29,7 @@ import Listmart from "./pages/marketlist"
 import Requestbuz from "./pages/requestBuz"
 import Reactions from "./pages/reactions"
 
-// admin view users
-import AdminUsers from "./components/admin/includes/users"
+ 
 import {
   BrowserRouter as Router,
   Switch,
@@ -69,20 +67,15 @@ export default function App() {
               </Route>
               <Route path="/giveaway">
                 <Giveaway />
-              </Route>
-
-              {/* rout admin */}
-              <Route path="/admin">
-                <Admin />  
-              </Route>
+              </Route> 
               
               {/* admin view users  AdminUsers*/}
               <Route path="/events">
                 <Events />
               </Route>
               
-              <Route path="/withdrawal/user/:username/:userId">
-                <AdminUsers />
+              <Route path="/profile/:profileId/:userId">
+                <Account />
               </Route>
               
               <Route path="/request" >

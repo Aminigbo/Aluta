@@ -124,7 +124,7 @@ function Home({ appState, login_suc }) {
           setStates({
             ...compState,
             alertMsg:
-              "Your profile if set and ready to be recognized. Have fun while you explore Aluta Meter",
+              "Your profile is set and ready to be recognized. Have fun while you explore Aluta Meter",
           });
         } else {
           setStateAlert(false);

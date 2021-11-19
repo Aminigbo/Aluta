@@ -3,7 +3,7 @@ import "../../static/css/top-nav.css";
 import { LinearProgress } from "@material-ui/core";
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { logOut, loginSuc } from "../../redux";
+import { logOut, loginSuc,add_wallet } from "../../redux";
 import { useHistory, Link } from "react-router-dom";
 import {
   LocalAtm,
@@ -22,7 +22,7 @@ import { updateUserMeta } from "../../functions/models/index";
 import { trigger, resetPin } from "../../functions/controllers/resetPin";
 
 // @=== import success response from worker function
-import { alert } from "../../functions/workers_functions/alert";
+import { alert,BuzAlert } from "../../functions/workers_functions/alert";
 
 // importing realtime controller
 // import { buzSubscription } from "../../functions/controllers/realtime";
@@ -38,7 +38,7 @@ const active = {
   color: "white",
 };
 
-function Desktopright({ appState, login_suc }, props) {
+function Desktopright({ appState, login_suc,addwallet }) {
   let history = useHistory();
   const state = appState;
 
@@ -135,40 +135,29 @@ function Desktopright({ appState, login_suc }, props) {
   const sub = () => {
       new_supabase
       .from(`buz-me:to=eq.${userId}`)
-      .on("INSERT", (payload) => {
-        // return [payload.new];
-        // console.log(payload.new)
-        const response = payload.new;
-        // console.log(response)
+      .on("INSERT", (payload) => { 
+        const response = payload.new; 
         let myNewWallet =
-          parseInt(state.loggedInUser.user.meta.wallet) +
+          parseInt(state.wallet) +
           parseInt(response.meta.data.amount);
-
-        // setting giver's new data
-        let buzzerNewWallet = {
-          ...state.loggedInUser.user.meta,
-          wallet: myNewWallet,
-        };
-
-        const newUserData = {
-          user: { ...state.loggedInUser.user, meta: buzzerNewWallet },
-          meta: state.loggedInUser.meta,
-        };
-        console.log(newUserData)
-        setGotbuzzed({
-          ...gotbuzzed,
-          status: true,
-          data:newUserData
-        }) 
-        login_suc(gotbuzzed.data); 
+        
+        // addwallet(myNewWallet)
         setStates({
-          ...compState, alertMsg: ` NGN -  ${response.meta.data.amount} || ${response.meta.data.desc}`,
-          title: `Buz Alert from ${response.meta.sender.fullname}`
+          ...compState, payload: response,
+          myNewWallet
         })
-        setStateAlert(true) 
+        setStateAlert('buzAlert') 
       })
       .subscribe();
-   }
+  }
+  
+  // @=====  claim the alert
+  const claimBuz = () => {
+    // addwallet(compState.myNewWallet)
+    setStateAlert(null)
+    history.push(`/profile/${state.loggedInUser.user.fullname}/${state.loggedInUser.user.id}`)
+  }
+
   React.useEffect(() => {
     sub()
   }, []);
@@ -206,7 +195,8 @@ function Desktopright({ appState, login_suc }, props) {
         {/* {console.log(split)} */}
         {stateAlert === null && <span>{history.push("/")}</span>}
         {stateAlert === true && alert(successPayload, setStateAlert)}
-        {stateAlert === false && alert(errorPayload, setStateAlert)} 
+        {stateAlert === false && alert(errorPayload, setStateAlert)}
+         {stateAlert == 'buzAlert' && BuzAlert(compState.payload, claimBuz)}
         <div
           onClick={() => {
             window.scrollTo(0, 0);
@@ -334,6 +324,7 @@ const mapDispatchToProps = (dispatch, encoded) => {
   return {
     logout: () => dispatch(logOut()),
     login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
+    addwallet: (walletBal) => dispatch(add_wallet(walletBal)),
   };
 };
 
