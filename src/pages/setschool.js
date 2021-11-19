@@ -39,17 +39,19 @@ function Home({ appState, login_suc }) {
     let user = state.loggedInUser.user;
     let newUser = {
       ...user,
-      meta: { ...user.meta, school: school.label },
+      meta: {...state.loggedInUser.user.meta, school: school.label },
     };
     let payload = {
       email: user.email,
-      newUser,
+      newUser:newUser.meta,
     };
 
     const data = {
       user: newUser,
       meta: state.loggedInUser.meta,
     };
+
+    console.log(payload)
 
     setStates({
       ...compState,

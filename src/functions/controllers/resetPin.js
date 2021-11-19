@@ -12,7 +12,7 @@ export function trigger(state, history, smile) {
 export function resetPin(state, resetTPin, smile, setPins, pins) {
   return (
     <div>
-      {state.loggedInUser.user.meta.beneficiaryid == "0000" && (
+      {state.loggedInUser.user.meta.transactionPin == "0000" && (
         <div className="realtime">
           <div className="realtimeParent">
             <div className="realtimeHeader" style={smile}>

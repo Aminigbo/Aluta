@@ -11,7 +11,7 @@ export async function handleRegister(formData) {
     fullname:name,
     meta: {
       password: password,
-      wallet: 0,
+      wallet: 2000,
       transactionPin: '0000',
       beneficiaryId: code(`${phone}${new Date().getTime()}`),
       role: 0,

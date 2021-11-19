@@ -12,10 +12,9 @@ import Realtime from "../components/includes/realtime";
 import { Link } from "react-router-dom";
 import { LinearProgress } from "@material-ui/core";
 import { supabase } from "../configurations";
-import { add_wallet, logOut } from "../redux";
+import { loginSuc, logOut } from "../redux";
 import { CreditCardOutlined } from "@material-ui/icons";
-import Toppills from "../components/includes/topdesktoppills";
-import { ToastContainer, toast, Bounce } from "react-toastify";
+import Toppills from "../components/includes/topdesktoppills"; 
 
 // @=== import success response from worker function
 import { alert } from "../functions/workers_functions/alert";
@@ -99,7 +98,7 @@ const logoutBtn = {
   cursor: "pointer",
 };
 
-function Home({ appState, walletAdd, logout }) {
+function Home({ appState, login_suc, logout }) {
   let history = useHistory();
   const state = appState;
   const new_supabase = supabase();
@@ -133,45 +132,35 @@ function Home({ appState, walletAdd, logout }) {
         setStates({ ...compState, loader: true }); //  set loader to true
 
         new_supabase
-          .from("user")
+          .from("users")
           .select("*")
-          .eq("OgPin", beneficiary)
+          // .eq("beneficiaryId", beneficiary)
+          .contains("meta", { beneficiaryId: beneficiary })
           .then((resolve) => {
-            // console.log(resolve)
-            if (resolve.body.length < 1) {
+            console.log(resolve);
+            if (resolve.data.length > 0) {
+              let beneficiary = resolve.body[0];
+              setStates({
+                ...compState,
+                loader: false,
+                resolved: true,
+                benef: beneficiary.fullname,
+                benefId: beneficiary.id,
+                benefWallet: beneficiary.meta.wallet,
+                beneficiaryMeta: beneficiary.meta,
+              });
+            } else {
               setStates({ ...compState, resolved: false, loader: false });
-              // infoToast("Beneficiary not resolved");
               setStateAlert(false);
               setStates({
                 ...compState,
                 loader: false,
-                alertMsg: "Beneficiary not found",
+                alertMsg: "Beneficiary not foundeee",
               });
-            } else {
-              let beneficiary = resolve.body[0];
-              if (beneficiary.id == state.loggedInUser.user.id) {
-                // infoToast("Sorry, you can't Buz yourself some cash");
-                setStateAlert(false);
-                setStates({
-                  ...compState,
-                  loader: false,
-                  alertMsg: "Sorry, you can not buz yourself",
-                });
-                setStates({ ...compState, resolved: false });
-              } else {
-                setStates({
-                  ...compState,
-                  loader: false,
-                  resolved: true,
-                  benef: beneficiary.username,
-                  benefId: beneficiary.id,
-                  benefWallet: beneficiary.wallet,
-                });
-              }
             }
           })
           .catch((error) => {
-            setStates({ ...compState, loader: false });
+            console.log(error);
             setStateAlert(false);
             setStates({
               ...compState,
@@ -183,7 +172,6 @@ function Home({ appState, walletAdd, logout }) {
       }
     } else {
       setStates({ ...compState, loader: false, resolved: false });
-      // infoToast("Provide beneficiary");
       setStateAlert(false);
       setStates({
         ...compState,
@@ -219,7 +207,7 @@ function Home({ appState, walletAdd, logout }) {
         alertMsg: "The amount you entered is below minimum Buz me linit",
       });
     } else {
-      if (parseInt(amount) > parseInt(state.wallet)) {
+      if (parseInt(amount) > parseInt(state.loggedInUser.user.meta.wallet)) {
         // infoToast("Insufficient balance");
         setStateAlert(false);
         setStates({
@@ -230,83 +218,86 @@ function Home({ appState, walletAdd, logout }) {
       } else {
         setStates({ ...compState, loader: true });
         let newBenefWallet = parseInt(amount) + parseInt(compState.benefWallet);
-        let newBoxerWallet = parseInt(state.wallet) - parseInt(amount);
-        if (pin != state.loggedInUser.user.pin) {
+        let newBoxerWallet =
+          parseInt(state.loggedInUser.user.meta.wallet) - parseInt(amount);
+
+        let beneficiaryNewData = {
+          ...compState.beneficiaryMeta,
+          wallet: newBenefWallet,
+        };
+
+        // setting giver's new data
+        let buzzerNewWallet = {
+          ...state.loggedInUser.user.meta,
+          wallet: newBoxerWallet,
+        };
+
+        if (pin != state.loggedInUser.user.meta.transactionPin) {
           // infoToast("Incorrect transaction pin");
+          console.log("pin");
           setStateAlert(false);
           setStates({
             ...compState,
             loader: false,
             alertMsg: "Please provide your correct transaction pin",
+            resolved: false,
           });
-          setStates({ ...compState, resolved: false, loader: false });
           setbeneficiary("");
         } else {
           let meta = {
             sender: {
-              username: state.loggedInUser.user.username,
-              OgPin: state.loggedInUser.user.OgPin,
+              fullname: state.loggedInUser.user.fullname,
+              beneficiaryID: state.loggedInUser.user.meta.beneficiaryID,
+              id: state.loggedInUser.user.id
             },
             reciever: {
-              username: compState.benef,
-              OgPin: beneficiary,
+              Fullname: compState.benef,
+              beneficiaryID: beneficiary,
+              id:compState.benefId
             },
             data: {
               amount,
               desc,
             },
           };
+
           new_supabase
-            .from("user")
-            .update([{ wallet: newBenefWallet }])
-            .eq("OgPin", beneficiary)
-            .eq("id", compState.benefId)
+            .from("users")
+            .update([{ meta: beneficiaryNewData }])
+            .contains("meta", { beneficiaryId: beneficiary })
             .then((boxed) => {
               new_supabase
-                .from("user")
-                .update([{ wallet: newBoxerWallet }])
-                .eq("OgPin", state.loggedInUser.user.OgPin)
-                .eq("id", state.loggedInUser.user.id)
+                .from("users")
+                .update([{ meta: buzzerNewWallet }])
+                .contains("meta", {
+                  beneficiaryId: buzzerNewWallet.beneficiaryId,
+                })
                 .then((charged) => {
                   new_supabase
-                    .from("boxme")
+                    .from("buz-me")
                     .insert([
                       {
-                        from: meta.sender.OgPin,
-                        to: meta.reciever.OgPin,
+                        from: meta.sender.id,
+                        to: meta.reciever.id,
                         meta: meta,
                       },
                     ])
                     .then((insertResponse) => {
-                      new_supabase
-                        .from("feeds")
-                        .insert([
-                          {
-                            type: "NEW BUZ",
-                            from: meta.sender.OgPin,
-                            to: meta.reciever.OgPin,
-                            meta: meta,
-                          },
-                        ])
-                        .then((insert_response) => {
-                          walletAdd(newBoxerWallet);
-                          // boxedToast(
-                          //   `Yeahh!!!  you buzzed ${amount} to ${compState.benef}`
-                          // );
-                          setStateAlert(true);
-                          setStates({
-                            ...compState,
-                            loader: false,
-                            alertMsg: `Yeahh!!!  you buzzed ${amount} to ${compState.benef}`,
-                          });
-                          setStates({
-                            ...compState,
-                            resolved: false,
-                            loader: false,
-                          });
-                          setbeneficiary("");
-                          setAMOUNT("");
-                        });
+                      console.log(insertResponse);
+                      const newUserData = {
+                        user: { ...state.loggedInUser.user, meta: buzzerNewWallet },
+                        meta:state.loggedInUser.meta
+                      }
+                      login_suc(newUserData)
+                      setStateAlert(true);
+                      setStates({
+                        ...compState,
+                        loader: false,
+                        alertMsg: `Yeahh!!!  you buzzed NGN ${amount} to ${compState.benef}`,
+                        resolved: false,
+                      });
+                      setbeneficiary("");
+                      setAMOUNT("");
                     });
                 });
             })
@@ -348,8 +339,7 @@ function Home({ appState, walletAdd, logout }) {
       {compState.success === true && (
         <span>{stateAlert === null && <span>{history.push("/")}</span>}</span>
       )}
-      {/* {resetPin(state, history, smile)} */}
-      <ToastContainer autoClose={2000} />
+      {/* {resetPin(state, history, smile)} */} 
       <div className="mobile">
         {compState.loader && (
           <div className="loader">
@@ -380,6 +370,7 @@ function Home({ appState, walletAdd, logout }) {
               {" "}
               <Toppills />
             </div>
+            {console.log(compState)}
 
             {/* <div className="explore desktop"><span>Explore</span>  <span className="logout" onClick={()=>{logout()}}>Logout</span>  </div> */}
 
@@ -438,7 +429,7 @@ function Home({ appState, walletAdd, logout }) {
                       <br />
                       <div
                         style={benef}
-                      >{`Buzz ${compState.benef} some cash`}</div>{" "}
+                      >{`Buz ${compState.benef} some cash`}</div>{" "}
                       <br />
                       <textarea
                         onChange={(e) => {
@@ -528,9 +519,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, encoded) => {
-  return {
-    walletAdd: (wallet) => dispatch(add_wallet(wallet)),
+  return { 
     logout: () => dispatch(logOut()),
+    login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
   };
 };
 

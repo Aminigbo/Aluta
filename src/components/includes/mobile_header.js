@@ -13,15 +13,16 @@ import {
   EmojiTransportationOutlined,
   CardGiftcardOutlined,
   StorefrontOutlined,
-  HowToVote,
+  SettingsOutlined,
   EventNote,
   AccountBalanceWallet,
   Receipt,
-  StarOutlined,
+  AddShoppingCart,
   DraftsOutlined,
   FiberManualRecord,
   SignalCellularConnectedNoInternet1BarOutlined,
-  FileCopyOutlined,LibraryAddCheckOutlined
+  FileCopyOutlined, LibraryAddCheckOutlined,
+  ExitToAppOutlined
 } from "@material-ui/icons";
 
 import avar from "../../static/logos/logo2.png";
@@ -38,8 +39,8 @@ import {
 
 
 const select = {
-  backgroundColor: "#0a3d62",
-  color: "white",
+  // backgroundColor: "#0a3d62",
+  color: "#0a3d62",
   textAlign:"center"
 }
 
@@ -115,15 +116,7 @@ function Header({ appState, log_out, getOneOnOne }) {
         
       </List>
 
-      <Divider />
-
-      <List
-        style={select}
-      >  
-        <b onClick={() => { setStates({ ...compState, copy: true }); navigator.clipboard.writeText(state.loggedInUser.user.meta.beneficiaryId) }}
-          >  {state.loggedInUser.user.meta.beneficiaryId} &nbsp;&nbsp;
-          {compState.copy == true ?  <LibraryAddCheckOutlined  style={selected}/>: <FileCopyOutlined/> }</b>
-      </List>
+     
 
 
       <Divider />
@@ -135,7 +128,7 @@ function Header({ appState, log_out, getOneOnOne }) {
         style={{ padding: "15px" }}
       >
         <Money /> &nbsp;
-        <b>Give away</b>
+        <span>Give away</span>
         {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
       </List>
       <Divider />
@@ -147,7 +140,7 @@ function Header({ appState, log_out, getOneOnOne }) {
         style={{ padding: "15px" }}
       >
         <EventNote /> &nbsp;
-        <b>Events</b>
+        <span>Events</span>
         {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
       </List>
       <Divider />
@@ -159,7 +152,7 @@ function Header({ appState, log_out, getOneOnOne }) {
         style={{ padding: "15px" }}
       >
         <StorefrontOutlined /> &nbsp;
-        <b>Aluta market</b>
+        <span>Aluta market</span>
         {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
       </List>
       <Divider />
@@ -171,7 +164,7 @@ function Header({ appState, log_out, getOneOnOne }) {
         style={{ padding: "15px" }}
       >
         <EmojiTransportationOutlined /> &nbsp;
-        <b>Campus tour</b>
+        <span>Campus tour</span>
         {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
       </List>
       <Divider />
@@ -183,22 +176,10 @@ function Header({ appState, log_out, getOneOnOne }) {
         style={{ padding: "15px" }}
       >
         <LocalAtm /> &nbsp;
-        <b>Buz me</b>
+        <span>Buz me</span>
         {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
       </List>
-      <Divider />
-      <List
-        onClick={() => {
-          setDrawerState({ ...drawerState, ["left"]: false });
-          history.push("/request");
-        }}
-        style={{ padding: "15px" }}
-      >
-        <CardGiftcardOutlined /> &nbsp;
-        <b>Request buz</b>
-        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
-      </List>
-      <Divider />
+      <Divider /> 
       <List
         onClick={() => {
           setDrawerState({ ...drawerState, ["left"]: false });
@@ -206,11 +187,13 @@ function Header({ appState, log_out, getOneOnOne }) {
         }}
         style={{ padding: "15px" }}
       >
-        <HowToVote /> &nbsp;
-        <b>Contests</b>
+        <AddShoppingCart /> &nbsp;
+        <span>Create market front</span>
         {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
       </List>
+      
       <Divider />
+      
       <List
         onClick={() => {
           setDrawerState({ ...drawerState, ["left"]: false });
@@ -218,22 +201,30 @@ function Header({ appState, log_out, getOneOnOne }) {
         }}
         style={{ padding: "15px" }}
       >
-        <AccountBalanceWallet /> &nbsp;
-        <b>Add cash</b>
+        <SettingsOutlined /> &nbsp;
+        <span>Settings</span>
         {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
       </List>
+      
       <Divider />
+      
+
       <List
-        onClick={() => {
-          setDrawerState({ ...drawerState, ["left"]: false });
-          // history.push("/giveaway");
-        }}
-        style={{ padding: "15px" }}
-      >
-        <Receipt /> &nbsp;
-        <b>Withdraw</b>
-        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
+        style={select}
+      >  
+        <b style={{float:"left",marginLeft:"10px"}} onClick={() => { setStates({ ...compState, copy: true }); navigator.clipboard.writeText(state.loggedInUser.user.meta.beneficiaryId) }}
+          >  {state.loggedInUser.user.meta.beneficiaryId} &nbsp;&nbsp;
+          {compState.copy == true ? <LibraryAddCheckOutlined style={selected} /> : <FileCopyOutlined />}</b>
+        
+        <b style={{float:"right",marginRight:"10px",color:"crimson"}} onClick={() => { log_out() }}
+        >
+          <ExitToAppOutlined /> 
+          </b>
+
+        
       </List>
+
+      
     </Box>
   );
 

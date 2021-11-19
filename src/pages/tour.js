@@ -24,7 +24,12 @@ const smile = {
 };
 
 function Home({ appState, login_suc }) {
-  const countries = allUniversities();
+  let history = useHistory();
+  const state = appState;
+
+
+  const schoolsToTour = allUniversities();  
+  let actuallSchool = schoolsToTour.filter(e => e.label != state.loggedInUser.user.meta.school) 
   const [compState, setStates] = useState({
     data: [],
     value: "",
@@ -80,8 +85,7 @@ function Home({ appState, login_suc }) {
     bgcolor: "background.paper",
   };
 
-  let history = useHistory();
-  const state = appState;
+  
 
   React.useEffect((compState) => {
     window.scrollTo(0, 0);
@@ -122,12 +126,12 @@ function Home({ appState, login_suc }) {
                   CAMPUS TOUR
                 </div> */}
                 <div className="realtimeBody">
-                  <b> Welcome to Campus Tour</b> <br />
-                  <br />
-                  Search for the university you want to take a tour to and we will take you there 
+                  <b>Tour other universities</b> <br />
+                  {/* <br />
+                  Search for the university you want to take a tour to and we will take you there  */}
                   <div
                     style={{
-                      marginTop: "20px",
+                      marginTop: "10px",
                       // width: "80%",
                       // marginLeft: "5%",
                       background: " ",
@@ -138,16 +142,15 @@ function Home({ appState, login_suc }) {
                     <Search
                       width="80vw"
                       spellcheck={true}
-                      placeholder="Search for your school..."
-                      options={countries}
+                      placeholder="Search for school to tour..."
+                      options={actuallSchool}
                       onChange={(option, e) => setCapturedSearch(option)}
                     />{" "}
-                  </div> <br />  <br /> 
+                  </div> <br />  
                 </div>
               </div>
             </div>
-            <br />
-            <br />
+            <br /> 
             <div
               style={{
                 marginTop: "-10px",

@@ -122,7 +122,8 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
               });
                   } else {
                     const data = {
-                      user: response2.body[0],
+                      // user: response2.body[0].meta,
+                      user:{...response2.body[0],meta:response2.body[0].meta},
                       meta: signin_response.data,
                     };
                     walletAdd(data.user.wallet);
@@ -133,8 +134,13 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
             }
           })
           .catch((error) => {
-            errorToast("A network error occured");
-            setStates({ ...compState, loader: false });
+            console.log(error)
+            setStateAlert(false);
+              setStates({
+                ...compState,
+                loader: false,
+                alertMsg: "Sorry, we could not log you in due to network error.",
+              }); 
           })
       );
     }

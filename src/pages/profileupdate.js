@@ -97,19 +97,21 @@ function Home({ appState, login_suc }) {
     } else {
       let DOB = update.day + "-" + update.month + "-" + update.year;
       let user = state.loggedInUser.user;
+      
       let newUser = {
-        ...user,
-        meta: { ...user.meta, DOB: DOB, gender: update.gender },
-      };
-      let payload = {
-        email: user.email,
-        newUser,
-      };
+      ...user,
+      meta: {...state.loggedInUser.user.meta, DOB: DOB, gender: update.gender },
+    };
+    let payload = {
+      email: user.email,
+      newUser:newUser.meta,
+    };
 
-      const data = {
-        user: newUser,
-        meta: state.loggedInUser.meta,
-      };
+    const data = {
+      user: newUser,
+      meta: state.loggedInUser.meta,
+    };
+
       setStates({
         ...compState,
         loader: true,

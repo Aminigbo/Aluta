@@ -172,7 +172,7 @@ function Home({ appState, loadFeeds, disp_draft }) {
 
   const preview = (event) => {
     let files = event.target.files[0];
-
+console.log(files)
     // <input type="file" id="upload"/>
     let image = document.getElementById("upload");
 

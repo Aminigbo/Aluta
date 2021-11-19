@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../static/css/auth/register.css";
 import { connect } from "react-redux";
 import { TextField, Button } from "@material-ui/core";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory , Redirect} from "react-router-dom";
 import loaderImg from "../static/logos/animation.gif";
 import { loginSuc, add_wallet } from "../redux";
 import { Helmet } from "react-helmet";
@@ -27,6 +27,7 @@ const logoStyle = {
 
 function Register({ appState, login_suc, walletAdd }) {
   let history = useHistory();
+  const state = appState
 
   React.useEffect((compState) => {
     window.scrollTo(0, 0);
@@ -112,7 +113,7 @@ function Register({ appState, login_suc, walletAdd }) {
             setStates({
               ...compState,
               loader: false,
-              alertMsg: "Please you have to fill out all forms",
+              alertMsg: "User already exists",
             });
           }
         })
@@ -132,9 +133,13 @@ function Register({ appState, login_suc, walletAdd }) {
     setStates({ ...compState, loader: true });
   };
 
-  return (
+  return state.loggedIn == true ? (
     <div>
-      {stateAlert === null && <small>{history.push("/")}</small>}
+      <Redirect to="/" />
+    </div>
+  ) : (
+    <div>
+      {/* {stateAlert === null && <small>{history.push("/")}</small>} */}
       {stateAlert === true && alert(successPayload, setStateAlert)}
       {stateAlert === false && alert(errorPayload, setStateAlert)}
       <Helmet>

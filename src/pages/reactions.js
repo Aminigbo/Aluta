@@ -138,8 +138,8 @@ function Home({ appState, loadFeeds, walletAdd }) {
       } else if (data.postType == "EVENT") {
         label = `EVENT  -   ${data.post.meta.event.date} |  ${data.post.meta.event.time}`;
       }
-    }
     setSchool(data.poster.school)
+    }
     return (
       <>
         <CardHeader
@@ -215,7 +215,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
               <CardMedia
                 component="img"
                 // height="220"
-                image={`${API_URL}images/posts/${data.post.photo}`}
+                image={`${API_URL}/${data.post.photo}`}
                 alt="image"
               />
             )}

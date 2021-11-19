@@ -28,7 +28,13 @@ import { fetchAllFeeds } from "../models/index";
 let new_supabase = supabase();
 
 // fetch feeds from database
-export async function returnFeeds(school, loadFeeds, disp_signal, setStates, compState) {
+export async function returnFeeds(
+  school,
+  loadFeeds,
+  disp_signal,
+  setStates,
+  compState
+) {
   setStates({ ...compState, loader: true });
   fetchAllFeeds(school)
     .then((res) => {
@@ -59,8 +65,7 @@ export async function returnFeeds(school, loadFeeds, disp_signal, setStates, com
     });
 }
 
-export async function fetchFeeds(loadFeeds) { 
-}
+export async function fetchFeeds(loadFeeds) {}
 
 //  respond to all Buz request
 const respondToBuzRequest = (
@@ -252,7 +257,7 @@ export function ALLPOSTS(props) {
               }}
               component="img"
               // height="220"
-              image={`${API_URL}images/posts/${data.post.photo}`}
+              image={`${API_URL}/${data.post.photo}`}
               alt="image"
             />
           )}
@@ -397,14 +402,14 @@ export async function handleCreatePost(payload, state, loadFeeds, disp_draft) {
   let { gender, school } = state.loggedInUser.user.meta;
   let name = state.loggedInUser.user.fullname;
   let id = state.loggedInUser.meta.id;
-  let avater = state.loggedInUser.user.meta.avater
+  let avater = state.loggedInUser.user.meta.avater;
   let postId = new Date().getTime() + "@" + id + "@" + new Date().getTime();
   let poster = {
     name,
     school,
     gender,
     id,
-    avater
+    avater,
   };
 
   // @====================  CHECK IF USER IS POSTING WITH IMAGE
@@ -463,28 +468,80 @@ export async function handleCreatePost(payload, state, loadFeeds, disp_draft) {
     // @======   user is posting with image
     // @==========  AT THIS POINT, MAKE A AXIOS CALL TO THE BACKEND TO UPLOAD THE IMAGE AND REPLACE THE URL
 
-    var formdata = new FormData();
-    formdata.append("payload", JSON.stringify(new_payload));
-    formdata.append("postimage", payload.post.file);
-    var requestOptions = {
-      method: "POST",
-      body: formdata,
-      redirect: "follow",
-    };
+    // if (payload.post.file === undefined) {
+    // !====user is not posting with image
+    let file = "";
+    let fileExt = "";
+    let fileName = "";
+    let filePath = "";
 
-    return fetch("http://localhost:1100/api/v1/post/createPost", requestOptions)
-      .then((response) => response.text())
-      .then((result) => {
-        let responseData = JSON.parse(result);
-        if (responseData.success == true) {
-          state.feeds.push(responseData);
-          loadFeeds(state.feeds);
-          console.log(responseData);
-          return success("Done", { success: true });
+    if (payload.post.file !== undefined) {
+      file = payload.post.file;
+      fileExt = file.name.split(".").pop();
+      fileName = `${Math.random()}.${fileExt}`;
+      filePath = `${fileName}`;
+    }
+
+    let new_payload = { ...payload, poster, id: postId, setPostPrivacy };
+    return new_supabase.storage
+      .from("posts")
+      .upload(filePath, file, {
+        cacheControl: "3600",
+        upsert: false,
+      })
+      .then((resAvater) => {
+        if (resAvater.error === null) {
+          console.log(resAvater);
+          let newDataToUpload = {
+            ...payload,
+            post: { ...payload.post, photo: resAvater.data.Key },
+            poster,
+            id: postId,
+            setPostPrivacy,
+          };
+          return new_supabase
+            .from("feeds")
+            .insert([
+              {
+                feed_id: postId,
+                poster: poster,
+                school: poster.school,
+                data: newDataToUpload,
+                time: JSON.stringify(payload.post.time),
+                privacy: setPostPrivacy,
+              },
+            ])
+            .then((res) => {
+              if (res.body === null) {
+                console.log(res);
+                state.draft.push(newDataToUpload);
+                disp_draft(state.draft);
+                return error(
+                  "Your operation could not be completed due to network error. Your post has been save to draft."
+                );
+              } else {
+                let newData = {
+                  ...res.body[0].data,
+                  likes: [],
+                  unlikes: [],
+                  comments: [],
+                  success: true,
+                };
+                state.feeds.push(newData);
+                loadFeeds(state.feeds);
+                console.log(res.body[0]);
+                return success("Done", { success: true });
+              }
+            });
+        } else {
         }
       })
       .catch((error) => {
-        return error("Done");
+        state.draft.push(new_payload);
+        disp_draft(state.draft);
+        return error(
+          "Your operation could not be completed due to network error. Your post has been save to draft."
+        );
       });
   }
 }

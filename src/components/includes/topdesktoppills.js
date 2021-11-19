@@ -1,7 +1,7 @@
 // import  "../../static/css/home/index.css"
 import "../../static/css/top-nav.css";
 import { LinearProgress } from "@material-ui/core";
-import { React, useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { logOut, loginSuc } from "../../redux";
 import { useHistory, Link } from "react-router-dom";
@@ -14,7 +14,6 @@ import {
   ForumOutlined,
   HomeOutlined,
   StorefrontOutlined,
-  
 } from "@material-ui/icons";
 
 import { updateUserMeta } from "../../functions/models/index";
@@ -25,27 +24,42 @@ import { trigger, resetPin } from "../../functions/controllers/resetPin";
 // @=== import success response from worker function
 import { alert } from "../../functions/workers_functions/alert";
 
+// importing realtime controller
+// import { buzSubscription } from "../../functions/controllers/realtime";
+
+import { supabase } from "../../functions/configs/index";
 const smile = {
   color: "white",
   fontSize: "20px",
 };
 
-
 const active = {
   background: "#0a3d62",
-  color:"white"
-}
+  color: "white",
+};
 
-function Desktopright({ appState, login_suc },props) {
+function Desktopright({ appState, login_suc }, props) {
   let history = useHistory();
   const state = appState;
+
+  const userId = state.loggedInUser.user.id;
+
+  const new_supabase = supabase();
+
+  
 
   const [pins, setPins] = useState({
     first: "",
     second: "",
   });
   const [stateAlert, setStateAlert] = useState("");
-  const [compState, setStates] = useState("");
+  const [compState, setStates] = useState({
+    title:''
+  });
+  const [gotbuzzed, setGotbuzzed] = useState({
+    status: false,
+    data:null
+  })
 
   const resetTPin = () => {
     if (pins.first.length != 4 || pins.second.length != 4) {
@@ -75,17 +89,18 @@ function Desktopright({ appState, login_suc },props) {
       let user = state.loggedInUser.user;
       let newUser = {
         ...user,
-        meta: { ...user.meta, transactionPin: first },
+        meta: { ...state.loggedInUser.user.meta, transactionPin: first },
       };
       let payload = {
         email: user.email,
-        newUser,
+        newUser: newUser.meta,
       };
 
       const data = {
         user: newUser,
         meta: state.loggedInUser.meta,
       };
+
       // call a async function to reset the userpin in the database
       updateUserMeta(payload)
         .then((res) => {
@@ -116,8 +131,50 @@ function Desktopright({ appState, login_suc },props) {
     }
   };
 
+
+  const sub = () => {
+      new_supabase
+      .from(`buz-me:to=eq.${userId}`)
+      .on("INSERT", (payload) => {
+        // return [payload.new];
+        // console.log(payload.new)
+        const response = payload.new;
+        // console.log(response)
+        let myNewWallet =
+          parseInt(state.loggedInUser.user.meta.wallet) +
+          parseInt(response.meta.data.amount);
+
+        // setting giver's new data
+        let buzzerNewWallet = {
+          ...state.loggedInUser.user.meta,
+          wallet: myNewWallet,
+        };
+
+        const newUserData = {
+          user: { ...state.loggedInUser.user, meta: buzzerNewWallet },
+          meta: state.loggedInUser.meta,
+        };
+        console.log(newUserData)
+        setGotbuzzed({
+          ...gotbuzzed,
+          status: true,
+          data:newUserData
+        }) 
+        login_suc(gotbuzzed.data); 
+        setStates({
+          ...compState, alertMsg: ` NGN -  ${response.meta.data.amount} || ${response.meta.data.desc}`,
+          title: `Buz Alert from ${response.meta.sender.fullname}`
+        })
+        setStateAlert(true) 
+      })
+      .subscribe();
+   }
+  React.useEffect(() => {
+    sub()
+  }, []);
+
   let successPayload = {
-    title: "SUCCESS",
+    title: compState.title.length < 1 ? "SUCCESS": compState.title,
     msg: compState.alertMsg,
     error: false,
   };
@@ -146,11 +203,10 @@ function Desktopright({ appState, login_suc },props) {
       )}
 
       <div id=" " className="top-nav-holder">
-        {console.log(split)}
+        {/* {console.log(split)} */}
         {stateAlert === null && <span>{history.push("/")}</span>}
         {stateAlert === true && alert(successPayload, setStateAlert)}
-        {stateAlert === false && alert(errorPayload, setStateAlert)}
-       
+        {stateAlert === false && alert(errorPayload, setStateAlert)} 
         <div
           onClick={() => {
             window.scrollTo(0, 0);
@@ -171,7 +227,13 @@ function Desktopright({ appState, login_suc },props) {
           }}
           className="top-nav-pills-holder"
         >
-          <span  style={{background:split == "transfer" && "#0a3d62",color:split == "transfer" && "white"}} className="top-nav-pills">
+          <span
+            style={{
+              background: split == "transfer" && "#0a3d62",
+              color: split == "transfer" && "white",
+            }}
+            className="top-nav-pills"
+          >
             {" "}
             <LocalAtm />{" "}
           </span>
@@ -184,7 +246,13 @@ function Desktopright({ appState, login_suc },props) {
           }}
           className="top-nav-pills-holder"
         >
-          <span  style={{background:split == "request" && "#0a3d62",color:split == "request" && "white"}} className="top-nav-pills">
+          <span
+            style={{
+              background: split == "request" && "#0a3d62",
+              color: split == "request" && "white",
+            }}
+            className="top-nav-pills"
+          >
             {" "}
             <CardGiftcardOutlined />{" "}
           </span>
@@ -192,21 +260,23 @@ function Desktopright({ appState, login_suc },props) {
         </div>
 
         <div
-         
           onClick={() => {
             history.push("/tour");
           }}
-          
           className="top-nav-pills-holder"
         >
-          <span style={{background:split == "tour" && "#0a3d62",color:split == "tour" && "white"}} className="top-nav-pills">
+          <span
+            style={{
+              background: split == "tour" && "#0a3d62",
+              color: split == "tour" && "white",
+            }}
+            className="top-nav-pills"
+          >
             {" "}
             <EmojiTransportationOutlined />{" "}
           </span>
           <p className="top-nav-pills-title">Tour</p>
         </div>
-
-        
 
         {/* <div className="top-nav-pills-holder">
             <span  className="top-nav-pills" >  <ForumOutlined/> </span>
@@ -219,7 +289,13 @@ function Desktopright({ appState, login_suc },props) {
           }}
           className="top-nav-pills-holder"
         >
-          <span  style={{background:split == "listmart" && "#0a3d62",color:split == "listmart" && "white"}} className="top-nav-pills">
+          <span
+            style={{
+              background: split == "listmart" && "#0a3d62",
+              color: split == "listmart" && "white",
+            }}
+            className="top-nav-pills"
+          >
             {" "}
             <StorefrontOutlined />{" "}
           </span>
@@ -232,14 +308,18 @@ function Desktopright({ appState, login_suc },props) {
           }}
           className="top-nav-pills-holder"
         >
-          <span  style={{background:split == "create" && "#0a3d62",color:split == "create" && "white"}} className="top-nav-pills">
+          <span
+            style={{
+              background: split == "create" && "#0a3d62",
+              color: split == "create" && "white",
+            }}
+            className="top-nav-pills"
+          >
             {" "}
             <AddBoxOutlined />{" "}
           </span>
           <p className="top-nav-pills-title"> Make post</p>
         </div>
-
-        
       </div>
     </>
   );

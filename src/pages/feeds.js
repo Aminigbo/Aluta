@@ -12,7 +12,11 @@ import { logOut, disp_feeds, add_wallet, isSignal } from "../redux";
 import { ALLPOSTS } from "../functions/controllers/feeds";
 import { Helmet } from "react-helmet";
 import logo from "../static/logos/logo2.png";
-import { ArrowRightOutlined, Send } from "@material-ui/icons";
+import {
+  ArrowRightOutlined,
+  Send,
+  AccountBalanceWalletOutlined,
+} from "@material-ui/icons";
 import PropTypes from "prop-types";
 import { TextareaAutosize } from "@mui/material";
 import "../static/css/feed.css";
@@ -20,7 +24,7 @@ import { List, Drawer, Box } from "@mui/material";
 import { addComment } from "../functions/controllers/comments"; // importing all the comment controllers
 import { handleAddLike, handleUnlike } from "../functions/controllers/likes"; // importing likes controllers
 import { createPanel } from "../components/create";
-
+import Naira from "react-naira";
 // @== import from feeds controller
 import { returnFeeds } from "../functions/controllers/feeds";
 
@@ -86,13 +90,7 @@ function Home({ appState, loadFeeds, disp_signal }) {
   ALLPOSTS.propTypes = {
     loading: PropTypes.bool,
   };
-
-  // fetch feeds from db
-  const fetch_feeds = () => {
-    // fetchFeeds(loadFeeds).then((fetched) => {
-    //   console.log(fetched);
-    // });
-  };
+ 
 
   React.useEffect((compState) => {
     window.scrollTo(0, 0);
@@ -105,7 +103,7 @@ function Home({ appState, loadFeeds, disp_signal }) {
         disp_signal,
         setStates,
         compState
-      ) 
+      );
     }
     // fetch_feeds()
     loadFeeds(state.feeds);
@@ -247,6 +245,22 @@ function Home({ appState, loadFeeds, disp_signal }) {
                   EVENTS
                   <ArrowRightOutlined style={{ marginLeft: "-4px" }} />
                 </Link>{" "}
+                <Link
+                  to="events"
+                  style={{
+                    marginRight: "10px",
+                    fontSize: "10px",
+                    color: "#0a3d62",
+                    textDecoration: "none",
+                    float: "right",
+                  }}
+                >
+                  {/* <AccountBalanceWalletOutlined
+                    style={{ marginLeft: "" }}
+                  /> */}
+                   
+                    <b  style={{color: "#0a3d62",fontSize:"14px"}} >NGN - {state.loggedInUser.user.meta.wallet}</b> 
+                </Link>{" "}
                 <br />
               </div>
             </div>
@@ -280,7 +294,16 @@ function Home({ appState, loadFeeds, disp_signal }) {
             ) : (
               <ALLPOSTS loading data={[]} />
             )}
-            <Pills />
+            {/* <Pills /> */}
+            {state.feeds.length < 1 && (
+              <div style={{ textAlign: "center", marginTop: "40%" }}>
+                No avilable feed ! <br />
+                <br />
+                <Link style={{ textDecoration: "none" }} to="/create">
+                  Create one
+                </Link>
+              </div>
+            )}
           </div>
           <br />
         </div>

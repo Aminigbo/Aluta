@@ -1,6 +1,6 @@
 import { PermPhoneMsg } from "@material-ui/icons";
 
-export const API_URL = "http://localhost:1100/"
+export const API_URL = "https://qwtxgoxfoytosibklxtt.supabase.in/storage/v1/object/public"
 
 
 export const error = (msg) => {

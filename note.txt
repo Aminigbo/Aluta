@@ -1,2 +1,6 @@
 lightgray   #f3f3f3
 brand color #0a3d62
+
+
+
+You may use http://cpanel.ogabike.com or https://cpanel-s18.registrar-servers.com, you don't need to mix them into one link.
