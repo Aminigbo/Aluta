@@ -59,7 +59,9 @@ function Home({ appState, loadFeeds, walletAdd }) {
   
   const [comment, setComment] = useState("");
   const [postToComment, setPostToComment] = useState("");
-const [compState, setStates] = useState("");
+  const [compState, setStates] = useState({
+  loader:true
+});
 
   const [drawerState, setDrawerState] = React.useState({
     bottom: false,
@@ -102,7 +104,7 @@ const [compState, setStates] = useState("");
 
   
 
-  
+
   const schoolFeeds = state.feeds.filter((e) => e.poster.school == school);
   function renderFeeds(allFeeds) {
     allFeeds.sort(function (a, b) {
