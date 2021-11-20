@@ -73,6 +73,7 @@ function Home({ appState, loadFeeds, disp_draft }) {
     amount: null,
     delaysecond: null,
     beneficiaries: null,
+    beneficiariesList:[]
   });
 
   const [event, setEvent] = useState({
@@ -89,8 +90,6 @@ function Home({ appState, loadFeeds, disp_draft }) {
   }
 
   const makePost = () => {
-   
-
     let photo = "";
     let type = "";
     if (
@@ -136,43 +135,40 @@ function Home({ appState, loadFeeds, disp_draft }) {
     if (blob == "" && postText == "") {
       console.log("dont post");
     } else {
-
-       var timeleft = 75;
-    var downloadTimer = setInterval(function () {
-      if (timeleft > 96) {
-        clearInterval(downloadTimer);
-      } else {
-        if (document.getElementById("progressBar") == null) {
+      var timeleft = 75;
+      var downloadTimer = setInterval(function () {
+        if (timeleft > 96) {
           clearInterval(downloadTimer);
         } else {
-          document.getElementById("progressBar").value = timeleft;
+          if (document.getElementById("progressBar") == null) {
+            clearInterval(downloadTimer);
+          } else {
+            document.getElementById("progressBar").value = timeleft;
+          }
+
+          timeleft += 15;
         }
+      }, 1000);
 
-        timeleft += 15;
-      }
-    }, 1000);
-      
-
-      handleCreatePost(postBody, state, loadFeeds,disp_draft)
-        .then(res => {
-          if (res.success == true) {
-            document.getElementById("progressBar").value = 100;
-            history.push("/");
-          } else { 
-            setStateAlert(false);
+      handleCreatePost(postBody, state, loadFeeds, disp_draft).then((res) => {
+        if (res.success == true) {
+          document.getElementById("progressBar").value = 100;
+          history.push("/");
+        } else {
+          setStateAlert(false);
           setStates({
             ...compState,
             loader: false,
             alertMsg: res.message,
           });
-          }
-        }) 
+        }
+      });
     }
   };
 
   const preview = (event) => {
     let files = event.target.files[0];
-console.log(files)
+    console.log(files);
     // <input type="file" id="upload"/>
     let image = document.getElementById("upload");
 
@@ -307,13 +303,14 @@ console.log(files)
             </div>
 
             <div>
-              {compState.loading === true && <progress
-                style={{ width: "100%", borderRadius: "0px", height: "5px",  }}
-                value="40"
-                max="100"
+              {compState.loading === true && (
+                <progress
+                  style={{ width: "100%", borderRadius: "0px", height: "5px" }}
+                  value="40"
+                  max="100"
                   id="progressBar"
-                  
-              ></progress>}
+                ></progress>
+              )}
               <div
                 style={{
                   height: "",
@@ -760,13 +757,14 @@ console.log(files)
                       </div>
 
                       {allowSend == true && (
-                          <div
-                            onClick={() => {
-                              makePost();
-                              setStates({
-                                ...compState, loading:true
-                              })
-                              window.scrollTo(0, 0);
+                        <div
+                          onClick={() => {
+                            makePost();
+                            setStates({
+                              ...compState,
+                              loading: true,
+                            });
+                            window.scrollTo(0, 0);
                           }}
                           style={{
                             marginRight: "20px",

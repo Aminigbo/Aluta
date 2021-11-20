@@ -10,7 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/material/IconButton";
 // import MoreVertIcon from '@mui/icons-material/IconButton';
 import Skeleton from "@mui/material/Skeleton";
-import { Avatar, Typography } from "@mui/material";
+import { Avatar, Typography, Divider } from "@mui/material";
 import { likedPost } from "./likes";
 import {
   FavoriteBorderOutlined,
@@ -289,12 +289,21 @@ export function ALLPOSTS(props) {
               {data.post.text}
             </span>
             <br />
+            <br />
+            <div style={{ textAlign: "right ",fontSize:"12px" }}> 
+                <small>{parseInt(data.likes.length)+ parseInt(data.unlikes.length)+parseInt(data.comments.length)} Reactions</small>
+{/* 
+              <FavoriteBorderOutlined   style={{fontSize:"18px",color:"#0a3d62",marginLeft:"-5px"}} />
+                <CommentOutlined style={{ fontSize: "18px", color: "#0a3d62", marginLeft: "-5px" }} />
+                &nbsp; {parseInt(data.likes.length)+ parseInt(data.unlikes.length)+parseInt(data.comments.length)} */}
+            </div>
+            <Divider />
             <div
               style={{
                 marginTop: "10px",
                 fontSize: "12px",
                 position: "relative",
-                width: "40px",
+                width: " ",
                 height: "40px",
                 background: " ",
                 textAlign: "center",
@@ -310,16 +319,18 @@ export function ALLPOSTS(props) {
                   handleLike(data.id);
                 }}
               />
-              <span style={{ fontSize: "11px" }}>{data.likes.length}</span>
+              &nbsp;<span>Love</span>
+              {/* <span style={{ fontSize: "11px" }}>{data.likes.length}</span> */}
             </div>
+            &nbsp; &nbsp;{" "}
             <div
               style={{
                 marginTop: "10px",
                 fontSize: "12px",
                 position: "relative",
-                width: "40px",
-                height: "40px",
-                background: " ",
+                width: " ",
+                height: "40px ",
+                background: "  ",
                 textAlign: "center",
                 display: "inline-block",
               }}
@@ -333,16 +344,18 @@ export function ALLPOSTS(props) {
                   handleUnlikes(data.id);
                 }}
               />
-              <span style={{ fontSize: "11px" }}>{data.unlikes.length}</span>
+              &nbsp;<span>Dislike</span>
+              {/* <span style={{ fontSize: "11px" }}>{data.unlikes.length}</span> */}
             </div>
+            &nbsp; &nbsp;
             <div
               style={{
                 marginTop: "10px",
                 fontSize: "12px",
                 position: "relative",
-                width: "40px",
+                width: " ",
                 height: "40px",
-                background: " ",
+                background: "  ",
                 textAlign: "center",
                 display: "inline-block",
               }}
@@ -353,14 +366,15 @@ export function ALLPOSTS(props) {
                   history.push(`/reaction/${data.id}`);
                 }}
               />
-              <span style={{ fontSize: "11px" }}>{data.comments.length}</span>
+              {/* <span style={{ fontSize: "11px" }}>{data.comments.length}</span> */}
+              &nbsp;<span>Comment</span>
             </div>
             <div
               style={{
                 marginTop: "10px",
                 fontSize: "12px",
                 position: "absolute",
-                width: "55%",
+                width: " ",
                 height: "40px",
                 background: " ",
                 textAlign: "left",
@@ -369,9 +383,9 @@ export function ALLPOSTS(props) {
               }}
             >
               <small></small>
-              <b className="link" style={{ float: "right", fontSize: "15px" }}>
+              {/* <b className="link" style={{ float: "right", fontSize: "15px" }}>
                 AMC - 110
-              </b>
+              </b> */}
             </div>
           </Typography>
         )}
@@ -429,7 +443,7 @@ export async function handleCreatePost(payload, state, loadFeeds, disp_draft) {
         {
           feed_id: postId,
           poster: poster,
-          posterId:id,
+          posterId: id,
           school: poster.school,
           data: new_payload,
           time: JSON.stringify(payload.post.time),
@@ -507,7 +521,7 @@ export async function handleCreatePost(payload, state, loadFeeds, disp_draft) {
                 feed_id: postId,
                 poster: poster,
                 school: poster.school,
-                posterId:id,
+                posterId: id,
                 data: newDataToUpload,
                 time: JSON.stringify(payload.post.time),
                 privacy: setPostPrivacy,

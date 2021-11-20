@@ -15,7 +15,7 @@ export async function createUser(email, password) {
   return new_supabase.auth.signUp({
     email,
     password,
-  })
+  });
 }
 
 // SAVE USER DATA TO PUBLIC USER TABLE
@@ -34,12 +34,10 @@ export async function registerUser(data) {
 // @==============  LOGIN USER
 export async function signInUser(email, password) {
   return new_supabase.auth.signIn({
-        email,
-        password,
-      });
+    email,
+    password,
+  });
 }
-
-
 
 // @=================  CREATE comment
 export async function addComments(payload) {
@@ -59,8 +57,8 @@ export async function addComments(payload) {
 export async function fetchAllFeeds(payload) {
   return new_supabase
     .from("feeds")
-    .select(`*, comments(*), post_likes(*), unlikes(*)`)
-    // .eq("school", payload);
+    .select(`*, comments(*), post_likes(*), unlikes(*)`);
+  // .eq("school", payload);
 }
 
 // @============  GET USERS OF A PARTICULAY UNIVERSITY
@@ -96,12 +94,13 @@ export async function addLikes(payload) {
           .eq("post", payload.post)
           .eq("userId", payload.userId);
       }
-    }).catch(error => {
+    })
+    .catch((error) => {
       return {
         error: true,
-        message:"A network error occured"
-      }
-    })
+        message: "A network error occured",
+      };
+    });
 }
 
 // @====== ADD UNLIKE
@@ -130,42 +129,77 @@ export async function addUnlike(payload) {
           .eq("post", payload.post)
           .eq("userId", payload.userId);
       }
-    }).catch(error => {
+    })
+    .catch((error) => {
       return {
         error: true,
-        message:"A network error occured"
-      }
-    })
+        message: "A network error occured",
+      };
+    });
 }
 
 export async function updateUserMeta(payload) {
-  let {email, newUser } = payload;
+  let { email, newUser } = payload;
 
-  return new_supabase.from("users").update([{ meta: newUser }]).eq("email", email).then(res => {console.log(res)
-    if (res.body == null) {
+  return new_supabase
+    .from("users")
+    .update([{ meta: newUser }])
+    .eq("email", email)
+    .then((res) => {
+      console.log(res);
+      if (res.body == null) {
+        return {
+          success: false,
+          message: "A network error occured",
+        };
+      } else {
+        return {
+          success: true,
+          message: "successful",
+        };
+      }
+    })
+    .catch((error) => {
       return {
         success: false,
-        message:"A network error occured"
-      }
-    } else {
-      return {
-        success: true,
-        message:"successful"
-      }
-    }
-  }).catch(error => {
-     return {
-        success: false,
-        message:error
-      }
-  })
-
-  
+        message: error,
+      };
+    });
 }
 
-
- 
 //  @============  fetch user profile
 export async function fetchUserProfile(payload) {
-  return new_supabase.from("users").select(`*, feeds(*)`).eq('id', payload)
+  return new_supabase.from("users").select(`*, feeds(*)`).eq("id", payload);
+}
+
+// sync dp
+export async function syncDB() {
+  return new_supabase
+    .from("comments")
+    .delete()
+    .then((del) => {
+      return new_supabase
+        .from("feeds")
+        .delete()
+        .then((del2) => {
+          return new_supabase
+            .from("post_likes")
+            .delete()
+            .then((del3) => {
+              return new_supabase
+                .from("unlikes")
+                .delete()
+                .then((del4) => {
+                  return new_supabase
+                    .from("buz-me")
+                    .delete()
+                    .then((del5) => {
+                      return {
+                        message:"done"
+                      }
+                    });
+                });
+            });
+        });
+    });
 }
