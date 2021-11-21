@@ -237,7 +237,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
               <CardMedia
                 component="img"
                 // height="220"
-                image={`${API_URL}/${data.post.photo}`}
+                image={data.post.file.secure_url}
                 alt="image"
               />
             )}

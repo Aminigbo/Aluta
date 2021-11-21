@@ -25,6 +25,14 @@ import { commentDuration, API_URL } from "../utils/index";
 
 import { fetchAllFeeds } from "../models/index";
 
+import {
+  Image,
+  Video,
+  Transformation,
+  CloudinaryContext,
+  Placeholder,
+} from "cloudinary-react";
+
 let new_supabase = supabase();
 
 // fetch feeds from database
@@ -249,17 +257,48 @@ export function ALLPOSTS(props) {
       {loading ? (
         <Skeleton sx={{ height: 190 }} animation="wave" variant="rectangular" />
       ) : (
-        <div>
-          {data.post.photo != null && (
-            <CardMedia
-              onClick={() => {
+        <div onClick={() => {
                 history.push(`/reaction/${data.id}`);
-              }}
-              component="img"
-              // height="220"
-              image={`${API_URL}/${data.post.photo}`}
-              alt="image"
-            />
+              }}>
+          {data.post.photo != null && (
+            <Image
+              cloudName="aluta-meta"
+              secure={true}
+              upload_preset="rx54xe0r"
+              publicId={`${data.post.photo}`}
+              dpr="auto"
+              responsive
+              width="auto"
+                crop="fill"
+              //   loading="lazy"
+                
+              responsiveUseBreakpoints="true"
+              >
+                <Placeholder type="vectorize" />
+
+                <Transformation  gravity="auto" width="300" height="250" crop="fill" />
+                <Transformation quality="90" />
+                 
+              </Image> 
+
+            //    <Image publicId={`${data.post.photo}`}>
+            // <Transformation effect="cartoonify" />
+            // <Transformation radius="max" />
+            // <Transformation effect="outline:100" color="lightblue" />
+            // <Transformation background="lightblue" />
+            // <Transformation height="300" crop="scale" />
+            // </Image>
+
+            // <CardMedia
+            //   onClick={() => {
+            //     history.push(`/reaction/${data.id}`);
+            //   }}
+            //   component="img"
+            //   height="220"
+            //   // image={`${API_URL}/${data.post.photo}`}
+            //     image={data.post.file.secure_url}
+            //   alt="image"
+            // />
           )}
         </div>
       )}
@@ -286,13 +325,18 @@ export function ALLPOSTS(props) {
               }}
               style={{ fontFamily: "" }}
             >
-              {data.post.text}
+                {data.post.text} 
             </span>
             <br />
             <br />
-            <div style={{ textAlign: "right ",fontSize:"12px" }}> 
-                <small>{parseInt(data.likes.length)+ parseInt(data.unlikes.length)+parseInt(data.comments.length)} Reactions</small>
-{/* 
+            <div style={{ textAlign: "right ", fontSize: "12px" }}>
+              <small>
+                {parseInt(data.likes.length) +
+                  parseInt(data.unlikes.length) +
+                  parseInt(data.comments.length)}{" "}
+                Reactions
+              </small>
+              {/* 
               <FavoriteBorderOutlined   style={{fontSize:"18px",color:"#0a3d62",marginLeft:"-5px"}} />
                 <CommentOutlined style={{ fontSize: "18px", color: "#0a3d62", marginLeft: "-5px" }} />
                 &nbsp; {parseInt(data.likes.length)+ parseInt(data.unlikes.length)+parseInt(data.comments.length)} */}
@@ -485,72 +529,65 @@ export async function handleCreatePost(payload, state, loadFeeds, disp_draft) {
 
     // if (payload.post.file === undefined) {
     // !====user is not posting with image
+
     let file = "";
-    let fileExt = "";
-    let fileName = "";
-    let filePath = "";
 
     if (payload.post.file !== undefined) {
       file = payload.post.file;
-      fileExt = file.name.split(".").pop();
-      fileName = `${Math.random()}.${fileExt}`;
-      filePath = `${fileName}`;
     }
-
-    let new_payload = { ...payload, poster, id: postId, setPostPrivacy };
-    return new_supabase.storage
-      .from("posts")
-      .upload(filePath, file, {
-        cacheControl: "3600",
-        upsert: false,
-      })
-      .then((resAvater) => {
-        if (resAvater.error === null) {
-          console.log(resAvater);
-          let newDataToUpload = {
-            ...payload,
-            post: { ...payload.post, photo: resAvater.data.Key },
-            poster,
-            id: postId,
-            setPostPrivacy,
-          };
-          return new_supabase
-            .from("feeds")
-            .insert([
-              {
-                feed_id: postId,
-                poster: poster,
-                school: poster.school,
-                posterId: id,
-                data: newDataToUpload,
-                time: JSON.stringify(payload.post.time),
-                privacy: setPostPrivacy,
-              },
-            ])
-            .then((res) => {
-              if (res.body === null) {
-                console.log(res);
-                state.draft.push(newDataToUpload);
-                disp_draft(state.draft);
-                return error(
-                  "Your operation could not be completed due to network error. Your post has been save to draft."
-                );
-              } else {
-                let newData = {
-                  ...res.body[0].data,
-                  likes: [],
-                  unlikes: [],
-                  comments: [],
-                  success: true,
-                };
-                state.feeds.push(newData);
-                loadFeeds(state.feeds);
-                console.log(res.body[0]);
-                return success("Done", { success: true });
-              }
-            });
-        } else {
-        }
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "rx54xe0r");
+    formData.append("folder", "aluta-meta-feed-posts");
+    return fetch("https://api.cloudinary.com/v1_1/aluta-meta/upload", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        let newDataToUpload = {
+          ...payload,
+          post: { ...payload.post, file: res, photo: res.public_id },
+          poster,
+          id: postId,
+          setPostPrivacy,
+        };
+        return new_supabase
+          .from("feeds")
+          .insert([
+            {
+              feed_id: postId,
+              poster: poster,
+              school: poster.school,
+              posterId: id,
+              data: newDataToUpload,
+              time: JSON.stringify(payload.post.time),
+              privacy: setPostPrivacy,
+            },
+          ])
+          .then((res) => {
+            if (res.body === null) {
+              console.log(res);
+              state.draft.push(newDataToUpload);
+              disp_draft(state.draft);
+              return error(
+                "Your operation could not be completed due to network error. Your post has been save to draft."
+              );
+            } else {
+              let newData = {
+                ...res.body[0].data,
+                likes: [],
+                unlikes: [],
+                comments: [],
+                success: true,
+              };
+              state.feeds.push(newData);
+              loadFeeds(state.feeds);
+              console.log(res.body[0]);
+              return success("Done", { success: true });
+            }
+          });
       })
       .catch((error) => {
         state.draft.push(new_payload);
@@ -559,5 +596,80 @@ export async function handleCreatePost(payload, state, loadFeeds, disp_draft) {
           "Your operation could not be completed due to network error. Your post has been save to draft."
         );
       });
+
+    // let file = "";
+    // let fileExt = "";
+    // let fileName = "";
+    // let filePath = "";
+
+    // if (payload.post.file !== undefined) {
+    //   file = payload.post.file;
+    //   fileExt = file.name.split(".").pop();
+    //   fileName = `${Math.random()}.${fileExt}`;
+    //   filePath = `${fileName}`;
+    // }
+
+    // let new_payload = { ...payload, poster, id: postId, setPostPrivacy };
+    // return new_supabase.storage
+    //   .from("posts")
+    //   .upload(filePath, file, {
+    //     cacheControl: "3600",
+    //     upsert: false,
+    //   })
+    //   .then((resAvater) => {
+    //     if (resAvater.error === null) {
+    //       console.log(resAvater);
+    //       let newDataToUpload = {
+    //         ...payload,
+    //         post: { ...payload.post, photo: resAvater.data.Key },
+    //         poster,
+    //         id: postId,
+    //         setPostPrivacy,
+    //       };
+    //       return new_supabase
+    //         .from("feeds")
+    //         .insert([
+    //           {
+    //             feed_id: postId,
+    //             poster: poster,
+    //             school: poster.school,
+    //             posterId: id,
+    //             data: newDataToUpload,
+    //             time: JSON.stringify(payload.post.time),
+    //             privacy: setPostPrivacy,
+    //           },
+    //         ])
+    //         .then((res) => {
+    //           if (res.body === null) {
+    //             console.log(res);
+    //             state.draft.push(newDataToUpload);
+    //             disp_draft(state.draft);
+    //             return error(
+    //               "Your operation could not be completed due to network error. Your post has been save to draft."
+    //             );
+    //           } else {
+    //             let newData = {
+    //               ...res.body[0].data,
+    //               likes: [],
+    //               unlikes: [],
+    //               comments: [],
+    //               success: true,
+    //             };
+    //             state.feeds.push(newData);
+    //             loadFeeds(state.feeds);
+    //             console.log(res.body[0]);
+    //             return success("Done", { success: true });
+    //           }
+    //         });
+    //     } else {
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     state.draft.push(new_payload);
+    //     disp_draft(state.draft);
+    //     return error(
+    //       "Your operation could not be completed due to network error. Your post has been save to draft."
+    //     );
+    //   });
   }
 }

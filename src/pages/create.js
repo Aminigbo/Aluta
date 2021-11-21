@@ -73,7 +73,7 @@ function Home({ appState, loadFeeds, disp_draft }) {
     amount: null,
     delaysecond: null,
     beneficiaries: null,
-    beneficiariesList:[]
+    beneficiariesList: [],
   });
 
   const [event, setEvent] = useState({
@@ -149,7 +149,6 @@ function Home({ appState, loadFeeds, disp_draft }) {
           timeleft += 15;
         }
       }, 1000);
-
       handleCreatePost(postBody, state, loadFeeds, disp_draft).then((res) => {
         if (res.success == true) {
           document.getElementById("progressBar").value = 100;
@@ -172,9 +171,7 @@ function Home({ appState, loadFeeds, disp_draft }) {
     // <input type="file" id="upload"/>
     let image = document.getElementById("upload");
 
-    var imageResize = new ImageResize({
-      quality: 18,
-    });
+    var imageResize = new ImageResize();
     imageResize
       .play(image)
       .then((response) => {
@@ -194,7 +191,8 @@ function Home({ appState, loadFeeds, disp_draft }) {
 
         //Usage example:
         var file = dataURLtoFile(response, files.name);
-        setBlob({ ...blob, file: file, url2: URL.createObjectURL(file) });
+        console.log(file)
+        setBlob({ ...blob, file: files, url2: URL.createObjectURL(files) });
         // window.scrollTo(0, document.body.scrollHeight);
         // console.log("scroll")
       })
