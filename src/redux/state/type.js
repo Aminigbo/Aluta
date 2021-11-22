@@ -1,7 +1,7 @@
 export const LOGGED_IN_SUCCESS = "LOGGED_IN_SUCCESS"
 export const LOGGED_IN_ERROR = "LOGGED_IN_ERROR"
 
-export const PICK_MATCH = "PICK_MATCH"
+export const LOADING = "LOADING"
 
 export const ALL_MATCHES = "ALL_MATCHES"
 
@@ -9,7 +9,7 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
 
 export const LOG_OUT = "LOG_OUT"
 
-export const PREDICTED = "PREDICTED"
+export const GIVEAWAY_BENEFICIARIES = "GIVEAWAY_BENEFICIARIES"
 
 export const TEST_RESULT = "TEST_RESULT"
 

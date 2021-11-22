@@ -7,7 +7,7 @@ import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
 import Toppills from "../components/includes/topdesktoppills";
 import Realtime from "../components/includes/realtime";
-import { logOut, disp_feeds, add_wallet } from "../redux";
+import { logOut, disp_feeds, add_wallet, allWhoBenefited ,disp_loading} from "../redux";
 // importing functions from controllers
 // import {fetchFeeds, renderFeeds} from "../functions/controllers/feeds"
 import { addComment, renderComments } from "../functions/controllers/comments"; // importing all the comment controllers
@@ -23,7 +23,7 @@ import {
   PublicOutlined,
   MoreHorizOutlined,
   LocalAtm,
-  CheckCircleOutlineOutlined
+  CheckCircleOutlineOutlined,
 } from "@material-ui/icons";
 import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
@@ -42,9 +42,20 @@ import {
 import { commentDuration, API_URL } from "../functions/utils/index";
 
 // import giveaway claim controller
-import { claimGiveaway } from "../functions/controllers/giveaway";
+import {
+  disp_all_who_benefited,
+  finallyBuzBeneficiary,
+  rewardUser,
+} from "../functions/controllers/giveaway";
 
-function Home({ appState, loadFeeds, walletAdd }) {
+// @======== CONFIRM ALERT
+import {
+  giveawayConfirm,
+  giveawayProceedAlert,
+  alreadyBenefited,
+} from "../functions/workers_functions/alert";
+
+function Home({ appState, loadFeeds, disp_allWhoBenefited, startLoading }) {
   let history = useHistory();
   const state = appState;
   const { postId } = useParams();
@@ -54,18 +65,18 @@ function Home({ appState, loadFeeds, walletAdd }) {
   const [compState, setStates] = useState({
     commentLoader: false,
   });
+  const [giveAwayConfirm, setGiveawayConfirm] = useState({
+    pop: null,
+  });
+  const [payloadHolder, setPayloadHolder] = useState("");
+  const [comment, setComment] = useState("");
+  const [school, setSchool] = useState("");
+
   function renderFeeds(allFeeds) {
-    console.log(post_to_comment);
+    // console.log(post_to_comment);
 
     return <Media loading={false} data={post_to_comment} />;
   }
-
-  // claim give away
-  const claim = () => {
-    claimGiveaway(post_to_comment).then((res) => {
-      console.log(res);
-    });
-  };
 
   function timeout() {
     let delaysecond = "";
@@ -94,8 +105,37 @@ function Home({ appState, loadFeeds, walletAdd }) {
 
   // @=======   function to buz users
   const buzUsers = (payload) => {
-    console.log(payload)
-  }
+    setPayloadHolder({
+      ...payload,
+    });
+    confirm(payload);
+    setGiveawayConfirm({
+      ...giveAwayConfirm,
+      // pop: true,
+      miniLoad: true,
+    });
+  };
+
+  // @======== PROCEED TO AWARD THE GIVE AWAY TO THE USER
+  const confirm = (payload) => {
+    rewardUser(
+      payload,
+      state.benefited,
+      giveAwayConfirm,
+      setGiveawayConfirm
+    ).then((res) => {});
+  };
+
+  // @======== FINALLY BUZ THE BENEFICIARY
+  const FinallyBuzBeneficiary = (payload) => {
+    finallyBuzBeneficiary(
+      payload,
+      state.benefited,
+      giveAwayConfirm,
+      setGiveawayConfirm,
+      disp_allWhoBenefited, 
+    ).then((res) => {});
+  };
 
   // render all comments
   const allComments = (allFeeds) => {
@@ -111,8 +151,8 @@ function Home({ appState, loadFeeds, walletAdd }) {
       CheckCircleOutlineOutlined,
       Divider,
       state,
-      buzUsers
-      
+      buzUsers,
+      giveAwayConfirm
     );
   };
 
@@ -146,9 +186,6 @@ function Home({ appState, loadFeeds, walletAdd }) {
       });
     }
   };
-
-  const [comment, setComment] = useState("");
-  const [school, setSchool] = useState("");
 
   function Media(props) {
     const { loading = false, data } = props;
@@ -237,7 +274,8 @@ function Home({ appState, loadFeeds, walletAdd }) {
               <CardMedia
                 component="img"
                 // height="220"
-                image={data.post.file.secure_url}
+                image={`${API_URL}/${data.post.photo}`}
+                // image={data.post.file.secure_url}
                 alt="image"
               />
             )}
@@ -409,24 +447,11 @@ function Home({ appState, loadFeeds, walletAdd }) {
     loading: PropTypes.bool,
   };
 
-  // fetch feeds from db
-  const fetch_feeds = () => {
-    fetchFeeds(loadFeeds).then((fetched) => {
-      console.log(fetched);
-    });
-  };
-
   React.useEffect((compState) => {
     // window.scrollTo(0, 0);
     // loadFeeds(state.feeds);
+    disp_all_who_benefited(postId, disp_allWhoBenefited, startLoading);
   }, []);
-
-  // show loader when rerouting
-  let reroute = (category) => {
-    // history.push(`./leagues/${category.id}`)
-    setStates({ ...compState, loader: true });
-    setTimeout(() => history.push(`./leagues/${category.id}`), 500);
-  };
 
   return state.loggedIn === false ? (
     <div>
@@ -434,6 +459,65 @@ function Home({ appState, loadFeeds, walletAdd }) {
     </div>
   ) : (
     <div id="body bg">
+      {console.log(state)}
+      {giveAwayConfirm.pop === true && (
+        <>
+          {" "}
+          {giveawayConfirm(
+            payloadHolder,
+            giveAwayConfirm,
+            setGiveawayConfirm,
+            FinallyBuzBeneficiary
+          )}{" "}
+        </>
+      )}
+      {giveAwayConfirm.pop == "CONFIRMED" && (
+        <>
+          {" "}
+          {giveawayProceedAlert(
+            {
+              error: false,
+              title: "SUCCESSFUL",
+              msg: `Giveaway of ${payloadHolder.giveawayData.amount} Buz to ${payloadHolder.luckyWinner.name} has been confirmed !`,
+            },
+            giveAwayConfirm,
+            setGiveawayConfirm
+          )}{" "}
+        </>
+      )}
+
+      {/* @======== CHECK IF THERE IS A CATCHED ERROR */}
+      {giveAwayConfirm.pop == "ERROR" && (
+        <>
+          {" "}
+          {giveawayProceedAlert(
+            {
+              error: true,
+              title: "Network Error",
+              msg: `The operation could not be completed due to network error.`,
+            },
+            giveAwayConfirm,
+            setGiveawayConfirm
+          )}{" "}
+        </>
+      )}
+
+      {/* ======== IF UESER ALREADY BENEFITED */}
+      {giveAwayConfirm.pop == "ALREADY BENEFITED" && (
+        <>
+          {" "}
+          {giveawayProceedAlert(
+            {
+              error: true,
+              title: "Unauthorized",
+              msg: `${payloadHolder.luckyWinner.name} has already benefited from this giveaway .`,
+            },
+            giveAwayConfirm,
+            setGiveawayConfirm
+          )}{" "}
+        </>
+      )}
+
       {/* {console.log(state)} */}
       {/* {state.realtime.length > 0 && <Realtime />} */}
       <Realtime />
@@ -579,6 +663,8 @@ const mapDispatchToProps = (dispatch, encoded) => {
     logout: () => dispatch(logOut()),
     loadFeeds: (payload) => dispatch(disp_feeds(payload)),
     walletAdd: (wallet) => dispatch(add_wallet(wallet)),
+    disp_allWhoBenefited: (payload) => dispatch(allWhoBenefited(payload)),
+     startLoading: (payload) => dispatch(disp_loading(payload)),
   };
 };
 

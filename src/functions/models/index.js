@@ -2,7 +2,7 @@ import { supabase } from "../configs/index";
 
 const new_supabase = supabase();
 
-// @============= CHECK IF USER EXISTS
+// @======== CHECK IF USER EXISTS
 export async function userExists(email, phone) {
   return new_supabase
     .from("users")
@@ -10,7 +10,7 @@ export async function userExists(email, phone) {
     .or(`email.eq.${email},phone.eq.${phone}`);
 }
 
-// @=========== AUTH USER
+// @======== AUTH USER
 export async function createUser(email, password) {
   return new_supabase.auth.signUp({
     email,
@@ -18,7 +18,7 @@ export async function createUser(email, password) {
   });
 }
 
-// SAVE USER DATA TO PUBLIC USER TABLE
+//@========  SAVE USER DATA TO PUBLIC USER TABLE
 export async function registerUser(data) {
   let { fullname, phone, email, meta } = data;
   return new_supabase.from("users").insert([
@@ -31,7 +31,7 @@ export async function registerUser(data) {
   ]);
 }
 
-// @==============  LOGIN USER
+// @======== LOGIN USER
 export async function signInUser(email, password) {
   return new_supabase.auth.signIn({
     email,
@@ -39,7 +39,7 @@ export async function signInUser(email, password) {
   });
 }
 
-// @=================  CREATE comment
+// @======== CREATE comment
 export async function addComments(payload) {
   let { post, comment_id, user, comment, meta } = payload;
   return new_supabase.from("comments").insert([
@@ -53,15 +53,17 @@ export async function addComments(payload) {
   ]);
 }
 
-// @====================================   FETCH ALL FEEDS
+// @======== FETCH ALL FEEDS
 export async function fetchAllFeeds(payload) {
   return new_supabase
     .from("feeds")
-    .select(`*, comments(*), post_likes(*), unlikes(*)`);
+    .select(
+      `*, comments(*), post_likes(*), unlikes(*), giveaway-lucky-winners(*)`
+    );
   // .eq("school", payload);
 }
 
-// @============  GET USERS OF A PARTICULAY UNIVERSITY
+// @======== GET USERS OF A PARTICULAY UNIVERSITY
 export async function fetchUsersOfUniversity(payload) {
   return new_supabase
     .from("users")
@@ -103,7 +105,7 @@ export async function addLikes(payload) {
     });
 }
 
-// @====== ADD UNLIKE
+// @======== ADD UNLIKE
 export async function addUnlike(payload) {
   return new_supabase
     .from("unlikes")
@@ -167,9 +169,70 @@ export async function updateUserMeta(payload) {
     });
 }
 
-//  @============  fetch user profile
+//  @======== fetch user profile
 export async function fetchUserProfile(payload) {
   return new_supabase.from("users").select(`*, feeds(*)`).eq("id", payload);
+}
+
+// @======== INSERT FEEDS TO DATABASE
+export async function insertFeeds(payload) {
+  return new_supabase.from("feeds").insert([
+    {
+      feed_id: payload.postId,
+      poster: payload.poster,
+      posterId: payload.poster.id,
+      school: payload.school,
+      data: payload,
+      time: payload.time,
+      privacy: payload.setPostPrivacy,
+    },
+  ]);
+}
+
+// @======== INSERT INTO BUCKET
+export async function storageInsert(filePath, file) {
+  return new_supabase.storage.from("posts").upload(filePath, file, {
+    cacheControl: "3600",
+    upsert: false,
+  });
+}
+
+// @======== GET THE NUMBER OF USERS WHO BENEFITED FROM A PERTICULAR GIVEAWAY
+export async function allWhoBenefited(payload) {
+  return new_supabase
+    .from("giveaway-lucky-winners")
+    .select("*")
+    .eq("post", payload);
+}
+
+// @======== RECORD THOS WHO BENEFITED FROM GIVEAWAY TO DATABASE
+export async function saveGiveawayBeneficiary(payload) {
+  return new_supabase.from("giveaway-lucky-winners").insert([
+    {
+      post: payload.postId,
+      luckywinner: payload.luckyWinner,
+      giver: payload.poster,
+      meta: payload,
+      beneficiaryId: payload.luckyWinner.beneficiary
+    },
+  ]);
+}
+
+// @======== CHECK IF USER ALREADY BENEFITED FROM THE GIVE AWAY
+// @======== IF USER BENEFITED,RETURN TRUE ELSE RETURN FALSE
+export async function userBenefited(payload) {
+
+  return new_supabase
+    .from("giveaway-lucky-winners")
+    .select("*")
+    .eq("beneficiaryId",payload)
+    .then((res) => {
+      if (res.body.length > 0) {
+        return true
+      } else {
+        return false
+      }
+    });
 }
 
 // sync dp
@@ -195,8 +258,8 @@ export async function syncDB() {
                     .delete()
                     .then((del5) => {
                       return {
-                        message:"done"
-                      }
+                        message: "done",
+                      };
                     });
                 });
             });

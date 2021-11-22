@@ -9,7 +9,7 @@ import Desktopright from "../components/includes/desktopright";
 import Pills from "../components/includes/desktoppillsholder";
 import Toppills from "../components/includes/topdesktoppills";
 import Realtime from "../components/includes/realtime";
-import { draft, disp_feeds, add_wallet } from "../redux";
+import { draft, disp_feeds, add_wallet ,loginSuc} from "../redux";
 import {
   fetchFeeds,
   ALLPOSTS,
@@ -63,7 +63,7 @@ import {
 // @=== import success response from worker function
 import { alert } from "../functions/workers_functions/alert";
 
-function Home({ appState, loadFeeds, disp_draft }) {
+function Home({ appState, loadFeeds, disp_draft,login_suc }) {
   const [postText, setPostText] = useState("");
   const [blob, setBlob] = useState("");
   const [postType, setPostType] = useState("POST");
@@ -149,7 +149,7 @@ function Home({ appState, loadFeeds, disp_draft }) {
           timeleft += 15;
         }
       }, 1000);
-      handleCreatePost(postBody, state, loadFeeds, disp_draft).then((res) => {
+      handleCreatePost(postBody, state, loadFeeds, disp_draft, login_suc).then((res) => {
         if (res.success == true) {
           document.getElementById("progressBar").value = 100;
           history.push("/");
@@ -191,8 +191,8 @@ function Home({ appState, loadFeeds, disp_draft }) {
 
         //Usage example:
         var file = dataURLtoFile(response, files.name);
-        console.log(file)
-        setBlob({ ...blob, file: files, url2: URL.createObjectURL(files) });
+        // console.log(file)
+        setBlob({ ...blob, file: file, url2: URL.createObjectURL(file) });
         // window.scrollTo(0, document.body.scrollHeight);
         // console.log("scroll")
       })
@@ -319,48 +319,6 @@ function Home({ appState, loadFeeds, disp_draft }) {
                   position: "relative",
                 }}
               >
-                <div>
-                  {blob.url2 != null && (
-                    <>
-                      <Card
-                        id="postArea1"
-                        style={{
-                          width: "100%",
-                          marginLeft: "0px",
-                          borderRadius: "0px",
-                          position: "relative",
-                        }}
-                        sx={{ m: 2 }}
-                      >
-                        {" "}
-                        <span
-                          onClick={() => {
-                            clear();
-                          }}
-                          style={{
-                            position: "absolute",
-                            top: "10px",
-                            right: "10px",
-                            color: "white",
-                            background: "red",
-                          }}
-                        >
-                          <CloseOutlined />
-                        </span>
-                        <CardMedia
-                          id="postArea1"
-                          component="img"
-                          height=" "
-                          // image={'https://i1.sndcdn.com/artworks-000371577855-entfet-t500x500.jpg'}
-                          // image={  "https://usercontent.one/wp/zonknews.com/wp-content/uploads/2021/01/GHANIAN-SOCIALITEHAJIA4REAL-DROPS-FINEGIRLAFTER-RELEASING-BADDERTHAN.jpg" }
-                          image={url}
-                          alt="image"
-                        />
-                      </Card>
-                      {/* <img style={{width:"50%"}} src = {url} /> */}
-                    </>
-                  )}
-                </div>
                 <div
                   style={{ height: " ", background: "", position: "relative" }}
                 >
@@ -441,6 +399,49 @@ function Home({ appState, loadFeeds, disp_draft }) {
                   </div>
                 </div>
 
+                <div>
+                  {blob.url2 != null && (
+                    <>
+                      <Card
+                        id="postArea1"
+                        style={{
+                          width: "100%",
+                          marginLeft: "0px",
+                          borderRadius: "0px",
+                          position: "relative",
+                        }}
+                        sx={{ m: 2 }}
+                      >
+                        {" "}
+                        <span
+                          onClick={() => {
+                            clear();
+                          }}
+                          style={{
+                            position: "absolute",
+                            top: "10px",
+                            right: "10px",
+                            color: "white",
+                            background: "red",
+                          }}
+                        >
+                          <CloseOutlined />
+                        </span>
+                        <CardMedia
+                          id="postArea1"
+                          component="img"
+                          height=" "
+                          // image={'https://i1.sndcdn.com/artworks-000371577855-entfet-t500x500.jpg'}
+                          // image={  "https://usercontent.one/wp/zonknews.com/wp-content/uploads/2021/01/GHANIAN-SOCIALITEHAJIA4REAL-DROPS-FINEGIRLAFTER-RELEASING-BADDERTHAN.jpg" }
+                          image={url}
+                          alt="image"
+                        />
+                      </Card>
+                      {/* <img style={{width:"50%"}} src = {url} /> */}
+                    </>
+                  )}
+                </div>
+
                 {postType == "GIVE AWAY" && (
                   <Box
                     id="postArea1"
@@ -491,7 +492,7 @@ function Home({ appState, loadFeeds, disp_draft }) {
                     <div
                       style={{
                         width: "40%",
-                        background: " ",
+                        background: "",
                         display: "inline-block",
                         height: " ",
                         padding: "10px 0px",
@@ -815,6 +816,7 @@ const mapDispatchToProps = (dispatch, encoded) => {
     disp_draft: (payload) => dispatch(draft(payload)),
     loadFeeds: (payload) => dispatch(disp_feeds(payload)),
     walletAdd: (wallet) => dispatch(add_wallet(wallet)),
+     login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
   };
 };
 

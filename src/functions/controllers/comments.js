@@ -102,14 +102,27 @@ export function renderComments(
   CheckCircleOutlineOutlined,
   Divider,
   state,
-  buzUsers
+  buzUsers,
+  giveAwayConfirm
 ) {
   const post_to_comment = posts.filter((e) => e.id == postId);
+
   post_to_comment[0].comments.sort(function (a, b) {
     return parseFloat(b.id) + parseFloat(a.id);
   });
-  console.log(post_to_comment);
+  // console.log(post_to_comment);
   return post_to_comment[0].comments.map((comments) => {
+    let isBeneficiary = null;
+    // filter benefited if user is found
+    let beneficiariesFilter = state.benefited.filter(
+      (e) => e.beneficiaryId == comments.user.beneficiary
+    );
+    if (beneficiariesFilter.length > 0) {
+      isBeneficiary = true;
+    } else {
+      isBeneficiary = false;
+    }
+
     return (
       <Paper
         style={{
@@ -162,7 +175,7 @@ export function renderComments(
             </Typography>
           </Grid>
         </Grid>
-        {console.log(comments)}
+        {/* {console.log(comments)} */}
 
         {post_to_comment[0].postType == "GIVE AWAY" && (
           <>
@@ -185,16 +198,58 @@ export function renderComments(
                   </>
                 ) : (
                   <>
-                    <div
-                      onClick={() => {
-                        buzUsers(post_to_comment[0]);
-                      }}
-                      style={buzBTN}
-                    >
-                      &nbsp; <FavoriteBorderOutlined />
-                      &nbsp;<b>Buz me</b>
-                      {/* <span style={{ fontSize: "11px" }}>{data.likes.length}</span> */}
-                    </div>
+                    {giveAwayConfirm.miniLoad == true ? (
+                      <div style={buzBTN}>
+                        &nbsp; &nbsp;<b>Just a sec........</b>
+                        {/* <span style={{ fontSize: "11px" }}>{data.likes.length}</span> */}
+                      </div>
+                    ) : (
+                      <>
+                        {isBeneficiary === true ? (
+                          <div style={buzBTN}>
+                            &nbsp; <CheckCircleOutlineOutlined />
+                            &nbsp;<b>Benefited</b>
+                            {/* <span style={{ fontSize: "11px" }}>{data.likes.length}</span> */}
+                          </div>
+                        ) : (
+                          <>
+                            {state.loading === true ? (
+                              <div style={buzBTN}>
+                                &nbsp; &nbsp;<b>Just a sec......</b>
+                                {/* <span style={{ fontSize: "11px" }}>{data.likes.length}</span> */}
+                              </div>
+                            ) : (
+                              <>
+                                {isBeneficiary === true ? (
+                                  <div style={buzBTN}>
+                                    &nbsp; <CheckCircleOutlineOutlined />
+                                    &nbsp;<b>YOU Benefited</b>
+                                    {/* <span style={{ fontSize: "11px" }}>{data.likes.length}</span> */}
+                                  </div>
+                                ) : (
+                                  <div
+                                    onClick={() => {
+                                      buzUsers({
+                                        giveawayData:
+                                          post_to_comment[0].post.meta.giveaway,
+                                        luckyWinner: comments.user,
+                                        postId: post_to_comment[0].id,
+                                        poster: post_to_comment[0].poster,
+                                      });
+                                    }}
+                                    style={buzBTN}
+                                  >
+                                    &nbsp; <FavoriteBorderOutlined />
+                                    &nbsp;<b>Buz me </b>
+                                    {/* <span style={{ fontSize: "11px" }}>{data.likes.length}</span> */}
+                                  </div>
+                                )}
+                              </>
+                            )}
+                          </>
+                        )}
+                      </>
+                    )}
                   </>
                 )}
               </>
@@ -221,17 +276,43 @@ export function renderComments(
                         <Divider
                           style={{ marginLeft: "40px", marginTop: "10px" }}
                         />
-                        <div
-                          onClick={() => {
-                            buzUsers(post_to_comment[0]);
-                          }}
-                          style={buzBTN}
-                        >
-                          You commented.
-                        </div>
-                      </>
+                        {isBeneficiary === true ? (
+                          <>
+                            {state.loading === true ? (
+                              <div style={buzBTN}>
+                                &nbsp; &nbsp;<b>Just a sec......</b>
+                                {/* <span style={{ fontSize: "11px" }}>{data.likes.length}</span> */}
+                              </div>
+                            ) : (
+                              <div style={buzBTN}>
+                                &nbsp; <CheckCircleOutlineOutlined />
+                                &nbsp;<b>YOU Benefited</b>
+                                {/* <span style={{ fontSize: "11px" }}>{data.likes.length}</span> */}
+                              </div>
+                            )}
+                          </>
                         ) : (
-                            ""
+                          <>
+                            {state.loading === true ? (
+                              <div style={buzBTN}>
+                                &nbsp; &nbsp;<b>Just a sec......</b>
+                                {/* <span style={{ fontSize: "11px" }}>{data.likes.length}</span> */}
+                              </div>
+                            ) : (
+                              <div
+                                onClick={() => {
+                                  buzUsers(post_to_comment[0]);
+                                }}
+                                style={buzBTN}
+                              >
+                                You commented.
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      ""
                       // comments.user.beneficiary
                     )}
                   </>

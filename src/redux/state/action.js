@@ -2,10 +2,10 @@ import {
    LOGGED_IN_SUCCESS,
    LOGGED_IN_ERROR,
    ALL_MATCHES,
-   PICK_MATCH,
+   LOADING,
    LOGIN_SUCCESS,
    LOG_OUT,
-   PREDICTED,
+   GIVEAWAY_BENEFICIARIES,
    TEST_RESULT,
    INIT_TOPUP,
    WALLET,
@@ -60,10 +60,10 @@ export const loginSuccess = (user) => {
    }
 }
 
-export const pickMatch = (picked_matches)=>{
+export const disp_loading = (bolean)=>{
    return {
-      type:PICK_MATCH,
-      picked_matches
+      type:LOADING,
+      bolean
    }
 }
 
@@ -87,10 +87,10 @@ export const logOut = ()=>{
    }
 }
 
-export const seePredicted = (predicted) => {
+export const allWhoBenefited = (payload) => {
    return {
-      type: PREDICTED,
-      predicted
+      type: GIVEAWAY_BENEFICIARIES,
+      payload
    }
 }
 

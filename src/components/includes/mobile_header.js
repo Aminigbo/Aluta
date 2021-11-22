@@ -232,18 +232,31 @@ function Header({ appState, log_out, getOneOnOne }) {
         </b>
 
         <b
+          style={{ float: "right", marginRight: "10px", color: "orange" }}
+          onClick={() => {
+            
+           log_out();
+
+          }}
+        >
+          <ExitToAppOutlined />
+        </b>
+
+        
+        <b
           style={{ float: "right", marginRight: "10px", color: "crimson" }}
           onClick={() => {
             
             syncDB().then(res => {
-              alert(res.message)
-              log_out();
+              alert(res.message) 
             })
 
           }}
         >
           <ExitToAppOutlined />
         </b>
+
+
       </List>
     </Box>
   );

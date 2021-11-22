@@ -1,11 +1,11 @@
 import {
    LOGGED_IN_SUCCESS,
    LOGGED_IN_ERROR,
-   PICK_MATCH,
+   LOADING,
    ALL_MATCHES,
    LOGIN_SUCCESS,
    LOG_OUT,
-   PREDICTED,
+   GIVEAWAY_BENEFICIARIES,
    TEST_RESULT,
    INIT_TOPUP,
    WALLET,
@@ -38,9 +38,8 @@ import {
 
 const initialState = {
    loggedIn: false,
-   loggedInUser : '',
-   pickedMatches: 0,
-   predicted:[],
+   loggedInUser : '', 
+   benefited:[],
    allMatches: [],
    testresult: [],
    payment: "",
@@ -49,7 +48,7 @@ const initialState = {
    winner: [],
    stagged: [], 
    refresh: [],
-   loading: [],
+   loading:false,
    cashout: "NO",
    oneXone_results: [],
    realtime: [],
@@ -82,12 +81,7 @@ const reducer = (state = initialState, action) => {
             ...state,
             loggedInUser: action.user,
             loggedIn:true
-         }
-      case PICK_MATCH :
-      return {
-         ...state,
-         pickedMatches:action.picked_matches
-      }
+         } 
       case ALL_MATCHES:
       return {
          ...state,
@@ -106,7 +100,7 @@ const reducer = (state = initialState, action) => {
          loggedInUser:'',
          pickedMatches:0,
          allMatches: [],
-         predicted: [],
+         benefited: [],
          testresult: [],
          wallet: 0,
          allOneOnOne: [],
@@ -122,16 +116,16 @@ const reducer = (state = initialState, action) => {
          // admin withdrawal request noti
          withdrawal_request_noti:[]
          }
-      case PREDICTED:
+      case GIVEAWAY_BENEFICIARIES:
          return {
             ...state,
-            predicted:action.predicted
+            benefited:action.payload
          }
       
-      case TEST_RESULT:
+      case LOADING:
          return {
             ...state,
-            testresult:action.result
+            loading:action.bolean
          }
       
       case INIT_TOPUP:
