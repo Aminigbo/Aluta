@@ -142,7 +142,7 @@ export async function addUnlike(payload) {
 
 export async function updateUserMeta(payload) {
   let { email, newUser } = payload;
-
+console.log(email)
   return new_supabase
     .from("users")
     .update([{ meta: newUser }])

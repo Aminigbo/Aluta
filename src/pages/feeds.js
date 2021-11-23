@@ -92,10 +92,10 @@ function Home({ appState, loadFeeds, disp_signal }) {
   };
  
 
-  React.useEffect((compState) => {
-    window.scrollTo(0, 0);
+  React.useEffect((compState) => { 
     // setStates({ ...compState, loader: true });
     // setTimeout(() => setStates({ ...compState, loader: false }), 500);
+
     if (state.loggedIn == true) {
       returnFeeds(
         state.loggedInUser.user.meta.school,
@@ -105,13 +105,19 @@ function Home({ appState, loadFeeds, disp_signal }) {
         compState
       );
     }
+
+    window.onscroll = () => {
+       
+      // window.pageYOffset === 0 && console.log("back at top");
+      console.log(window.pageYOffset)
+    }
+    
+     console.log(window.pageYOffset)
+   
+    
     // fetch_feeds()
     loadFeeds(state.feeds);
-    if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
-      console.info("This page is reloaded");
-    } else {
-      console.info("This page is not reloaded");
-    }
+    
   }, []);
 
   const [drawerState, setDrawerState] = React.useState({

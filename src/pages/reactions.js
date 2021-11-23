@@ -108,12 +108,12 @@ function Home({ appState, loadFeeds, disp_allWhoBenefited, startLoading }) {
     setPayloadHolder({
       ...payload,
     });
-    confirm(payload);
     setGiveawayConfirm({
       ...giveAwayConfirm,
       // pop: true,
       miniLoad: true,
     });
+    confirm(payload);
   };
 
   // @======== PROCEED TO AWARD THE GIVE AWAY TO THE USER
@@ -500,7 +500,24 @@ function Home({ appState, loadFeeds, disp_allWhoBenefited, startLoading }) {
             setGiveawayConfirm
           )}{" "}
         </>
-      )}
+        )}
+        
+        {/* @======== IF THE GIVER EXHAUSTS HIS NUMBER OF BENEFICIARIES */}
+        {giveAwayConfirm.pop == "COMPLETED" && (
+        <>
+          {" "}
+          {giveawayProceedAlert(
+            {
+              error: true,
+              title: "Maximum reached",
+              msg: `You have exhausted your giveaway amount. Create another giveaway and continue the good work.`,
+            },
+            giveAwayConfirm,
+            setGiveawayConfirm
+          )}{" "}
+        </>
+        )}
+        
 
       {/* ======== IF UESER ALREADY BENEFITED */}
       {giveAwayConfirm.pop == "ALREADY BENEFITED" && (

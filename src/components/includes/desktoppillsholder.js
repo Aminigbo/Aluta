@@ -24,8 +24,7 @@ function Desktopright({ appState,log_out,set_session}) {
       });
    }
   
-  React.useEffect((compState) => {  
-      window.scrollTo(0, 0); 
+  React.useEffect((compState) => {   
       setStates({ ...compState, loader: true})
     setTimeout(() => setStates({ ...compState, loader: false }), 500);
     

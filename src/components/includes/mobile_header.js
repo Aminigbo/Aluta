@@ -1,6 +1,7 @@
 import "../../static/css/home/index.css";
 import React, { useState } from "react";
 import logo from "../../static/logos/aluta.png";
+import am from "../../static/logos/am.png";
 import { Dehaze, Search } from "@material-ui/icons";
 import { connect } from "react-redux";
 import { logOut, alloneonone } from "../../redux";
@@ -294,7 +295,7 @@ function Header({ appState, log_out, getOneOnOne }) {
         >
           <ListItemAvatar>
             {/* <img alt="Aluta Meter" style={{width:"70px"}}  src={logo}/>  */}
-            <img alt="Aluta Meter" style={{ width: "40px" }} src={logo} />
+            <img alt="Aluta Meter" style={{ width: "100px" }} src={am} />
           </ListItemAvatar>{" "}
           &nbsp;&nbsp;
           {/* <b><ListItemText

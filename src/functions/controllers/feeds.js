@@ -501,6 +501,7 @@ export async function handleCreatePost(
 
   let eachUserGets = amount / beneficiaries; //AMOUNT EACH BENEFICIARIES GETS
 
+
   // @============ MAKE SURE USERS DONT CREATE GIVEAWAY LES THAN 1000 BUZ
   if (payload.postType == "GIVE AWAY" && amount < 1000) {
     return error("The minimum amount for Give-away is 1000 Buz");

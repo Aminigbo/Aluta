@@ -3,7 +3,7 @@ import "../../static/css/top-nav.css";
 import { LinearProgress } from "@material-ui/core";
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { logOut, loginSuc,add_wallet } from "../../redux";
+import { logOut, loginSuc, add_wallet } from "../../redux";
 import { useHistory, Link } from "react-router-dom";
 import {
   LocalAtm,
@@ -22,7 +22,7 @@ import { updateUserMeta } from "../../functions/models/index";
 import { trigger, resetPin } from "../../functions/controllers/resetPin";
 
 // @=== import success response from worker function
-import { alert,BuzAlert } from "../../functions/workers_functions/alert";
+import { alert, BuzAlert } from "../../functions/workers_functions/alert";
 
 // importing realtime controller
 // import { buzSubscription } from "../../functions/controllers/realtime";
@@ -38,15 +38,13 @@ const active = {
   color: "white",
 };
 
-function Desktopright({ appState, login_suc,addwallet }) {
+function Desktopright({ appState, login_suc, addwallet }) {
   let history = useHistory();
   const state = appState;
 
   const userId = state.loggedInUser.user.id;
-
+  const beneficiaryId = state.loggedInUser.user.meta.beneficiaryId;
   const new_supabase = supabase();
-
-  
 
   const [pins, setPins] = useState({
     first: "",
@@ -54,12 +52,12 @@ function Desktopright({ appState, login_suc,addwallet }) {
   });
   const [stateAlert, setStateAlert] = useState("");
   const [compState, setStates] = useState({
-    title:''
+    title: "",
   });
   const [gotbuzzed, setGotbuzzed] = useState({
     status: false,
-    data:null
-  })
+    data: null,
+  });
 
   const resetTPin = () => {
     if (pins.first.length != 4 || pins.second.length != 4) {
@@ -131,39 +129,66 @@ function Desktopright({ appState, login_suc,addwallet }) {
     }
   };
 
-
   const sub = () => {
-      new_supabase
+    new_supabase
       .from(`buz-me:to=eq.${userId}`)
-      .on("INSERT", (payload) => { 
-        const response = payload.new; 
+      .on("INSERT", (payload) => {
+        const response = payload.new;
         let myNewWallet =
-          parseInt(state.wallet) +
-          parseInt(response.meta.data.amount);
-        
+          parseInt(state.wallet) + parseInt(response.meta.data.amount);
+
         // addwallet(myNewWallet)
         setStates({
-          ...compState, payload: response,
-          myNewWallet
-        })
-        setStateAlert('buzAlert') 
+          ...compState,
+          payload: response,
+          myNewWallet,
+        });
+        setStateAlert("buzAlert");
       })
       .subscribe();
-  }
-  
+
+    new_supabase
+      .from(`giveaway-lucky-winners:beneficiaryId=eq.${beneficiaryId}`)
+      .on("INSERT", (payload) => {
+        const response = payload.new;
+        let myNewWallet =
+          parseInt(state.wallet) +
+          parseInt(response.meta.giveawayData.userGets);
+        console.log(response);
+
+        // addwallet(myNewWallet)
+        let load = {
+            meta: {
+              data: {
+                amount: response.meta.giveawayData.userGets,
+              desc:"You are one of the beneficiaries of "+response.giver.name +"'s give away. Cheers "},
+            sender:{fullname:response.giver.name}},
+        } 
+        setStates({
+          ...compState,
+          payload: load,
+          myNewWallet,
+        });
+        setStateAlert("buzAlert");
+      })
+      .subscribe();
+  };
+
   // @=====  claim the alert
   const claimBuz = () => {
     // addwallet(compState.myNewWallet)
-    setStateAlert(null)
-    history.push(`/profile/${state.loggedInUser.user.fullname}/${state.loggedInUser.user.id}`)
-  }
+    setStateAlert(null);
+    history.push(
+      `/profile/${state.loggedInUser.user.fullname}/${state.loggedInUser.user.id}`
+    );
+  };
 
   React.useEffect(() => {
-    sub()
+    sub();
   }, []);
 
   let successPayload = {
-    title: compState.title.length < 1 ? "SUCCESS": compState.title,
+    title: compState.title.length < 1 ? "SUCCESS" : compState.title,
     msg: compState.alertMsg,
     error: false,
   };
@@ -196,11 +221,16 @@ function Desktopright({ appState, login_suc,addwallet }) {
         {stateAlert === null && <span>{history.push("/")}</span>}
         {stateAlert === true && alert(successPayload, setStateAlert)}
         {stateAlert === false && alert(errorPayload, setStateAlert)}
-         {stateAlert == 'buzAlert' && BuzAlert(compState.payload, claimBuz)}
+        {stateAlert == "buzAlert" && BuzAlert(compState.payload, claimBuz)}
         <div
           onClick={() => {
-            window.scrollTo(0, 0);
+            // window.scrollTo(0, 0);
             history.push("/");
+            if (window.pageYOffset === 0) {
+              console.log("refesh")
+            } else {
+              // window.scrollTo(0, 0)
+            }
           }}
           className="top-nav-pills-holder"
         >

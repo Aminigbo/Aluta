@@ -10,7 +10,7 @@ import Desktopright from "../components/includes/desktopright";
 import { LinearProgress } from "@material-ui/core";
 import { supabase } from "../configurations";
 import { add_wallet, logOut, disp_feeds, draft } from "../redux";
-import Toppills from "../components/includes/topdesktoppills"; 
+import Toppills from "../components/includes/topdesktoppills";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { fetchUsersOfUniversity } from "../functions/models/index";
 import {
@@ -26,7 +26,7 @@ import makeAnimated from "react-select/animated";
 
 // @=== import success response from worker function
 import { alert } from "../functions/workers_functions/alert";
-
+import { handleCreateRequest } from "../functions/controllers/requestbuz";
 const rec_inputs = {
   margin: "5%",
   width: "90%",
@@ -256,7 +256,7 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
               timeleft += 20;
             }
           }, 1000);
-          handleCreatePost(postBody, state, loadFeeds, disp_draft).then(
+          handleCreateRequest(postBody, state, loadFeeds, disp_draft).then(
             (res) => {
               if (res.success == true) {
                 document.getElementById("progressBar").value = 100;
