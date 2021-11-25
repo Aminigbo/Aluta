@@ -1,4 +1,4 @@
-import { PermPhoneMsg } from "@material-ui/icons";
+import md5 from "md5";
 
 export const API_URL = "https://qwtxgoxfoytosibklxtt.supabase.in/storage/v1/object/public"
 
@@ -283,4 +283,43 @@ export function allUniversities() {
   ]
   return schools
   
+}
+
+
+// @======== GENERATE BENEFICIARY ID FOR EVERY SIGNUP'
+export function beneficaryID(fullname,email,phone,password) {
+  return md5(fullname+email+phone+password+new Date().getTime()).replace(/[^0-9]/g, "").substr(0, 10)
+}
+
+// @======== GENERATE CODES FOR CASHBACK
+export function cashbackRegEx(benID,phone,email,password,amount) {
+  return md5(benID+phone+email+password+amount+new Date().getTime()).replace(/[^0-9]/g, "").substr(0, 6)
+}
+
+
+// @======== CASHBACK chargeCENTAGES
+export function cashbackchargecentage(amount){
+  let charge = ""
+  if (amount > 99.99 && amount < 4999) {
+    charge = 80
+  } else if (amount > 4999 && amount < 9999) {
+    charge = 160
+  }else if (amount > 9999 && amount < 14999) {
+    charge = 240
+  }else if (amount > 14999 && amount < 24999) {
+    charge = 320
+  }else if (amount > 24999 && amount < 29999) {
+    charge = 400
+  }else if (amount > 29999 && amount < 34999) {
+    charge = 480
+  }else if (amount > 34999 && amount < 39999) {
+    charge = 560
+  }else if (amount > 39999 && amount < 44999) {
+    charge = 640
+  }else if (amount > 44999 && amount < 49999) {
+    charge = 720
+  }else if (amount > 49999) {
+    charge = 1000
+  }
+  return charge
 }

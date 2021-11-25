@@ -218,6 +218,41 @@ export async function saveGiveawayBeneficiary(payload) {
   ]);
 }
 
+// @========  RECORD THE CASHBACK GENERATED TO DATABASE
+export async function saveCashBack(payload) {
+   return new_supabase.from("cashback").insert([
+    {
+      token: payload.token,
+      meta: payload.meta,
+      user: payload.user, 
+    },
+  ]);
+}
+
+
+// @======== VERIFY CASHBACK TOKEN
+export async function verifyCashbackToken(payload) { 
+  return new_supabase
+    .from("cashback")
+    .select("*")
+    .eq("token", payload)
+    .eq('isActive', true)
+}
+
+// @======== DEACTIVATE TOKEN
+export async function deactivateToken(payload, data) { 
+  return new_supabase
+    .from("cashback")
+    .update({
+      isActive: false,
+      meta:data
+    })
+    .eq("token", payload) 
+}
+
+
+
+
 // @======== CHECK IF USER ALREADY BENEFITED FROM THE GIVE AWAY
 // @======== IF USER BENEFITED,RETURN TRUE ELSE RETURN FALSE
 export async function userBenefited(payload) {

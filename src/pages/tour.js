@@ -120,12 +120,20 @@ function Home({ appState, login_suc }) {
               {" "}
               <Toppills />
             </div>{" "}
-            <div className=" " style={{marginTop:"20px"}}>
+            <div style={{
+                  width: "90%",
+                  background: "white",
+                  padding: "10px 3px",
+                  marginLeft: "5%",
+                  marginTop: "20px", 
+                  boxShadow: " 1px 1px 3px #888888",
+                  border: "0.5px solid #f3f3f3",
+                }}>
               <div className="realtimeParent">
                 {/* <div className="realtimeHeader" style={smile}>
                   CAMPUS TOUR
                 </div> */}
-                <div className="realtimeBody">
+                <div className=" " >
                   <b>Tour other universities</b> <br />
                   {/* <br />
                   Search for the university you want to take a tour to and we will take you there  */}

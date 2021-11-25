@@ -348,7 +348,7 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
             {/* <div className="explore desktop"><span>Explore</span>  <span className="logout" onClick={()=>{logout()}}>Logout</span>  </div> */}
 
             <div animateIn="fadeIn">
-              <div className="leagues_holder">
+              <div className=""  >
                 {compState.loader === true && (
                   <progress
                     style={{
@@ -362,7 +362,16 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
                   ></progress>
                 )}
 
-                <div className="paypanel">
+                <div className="paypanel" style={{
+                  width: "90%",
+                  background: "white",
+                  padding: "10px",
+                  // marginLeft: "5%",
+                  marginTop: "20px",
+                  borderRadius: "40px 40px 2px 3px",
+                  boxShadow: " 1px 1px 3px #888888",
+                  border: "0.5px solid #f3f3f3",
+                }}>
                   <div style={paymentTitle}>
                     <p>Request Buz</p>
                   </div>

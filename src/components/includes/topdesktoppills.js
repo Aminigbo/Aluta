@@ -14,7 +14,10 @@ import {
   ForumOutlined,
   HomeOutlined,
   StorefrontOutlined,
+  AssignmentReturnedOutlined
 } from "@material-ui/icons";
+
+import { cashbackloader } from "../../components/loading";
 
 import { updateUserMeta } from "../../functions/models/index";
 
@@ -82,6 +85,10 @@ function Desktopright({ appState, login_suc, addwallet }) {
         alertMsg: "Sorry, you can not use the default pin.",
       });
     } else {
+      setStates({
+        ...compState,
+        loading:true
+      })
       let { first, second } = pins;
 
       let user = state.loggedInUser.user;
@@ -117,7 +124,7 @@ function Desktopright({ appState, login_suc, addwallet }) {
               loader: false,
               alertMsg: "Sorry, a network error occured",
             });
-          }
+          } 
         })
         .catch((errer) => {
           alert("A network error occured");
@@ -218,6 +225,7 @@ function Desktopright({ appState, login_suc, addwallet }) {
 
       <div id=" " className="top-nav-holder">
         {/* {console.log(split)} */}
+         {compState.loading === true && <>{cashbackloader()} </>}
         {stateAlert === null && <span>{history.push("/")}</span>}
         {stateAlert === true && alert(successPayload, setStateAlert)}
         {stateAlert === false && alert(errorPayload, setStateAlert)}
@@ -276,7 +284,7 @@ function Desktopright({ appState, login_suc, addwallet }) {
             {" "}
             <CardGiftcardOutlined />{" "}
           </span>
-          <p className="top-nav-pills-title">Request Buz</p>
+          <p className="top-nav-pills-title">Request</p>
         </div>
 
         <div
@@ -303,7 +311,7 @@ function Desktopright({ appState, login_suc, addwallet }) {
             <p className="top-nav-pills-title">Forum</p>
             </div> */}
 
-        <div
+        {/* <div
           onClick={() => {
             history.push("/listmart");
           }}
@@ -317,11 +325,31 @@ function Desktopright({ appState, login_suc, addwallet }) {
             className="top-nav-pills"
           >
             {" "}
-            <StorefrontOutlined />{" "}
+            <StorefrontOutlined />{" "} 
           </span>
-          <p className="top-nav-pills-title"> Aluta Mart</p>
+          <p className="top-nav-pills-title">Redeem</p>
+        </div> */}
+
+        <div
+          onClick={() => {
+            history.push("/cashback");
+          }}
+          className="top-nav-pills-holder"
+        >
+          <span
+            style={{
+              background: split == "cashback" && "#0a3d62",
+              color: split == "cashback" && "white",
+            }}
+            className="top-nav-pills"
+          > 
+            <AssignmentReturnedOutlined />
+          </span>
+          <p className="top-nav-pills-title">Cash Back</p>
         </div>
 
+
+        {state.loggedInUser.user.meta.school !== null ? 
         <div
           onClick={() => {
             history.push("/create");
@@ -338,8 +366,27 @@ function Desktopright({ appState, login_suc, addwallet }) {
             {" "}
             <AddBoxOutlined />{" "}
           </span>
-          <p className="top-nav-pills-title"> Make post</p>
-        </div>
+          <p className="top-nav-pills-title">Post</p>
+          </div> :
+        <div
+          onClick={() => {
+            history.push("/listmart");
+          }}
+          className="top-nav-pills-holder"
+        >
+          <span
+            style={{
+              background: split == "listmart" && "#0a3d62",
+              color: split == "listmart" && "white",
+            }}
+            className="top-nav-pills"
+          >
+            {" "}
+            <StorefrontOutlined />{" "} 
+          </span>
+          <p className="top-nav-pills-title">Market</p>
+          </div>
+        }
       </div>
     </>
   );

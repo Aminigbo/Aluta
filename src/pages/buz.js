@@ -7,7 +7,7 @@ import Footer from "../components/includes/mobile_footer.js";
 import Header from "../components/includes/mobile_header.js";
 import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
-
+import { cashbackloader } from "../components/loading";
 import Realtime from "../components/includes/realtime";
 import { Link } from "react-router-dom";
 import { LinearProgress } from "@material-ui/core";
@@ -37,7 +37,7 @@ const rec_inputs3 = {
   width: "90%",
   padding: "4px 2px",
   border: "5px",
-  height: "40px",
+  height: "60px",
   borderBottom: "0.5px solid grey",
   backgroundColor: "#f4f6f7",
   color: "#4e7a97",
@@ -341,12 +341,7 @@ function Home({ appState, login_suc, logout }) {
       )}
       {/* {resetPin(state, history, smile)} */} 
       <div className="mobile">
-        {compState.loader && (
-          <div className="loader">
-            {" "}
-            <LinearProgress />{" "}
-          </div>
-        )}
+        {compState.loader === true && <>{cashbackloader()} </>}
         {/* {state.realtime.length > 0 && <Realtime />} */}
         {/* <Realtime /> */}
         <div className="header_footer">
@@ -380,7 +375,16 @@ function Home({ appState, login_suc, logout }) {
                   <span>Topup</span> <span className="logout">History</span>
                 </div>
 
-                <div style={{ borderColor: "#2C3A47" }} className="paypanel">
+                <div style={{ borderColor: "#2C3A47" }} className="paypanel"  style={{
+                  width: "90%",
+                  background: "white",
+                  padding: "10px",
+                  // marginLeft: "5%",
+                  marginTop: "20px",
+                  borderRadius: "40px 40px 2px 3px",
+                  boxShadow: " 1px 1px 3px #888888",
+                  border: "0.5px solid #f3f3f3",
+                }}>
                   <div style={paymentTitle}>
                     <p>
                       BUZ ME &nbsp; <CreditCardOutlined style={smile} />

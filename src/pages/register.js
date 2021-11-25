@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../static/css/auth/register.css";
 import { connect } from "react-redux";
 import { TextField, Button } from "@material-ui/core";
-import { Link, useHistory , Redirect} from "react-router-dom";
+import { Link, useHistory, Redirect } from "react-router-dom";
 import loaderImg from "../static/logos/animation.gif";
 import { loginSuc, add_wallet } from "../redux";
 import { Helmet } from "react-helmet";
@@ -12,12 +12,13 @@ import {
   validateEmail,
   code,
   generateOTP,
+  beneficaryID,
 } from "../functions/utils/index";
 import { handleRegister } from "../functions/controllers/auth/register";
 
 // @=== import success response from worker function
 import { alert } from "../functions/workers_functions/alert";
-
+import { cashbackloader } from "../components/loading";
 const logoStyle = {
   position: "absolute",
   top: "20px",
@@ -27,7 +28,7 @@ const logoStyle = {
 
 function Register({ appState, login_suc, walletAdd }) {
   let history = useHistory();
-  const state = appState
+  const state = appState;
 
   React.useEffect((compState) => {
     window.scrollTo(0, 0);
@@ -139,6 +140,7 @@ function Register({ appState, login_suc, walletAdd }) {
     </div>
   ) : (
     <div>
+      {compState.loader === true && <>{cashbackloader()} </>}
       {/* {stateAlert === null && <small>{history.push("/")}</small>} */}
       {stateAlert === true && alert(successPayload, setStateAlert)}
       {stateAlert === false && alert(errorPayload, setStateAlert)}
@@ -209,6 +211,7 @@ function Register({ appState, login_suc, walletAdd }) {
           {/* <br /><br />
                <TextField id="input" onChange={(e)=>{ setDob(e.target.value)  }} value={dob} required label="" type="date" variant="outlined" /> */}
           <br />
+          <br />
           <TextField
             id="input"
             onChange={(e) => {
@@ -222,19 +225,15 @@ function Register({ appState, login_suc, walletAdd }) {
           />{" "}
           <br />
           <br />
-          {compState.loader != true ? (
-            <Button
-              style={{background:"#0a3d62", color:"white"}}
-              type="submit"
-              variant=" "
-              id=" " 
-            >
-              {" "}
-              Register{" "}
-            </Button>
-          ) : (
-            <img src={loaderImg} />
-          )}
+          <Button
+            style={{ background: "#0a3d62", color: "white" }}
+            type="submit"
+            variant=" "
+            id=" "
+          >
+            {" "}
+            Register{" "}
+          </Button>{"  "} 
           <div class="option">
             <span>Already have an account? </span>{" "}
             <Link
@@ -245,7 +244,7 @@ function Register({ appState, login_suc, walletAdd }) {
               to="/login"
             >
               {" "}
-              <b style={{color:"#0a3d62"}}>Login</b>
+              <b style={{ color: "#0a3d62" }}>Login</b>
             </Link>
           </div>
         </form>

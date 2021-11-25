@@ -12,7 +12,7 @@ import Toppills from "../components/includes/topdesktoppills";
 import { allUniversities } from "../functions/utils/index";
 import { updateUserMeta } from "../functions/models/index";
 import { LanguageOutlined } from "@material-ui/icons";
-
+import { cashbackloader } from "../components/loading";
 // @=== import success response from worker function
 import { alert } from "../functions/workers_functions/alert";
 const smile = {
@@ -190,9 +190,9 @@ function Home({ appState, login_suc }) {
               </div>{" "}
               <div className=" " style={{ marginTop: "10px" }}>
                 <div className="realtimeParent">
-                  <div className="realtimeHeader" style={smile}>
+                  {/* <div className="realtimeHeader" style={smile}>
                     Update your profile
-                  </div>
+                  </div> */}
                   <div className="realtimeBody" style={{ fontSize: "13px" }}>
                     Update your details, this will help us serve you with the
                     right contents .
@@ -438,24 +438,7 @@ function Home({ appState, login_suc }) {
                     <br />
                   </div>
 
-                  {compState.loader && (
-                    <div className="loader">
-                      {" "}
-                      <LinearProgress />
-                      {compState.done == true && (
-                        <div
-                          style={{
-                            position: "relative",
-                            top: "40%",
-                            color: "white",
-                            textAlign: "center",
-                          }}
-                        >
-                          You have successfully updated your school
-                        </div>
-                      )}
-                    </div>
-                  )}
+                   {compState.loader === true && <>{cashbackloader()} </>}
                 </div>
               </div>
               <br />

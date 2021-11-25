@@ -478,7 +478,7 @@ function Home({ appState, loadFeeds, disp_allWhoBenefited, startLoading }) {
             {
               error: false,
               title: "SUCCESSFUL",
-              msg: `Giveaway of ${payloadHolder.giveawayData.amount} Buz to ${payloadHolder.luckyWinner.name} has been confirmed !`,
+              msg: `Giveaway of ${payloadHolder.giveawayData.userGets} Buz to ${payloadHolder.luckyWinner.name} has been confirmed !`,
             },
             giveAwayConfirm,
             setGiveawayConfirm

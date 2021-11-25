@@ -26,8 +26,12 @@ import Updateprofile from "./pages/profileupdate"
 import Buz from "./pages/buz"
 import Marketproducts from "./pages/marketproducts"
 import Listmart from "./pages/marketlist"
+import CASHBACK from "./pages/cashback"
+import Create_cb from "./pages/createcashback"
+import Nonstudentfeeds from "./components/nonstudentfeeds";
 import Requestbuz from "./pages/requestBuz"
 import Reactions from "./pages/reactions"
+import History  from "./pages/history"
 
  
 import {
@@ -67,8 +71,18 @@ export default function App() {
               </Route>
               <Route path="/giveaway">
                 <Giveaway />
-              </Route> 
+              </Route>
               
+               <Route path="/nonstudentfeed">
+                <Nonstudentfeeds />
+              </Route> 
+
+              <Route path="/history">
+                <History />
+              </Route>
+
+              
+              {/*  */}
               {/* admin view users  AdminUsers*/}
               <Route path="/events">
                 <Events />
@@ -84,6 +98,14 @@ export default function App() {
 
               <Route path="/listmart">
                 <Listmart />
+              </Route>
+
+              <Route path="/cashback">
+                <CASHBACK />
+              </Route>
+
+              <Route path="/cashback-create">
+                <Create_cb />
               </Route>
 
               <Route path="/market/:marketID">

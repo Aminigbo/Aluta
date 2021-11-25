@@ -16,7 +16,7 @@ import Avatar from "@mui/material/Avatar";
 import { allUniversities } from "../functions/utils/index";
 import { updateUserMeta } from "../functions/models/index";
 import Search from "search-react-input";
-
+import { cashbackloader } from "../components/loading";
 const smile = {
   color: "white",
   fontSize: "20px",
@@ -39,11 +39,11 @@ function Home({ appState, login_suc }) {
     let user = state.loggedInUser.user;
     let newUser = {
       ...user,
-      meta: {...state.loggedInUser.user.meta, school: school.label },
+      meta: { ...state.loggedInUser.user.meta, school: school.label },
     };
     let payload = {
       email: user.email,
-      newUser:newUser.meta,
+      newUser: newUser.meta,
     };
 
     const data = {
@@ -51,7 +51,7 @@ function Home({ appState, login_suc }) {
       meta: state.loggedInUser.meta,
     };
 
-    console.log(payload)
+    console.log(payload);
 
     setStates({
       ...compState,
@@ -70,6 +70,7 @@ function Home({ appState, login_suc }) {
         setStates({
           ...compState,
           done: true,
+          loading: false,
         });
       }
     });
@@ -94,120 +95,128 @@ function Home({ appState, login_suc }) {
     </div>
   ) : (
     <div id="body bg">
-        {state.loggedInUser.user.meta.school !== null ? history.push("/") :
-      <>
-        <div className="mobile">
-        <div className="header_footer">
-          {/* <Footer /> */}
-          <Header />
-        </div>
+      {state.loggedInUser.user.meta.school !== null ? (
+        history.push("/")
+      ) : (
+        <>
+          {compState.loading === true && <>{cashbackloader()} </>}
+          <div className="mobile">
+            <div className="header_footer">
+              {/* <Footer /> */}
+              <Header />
+            </div>
 
-        <div>
-          <div>
-            <div
-              style={{
-                textAlign: "center",
-                marginTop: "10px",
-                background: " #f4f6f7",
-                position: "sticky",
-                top: "0px",
-                zIndex: "1000",
-                padding: "0px",
-              }}
-            >
-              {" "}
-              <Toppills />
-            </div>{" "}
-            <div className=" " style={{marginTop:"20px"}}>
-              <div className="realtimeParent">
-                <div className="realtimeHeader" style={smile}>
+            <div>
+              <div>
+                <div
+                  style={{
+                    textAlign: "center",
+                    marginTop: "10px",
+                    background: " #f4f6f7",
+                    position: "sticky",
+                    top: "0px",
+                    zIndex: "1000",
+                    padding: "0px",
+                  }}
+                >
+                  {" "}
+                  <Toppills />
+                </div>{" "}
+                <div className=" " style={{ marginTop: "10px" }}>
+                  <div className="realtimeParent">
+                    {/* <div className="realtimeHeader" style={smile}>
                   Add your university
-                </div>
-                <div className="realtimeBody">
-                  <b> Welcome {state.loggedInUser.user.fullname}</b> <br />
-                  <br />
-                  Add your university to get in touch with your schoolmates .
-                  <div className="description">
-                    Get the latest happening around the univers
-                  </div>{" "} 
-                  <div
-                    style={{
-                      marginTop: "20px",
-                      // width: "80%",
-                      // marginLeft: "5%",
-                      background: " ",
-                      textAlign: "center",
-                    }}
-                    >
+                </div> */}
+                    <div className="realtimeBody">
+                      <b> Welcome {state.loggedInUser.user.fullname}</b> <br />
                       <br />
-                    <Search
-                      width="80vw"
-                      spellcheck={true}
-                      placeholder="Search for your school..."
-                      options={countries}
-                      onChange={(option, e) => setCapturedSearch(option)}
-                    />{" "}
-                  </div> <br /> 
+                      Add your university to get in touch with your schoolmates
+                      .
+                      <div className="description">
+                        Get the latest happening around the univers
+                      </div>{" "}
+                      <div
+                        style={{
+                          marginTop: "20px",
+                          // width: "80%",
+                          // marginLeft: "5%",
+                          background: " ",
+                          textAlign: "center",
+                        }}
+                      >
+                        <br />
+                        <Search
+                          width="80vw"
+                          spellcheck={true}
+                          placeholder="Search for your school..."
+                          options={countries}
+                          onChange={(option, e) => setCapturedSearch(option)}
+                        />{" "}
+                      </div>{" "}
+                      <br />
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <br />
+                <div
+                  style={{
+                    marginTop: "-10px",
+                    width: "90%",
+                    marginLeft: "5%",
+                    backgroundColor: " ",
+                    textAlign: "center",
+                  }}
+                >
+                  {capturedSearch && (
+                    // "Hello and welcome to " + capturedSearch.label}
+                    <ListItem
+                      style={{ background: "lightgray", borderRadius: "4px" }}
+                      onClick={() => {
+                        setSchool(capturedSearch);
+                      }}
+                    >
+                      {compState.loader && (
+                        <div className="loader">
+                          {" "}
+                          <LinearProgress />
+                          {compState.done == true && (
+                            <div
+                              style={{
+                                position: "relative",
+                                top: "40%",
+                                color: "white",
+                                textAlign: "center",
+                              }}
+                            >
+                              You have successfully updated your school
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      <ListItemAvatar>
+                        <Avatar>
+                          <img
+                            style={{ width: "40px" }}
+                            src={capturedSearch.img}
+                          />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={capturedSearch.label}
+                        // secondary="+99 new activities"
+                      />
+                    </ListItem>
+                  )}
                 </div>
               </div>
             </div>
-            <br />
-            <br />
-            <div
-              style={{
-                marginTop: "-10px",
-                width: "90%",
-                marginLeft: "5%",
-                backgroundColor: " ",
-                textAlign: "center",
-              }}
-            >
-              {capturedSearch && (
-                // "Hello and welcome to " + capturedSearch.label}
-                <ListItem
-                  style={{ background: "lightgray", borderRadius: "4px" }}
-                  onClick={() => {
-                    setSchool(capturedSearch);
-                  }}
-                >
-                  {compState.loader && (
-                    <div className="loader">
-                      {" "}
-                      <LinearProgress />
-                      {compState.done == true && (
-                        <div
-                          style={{
-                            position: "relative",
-                            top: "40%",
-                            color: "white",
-                            textAlign: "center",
-                          }}
-                        >
-                          You have successfully updated your school
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  <ListItemAvatar>
-                    <Avatar>
-                      <img style={{ width: "40px" }} src={capturedSearch.img} />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={capturedSearch.label}
-                    // secondary="+99 new activities"
-                  />
-                </ListItem>
-              )}
-            </div>
           </div>
-        </div>
-      </div>
 
-      <Desktopleft />
-      <Desktopright />
-      </>
-      }
+          <Desktopleft />
+          <Desktopright />
+        </>
+      )}
     </div>
   );
 }

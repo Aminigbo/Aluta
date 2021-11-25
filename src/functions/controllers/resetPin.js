@@ -2,9 +2,10 @@ import { allUniversities } from "../utils/index";
 
 export function trigger(state, history, smile) {
 
-  if (state.loggedInUser.user.meta.school === null) {
-    history.push("/setschool")
-  } else if (state.loggedInUser.user.meta.gender === null || state.loggedInUser.user.meta.DOB === null) {
+  // if (state.loggedInUser.user.meta.school === null) {
+  //   history.push("/setschool")
+  // } else
+    if (state.loggedInUser.user.meta.gender === null || state.loggedInUser.user.meta.DOB === null) {
     history.push("/updateprofile")
   } 
 }

@@ -90,9 +90,8 @@ function Home({ appState, loadFeeds, disp_signal }) {
   ALLPOSTS.propTypes = {
     loading: PropTypes.bool,
   };
- 
 
-  React.useEffect((compState) => { 
+  React.useEffect((compState) => {
     // setStates({ ...compState, loader: true });
     // setTimeout(() => setStates({ ...compState, loader: false }), 500);
 
@@ -107,17 +106,13 @@ function Home({ appState, loadFeeds, disp_signal }) {
     }
 
     window.onscroll = () => {
-       
       // window.pageYOffset === 0 && console.log("back at top");
-      console.log(window.pageYOffset)
-    }
-    
-     console.log(window.pageYOffset)
-   
-    
+      // console.log(window.pageYOffset)
+    };
+ 
+
     // fetch_feeds()
     loadFeeds(state.feeds);
-    
   }, []);
 
   const [drawerState, setDrawerState] = React.useState({
@@ -196,7 +191,7 @@ function Home({ appState, loadFeeds, disp_signal }) {
     </div>
   ) : (
     <div id="body bg">
-      {console.log(state)}
+      {state.loggedInUser.user.meta.school === null && history.push("/nonstudentfeed")}
       {/* {state.realtime.length > 0 && <Realtime />} */}
       <Realtime />
 
@@ -263,9 +258,11 @@ function Home({ appState, loadFeeds, disp_signal }) {
                 >
                   {/* <AccountBalanceWalletOutlined
                     style={{ marginLeft: "" }}
-                  /> */} 
-                  
-                    <b  style={{ color: "#0a3d62", fontSize: "14px" }}>{state.loggedInUser.user.meta.wallet} <s>BUZ</s></b>
+                  /> */}
+
+                  <b style={{ color: "#0a3d62", fontSize: "14px" }}>
+                    {state.loggedInUser.user.meta.wallet} <s>BUZ</s>
+                  </b>
                 </Link>{" "}
                 <br />
               </div>

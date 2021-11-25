@@ -11,9 +11,11 @@ import loaderImg from "../static/logos/animation.gif";
 import logo from "../static/logos/aluta.png";
 import { Helmet } from "react-helmet";
 import { makeStyles } from "@material-ui/core/styles";
-
+import md5 from "md5";
 // @=== import success response from worker function
 import { alert } from "../functions/workers_functions/alert";
+import { cashbackloader } from "../components/loading";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -104,10 +106,12 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
                 alertMsg: "Invalid credentials",
               });
             } else {
+              const new_pwd = md5(password + email)
+              console.log(new_pwd)
               return new_supabase.auth
                 .signIn({
                   email,
-                  password,
+                  password:new_pwd,
                 })
                 .then((signin_response) => {
                   if (
@@ -158,12 +162,13 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
     error: true,
   };
 
-  return state.loggedIn == true ? (
+  return state.loggedIn === true ? (
     <div>
       <Redirect to="/" />
     </div>
   ) : (
-    <div className="bg">
+      <div className="bg">
+        {compState.loader === true && <>{cashbackloader()} </>}
       {stateAlert === true && alert(successPayload, setStateAlert)}
       {stateAlert === false && alert(errorPayload, setStateAlert)}
       {console.log(state)}
@@ -215,9 +220,8 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
             <span style={{color:"#0a3d62"}}>Forgot Password?</span>
           </div>
           <br />
-          <br />
-          {compState.loader != true ? (
-              <Button
+            <br />
+            <Button
                 style={{background:"#0a3d62", color:"white"}}
               onClick={(e) => {
                 login();
@@ -227,10 +231,7 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
             >
               {" "}
               Login{" "}
-            </Button>
-          ) : (
-            <img src={loaderImg} />
-          )}
+            </Button> 
           <div class="option">
             <br />
             <span>Don't have an account? </span>{" "}

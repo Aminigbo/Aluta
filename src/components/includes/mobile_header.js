@@ -1,13 +1,13 @@
 import "../../static/css/home/index.css";
 import React, { useState } from "react";
-import logo from "../../static/logos/aluta.png";
-import am from "../../static/logos/am.png";
+import logo from "../../static/logos/amm.png";
+import am from "../../static/logos/logo-icon.png";
 import { Dehaze, Search } from "@material-ui/icons";
 import { connect } from "react-redux";
-import { logOut, alloneonone } from "../../redux";
+import { logOut,loginSuc } from "../../redux";
 import Naira from "react-naira";
 import { useHistory, Link } from "react-router-dom";
-import {syncDB} from "../../functions/models/index"
+import { syncDB } from "../../functions/models/index";
 import {
   LocalAtm,
   Money,
@@ -20,6 +20,7 @@ import {
   Receipt,
   AddShoppingCart,
   DraftsOutlined,
+  SchoolOutlined,
   FiberManualRecord,
   SignalCellularConnectedNoInternet1BarOutlined,
   FileCopyOutlined,
@@ -39,6 +40,8 @@ import {
   Avatar,
 } from "@mui/material";
 
+import {updateUserMeta} from "../../functions/models/index"
+
 const select = {
   // backgroundColor: "#0a3d62",
   color: "#0a3d62",
@@ -49,11 +52,50 @@ const selected = {
   color: "mediumseagreen",
 };
 
-function Header({ appState, log_out, getOneOnOne }) {
+function Header({ appState, log_out, login_suc }) {
   const state = appState;
   let history = useHistory();
 
-  const new_supabase = supabase();
+  const signoutfromschool = ()=>{
+let user = state.loggedInUser.user;
+    let newUser = {
+      ...user,
+      meta: { ...state.loggedInUser.user.meta, school: null },
+    };
+    let payload = {
+      email: user.email,
+      newUser: newUser.meta,
+    };
+
+    const data = {
+      user: newUser,
+      meta: state.loggedInUser.meta,
+    };
+
+    console.log(payload);
+
+    setStates({
+      ...compState,
+      loader: true,
+    });
+    updateUserMeta(payload).then((res) => {
+      if (res.success == true) {
+        login_suc(data);
+        setTimeout(() => history.push("/"), 2000);
+        setStates({
+          ...compState,
+          done: true,
+          loader: true,
+        });
+      } else {
+        setStates({
+          ...compState,
+          done: true,
+          loading: false,
+        });
+      }
+    });
+  }
 
   const [drawerState, setDrawerState] = React.useState({
     bottom: false,
@@ -72,7 +114,7 @@ function Header({ appState, log_out, getOneOnOne }) {
     setDrawerState({ ...drawerState, [anchor]: open });
   };
 
-  const list = (anchor) => (
+  const list = () => (
     <Box sx={{ width: 270, height: "400px" }} role="presentation">
       <List>
         <img alt="Aluta Meter" style={{ width: "120px" }} src={logo} />
@@ -85,7 +127,9 @@ function Header({ appState, log_out, getOneOnOne }) {
         <div
           style={{ padding: "0px 10px", fontSize: "13px", color: "#0a3d62" }}
         >
-          <b>@{state.loggedInUser.user.meta.school}</b>
+          {state.loggedInUser.user.meta.school !== null && (
+            <b>@{state.loggedInUser.user.meta.school}</b>
+          )}
         </div>
       </List>
       <Divider />
@@ -117,11 +161,11 @@ function Header({ appState, log_out, getOneOnOne }) {
           </Avatar>
         </div>
         &nbsp;&nbsp;<span>{state.loggedInUser.user.fullname}</span>
-        <div style={{ textAlign: "center" }}>
+        {/* <div style={{ textAlign: "center" }}>
           <b style={{ color: "#0a3d62", fontSize: "14px" }}>
             {state.loggedInUser.user.meta.wallet} <s>BUZ</s>
           </b>
-        </div>
+        </div> */}
       </List>
 
       <Divider />
@@ -199,6 +243,39 @@ function Header({ appState, log_out, getOneOnOne }) {
 
       <Divider />
 
+      {state.loggedInUser.user.meta.school === null ? (
+        <>
+          {" "}
+          <List
+            onClick={() => {
+              setDrawerState({ ...drawerState, ["left"]: false });
+              history.push("/setschool");
+            }}
+            style={{ padding: "15px" }}
+          >
+            <SchoolOutlined /> &nbsp;
+            <span>Add school</span>
+            {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
+          </List>
+          <Divider />
+        </>
+      ) : 
+       <>
+          {" "}
+          <List
+            onClick={() => {
+              setDrawerState({ ...drawerState, ["left"]: false });
+              signoutfromschool()
+            }}
+            style={{ padding: "15px" }}
+          >
+            <SchoolOutlined /> &nbsp;
+            <span>Leave school</span>
+            {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
+          </List>
+          <Divider />
+        </>}
+
       <List
         onClick={() => {
           setDrawerState({ ...drawerState, ["left"]: false });
@@ -235,29 +312,22 @@ function Header({ appState, log_out, getOneOnOne }) {
         <b
           style={{ float: "right", marginRight: "10px", color: "orange" }}
           onClick={() => {
-            
-           log_out();
-
+            log_out();
           }}
         >
           <ExitToAppOutlined />
         </b>
 
-        
         <b
           style={{ float: "right", marginRight: "10px", color: "crimson" }}
           onClick={() => {
-            
-            syncDB().then(res => {
-              alert(res.message) 
-            })
-
+            syncDB().then((res) => {
+              alert(res.message);
+            });
           }}
         >
           <ExitToAppOutlined />
         </b>
-
-
       </List>
     </Box>
   );
@@ -285,7 +355,7 @@ function Header({ appState, log_out, getOneOnOne }) {
         <ListItem
           style={{
             marginTop: "0px",
-            background: " #0a3d62",
+            background: " ",
             position: "sticky",
             top: "0px",
             zIndex: "1000",
@@ -295,7 +365,7 @@ function Header({ appState, log_out, getOneOnOne }) {
         >
           <ListItemAvatar>
             {/* <img alt="Aluta Meter" style={{width:"70px"}}  src={logo}/>  */}
-            <img alt="Aluta Meter" style={{ width: "100px" }} src={am} />
+            <img alt="Aluta Meter" style={{ width: "60px" }} src={am} />
           </ListItemAvatar>{" "}
           &nbsp;&nbsp;
           {/* <b><ListItemText
@@ -303,11 +373,15 @@ function Header({ appState, log_out, getOneOnOne }) {
                   primary={state.loggedInUser.user.meta.school}
                   secondary="+99 new activities"
           /></b> */}
-          <b style={{ color: "white", fontSize: "15px" }}>
-            @{state.loggedInUser.user.meta.school}
+          <b style={{ color: "#0a3d62", fontSize: "15px" }}>
+            {state.loggedInUser.user.meta.school === null ? (
+              <div style={{ marginLeft: "50px" }}>Aluta-Meter</div>
+            ) : (
+              <> @{state.loggedInUser.user.meta.school} </>
+            )}
           </b>
           <Dehaze
-            style={{ color: "white", position: " absolute", right: "10px" }}
+            style={{ color: "#0a3d62", position: " absolute", right: "10px" }}
             className="menu"
             onClick={toggleDrawer("left", true)}
           />
@@ -348,8 +422,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, encoded) => {
   return {
-    log_out: () => dispatch(logOut()),
-    getOneOnOne: (data) => dispatch(alloneonone(data)),
+    log_out: () => dispatch(logOut()), 
+    login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
   };
 };
 
