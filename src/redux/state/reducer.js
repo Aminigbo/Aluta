@@ -15,7 +15,7 @@ import {
    ISSIGNAL,
    DRAFT, 
    CASHOUT,
-   oneXoneResults,
+   NOTIFICATION,
    JACKPOT,
 
    REALTIME,
@@ -44,7 +44,7 @@ const initialState = {
    testresult: [],
    payment: "",
    WALLET: 0,
-   allOneOnOne: [],
+   notification:false,
    winner: [],
    stagged: [], 
    refresh: [],
@@ -173,10 +173,10 @@ const reducer = (state = initialState, action) => {
             cashout:action.cashout
          }
       
-      case oneXoneResults:
+      case NOTIFICATION:
          return {
             ...state,
-            oneXone_results:action.result
+            notification:action.payload
          }
       
       case REALTIME:

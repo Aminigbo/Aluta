@@ -191,7 +191,7 @@ function Home({ appState, loadFeeds, disp_signal }) {
     </div>
   ) : (
     <div id="body bg">
-      {state.loggedInUser.user.meta.school === null && history.push("/nonstudentfeed")}
+      {state.loggedInUser.user.meta.schoolmode === false && history.push("/nonstudentfeed")}
       {/* {state.realtime.length > 0 && <Realtime />} */}
       <Realtime />
 

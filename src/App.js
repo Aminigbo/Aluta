@@ -32,7 +32,7 @@ import Nonstudentfeeds from "./components/nonstudentfeeds";
 import Requestbuz from "./pages/requestBuz"
 import Reactions from "./pages/reactions"
 import History  from "./pages/history"
-
+import Notification from "./components/notification"
  
 import {
   BrowserRouter as Router,
@@ -72,6 +72,11 @@ export default function App() {
               <Route path="/giveaway">
                 <Giveaway />
               </Route>
+              {/*  */}
+
+              <Route path="/cb">
+                <Nonstudentfeeds />
+              </Route> 
               
                <Route path="/nonstudentfeed">
                 <Nonstudentfeeds />
@@ -79,6 +84,10 @@ export default function App() {
 
               <Route path="/history">
                 <History />
+              </Route>
+
+              <Route path="/notification">
+                <Notification />
               </Route>
 
               

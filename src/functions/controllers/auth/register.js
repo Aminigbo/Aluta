@@ -5,7 +5,8 @@ import md5 from "md5";
 export async function handleRegister(formData) {
   let loadedData = null;
   let { email, phone, name, password } = formData;
-  const ben_id = beneficaryID(name, email, phone, password);
+  const ben_id = beneficaryID(name, email, phone, password);  // beneficiary id gotten from md5
+  let curvedBenId = phone.substring(1,11)  // beneficiary id gotten from phone number
   const new_pwd = md5(password+email);
   const uuid = md5(ben_id + new_pwd);
   let data = {
@@ -17,8 +18,9 @@ export async function handleRegister(formData) {
       password: new_pwd,
       wallet: 2000,
       transactionPin: "0000",
-      beneficiaryId: ben_id,
+      beneficiaryId: curvedBenId,
       role: 0,
+      schoolmode:false,
       DOB: null,
       gender: null,
       nickname: null,

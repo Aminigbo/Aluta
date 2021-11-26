@@ -128,16 +128,20 @@ function Home({ appState, login_suc }) {
                   Add your university
                 </div> */}
                     <div className="realtimeBody">
-                      <b> Welcome {state.loggedInUser.user.fullname}</b> <br />
-                      <br />
-                      Add your university to get in touch with your schoolmates
-                      .
-                      <div className="description">
-                        Get the latest happening around the univers
+                      <b>
+                        {" "}
+                        Welcome {state.loggedInUser.user.fullname.split(" ")[0]}
+                      </b>
+                      <div>
+                        Smart Campus helps you get in touch with your.
+                        schoolmates
+                      </div> 
+                      <div className="description" style={{color:"gold", marginTop: "10px",}}>
+                        You can turn this off in your menu section
                       </div>{" "}
                       <div
                         style={{
-                          marginTop: "20px",
+                          marginTop: "5px",
                           // width: "80%",
                           // marginLeft: "5%",
                           background: " ",

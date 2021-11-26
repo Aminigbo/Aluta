@@ -4,21 +4,16 @@ import logo from "../../static/logos/amm.png";
 import am from "../../static/logos/logo-icon.png";
 import { Dehaze, Search } from "@material-ui/icons";
 import { connect } from "react-redux";
-import { logOut,loginSuc } from "../../redux";
-import Naira from "react-naira";
+import { logOut, loginSuc,disp_noti } from "../../redux";
 import { useHistory, Link } from "react-router-dom";
 import { syncDB } from "../../functions/models/index";
 import {
   LocalAtm,
   Money,
   EmojiTransportationOutlined,
-  CardGiftcardOutlined,
-  StorefrontOutlined,
   SettingsOutlined,
   EventNote,
-  AccountBalanceWallet,
-  Receipt,
-  AddShoppingCart,
+  NotificationsActiveOutlined,
   DraftsOutlined,
   SchoolOutlined,
   FiberManualRecord,
@@ -26,10 +21,11 @@ import {
   FileCopyOutlined,
   LibraryAddCheckOutlined,
   ExitToAppOutlined,
+  EuroSymbolOutlined,
 } from "@material-ui/icons";
 
 import avar from "../../static/logos/logo2.png";
-import { supabase } from "../../configurations/index";
+import { cashbackloader } from "../../components/loading";
 import {
   List,
   ListItem,
@@ -38,9 +34,11 @@ import {
   Box,
   Drawer,
   Avatar,
+  Switch,
 } from "@mui/material";
 
-import {updateUserMeta} from "../../functions/models/index"
+import { updateUserMeta } from "../../functions/models/index";
+import { notificationAlert } from "../../functions/utils/index";
 
 const select = {
   // backgroundColor: "#0a3d62",
@@ -52,15 +50,22 @@ const selected = {
   color: "mediumseagreen",
 };
 
-function Header({ appState, log_out, login_suc }) {
+function Header({ appState, log_out, login_suc, dispNoti }) {
   const state = appState;
   let history = useHistory();
 
-  const signoutfromschool = ()=>{
-let user = state.loggedInUser.user;
+  const [checked, setChecked] = React.useState(false);
+  const schoolmode = (event) => {
+    switchschool(event);
+  };
+  const label = { inputProps: { 'aria-label': 'Switch demo' } };
+
+  const switchschool = (mood) => {
+    const moodSwitch = mood.target.checked;
+    let user = state.loggedInUser.user;
     let newUser = {
       ...user,
-      meta: { ...state.loggedInUser.user.meta, school: null },
+      meta: { ...state.loggedInUser.user.meta, schoolmode: moodSwitch },
     };
     let payload = {
       email: user.email,
@@ -81,13 +86,15 @@ let user = state.loggedInUser.user;
     updateUserMeta(payload).then((res) => {
       if (res.success == true) {
         login_suc(data);
-        setTimeout(() => history.push("/"), 2000);
+        setChecked(moodSwitch);
+        // setDrawerState({ ...drawerState, ["left"]: false });
         setStates({
           ...compState,
           done: true,
-          loader: true,
+          loader: false,
         });
       } else {
+        console.log(res);
         setStates({
           ...compState,
           done: true,
@@ -95,7 +102,7 @@ let user = state.loggedInUser.user;
         });
       }
     });
-  }
+  };
 
   const [drawerState, setDrawerState] = React.useState({
     bottom: false,
@@ -117,22 +124,13 @@ let user = state.loggedInUser.user;
   const list = () => (
     <Box sx={{ width: 270, height: "400px" }} role="presentation">
       <List>
-        <img alt="Aluta Meter" style={{ width: "120px" }} src={logo} />
         <small
           style={{ float: "right", marginRight: "30px", color: "crimson" }}
         >
           <DraftsOutlined /> <br />
           <small>Draft</small>
         </small>
-        <div
-          style={{ padding: "0px 10px", fontSize: "13px", color: "#0a3d62" }}
-        >
-          {state.loggedInUser.user.meta.school !== null && (
-            <b>@{state.loggedInUser.user.meta.school}</b>
-          )}
-        </div>
       </List>
-      <Divider />
 
       <List
         style={{ padding: "5px" }}
@@ -193,7 +191,7 @@ let user = state.loggedInUser.user;
         {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
       </List>
       <Divider />
-      <List
+      {/* <List
         onClick={() => {
           setDrawerState({ ...drawerState, ["left"]: false });
           history.push("/listmart");
@@ -201,10 +199,9 @@ let user = state.loggedInUser.user;
         style={{ padding: "15px" }}
       >
         <StorefrontOutlined /> &nbsp;
-        <span>Aluta market</span>
-        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
+        <span>Aluta market</span> 
       </List>
-      <Divider />
+      <Divider /> */}
       <List
         onClick={() => {
           setDrawerState({ ...drawerState, ["left"]: false });
@@ -229,52 +226,40 @@ let user = state.loggedInUser.user;
         {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
       </List>
       <Divider />
-      <List
+      {/* <List
         onClick={() => {
-          setDrawerState({ ...drawerState, ["left"]: false });
-          // history.push("/giveaway");
+          setDrawerState({ ...drawerState, ["left"]: false }); 
         }}
         style={{ padding: "15px" }}
       >
         <AddShoppingCart /> &nbsp;
-        <span>Create market front</span>
-        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
+        <span>Create market front</span> 
       </List>
 
-      <Divider />
+      <Divider /> */}
 
-      {state.loggedInUser.user.meta.school === null ? (
-        <>
-          {" "}
-          <List
-            onClick={() => {
-              setDrawerState({ ...drawerState, ["left"]: false });
-              history.push("/setschool");
-            }}
-            style={{ padding: "15px" }}
-          >
-            <SchoolOutlined /> &nbsp;
-            <span>Add school</span>
-            {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
-          </List>
-          <Divider />
-        </>
-      ) : 
-       <>
-          {" "}
-          <List
-            onClick={() => {
-              setDrawerState({ ...drawerState, ["left"]: false });
-              signoutfromschool()
-            }}
-            style={{ padding: "15px" }}
-          >
-            <SchoolOutlined /> &nbsp;
-            <span>Leave school</span>
-            {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
-          </List>
-          <Divider />
-        </>}
+      <>
+        {" "}
+        <List
+          // onClick={() => {
+          //   setDrawerState({ ...drawerState, ["left"]: false });
+          //   history.push("/setschool");
+          // }}
+          style={{ padding: "15px" }}
+        >
+          <SchoolOutlined /> &nbsp;
+          <span>School mode</span>
+          <div style={{ display: "inline-block", float: "right" }}>
+            <Switch 
+              style={{ float: "right" }}
+              checked={state.loggedInUser.user.meta.schoolmode}
+              onChange={schoolmode}
+              inputProps={{ "aria-label": "controlled" }}
+            /> 
+          </div>
+        </List>
+        <Divider />
+      </>
 
       <List
         onClick={() => {
@@ -334,6 +319,8 @@ let user = state.loggedInUser.user;
 
   return (
     <div>
+      {compState.loader === true && <> {cashbackloader()} </>}
+      {console.log(checked)}
       <div>
         {state.signal == false && (
           <div
@@ -363,9 +350,22 @@ let user = state.loggedInUser.user;
             color: "white",
           }}
         >
-          <ListItemAvatar>
+          <ListItemAvatar onClick={() => {
+            history.push("/")
+          }}>
             {/* <img alt="Aluta Meter" style={{width:"70px"}}  src={logo}/>  */}
-            <img alt="Aluta Meter" style={{ width: "60px" }} src={am} />
+            {/* <img alt="Aluta Meter" style={{ width: "60px" }} src={am} /> */}
+            <div
+              style={{ marginLeft: "15px", fontSize: "35px", color: "#0a3d62" }}
+            >
+              <b>
+                B
+                <EuroSymbolOutlined
+                  style={{ transform: "rotateZ(-90deg)", fontSize: "35px" }}
+                />
+                zz
+              </b>
+            </div>
           </ListItemAvatar>{" "}
           &nbsp;&nbsp;
           {/* <b><ListItemText
@@ -373,13 +373,15 @@ let user = state.loggedInUser.user;
                   primary={state.loggedInUser.user.meta.school}
                   secondary="+99 new activities"
           /></b> */}
-          <b style={{ color: "#0a3d62", fontSize: "15px" }}>
-            {state.loggedInUser.user.meta.school === null ? (
-              <div style={{ marginLeft: "50px" }}>Aluta-Meter</div>
-            ) : (
-              <> @{state.loggedInUser.user.meta.school} </>
-            )}
-          </b>
+          <NotificationsActiveOutlined
+            onClick={() => { dispNoti(false); history.push("/notification")}}
+            className="menu"
+            style={{
+              color: state.notification  === true ? "red" : "#0a3d62",
+              position: " absolute",
+              right: "80px",
+            }}
+          />
           <Dehaze
             style={{ color: "#0a3d62", position: " absolute", right: "10px" }}
             className="menu"
@@ -400,6 +402,24 @@ let user = state.loggedInUser.user;
             </span>
           )}
         </ListItem>
+
+        {state.loggedInUser.user.meta.schoolmode === true && (
+          <>
+            <div
+              style={{
+                color: "#0a3d62",
+                fontSize: "15px",
+                marginTop: "-40px",
+                padding: "0px 13px",
+              }}
+            >
+              <br />
+              {state.loggedInUser.user.meta.school != null && (
+                <> @{state.loggedInUser.user.meta.school} </>
+              )}{" "}
+            </div>{" "}
+          </>
+        )}
       </div>
 
       <React.Fragment key="left">
@@ -422,8 +442,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, encoded) => {
   return {
-    log_out: () => dispatch(logOut()), 
+    log_out: () => dispatch(logOut()),
     login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
+     dispNoti: (payload) => dispatch(disp_noti(payload)),
   };
 };
 

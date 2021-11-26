@@ -348,7 +348,8 @@ function Home({ appState, login_suc }) {
       <Redirect to="/login" />
     </div>
   ) : (
-    <div id="body bg">
+      <div id="body bg">
+         {state.loggedInUser.user.meta.schoolmode === true && history.push("/")}
       {console.log(state)}
       {console.log(verifyPayload)}
       {/* IF TOKEN VERIFICATION TURNS ERROR */}
@@ -457,7 +458,7 @@ function Home({ appState, login_suc }) {
                     padding: "40px 20px",
                     marginLeft: "5%",
                     marginTop: "20px",
-                    borderRadius: "40px 40px 2px 3px",
+                    // borderRadius: "40px 40px 2px 3px",
                     boxShadow: " 1px 1px 3px #888888",
                     border: "0.5px solid #f3f3f3",
                   }}

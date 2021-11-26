@@ -3,7 +3,7 @@ import "../../static/css/top-nav.css";
 import { LinearProgress } from "@material-ui/core";
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { logOut, loginSuc, add_wallet } from "../../redux";
+import { logOut, loginSuc, add_wallet,disp_noti } from "../../redux";
 import { useHistory, Link } from "react-router-dom";
 import {
   LocalAtm,
@@ -14,7 +14,8 @@ import {
   ForumOutlined,
   HomeOutlined,
   StorefrontOutlined,
-  AssignmentReturnedOutlined
+  AssignmentReturnedOutlined,
+  NotificationsActiveOutlined
 } from "@material-ui/icons";
 
 import { cashbackloader } from "../../components/loading";
@@ -41,7 +42,7 @@ const active = {
   color: "white",
 };
 
-function Desktopright({ appState, login_suc, addwallet }) {
+function Desktopright({ appState, login_suc, dispNoti }) {
   let history = useHistory();
   const state = appState;
 
@@ -136,6 +137,8 @@ function Desktopright({ appState, login_suc, addwallet }) {
     }
   };
 
+  
+  // @========  REALTIME SUBSCRIPTION
   const sub = () => {
     new_supabase
       .from(`buz-me:to=eq.${userId}`)
@@ -177,6 +180,16 @@ function Desktopright({ appState, login_suc, addwallet }) {
           myNewWallet,
         });
         setStateAlert("buzAlert");
+      })
+      .subscribe();
+    
+
+    // @======== SUBSCRIBE TO NOTIFICATION TABLE
+    new_supabase
+      .from(`notifications:to=eq.${userId}`)
+      .on("INSERT", (payload) => {
+        dispNoti(true) 
+        
       })
       .subscribe();
   };
@@ -332,14 +345,18 @@ function Desktopright({ appState, login_suc, addwallet }) {
 
         <div
           onClick={() => {
-            history.push("/cashback");
+            if (state.loggedInUser.user.meta.schoolmode === false) {
+              history.push("/cb");
+            } else {
+               history.push("/cashback");
+           }
           }}
           className="top-nav-pills-holder"
         >
           <span
             style={{
-              background: split == "cashback" && "#0a3d62",
-              color: split == "cashback" && "white",
+              background: split == "cashback"  ||  split == "cb" && "#0a3d62",
+              color: split == "cashback"  ||  split == "cb" && "white",
             }}
             className="top-nav-pills"
           > 
@@ -349,7 +366,7 @@ function Desktopright({ appState, login_suc, addwallet }) {
         </div>
 
 
-        {state.loggedInUser.user.meta.school !== null ? 
+        {state.loggedInUser.user.meta.schoolmode !== false ? 
         <div
           onClick={() => {
             history.push("/create");
@@ -379,7 +396,8 @@ function Desktopright({ appState, login_suc, addwallet }) {
               background: split == "listmart" && "#0a3d62",
               color: split == "listmart" && "white",
             }}
-            className="top-nav-pills"
+              className="top-nav-pills"
+              // nonstudentfeed
           >
             {" "}
             <StorefrontOutlined />{" "} 
@@ -402,6 +420,7 @@ const mapDispatchToProps = (dispatch, encoded) => {
     logout: () => dispatch(logOut()),
     login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
     addwallet: (walletBal) => dispatch(add_wallet(walletBal)),
+    dispNoti: (payload) => dispatch(disp_noti(payload)),
   };
 };
 

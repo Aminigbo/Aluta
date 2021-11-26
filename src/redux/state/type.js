@@ -29,7 +29,7 @@ export const DRAFT = "DRAFT"
 
 export const CASHOUT = "CASHOUT"
 
-export const oneXoneResults = "oneXoneResults"
+export const NOTIFICATION = "NOTIFICATION"
 
 export const REALTIME = 'REALTIME'
 

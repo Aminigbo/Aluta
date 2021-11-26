@@ -16,7 +16,7 @@ import {
    ISSIGNAL,
    DRAFT, 
    CASHOUT,
-   oneXoneResults,
+   NOTIFICATION,
    JACKPOT,
 
    REALTIME,
@@ -122,10 +122,10 @@ export const set_winner = (winner) => {
    }
 }
 
-export const disp_oneXoneResult = (result) => {
+export const disp_noti = (payload) => {
    return {
-      type: oneXoneResults,
-      result
+      type: NOTIFICATION,
+      payload
    }
 }
 

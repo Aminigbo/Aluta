@@ -14,7 +14,7 @@ import { LinearProgress } from "@material-ui/core";
 import { supabase } from "../configurations";
 import { loginSuc, logOut } from "../redux";
 import { CreditCardOutlined } from "@material-ui/icons";
-import Toppills from "../components/includes/topdesktoppills"; 
+import Toppills from "../components/includes/topdesktoppills";
 
 // @=== import success response from worker function
 import { alert } from "../functions/workers_functions/alert";
@@ -248,12 +248,12 @@ function Home({ appState, login_suc, logout }) {
             sender: {
               fullname: state.loggedInUser.user.fullname,
               beneficiaryID: state.loggedInUser.user.meta.beneficiaryID,
-              id: state.loggedInUser.user.id
+              id: state.loggedInUser.user.id,
             },
             reciever: {
               Fullname: compState.benef,
               beneficiaryID: beneficiary,
-              id:compState.benefId
+              id: compState.benefId,
             },
             data: {
               amount,
@@ -285,19 +285,34 @@ function Home({ appState, login_suc, logout }) {
                     .then((insertResponse) => {
                       console.log(insertResponse);
                       const newUserData = {
-                        user: { ...state.loggedInUser.user, meta: buzzerNewWallet },
-                        meta:state.loggedInUser.meta
-                      }
-                      login_suc(newUserData)
-                      setStateAlert(true);
-                      setStates({
-                        ...compState,
-                        loader: false,
-                        alertMsg: `Yeahh!!!  you buzzed NGN ${amount} to ${compState.benef}`,
-                        resolved: false,
-                      });
-                      setbeneficiary("");
-                      setAMOUNT("");
+                        user: {
+                          ...state.loggedInUser.user,
+                          meta: buzzerNewWallet,
+                        },
+                        meta: state.loggedInUser.meta,
+                      };
+
+                      new_supabase
+                        .from("notifications")
+                        .insert([
+                          {
+                            from: meta.sender.id,
+                            to: meta.reciever.id,
+                            meta: meta,
+                          },
+                        ])
+                        .then((resX) => {
+                          login_suc(newUserData);
+                          setStateAlert(true);
+                          setStates({
+                            ...compState,
+                            loader: false,
+                            alertMsg: `Yeahh!!!  you buzzed NGN ${amount} to ${compState.benef}`,
+                            resolved: false,
+                          });
+                          setbeneficiary("");
+                          setAMOUNT("");
+                        });
                     });
                 });
             })
@@ -339,7 +354,7 @@ function Home({ appState, login_suc, logout }) {
       {compState.success === true && (
         <span>{stateAlert === null && <span>{history.push("/")}</span>}</span>
       )}
-      {/* {resetPin(state, history, smile)} */} 
+      {/* {resetPin(state, history, smile)} */}
       <div className="mobile">
         {compState.loader === true && <>{cashbackloader()} </>}
         {/* {state.realtime.length > 0 && <Realtime />} */}
@@ -375,16 +390,20 @@ function Home({ appState, login_suc, logout }) {
                   <span>Topup</span> <span className="logout">History</span>
                 </div>
 
-                <div style={{ borderColor: "#2C3A47" }} className="paypanel"  style={{
-                  width: "90%",
-                  background: "white",
-                  padding: "10px",
-                  // marginLeft: "5%",
-                  marginTop: "20px",
-                  borderRadius: "40px 40px 2px 3px",
-                  boxShadow: " 1px 1px 3px #888888",
-                  border: "0.5px solid #f3f3f3",
-                }}>
+                <div
+                  style={{ borderColor: "#2C3A47" }}
+                  className="paypanel"
+                  style={{
+                    width: "90%",
+                    background: "white",
+                    padding: "10px",
+                    // marginLeft: "5%",
+                    marginTop: "20px",
+                    borderRadius: "40px 40px 2px 3px",
+                    boxShadow: " 1px 1px 3px #888888",
+                    border: "0.5px solid #f3f3f3",
+                  }}
+                >
                   <div style={paymentTitle}>
                     <p>
                       BUZ ME &nbsp; <CreditCardOutlined style={smile} />
@@ -523,7 +542,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, encoded) => {
-  return { 
+  return {
     logout: () => dispatch(logOut()),
     login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
   };

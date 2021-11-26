@@ -150,10 +150,18 @@ console.log(email)
     .then((res) => {
       console.log(res);
       if (res.body == null) {
-        return {
+        if (res.error.meddage == "JWT expired") {
+          return {
+          success: false,
+          message: "auth error",
+        };
+        } else {
+          return {
           success: false,
           message: "A network error occured",
         };
+        }
+        
       } else {
         return {
           success: true,

@@ -1,7 +1,7 @@
 import md5 from "md5";
 
-export const API_URL = "https://qwtxgoxfoytosibklxtt.supabase.in/storage/v1/object/public"
-
+export const API_URL =
+  "https://qwtxgoxfoytosibklxtt.supabase.in/storage/v1/object/public";
 
 export const error = (msg) => {
   return {
@@ -73,25 +73,20 @@ export const commentDuration = (commentedTime) => {
   // return duration;
 };
 
-
-
-
 // @============== shuffle
- // generate code
-  String.prototype.shuffle = function () {
-    var a = this.split(""),
-      n = a.length;
+// generate code
+String.prototype.shuffle = function () {
+  var a = this.split(""),
+    n = a.length;
 
-    for (var i = n - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var tmp = a[i];
-      a[i] = a[j];
-      a[j] = tmp;
-    }
-    return a.join("");
-  };
-
-
+  for (var i = n - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = a[i];
+    a[i] = a[j];
+    a[j] = tmp;
+  }
+  return a.join("");
+};
 
 // @==============  GENERATE CODE
 
@@ -139,187 +134,194 @@ export function validatePhoneNumber(input_str) {
   return re.test(input_str);
 }
 
-
- 
-
 //  !======================   export all universities
 export function allUniversities() {
-  let schools =  [
+  let schools = [
     {
       label: "Abia State University",
       value: "ABSU743",
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHdH3gz7YNpstzvlAFprJdWFiM6Qc3_2QTSQ&usqp=CAU"
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHdH3gz7YNpstzvlAFprJdWFiM6Qc3_2QTSQ&usqp=CAU",
     },
     {
       label: "Akwa Ibom State University",
       value: "AKSU473",
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJIkSpTrg_boLQgdYC0x0jAmddQdR-tYo_4nrTM_fzYZc8EyDLMgOUSYFGbKighNHKbpA&usqp=CAU"
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJIkSpTrg_boLQgdYC0x0jAmddQdR-tYo_4nrTM_fzYZc8EyDLMgOUSYFGbKighNHKbpA&usqp=CAU",
     },
     {
       label: "Ahmadu Bello University",
       value: "ABU417",
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMFG-AWrNo_hgft1vgdmCmK-0kAn1NMjg3bg&usqp=CAU"
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMFG-AWrNo_hgft1vgdmCmK-0kAn1NMjg3bg&usqp=CAU",
     },
     {
       label: "Anambra State University",
       value: "ANSU718",
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXnMIUbMk_raRTpNtODSWixJ-doqdprTR_0YAC71VyxX5nNoISTZ1gOiyuncuB45nXjhU&usqp=CAU"
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXnMIUbMk_raRTpNtODSWixJ-doqdprTR_0YAC71VyxX5nNoISTZ1gOiyuncuB45nXjhU&usqp=CAU",
     },
     {
       label: "Ajayi Crowther University",
       value: "ACU839",
-      img:"https://i1.wp.com/www.yabacampus.com/wp-content/uploads/2020/06/AJCU.jpg?fit=398%2C330&ssl=1"
+      img: "https://i1.wp.com/www.yabacampus.com/wp-content/uploads/2020/06/AJCU.jpg?fit=398%2C330&ssl=1",
     },
     {
       label: "Bells University of Technology",
       value: "BUT214",
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTu96XSrZ2wifrhB7t2kc-6oE6qtDxtT-o5zzr3tGZFL5eeJY8BBQHoPe4lu_E4YoMehWU&usqp=CAU"
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTu96XSrZ2wifrhB7t2kc-6oE6qtDxtT-o5zzr3tGZFL5eeJY8BBQHoPe4lu_E4YoMehWU&usqp=CAU",
     },
     {
       label: "Benue State University",
       value: "BSU835",
-      img:"https://i2.wp.com/www.realmina.com/wp-content/uploads/2019/11/bsu.jpg?resize=268%2C180&ssl=1"
+      img: "https://i2.wp.com/www.realmina.com/wp-content/uploads/2019/11/bsu.jpg?resize=268%2C180&ssl=1",
     },
     {
       label: "Bowen University",
       value: "BU927",
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGUXm8_EUbqJUJtB1eA_asrn1xHmbgFdStxRu0u4MtLZ37wy9vOEj-KkEjjzinytW51Os&usqp=CAU"
-    }, 
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGUXm8_EUbqJUJtB1eA_asrn1xHmbgFdStxRu0u4MtLZ37wy9vOEj-KkEjjzinytW51Os&usqp=CAU",
+    },
     {
       label: "National Open University of Nigeria",
       value: "NOUN503",
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNqhRwC1NX3ScBPr_w-pjNSDdTSPWHWOxU5DLG8eSiYc67GPCCqvj82dQ3CtjYRrpPJoU&usqp=CAU"
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNqhRwC1NX3ScBPr_w-pjNSDdTSPWHWOxU5DLG8eSiYc67GPCCqvj82dQ3CtjYRrpPJoU&usqp=CAU",
     },
     {
       label: "Cross River University of Technology",
       value: "CRUTECH532",
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAKt5vnjefOJc3hvqzmx63VrQnmVMpOL3OuyF8yRMit76pyRCpmsdRmZUsfodFVrUso4I&usqp=CAU"
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAKt5vnjefOJc3hvqzmx63VrQnmVMpOL3OuyF8yRMit76pyRCpmsdRmZUsfodFVrUso4I&usqp=CAU",
     },
     {
       label: "Delta State University Abraka",
       value: "DELSU096",
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOU8RRmw8qSAJeNHdixmOnNdU5BKEWhtDgU7xYlSnFxMG49AY-xpw4Gt35HmcLZTxmMGo&usqp=CAU"
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOU8RRmw8qSAJeNHdixmOnNdU5BKEWhtDgU7xYlSnFxMG49AY-xpw4Gt35HmcLZTxmMGo&usqp=CAU",
     },
     {
       label: "Ebonyi State University",
       value: "EBSU315",
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0jmbMI6ibkvJd09Y679xiO4pGRci4ioOZkocS3V0VvkOCdMY93XLem3TSNU-63eGxm5s&usqp=CAU"
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0jmbMI6ibkvJd09Y679xiO4pGRci4ioOZkocS3V0VvkOCdMY93XLem3TSNU-63eGxm5s&usqp=CAU",
     },
     {
       label: "Federal University of Technology",
       value: "FUTA194",
-      img:"https://upload.wikimedia.org/wikipedia/en/thumb/1/16/FUTO_logo.png/220px-FUTO_logo.png"
+      img: "https://upload.wikimedia.org/wikipedia/en/thumb/1/16/FUTO_logo.png/220px-FUTO_logo.png",
     },
     {
       label: "Gregory University Abia",
       value: "GUA520",
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMca2VFnYiQhKk3tnjxceuYJx07wETcKwnWyaN9OPCgifaHCQF0uaGY56Fv2qcuxvirpk&usqp=CAU"
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMca2VFnYiQhKk3tnjxceuYJx07wETcKwnWyaN9OPCgifaHCQF0uaGY56Fv2qcuxvirpk&usqp=CAU",
     },
     {
       label: "Lagos State University",
       value: "LASU324",
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6rt5cdQUTVbdRInIJOCj74_BIoqunsoHcJEoXfmidWfCh9BKncBiYR6lqiF2O8LqID74&usqp=CAU"
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6rt5cdQUTVbdRInIJOCj74_BIoqunsoHcJEoXfmidWfCh9BKncBiYR6lqiF2O8LqID74&usqp=CAU",
     },
     {
       label: "Taraba State University",
       value: "TSU987",
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ8us8pn9f2vx_e1dqfqdjQ75O13uI-DLEG2OyCv6Atp5D0uK6-yAQvcBoh0YjVCyBPy4&usqp=CAU"
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ8us8pn9f2vx_e1dqfqdjQ75O13uI-DLEG2OyCv6Atp5D0uK6-yAQvcBoh0YjVCyBPy4&usqp=CAU",
     },
     {
       label: "University of Benin",
       value: "UNIBEN519",
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQYz3yCABd2tIpJkG1FZwBtTHMiWje0hcBHQ&usqp=CAU"
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQYz3yCABd2tIpJkG1FZwBtTHMiWje0hcBHQ&usqp=CAU",
     },
     {
       label: "University of Calabar",
       value: "UNICAL893",
-      img:"https://i1.wp.com/educeleb.com/wp-content/uploads/2017/09/UNICAL.jpg?fit=400%2C300&ssl=1"
+      img: "https://i1.wp.com/educeleb.com/wp-content/uploads/2017/09/UNICAL.jpg?fit=400%2C300&ssl=1",
     },
     {
       label: "University of Ibadam",
       value: "UI213",
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQtERBuJvMuaQ8jx-AsQv9KPDp8skS3JjJr5mEQoxnCCiceJ-ZCLkhF5ER6Xd3xLqhIuI&usqp=CAU"
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQtERBuJvMuaQ8jx-AsQv9KPDp8skS3JjJr5mEQoxnCCiceJ-ZCLkhF5ER6Xd3xLqhIuI&usqp=CAU",
     },
     {
       label: "University of Lagos",
       value: "UNILAG065",
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0XXWNPvlcr0LChbWjut165rWG_CHbWs7NYtmEH36xRtX3-eReQdczsY-to0AwHbHbqcY&usqp=CAU"
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0XXWNPvlcr0LChbWjut165rWG_CHbWs7NYtmEH36xRtX3-eReQdczsY-to0AwHbHbqcY&usqp=CAU",
     },
     {
       label: "University of Port Harcourt",
       value: "UNIPORT629",
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTTLOvE2bFVW7qeppl9K-DHLuSXnLJTAgcR3qGh1MU4g-czQo3sIvTdwr_i7hCLrAmDFY&usqp=CAUhttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTTLOvE2bFVW7qeppl9K-DHLuSXnLJTAgcR3qGh1MU4g-czQo3sIvTdwr_i7hCLrAmDFY&usqp=CAU"
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTTLOvE2bFVW7qeppl9K-DHLuSXnLJTAgcR3qGh1MU4g-czQo3sIvTdwr_i7hCLrAmDFY&usqp=CAUhttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTTLOvE2bFVW7qeppl9K-DHLuSXnLJTAgcR3qGh1MU4g-czQo3sIvTdwr_i7hCLrAmDFY&usqp=CAU",
     },
     {
       label: "University of Nigeria Nsuka",
       value: "UNN874",
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGyDQArkPTze46T73EUm_-XQwqZUykg3bFt_29x80vq6EmzKDHCiyasQusTi8dbHlQICs&usqp=CAU"
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGyDQArkPTze46T73EUm_-XQwqZUykg3bFt_29x80vq6EmzKDHCiyasQusTi8dbHlQICs&usqp=CAU",
     },
     {
       label: "University of Uyo",
       value: "UNIUYO684",
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-MxTv9iLuj0aCJzYRG7CSEHg_zj94IhrdjZeTtiIiKuyUIOGn1Iyvd713AtKWyn8WaEo&usqp=CAU"
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-MxTv9iLuj0aCJzYRG7CSEHg_zj94IhrdjZeTtiIiKuyUIOGn1Iyvd713AtKWyn8WaEo&usqp=CAU",
     },
     {
       label: "University of Jos",
       value: "UNIJSO189",
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHkeqAn7WuJczOU0WHFMIUQ9B6PSAir4LPaFQ_qMxO2UZMnnp5uGCS5AJSPSAh-y3wWL0&usqp=CAU"
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHkeqAn7WuJczOU0WHFMIUQ9B6PSAir4LPaFQ_qMxO2UZMnnp5uGCS5AJSPSAh-y3wWL0&usqp=CAU",
     },
     {
       label: "University of Ilorin",
       value: "UNILORIN927",
-      img:"https://nigerianfinder.com/wp-content/uploads/2018/02/unilorin-logo-347x300.jpg"
+      img: "https://nigerianfinder.com/wp-content/uploads/2018/02/unilorin-logo-347x300.jpg",
     },
     {
       label: "University of Education Rivers State",
       value: "UOE948",
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8zkbBbzIaLJIMxpCroR-SXge8lvhUwNFRG_vgKBVELURkoHe178hsTVZPTo3hO7B2qOA&usqp=CAU"
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8zkbBbzIaLJIMxpCroR-SXge8lvhUwNFRG_vgKBVELURkoHe178hsTVZPTo3hO7B2qOA&usqp=CAU",
     },
     {
       label: "Rivers State University",
       value: "RSU7405",
-      img:"https://tethys-engineering.pnnl.gov/sites/default/files/styles/large/public/taxonomy-images/riversstate.png?itok=Y8Oyls7d"
+      img: "https://tethys-engineering.pnnl.gov/sites/default/files/styles/large/public/taxonomy-images/riversstate.png?itok=Y8Oyls7d",
     },
-  ]
-  return schools
-  
+  ];
+  return schools;
 }
 
-
 // @======== GENERATE BENEFICIARY ID FOR EVERY SIGNUP'
-export function beneficaryID(fullname,email,phone,password) {
-  return md5(fullname+email+phone+password+new Date().getTime()).replace(/[^0-9]/g, "").substr(0, 10)
+export function beneficaryID(fullname, email, phone, password) {
+  return md5(fullname + email + phone + password + new Date().getTime())
+    .replace(/[^0-9]/g, "")
+    .substr(0, 10);
 }
 
 // @======== GENERATE CODES FOR CASHBACK
-export function cashbackRegEx(benID,phone,email,password,amount) {
-  return md5(benID+phone+email+password+amount+new Date().getTime()).replace(/[^0-9]/g, "").substr(0, 6)
+export function cashbackRegEx(benID, phone, email, password, amount) {
+  return md5(benID + phone + email + password + amount + new Date().getTime())
+    .replace(/[^0-9]/g, "")
+    .substr(0, 6);
 }
 
-
 // @======== CASHBACK chargeCENTAGES
-export function cashbackchargecentage(amount){
-  let charge = ""
+export function cashbackchargecentage(amount) {
+  let charge = "";
   if (amount > 99.99 && amount < 4999) {
-    charge = 80
+    charge = 80;
   } else if (amount > 4999 && amount < 9999) {
-    charge = 160
-  }else if (amount > 9999 && amount < 14999) {
-    charge = 240
-  }else if (amount > 14999 && amount < 24999) {
-    charge = 320
-  }else if (amount > 24999 && amount < 29999) {
-    charge = 400
-  }else if (amount > 29999 && amount < 34999) {
-    charge = 480
-  }else if (amount > 34999 && amount < 39999) {
-    charge = 560
-  }else if (amount > 39999 && amount < 44999) {
-    charge = 640
-  }else if (amount > 44999 && amount < 49999) {
-    charge = 720
-  }else if (amount > 49999) {
-    charge = 1000
+    charge = 160;
+  } else if (amount > 9999 && amount < 14999) {
+    charge = 240;
+  } else if (amount > 14999 && amount < 24999) {
+    charge = 320;
+  } else if (amount > 24999 && amount < 29999) {
+    charge = 400;
+  } else if (amount > 29999 && amount < 34999) {
+    charge = 480;
+  } else if (amount > 34999 && amount < 39999) {
+    charge = 560;
+  } else if (amount > 39999 && amount < 44999) {
+    charge = 640;
+  } else if (amount > 44999 && amount < 49999) {
+    charge = 720;
+  } else if (amount > 49999) {
+    charge = 1000;
   }
-  return charge
+  return charge;
+}
+
+export function notificationAlert(state) { 
+    if (state.notification === true) {
+      return true;
+    } else {
+      return false;
+    }
+  
 }
