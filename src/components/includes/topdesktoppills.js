@@ -3,7 +3,7 @@ import "../../static/css/top-nav.css";
 import { LinearProgress } from "@material-ui/core";
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { logOut, loginSuc, add_wallet,disp_noti } from "../../redux";
+import { logOut, loginSuc, add_wallet,disp_noti,disp_session } from "../../redux";
 import { useHistory, Link } from "react-router-dom";
 import {
   LocalAtm,
@@ -17,7 +17,7 @@ import {
   AssignmentReturnedOutlined,
   NotificationsActiveOutlined
 } from "@material-ui/icons";
-
+import {checkSession} from '../controlers/session'
 import { cashbackloader } from "../../components/loading";
 
 import { updateUserMeta } from "../../functions/models/index";
@@ -42,7 +42,7 @@ const active = {
   color: "white",
 };
 
-function Desktopright({ appState, login_suc, dispNoti }) {
+function Desktopright({ appState, login_suc, dispNoti, set_session, logout }) {
   let history = useHistory();
   const state = appState;
 
@@ -205,6 +205,7 @@ function Desktopright({ appState, login_suc, dispNoti }) {
 
   React.useEffect(() => {
     sub();
+    checkSession(logout,set_session, state) 
   }, []);
 
   let successPayload = {
@@ -416,7 +417,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, encoded) => {
-  return {
+  return { 
+    set_session: (time) => dispatch(disp_session(time)),
     logout: () => dispatch(logOut()),
     login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
     addwallet: (walletBal) => dispatch(add_wallet(walletBal)),
