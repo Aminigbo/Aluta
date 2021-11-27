@@ -17,6 +17,7 @@ export async function handleRegister(formData) {
       uuid: uuid,
       password: new_pwd,
       wallet: 2000,
+      buzzmewallet:0,
       transactionPin: "0000",
       beneficiaryId: curvedBenId,
       role: 0,

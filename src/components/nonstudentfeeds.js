@@ -11,38 +11,36 @@ import {
 } from "@material-ui/icons";
 
 import {
-  Person,
-  LocalAtm,
-  AccountBalanceWallet,
-  AddBoxOutlined,
+  Person, 
+  AccountBalanceWallet, 
   FiberPin,
-  CardGiftcardOutlined,
+  EuroSymbolOutlined,
   FileCopyOutlined,
-  HomeOutlined,
-  StorefrontOutlined,
+  RemoveRedEye, 
   ViewAgenda,
   LibraryAddCheckOutlined,
 } from "@material-ui/icons";
 
-import { confirmCashbackCreation } from "../functions/workers_functions/cashback";   // CASHBACK CONTROLLER
+import { confirmCashbackCreation } from "../functions/workers_functions/cashback"; // CASHBACK CONTROLLER
 import { Drawer, Divider } from "@mui/material";
 
 import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
 import { add_wallet, logOut, loginSuc } from "../redux";
-import { updateUserMeta } from "../functions/models/index";
+import { moveBuzzmeFunds } from "../functions/controllers/movebuzzmefunds";
 import { btn_primary, btn_danger } from "../components/buttons";
 import { text_input } from "../components/forms";
 import Toppills from "../components/includes/topdesktoppills";
 import { cashbackCurrency } from "../components/currency";
 import { cashbackchargecentage } from "../functions/utils/index";
 import { cashbackloader } from "../components/loading";
-import { errorComponent,successComponent } from "../components/error"; // error component for error handling
+import { errorComponent, successComponent } from "../components/error"; // error component for error handling
 import {
   handleChashbackGeneration,
   handleVerifyToken,
-  settleCashbackToWallet
-} from "../functions/controllers/cashback"; // CASHBACK TOKEN CONTROLLER
+  settleCashbackToWallet,
+} from "../functions/controllers/cashback"; // CASHBACK TOKEN CONTROLLER 
+import  {pinConfirmPop} from "../components/confirmPin"
 
 function Home({ appState, login_suc }) {
   let history = useHistory();
@@ -53,6 +51,10 @@ function Home({ appState, login_suc }) {
     value: "",
     done: false,
     miniLoad: false,
+    wallethidden: true,
+    confirmpwderror: null,
+    confirmpwderrormsg: "",
+    error:null
   });
   const [value, setValue] = useState(null); //TOKEN TO BE VERIFIED
   const [verifyPayload, setVerifypayload] = useState({
@@ -66,11 +68,69 @@ function Home({ appState, login_suc }) {
   const [generatedcode, setGeneratedcode] = useState(null); // return true or false if code is generated
   const [generatedToken, setGeneratedToken] = useState(null); // set the returned generated token
   const [pin, setPin] = useState("");
-  const [resolved, setResolved] = useState(null)  // return true if the cashback has been resolved to the wallet
+  const [resolved, setResolved] = useState(null); // return true if the cashback has been resolved to the
+  const [pwd, setPwd] = useState(""); // set password requird to view balance
+  const [clickToViewPwd, setClickToViewPwd] = useState(false);
+  const [resolvedVerifyPin, setResolvedPinVerification] = useState(false)
+
+  const [movebuzzResolved, setmovebuzzResolved] = useState(false)
+
+  // @========  FUNCTION TO VERIFY pin AND SHOW balance
+  const showPwd = () => {
+    if (state.loggedInUser.user.meta.transactionPin != pwd) {
+      setStates({
+        ...compState,
+        wallethidden: true,
+        confirmpwderror: true,
+        confirmpwderrormsg: "Wrong pin",
+      });
+      setPwd("");
+    } else {
+      console.log("true"); 
+      setClickToViewPwd(false);
+      setStates({
+        ...compState,
+        wallethidden: false,
+        confirmpwderror: false,
+        confirmpwderrormsg: "",
+      });
+      setPwd("");
+      // @==== if the action was to move buzzme balance to wallet
+      if (resolvedVerifyPin === true) {
+        moveBuzzmeFunds(state.loggedInUser, compState, setStates, login_suc,setmovebuzzResolved).then(res => {
+          if (res === true) {
+            setStates({
+               ...compState, error:false
+             })
+          }
+          // else {
+          //   setStates({
+          //      ...compState, error:true
+          //    })
+          //  }
+         })
+      }
+    }
+  };
+
+  const closePwd = () => {
+    setClickToViewPwd(false);
+    setResolvedPinVerification(false)
+    setStates({
+      ...compState,
+      confirmpwderrormsg: "",
+    });
+  };
 
   let userWallet = "";
   if (state.loggedIn === true) {
     userWallet = state.loggedInUser.user.meta.wallet;
+  }
+
+  // ===   function to move Buzz me balance to wallet
+  function moveBuzzmeBalance() {
+    setClickToViewPwd(true)
+    setResolvedPinVerification(true)
   }
 
   // @======== GET AMOUNT TO BE DEDUCTED
@@ -98,14 +158,25 @@ function Home({ appState, login_suc }) {
     setValue(null);
   };
 
-  const confirmCashback = () => { 
-    settleCashbackToWallet(verifyPayload,setcashbackpinresolved,setValue,state.loggedInUser,compState,setStates,login_suc,setResolved)
+  const confirmCashback = () => {
+    settleCashbackToWallet(
+      verifyPayload,
+      setcashbackpinresolved,
+      setValue,
+      state.loggedInUser,
+      compState,
+      setStates,
+      login_suc,
+      setResolved
+    );
   };
 
   // @======== close success pop
   const closeSuccessPop = () => {
-    setResolved(false)
-  }
+    setResolved(false);
+    setmovebuzzResolved(false)
+    setResolvedPinVerification(false)
+  };
 
   React.useEffect((compState) => {
     window.scrollTo(0, 0);
@@ -138,6 +209,7 @@ function Home({ appState, login_suc }) {
     setStates({
       ...compState,
       loading: false,
+      wallethidden: true,
     });
   }, []);
 
@@ -158,7 +230,7 @@ function Home({ appState, login_suc }) {
         errorMsg: "Please provide a valid amount greater than 100 BUZ",
       });
     } else if (amountPlusCharge > userWallet) {
-      console.log(amountPlusCharge)
+      console.log(amountPlusCharge);
       setStates({
         ...compState,
         error: true,
@@ -182,7 +254,6 @@ function Home({ appState, login_suc }) {
   };
 
   // @======== USER ACCEPTS TO CREATE  THE CASHBACK
-
 
   const finallyGenerateCashbackCode = () => {
     let payload = {
@@ -348,15 +419,36 @@ function Home({ appState, login_suc }) {
       <Redirect to="/login" />
     </div>
   ) : (
-      <div id="body bg">
-         {state.loggedInUser.user.meta.schoolmode === true && history.push("/")}
+    <div id="body bg">
+      {clickToViewPwd === true && <> {pinConfirmPop(compState, pwd, setPwd,closePwd,showPwd,text_input,btn_danger,btn_primary)} </>}
+      {state.loggedInUser.user.meta.schoolmode === true && history.push("/")}
       {console.log(state)}
       {console.log(verifyPayload)}
       {/* IF TOKEN VERIFICATION TURNS ERROR */}
-        {verifyPayload.success === false && <> </>}
-        
-        {/* if the user successfully resolved the cashback */}
-        {resolved === true && <> {successComponent("The cashback has been resolved to your wallet successfully", closeSuccessPop)}  </>}
+      {verifyPayload.success === false && <> </>}
+
+      {/* if the user successfully resolved the cashback */}
+      {resolved === true && (
+        <>
+          {" "}
+          {successComponent(
+            "The cashback has been resolved to your wallet successfully",
+            closeSuccessPop
+          )}{" "}
+        </>
+      )}
+
+        {/* @======== WHEN USER SUCCESSFULLY MOVE BUZZ ME BALANCE TO WALLET */}
+        {movebuzzResolved === true && (
+        <>
+          {" "}
+          {successComponent(
+            "Balance successfully moved to wallet",
+            closeSuccessPop
+          )}{" "}
+        </>
+      )}
+
 
       {compState.loading === true && <> {cashbackloader()}</>}
       {compState.error === true && (
@@ -539,6 +631,97 @@ function Home({ appState, login_suc }) {
                   )}
                 </div>
                 {/* @======== RESOLVE CASHBACK TOKEN ENDS */}
+
+                {/* @======== SHOW SIDE BUZZ ME WALLET */}
+
+                <div
+                  style={{
+                    width: "90%",
+                    height: "70px",
+                    background: "white",
+                    boxShadow: " 1px 1px 3px #888888",
+                    border: "2px solid #f3f3f3",
+                    marginBottom: "20px",
+                    marginTop: "20px",
+                    marginLeft: "5%",
+                    position: "relative",
+                  }}
+                >
+                  {/* <FiberPin style={{ margin: "5px", color: "#0a3d62" }} /> */}
+                  <div
+                    onClick={() => {
+                      setStates({
+                        ...compState,
+                        copy: true,
+                      });
+                      if (navigator && navigator.clipboard) {
+                        navigator.clipboard.writeText(generatedToken);
+                      }
+                    }}
+                    style={{
+                      height: "100%",
+                      background: " ",
+                      textAlign: "center",
+                      display: "inline-block",
+                      padding: "4px 0px",
+                      position: "absolute",
+                      width: "45%",
+                    }}
+                  >
+                    <span>Buzz me balance</span> <br />
+                    <b>
+                      {compState.wallethidden === false ? (
+                        <>
+                          {" "}
+                          B
+                          <EuroSymbolOutlined
+                            style={{
+                              transform: "rotateZ(-90deg)",
+                              fontSize: "15px",
+                            }}
+                          />
+                          <b> - {state.loggedInUser.user.meta.buzzmewallet}</b>{" "}
+                        </>
+                      ) : (
+                        <>
+                          {clickToViewPwd === false && (
+                            <>
+                              {" "}
+                              <RemoveRedEye
+                                onClick={() => {
+                                  setClickToViewPwd(true);
+                                }}
+                                style={{ fontSize: "25px", color: "#0a3d62" }}
+                              />
+                            </>
+                          )}
+                        </>
+                      )}
+                    </b>
+                  </div>
+
+                  <div
+                    onClick={() => {
+                      moveBuzzmeBalance();
+                    }}
+                    style={{
+                      height: "100%",
+                      background: " #0a3d62",
+                      textAlign: "center",
+                      display: "inline-block",
+                      padding: "18px 0px",
+                      position: "absolute",
+                      width: "45%",
+                      right: "0px",
+                      color: "white",
+                      borderRadius: "30px 16px",
+                      fontSize: "15px",
+                    }}
+                  >
+                    <b> Move to wallet</b>
+                  </div>
+                </div>
+
                 {/* account balance and beneficiary id */}
                 <div
                   style={{
@@ -563,6 +746,7 @@ function Home({ appState, login_suc }) {
                     <AccountBalanceWallet
                       style={{ margin: "5px", color: "#0a3d62" }}
                     />
+
                     <div
                       style={{
                         // height: "70px",
@@ -575,7 +759,37 @@ function Home({ appState, login_suc }) {
                       <span>Wallet balance</span>
                       <br />
 
-                      <b>{state.loggedInUser.user.meta.wallet}</b>
+                      {/* <b>{state.loggedInUser.user.meta.wallet}</b> */}
+
+                      {compState.wallethidden === false ? (
+                        <>
+                          {" "}
+                          <b style={{ fontSize: "14px", marginRight: "4px" }}>
+                            B
+                            <EuroSymbolOutlined
+                              style={{
+                                transform: "rotateZ(-90deg)",
+                                fontSize: "15px",
+                              }}
+                            />
+                          </b>
+                          <b> - {state.loggedInUser.user.meta.wallet}</b>{" "}
+                        </>
+                      ) : (
+                        <>
+                          {clickToViewPwd === false && (
+                            <>
+                              {" "}
+                              <RemoveRedEye
+                                onClick={() => {
+                                  setClickToViewPwd(true);
+                                }}
+                                style={{ fontSize: "25px", color: "#0a3d62" }}
+                              />
+                            </>
+                          )}
+                        </>
+                      )}
                     </div>
                   </div>
 

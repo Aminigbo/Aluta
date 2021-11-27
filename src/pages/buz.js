@@ -146,7 +146,7 @@ function Home({ appState, login_suc, logout }) {
                 resolved: true,
                 benef: beneficiary.fullname,
                 benefId: beneficiary.id,
-                benefWallet: beneficiary.meta.wallet,
+                benefWallet: beneficiary.meta.buzzmewallet,
                 beneficiaryMeta: beneficiary.meta,
               });
             } else {
@@ -223,7 +223,7 @@ function Home({ appState, login_suc, logout }) {
 
         let beneficiaryNewData = {
           ...compState.beneficiaryMeta,
-          wallet: newBenefWallet,
+          buzzmewallet: newBenefWallet,
         };
 
         // setting giver's new data
