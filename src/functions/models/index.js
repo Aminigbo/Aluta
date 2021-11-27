@@ -142,7 +142,7 @@ export async function addUnlike(payload) {
 
 export async function updateUserMeta(payload) {
   let { email, newUser } = payload;
-console.log(email)
+  console.log(email);
   return new_supabase
     .from("users")
     .update([{ meta: newUser }])
@@ -150,18 +150,17 @@ console.log(email)
     .then((res) => {
       console.log(res);
       if (res.body == null) {
-        if (res.error.meddage == "JWT expired") {
+        if (res.error.message == "JWT expired") {
           return {
-          success: false,
-          message: "auth error",
-        };
+            success: false,
+            message: "auth error",
+          };
         } else {
           return {
-          success: false,
-          message: "A network error occured",
-        };
+            success: false,
+            message: "A network error occured",
+          };
         }
-        
       } else {
         return {
           success: true,
@@ -221,59 +220,54 @@ export async function saveGiveawayBeneficiary(payload) {
       luckywinner: payload.luckyWinner,
       giver: payload.poster,
       meta: payload,
-      beneficiaryId: payload.luckyWinner.beneficiary
+      beneficiaryId: payload.luckyWinner.beneficiary,
     },
   ]);
 }
 
 // @========  RECORD THE CASHBACK GENERATED TO DATABASE
 export async function saveCashBack(payload) {
-   return new_supabase.from("cashback").insert([
+  return new_supabase.from("cashback").insert([
     {
       token: payload.token,
       meta: payload.meta,
-      user: payload.user, 
+      user: payload.user,
     },
   ]);
 }
 
-
 // @======== VERIFY CASHBACK TOKEN
-export async function verifyCashbackToken(payload) { 
+export async function verifyCashbackToken(payload) {
   return new_supabase
     .from("cashback")
     .select("*")
     .eq("token", payload)
-    .eq('isActive', true)
+    .eq("isActive", true);
 }
 
 // @======== DEACTIVATE TOKEN
-export async function deactivateToken(payload, data) { 
+export async function deactivateToken(payload, data) {
   return new_supabase
     .from("cashback")
     .update({
       isActive: false,
-      meta:data
+      meta: data,
     })
-    .eq("token", payload) 
+    .eq("token", payload);
 }
-
-
-
 
 // @======== CHECK IF USER ALREADY BENEFITED FROM THE GIVE AWAY
 // @======== IF USER BENEFITED,RETURN TRUE ELSE RETURN FALSE
 export async function userBenefited(payload) {
-
   return new_supabase
     .from("giveaway-lucky-winners")
     .select("*")
-    .eq("beneficiaryId",payload)
+    .eq("beneficiaryId", payload)
     .then((res) => {
       if (res.body.length > 0) {
-        return true
+        return true;
       } else {
-        return false
+        return false;
       }
     });
 }
@@ -308,4 +302,16 @@ export async function syncDB() {
             });
         });
     });
+}
+
+// @======== INSERT TO NOTIFICATION
+export async function insertNotification(payload) {
+  return new_supabase.from("notifications").insert([
+    {
+      from: payload.sendeId,
+      to:payload.recieverId,
+      meta: payload.meta,
+      type:payload.type
+    },
+  ]);
 }

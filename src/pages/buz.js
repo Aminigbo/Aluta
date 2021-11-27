@@ -299,6 +299,7 @@ function Home({ appState, login_suc, logout }) {
                             from: meta.sender.id,
                             to: meta.reciever.id,
                             meta: meta,
+                            type:"BUZ ALERT"
                           },
                         ])
                         .then((resX) => {

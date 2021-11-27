@@ -4,6 +4,7 @@ import {
   saveCashBack,
   verifyCashbackToken,
   deactivateToken,
+  insertNotification,
 } from "../models/index";
 
 // @======== VERIFY CASHBACK TOKEN
@@ -144,7 +145,7 @@ export async function handleChashbackGeneration(
               setGeneratedToken(token);
               setInitiateCreate(false);
               setGeneratedcode(true);
-              setPin(null)
+              setPin(null);
             } else {
               return setStates({
                 ...compState,
@@ -184,7 +185,7 @@ export async function settleCashbackToWallet(
   compState,
   setStates,
   login_suc,
-  setResolved, 
+  setResolved
 ) {
   setStates({
     ...compState,
@@ -219,7 +220,10 @@ export async function settleCashbackToWallet(
   // data to login
   let loginData = {
     meta: state.meta,
-    user: { ...state.user, meta:{...state.user.meta, wallet: userNewAmount} },
+    user: {
+      ...state.user,
+      meta: { ...state.user.meta, wallet: userNewAmount },
+    },
   };
 
   // user data to update  db
@@ -228,19 +232,27 @@ export async function settleCashbackToWallet(
     newUser: { ...state.user.meta, wallet: userNewAmount },
   };
 
-  verifyCashbackToken(token).then((res) => {
+  verifyCashbackToken(token).then((res) => { 
     if (res.body.length > 0) {
       deactivateToken(token, newTokenData).then((res2) => {
         if (res2.body.length > 0) {
           updateUserMeta(userDBupdataData).then((res3) => {
             if (res3.success === true) {
-              login_suc(loginData);
-              setResolved(true); 
-              setStates({
-                ...compState,
-                loading: false,
-                error: false,
-                errorMsg: "",
+                let notificationPayload = {
+                  sendeId: state.user.id ,
+                  recieverId:res.body[0].user,
+                  meta: {amount:res.body[0].meta.amount, resolvedby:res.body[0].meta.name,token},
+                  type:"CASHBACK RESOLVED"
+                }
+              insertNotification(notificationPayload).then((res4) => {
+                login_suc(loginData);
+                setResolved(true);
+                setStates({
+                  ...compState,
+                  loading: false,
+                  error: false,
+                  errorMsg: "",
+                });
               });
             } else {
               setStates({

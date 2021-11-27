@@ -3,7 +3,13 @@ import "../../static/css/top-nav.css";
 import { LinearProgress } from "@material-ui/core";
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { logOut, loginSuc, add_wallet,disp_noti,disp_session } from "../../redux";
+import {
+  logOut,
+  loginSuc,
+  add_wallet,
+  disp_noti,
+  disp_session,
+} from "../../redux";
 import { useHistory, Link } from "react-router-dom";
 import {
   LocalAtm,
@@ -15,9 +21,12 @@ import {
   HomeOutlined,
   StorefrontOutlined,
   AssignmentReturnedOutlined,
-  NotificationsActiveOutlined
+  NotificationsActiveOutlined,
 } from "@material-ui/icons";
-import {checkSession} from '../controlers/session'
+
+// strong tin.mp3
+import mp3 from "../../static/audio/Doorbell.mp3";
+import { checkSession } from "../controlers/session";
 import { cashbackloader } from "../../components/loading";
 
 import { updateUserMeta } from "../../functions/models/index";
@@ -88,8 +97,8 @@ function Desktopright({ appState, login_suc, dispNoti, set_session, logout }) {
     } else {
       setStates({
         ...compState,
-        loading:true
-      })
+        loading: true,
+      });
       let { first, second } = pins;
 
       let user = state.loggedInUser.user;
@@ -125,7 +134,7 @@ function Desktopright({ appState, login_suc, dispNoti, set_session, logout }) {
               loader: false,
               alertMsg: "Sorry, a network error occured",
             });
-          } 
+          }
         })
         .catch((errer) => {
           alert("A network error occured");
@@ -137,7 +146,6 @@ function Desktopright({ appState, login_suc, dispNoti, set_session, logout }) {
     }
   };
 
-  
   // @========  REALTIME SUBSCRIPTION
   const sub = () => {
     new_supabase
@@ -153,9 +161,26 @@ function Desktopright({ appState, login_suc, dispNoti, set_session, logout }) {
           payload: response,
           myNewWallet,
         });
+        window.navigator.vibrate([2000, 100, 2000]);
+        var audio = new Audio(mp3);
+        audio.play();
         setStateAlert("buzAlert");
       })
       .subscribe();
+
+
+
+    // @======== subscribe to cashback resolve
+    new_supabase
+      .from(`cashback:user=eq.${userId}`)
+      .on("UPDATE", (payload) => {
+        const response = payload.new; 
+        window.navigator.vibrate([2000, 100, 2000]);
+        var audio = new Audio(mp3);
+        audio.play(); 
+      })
+      .subscribe();
+    
 
     new_supabase
       .from(`giveaway-lucky-winners:beneficiaryId=eq.${beneficiaryId}`)
@@ -168,12 +193,20 @@ function Desktopright({ appState, login_suc, dispNoti, set_session, logout }) {
 
         // addwallet(myNewWallet)
         let load = {
-            meta: {
-              data: {
-                amount: response.meta.giveawayData.userGets,
-              desc:"You are one of the beneficiaries of "+response.giver.name +"'s give away. Cheers "},
-            sender:{fullname:response.giver.name}},
-        } 
+          meta: {
+            data: {
+              amount: response.meta.giveawayData.userGets,
+              desc:
+                "You are one of the beneficiaries of " +
+                response.giver.name +
+                "'s give away. Cheers ",
+            },
+            sender: { fullname: response.giver.name },
+          },
+        };
+        window.navigator.vibrate([2000, 100, 2000]);
+        var audio = new Audio(mp3);
+        audio.play();
         setStates({
           ...compState,
           payload: load,
@@ -182,14 +215,13 @@ function Desktopright({ appState, login_suc, dispNoti, set_session, logout }) {
         setStateAlert("buzAlert");
       })
       .subscribe();
-    
 
     // @======== SUBSCRIBE TO NOTIFICATION TABLE
     new_supabase
       .from(`notifications:to=eq.${userId}`)
       .on("INSERT", (payload) => {
-        dispNoti(true) 
-        
+         
+        dispNoti(true); 
       })
       .subscribe();
   };
@@ -205,7 +237,7 @@ function Desktopright({ appState, login_suc, dispNoti, set_session, logout }) {
 
   React.useEffect(() => {
     sub();
-    checkSession(logout,set_session, state) 
+    checkSession(logout, set_session, state);
   }, []);
 
   let successPayload = {
@@ -239,7 +271,7 @@ function Desktopright({ appState, login_suc, dispNoti, set_session, logout }) {
 
       <div id=" " className="top-nav-holder">
         {/* {console.log(split)} */}
-         {compState.loading === true && <>{cashbackloader()} </>}
+        {compState.loading === true && <>{cashbackloader()} </>}
         {stateAlert === null && <span>{history.push("/")}</span>}
         {stateAlert === true && alert(successPayload, setStateAlert)}
         {stateAlert === false && alert(errorPayload, setStateAlert)}
@@ -249,7 +281,7 @@ function Desktopright({ appState, login_suc, dispNoti, set_session, logout }) {
             // window.scrollTo(0, 0);
             history.push("/");
             if (window.pageYOffset === 0) {
-              console.log("refesh")
+              console.log("refesh");
             } else {
               // window.scrollTo(0, 0)
             }
@@ -349,63 +381,63 @@ function Desktopright({ appState, login_suc, dispNoti, set_session, logout }) {
             if (state.loggedInUser.user.meta.schoolmode === false) {
               history.push("/cb");
             } else {
-               history.push("/cashback");
-           }
+              history.push("/cashback");
+            }
           }}
           className="top-nav-pills-holder"
         >
           <span
             style={{
-              background: split == "cashback"  ||  split == "cb" && "#0a3d62",
-              color: split == "cashback"  ||  split == "cb" && "white",
+              background: split == "cashback" || (split == "cb" && "#0a3d62"),
+              color: split == "cashback" || (split == "cb" && "white"),
             }}
             className="top-nav-pills"
-          > 
+          >
             <AssignmentReturnedOutlined />
           </span>
           <p className="top-nav-pills-title">Cash Back</p>
         </div>
 
-
-        {state.loggedInUser.user.meta.schoolmode !== false ? 
-        <div
-          onClick={() => {
-            history.push("/create");
-          }}
-          className="top-nav-pills-holder"
-        >
-          <span
-            style={{
-              background: split == "create" && "#0a3d62",
-              color: split == "create" && "white",
+        {state.loggedInUser.user.meta.schoolmode !== false ? (
+          <div
+            onClick={() => {
+              history.push("/create");
             }}
-            className="top-nav-pills"
+            className="top-nav-pills-holder"
           >
-            {" "}
-            <AddBoxOutlined />{" "}
-          </span>
-          <p className="top-nav-pills-title">Post</p>
-          </div> :
-        <div
-          onClick={() => {
-            history.push("/listmart");
-          }}
-          className="top-nav-pills-holder"
-        >
-          <span
-            style={{
-              background: split == "listmart" && "#0a3d62",
-              color: split == "listmart" && "white",
+            <span
+              style={{
+                background: split == "create" && "#0a3d62",
+                color: split == "create" && "white",
+              }}
+              className="top-nav-pills"
+            >
+              {" "}
+              <AddBoxOutlined />{" "}
+            </span>
+            <p className="top-nav-pills-title">Post</p>
+          </div>
+        ) : (
+          <div
+            onClick={() => {
+              history.push("/listmart");
             }}
+            className="top-nav-pills-holder"
+          >
+            <span
+              style={{
+                background: split == "listmart" && "#0a3d62",
+                color: split == "listmart" && "white",
+              }}
               className="top-nav-pills"
               // nonstudentfeed
-          >
-            {" "}
-            <StorefrontOutlined />{" "} 
-          </span>
-          <p className="top-nav-pills-title">Market</p>
+            >
+              {" "}
+              <StorefrontOutlined />{" "}
+            </span>
+            <p className="top-nav-pills-title">Market</p>
           </div>
-        }
+        )}
       </div>
     </>
   );
@@ -417,7 +449,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, encoded) => {
-  return { 
+  return {
     set_session: (time) => dispatch(disp_session(time)),
     logout: () => dispatch(logOut()),
     login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
