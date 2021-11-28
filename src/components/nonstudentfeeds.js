@@ -927,7 +927,7 @@ function Home({ appState, login_suc }) {
                   <div>
                     <span>All Buz In</span>{" "}
                       <span style={{ float: "right" }}>
-                        {buzzState.loading === true ? <small style={{ fontSize: "11px" }}>Just a sec...</small> : <> <b>
+                        {buzzState.loading === true ? <small style={{ fontSize: "11px" }}>......</small> : <> <b>
                         B
                           <EuroSymbolOutlined
                             style={{
@@ -942,7 +942,7 @@ function Home({ appState, login_suc }) {
                   <div>
                     <span>All Buz Out</span>{" "}
                       <span style={{ float: "right" }}>
-                         {buzzState.loading === true ? <small style={{fontSize:"11px"}}>Just a sec...</small> : <> <b> B
+                         {buzzState.loading === true ? <small style={{fontSize:"11px"}}>......</small> : <> <b> B
                           <EuroSymbolOutlined
                             style={{
                               transform: "rotateZ(-90deg)",
@@ -956,7 +956,7 @@ function Home({ appState, login_suc }) {
                   <div>
                     <span>Cashback generated</span>{" "}
                     <span style={{ float: "right" }}>
-                       {buzzState.loading === true ? "A sec.." : "320"}
+                       {buzzState.loading === true ? "A sec.." : "---"}
                     </span>
                   </div>
                   <Divider style={{ marginBottom: "28px", color: "#0a3d62" }} />
@@ -964,7 +964,7 @@ function Home({ appState, login_suc }) {
                   <div>
                     <span>Cashback resolved</span>{" "}
                       <span style={{ float: "right" }}>
-                       {buzzState.loading === true ? "A sec.." : "320"}
+                       {buzzState.loading === true ? "A sec.." : "---"}
                     </span>
                   </div>
                   <Divider style={{ marginBottom: "28px", color: "#0a3d62" }} />
