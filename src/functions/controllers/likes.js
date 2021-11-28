@@ -241,7 +241,7 @@ export function likedPost(postLikesArr, state) {
   let id=""
   const sessionUser = {
     name: state.loggedInUser.user.fullname,
-    id: state.loggedInUser.meta.user.id,
+    id: state.loggedInUser.user.id,
     school: state.loggedInUser.user.meta.school,
     gender: state.loggedInUser.user.meta.gender,
     badge: state.loggedInUser.user.meta.badge,

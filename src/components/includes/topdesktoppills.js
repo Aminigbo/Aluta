@@ -9,6 +9,7 @@ import {
   add_wallet,
   disp_noti,
   disp_session,
+  disp_request,
 } from "../../redux";
 import { useHistory, Link } from "react-router-dom";
 import {
@@ -51,7 +52,14 @@ const active = {
   color: "white",
 };
 
-function Desktopright({ appState, login_suc, dispNoti, set_session, logout }) {
+function Desktopright({
+  appState,
+  login_suc,
+  dispNoti,
+  set_session,
+  logout,
+  dispRequest,
+}) {
   let history = useHistory();
   const state = appState;
 
@@ -168,19 +176,16 @@ function Desktopright({ appState, login_suc, dispNoti, set_session, logout }) {
       })
       .subscribe();
 
-
-
     // @======== subscribe to cashback resolve
     new_supabase
       .from(`cashback:user=eq.${userId}`)
       .on("UPDATE", (payload) => {
-        const response = payload.new; 
+        const response = payload.new;
         window.navigator.vibrate([2000, 100, 2000]);
         var audio = new Audio(mp3);
-        audio.play(); 
+        audio.play();
       })
       .subscribe();
-    
 
     new_supabase
       .from(`giveaway-lucky-winners:beneficiaryId=eq.${beneficiaryId}`)
@@ -220,8 +225,23 @@ function Desktopright({ appState, login_suc, dispNoti, set_session, logout }) {
     new_supabase
       .from(`notifications:to=eq.${userId}`)
       .on("INSERT", (payload) => {
-         
-        dispNoti(true); 
+        dispNoti(true);
+      })
+      .subscribe();
+
+    // @======== SUBSCRIBE TO BUZZ REQUEST TABLE
+    new_supabase
+      .from(`buzz-request`)
+      .on("INSERT", (payload) => {
+        const response = payload.new;
+        console.log(response);
+        let check = response.to.filter((e) => e.value == beneficiaryId);
+        if (check.length > 0) {
+          window.navigator.vibrate([2000, 100, 2000]);
+          var audio = new Audio(mp3);
+          audio.play();
+          dispRequest(true);
+        }
       })
       .subscribe();
   };
@@ -455,6 +475,7 @@ const mapDispatchToProps = (dispatch, encoded) => {
     login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
     addwallet: (walletBal) => dispatch(add_wallet(walletBal)),
     dispNoti: (payload) => dispatch(disp_noti(payload)),
+    dispRequest: (bolean) => dispatch(disp_request(bolean)),
   };
 };
 

@@ -118,7 +118,7 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
   const state = appState;
   const new_supabase = supabase();
   const loggedInUserSchool = state.loggedInUser.user.meta.school;
-  const { fullname, email, phone } = state.loggedInUser.user;
+  const { fullname, email, phone,id } = state.loggedInUser.user;
   const userId = state.loggedInUser.meta.user.id;
 
   const [compState, setStates] = useState({
@@ -135,7 +135,7 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
     // setStates({ ...compState, loader: true });
     // setTimeout(() => setStates({ ...compState, loader: false }), 500);
     let filterOpt = [];
-    fetchUsersOfUniversity(loggedInUserSchool)
+    fetchUsersOfUniversity(loggedInUserSchool,id)
       .then((res) => {
         res.body.map((resp) => {
           let prepared = {
@@ -226,7 +226,7 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
           const postBody = {
             postPrivacy,
             postType: "BUZ REQUEST",
-            id: new Date().getTime(),
+            // id: new Date().getTime(),
             postText: reason,
             poster: {},
             post: {

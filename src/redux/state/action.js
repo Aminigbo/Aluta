@@ -17,7 +17,7 @@ import {
    DRAFT, 
    CASHOUT,
    NOTIFICATION,
-   JACKPOT,
+   REQUEST,
 
    REALTIME,
 
@@ -165,10 +165,10 @@ export const disp_cashout = (cashout) => {
    }
 }
 
-export const disp_jackpots = (jackpot) => {
+export const disp_request = (bolean) => {
    return {
-      type: JACKPOT,
-      jackpot
+      type: REQUEST,
+      bolean
    }
 }
 

@@ -16,7 +16,7 @@ import {
    DRAFT, 
    CASHOUT,
    NOTIFICATION,
-   JACKPOT,
+   REQUEST,
 
    REALTIME,
    
@@ -50,7 +50,7 @@ const initialState = {
    refresh: [],
    loading:false,
    cashout: "NO",
-   oneXone_results: [],
+   request: false,
    realtime: [],
    draft: [],
    session: '',
@@ -185,10 +185,10 @@ const reducer = (state = initialState, action) => {
             realtime:action.realData
          }
       
-      case JACKPOT:
+      case REQUEST:
          return {
             ...state,
-            jackpots:action.jackpot
+            request:action.bolean
          }
       
       // loggout user at every inactivity

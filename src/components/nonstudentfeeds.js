@@ -42,9 +42,16 @@ import {
 } from "../functions/controllers/cashback"; // CASHBACK TOKEN CONTROLLER 
 import  {pinConfirmPop} from "../components/confirmPin"
 
+// @======== ALLL BUZZME CONTROLLER
+import {getAllBuzz} from "../functions/controllers/allbuzzme"
 function Home({ appState, login_suc }) {
   let history = useHistory();
   const state = appState;
+  let userId =""
+  if (state.loggedIn === true) {
+    userId = state.loggedInUser.user.id
+  }
+
 
   const [compState, setStates] = useState({
     data: [],
@@ -61,6 +68,11 @@ function Home({ appState, login_suc }) {
     data: null,
     success: null,
   });
+
+  const [buzzState, setBuzzState] = useState({
+    leading: false,
+    data:[]
+  })
 
   const [tokenamount, setTokenamount] = useState(""); // amount to be generated
   const [cashbackpinresolved, setcashbackpinresolved] = useState(false); // state to control resolving cashback
@@ -176,11 +188,7 @@ function Home({ appState, login_suc }) {
     setResolved(false);
     setmovebuzzResolved(false)
     setResolvedPinVerification(false)
-  };
-
-  React.useEffect((compState) => {
-    window.scrollTo(0, 0);
-  }, []);
+  }; 
 
   const [drawerState, setDrawerState] = React.useState({
     bottom: false,
@@ -205,12 +213,16 @@ function Home({ appState, login_suc }) {
   };
 
   React.useEffect(() => {
+    getAllBuzz(userId,buzzState,setBuzzState)
     window.scrollTo(0, 0);
     setStates({
       ...compState,
       loading: false,
       wallethidden: true,
     });
+
+
+
   }, []);
 
   const clearError = () => {
@@ -914,25 +926,46 @@ function Home({ appState, login_suc }) {
 
                   <div>
                     <span>All Buz In</span>{" "}
-                    <span style={{ float: "right" }}>2100</span>
+                      <span style={{ float: "right" }}>
+                        {buzzState.loading === true ? <small style={{ fontSize: "11px" }}>Just a sec...</small> : <> <b>
+                        B
+                          <EuroSymbolOutlined
+                            style={{
+                              transform: "rotateZ(-90deg)",
+                              fontSize: "15px",
+                            }}
+                          /> - {buzzState.data.to} </b></>}
+                    </span>
                   </div>
                   <Divider style={{ marginBottom: "28px", color: "#0a3d62" }} />
 
                   <div>
                     <span>All Buz Out</span>{" "}
-                    <span style={{ float: "right" }}>2100</span>
+                      <span style={{ float: "right" }}>
+                         {buzzState.loading === true ? <small style={{fontSize:"11px"}}>Just a sec...</small> : <> <b> B
+                          <EuroSymbolOutlined
+                            style={{
+                              transform: "rotateZ(-90deg)",
+                              fontSize: "15px",
+                            }}
+                          /> - {buzzState.data.from} </b> </>}
+                    </span>
                   </div>
                   <Divider style={{ marginBottom: "28px", color: "#0a3d62" }} />
 
                   <div>
                     <span>Cashback generated</span>{" "}
-                    <span style={{ float: "right" }}>2100</span>
+                    <span style={{ float: "right" }}>
+                       {buzzState.loading === true ? "A sec.." : "320"}
+                    </span>
                   </div>
                   <Divider style={{ marginBottom: "28px", color: "#0a3d62" }} />
 
                   <div>
                     <span>Cashback resolved</span>{" "}
-                    <span style={{ float: "right" }}>2100</span>
+                      <span style={{ float: "right" }}>
+                       {buzzState.loading === true ? "A sec.." : "320"}
+                    </span>
                   </div>
                   <Divider style={{ marginBottom: "28px", color: "#0a3d62" }} />
                 </div>

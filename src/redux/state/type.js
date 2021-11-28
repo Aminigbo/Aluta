@@ -35,7 +35,7 @@ export const REALTIME = 'REALTIME'
 
 
 // jackpot
-export const JACKPOT = "JACKPOT"
+export const REQUEST = "REQUEST"
 
 // predictors betslip
 export const BETSLIPDATA = "BETSLIPDATA"

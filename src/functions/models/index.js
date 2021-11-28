@@ -64,11 +64,9 @@ export async function fetchAllFeeds(payload) {
 }
 
 // @======== GET USERS OF A PARTICULAY UNIVERSITY
-export async function fetchUsersOfUniversity(payload) {
-  return new_supabase
-    .from("users")
-    .select("*")
-    .contains("meta", { school: payload });
+export async function fetchUsersOfUniversity(payload, userId) {
+  return new_supabase.from("users").select("*").neq("id", userId);
+  // .contains("meta", { school: payload });
 }
 
 export async function addLikes(payload) {
@@ -309,9 +307,17 @@ export async function insertNotification(payload) {
   return new_supabase.from("notifications").insert([
     {
       from: payload.sendeId,
-      to:payload.recieverId,
+      to: payload.recieverId,
       meta: payload.meta,
-      type:payload.type
+      type: payload.type,
     },
   ]);
+}
+
+// @======== GET ALL BUZZ ME REQARDING TO A USER
+export async function allBuzMe(userId) {
+  return new_supabase
+    .from("buz-me")
+    .select("*")
+    .or(`from.eq.${userId},to.eq.${userId}`);
 }

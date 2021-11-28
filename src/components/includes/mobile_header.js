@@ -4,7 +4,7 @@ import logo from "../../static/logos/amm.png";
 import am from "../../static/logos/logo-icon.png";
 import { Dehaze, Search } from "@material-ui/icons";
 import { connect } from "react-redux";
-import { logOut, loginSuc,disp_noti } from "../../redux";
+import { logOut, loginSuc,disp_noti,disp_request } from "../../redux";
 import { useHistory, Link } from "react-router-dom";
 import { syncDB } from "../../functions/models/index";
 import {
@@ -22,6 +22,7 @@ import {
   LibraryAddCheckOutlined,
   ExitToAppOutlined,
   EuroSymbolOutlined,
+  MailOutlined,
 } from "@material-ui/icons";
 
 import avar from "../../static/logos/logo2.png";
@@ -50,7 +51,7 @@ const selected = {
   color: "mediumseagreen",
 };
 
-function Header({ appState, log_out, login_suc, dispNoti }) {
+function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
   const state = appState;
   let history = useHistory();
 
@@ -379,9 +380,21 @@ function Header({ appState, log_out, login_suc, dispNoti }) {
             style={{
               color: state.notification  === true ? "red" : "#0a3d62",
               position: " absolute",
-              right: "80px",
+              right: "75px",
             }}
           />
+
+          <MailOutlined
+            onClick={() => {
+              dispRequest(false);
+              // history.push("/notification")
+            }}
+            className="menu"
+            style={{
+              color: state.request  === true ? "red" : "#0a3d62",
+              position: " absolute",
+              right: "140px",
+            }}/>
           <Dehaze
             style={{ color: "#0a3d62", position: " absolute", right: "10px" }}
             className="menu"
@@ -444,7 +457,8 @@ const mapDispatchToProps = (dispatch, encoded) => {
   return {
     log_out: () => dispatch(logOut()),
     login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
-     dispNoti: (payload) => dispatch(disp_noti(payload)),
+    dispNoti: (payload) => dispatch(disp_noti(payload)),
+     dispRequest: (bolean) => dispatch(disp_request(bolean)),
   };
 };
 
