@@ -24,7 +24,7 @@ export function pinConfirmPop(compState, pwd, setPwd,closePwd,showPwd,text_input
             padding: "5px 20px",
           }}
         >
-          {text_input("Provide transaction pin", pwd, "text", setPwd)}
+          {text_input("Provide transaction pin", pwd, "number", setPwd)}
           <br />
           <div style={{ marginTop: "10px" }}>
             {compState.confirmpwderror === true && (
