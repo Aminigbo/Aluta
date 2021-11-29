@@ -28,6 +28,7 @@ export function resetPin(state, resetTPin, smile, setPins, pins) {
               </div> 
               <div className="description" style={{ textAlign: "center" }}>
                 <input
+                type="number"
                   onChange={(e) => {
                     setPins({
                       ...pins,
@@ -46,6 +47,7 @@ export function resetPin(state, resetTPin, smile, setPins, pins) {
                   placeholder="New pin"
                 />
                 <input
+                type="number"
                   onChange={(e) => {
                     setPins({
                       ...pins,

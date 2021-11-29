@@ -321,3 +321,9 @@ export async function allBuzMe(userId) {
     .select("*")
     .or(`from.eq.${userId},to.eq.${userId}`);
 }
+
+// @========  FETCH ALL USER'S NOTIFICATION
+// @======== VERIFY CASHBACK TOKEN
+export async function fetchNotification(payload) {
+  return new_supabase.from("notifications").select("*").eq("to", payload);
+}

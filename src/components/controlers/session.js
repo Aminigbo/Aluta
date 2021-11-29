@@ -15,7 +15,7 @@ export const checkSession = (logout,set_session,state,errorToast) => {
    console.log(timeDiff) 
    
     if (timeDiff  < -1005 && state.session  != -0.1) {
-       logout()
+      //  logout()
        set_session(new Date().getTime())
       //  errorToast("Session expired")
        console.log("logout")

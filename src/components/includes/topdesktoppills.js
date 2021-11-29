@@ -251,7 +251,7 @@ function Desktopright({
     // addwallet(compState.myNewWallet)
     setStateAlert(null);
     history.push(
-      `/profile/${state.loggedInUser.user.fullname}/${state.loggedInUser.user.id}`
+      `/notification`
     );
   };
 

@@ -420,12 +420,14 @@ function Home({ appState, login_suc, logout }) {
                       setAMOUNT(e.target.value);
                     }}
                     value={amount}
-                    style={rec_inputs}
+                      style={rec_inputs}
+                      type="number"
                     placeholder=" Enter Amount to Buz "
                   />
 
                   <br />
-                  <input
+                    <input
+                      type="number"
                     id="beneficiary"
                     onChange={(e) => {
                       setbeneficiary(e.target.value);
@@ -465,7 +467,7 @@ function Home({ appState, login_suc, logout }) {
                       ></textarea>{" "}
                       <br />
                       <input
-                        type="password"
+                        type="number"
                         onChange={(e) => {
                           setPin(e.target.value);
                         }}
