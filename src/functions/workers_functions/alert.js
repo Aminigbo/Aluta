@@ -1,3 +1,5 @@
+
+import { EuroSymbolOutlined } from "@material-ui/icons";
 export function alert(payload, setStateAlert) {
   return (
     <div>
@@ -48,9 +50,24 @@ export function BuzAlert(payload, redirect) {
               background: payload.error == true ? "crimson" : "#0a3d62",
               color: "white",
             }}
-          >
-            <b>
-              {payload.meta.data.amount} <s>BUZ</s>
+          > 
+             <b
+                  style={{
+                    background: "#0a3d62",
+                    color: "white",
+                    padding: "3px 10px",
+                    borderRadius: "5px",
+                    marginTop:"20px"
+                  }}
+                >
+                  {" "}
+                  B
+                  <EuroSymbolOutlined
+                    style={{
+                      transform: "rotateZ(-90deg)",
+                      fontSize: "15px",
+                    }}
+                  />  {payload.meta.data.amount}
             </b>{" "}
             &nbsp; from {payload.meta.sender.fullname}
           </div>
