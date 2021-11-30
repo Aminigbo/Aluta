@@ -327,3 +327,12 @@ export async function allBuzMe(userId) {
 export async function fetchNotification(payload) {
   return new_supabase.from("notifications").select("*").eq("to", payload).order('id', { ascending: false })
 }
+
+
+// @======== CHECK IF USER EXISTS
+export async function allBuzzMe(userId) {
+  return new_supabase
+    .from("buz-me")
+    .select("*")
+    .or(`from.eq.${userId},to.eq.${userId}`);
+}

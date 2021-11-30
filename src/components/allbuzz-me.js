@@ -8,7 +8,7 @@ import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
 import { add_wallet, logOut, loginSuc, disp_noti } from "../redux";
 import { cashbackloader } from "../components/loading";
-import { fetchNotification } from "../functions/models/index";
+import { allBuzzMe } from "../functions/models/index";
 
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -21,7 +21,11 @@ const smile = {
 
 function Home({ appState, dispNoti }) {
   let history = useHistory();
-  const state = appState;
+   const state = appState;
+   let userId = ""
+   if (state.loggedIn == true) {
+      userId = state.loggedInUser.user.id
+   }
 
   const style = {
     width: "100%",
@@ -39,8 +43,9 @@ function Home({ appState, dispNoti }) {
       ...compState,
       loader: true,
     });
-    fetchNotification(user)
-      .then((res) => {
+    allBuzzMe(user)
+       .then((res) => {
+         console.log(res)
         if (res.error === null) {
           setStates({
             ...compState,
@@ -72,8 +77,7 @@ function Home({ appState, dispNoti }) {
 
   const renderNotifications = () => {
     if (compState.data) {
-      return compState.data.map((e) => {
-        if (e.type == "BUZZ REQUEST" || e.type == "BUZZ ALERT") {
+      return compState.data.map((e) => { 
           return (
             <>
               {console.log(compState.data)}
@@ -82,12 +86,12 @@ function Home({ appState, dispNoti }) {
                   style={{
                     backgroundColor: "",
                     width: "100%",
-                    padding: "10px 20px",
+                    padding: " 10px 0px",
                   }}
                 >
                   <b>{e.type} </b> &nbsp;&nbsp;{" "}
                   <span style={{ fontSize: "14px" }}>
-                    {" "}
+                    {e.from == userId ? "Debit ":"Cradit "}
                     From
                     <b> {e.meta.sender.fullname.split(" ")[0]}</b>
                   </span>{" "}
@@ -106,7 +110,7 @@ function Home({ appState, dispNoti }) {
                   style={{
                     backgroundColor: " ",
                     width: "100%",
-                    padding: "10px 20px",
+                    padding: "10px",
                     marginTop: "-15px",
                     borderBottom: "0.5px solid lightgray",
                   }}
@@ -133,64 +137,7 @@ function Home({ appState, dispNoti }) {
               </div>
               {/* <Divider /> */}
             </>
-          );
-        } else if (e.type == "CASHBACK RESOLVED") {
-          return (
-            <>
-              {console.log(compState.data)}
-              <div style={{ background: "" }}>
-                <div
-                  style={{
-                    backgroundColor: "",
-                    width: "100%",
-                    padding: "10px 20px",
-                  }}
-                >
-                  <b>{e.type} </b> &nbsp;&nbsp;{" "}
-                  <b
-                    style={{
-                      color: "#0a3d62",
-                      padding: "3px 10px",
-                      borderRadius: "5px",
-                      float: "right",
-                    }}
-                  >NGN {e.meta.amount}
-                  </b>
-                  <br />
-                  <span style={{ fontSize: "14px" }}>
-                    {" "}
-                    By
-                    <b> {e.meta.resolvedby.split(" ")[0]}</b>
-                  </span>{" "}
-                  <br />
-                </div>
-                <div
-                  style={{
-                    backgroundColor: " ",
-                    width: "100%",
-                    padding: "10px 20px",
-                    marginTop: "-15px",
-                    borderBottom: "0.5px solid lightgray",
-                  }}
-                >
-                  <small>
-                    Your generated cashback of   <b
-                    style={{
-                      color: "#0a3d62",
-                      padding: "3px 4px",
-                      borderRadius: "5px", 
-                    }}
-                  >NGN {e.meta.amount}
-                  </b> has been resolved by <b>{e.meta.resolvedby} </b>
-                  
-                  </small>{" "}
-                  <br />
-                </div>
-              </div>
-              {/* <Divider /> */}
-            </>
-          );
-        }
+          ); 
       });
     }
   };
@@ -205,27 +152,9 @@ function Home({ appState, dispNoti }) {
         {console.log(compState)}
         {compState.loader === true && <> {cashbackloader()}</>}
         <div className="mobile">
-          <div className="header_footer">
-            {/* <Footer /> */}
-            <Header />
-          </div>
 
           <div>
-            <div>
-              <div
-                style={{
-                  textAlign: "left",
-                  marginTop: "10px",
-                  background: " #f4f6f7",
-                  position: "sticky",
-                  top: "0px",
-                  zIndex: "1000",
-                  padding: "10px 15px",
-                }}
-              >
-                {" "}
-                <b>Notifications</b>
-              </div>{" "}
+            <div> 
               {compState.loader != true &&
                 compState.data !== null &&
                 compState.data.length > 0 && (
@@ -233,10 +162,10 @@ function Home({ appState, dispNoti }) {
                     {" "}
                     <div
                       style={{
-                        width: "100%",
+                        width: "90%",
                         background: "white",
-                        padding: "0px 3px",
-                        marginLeft: "0%",
+                        padding: "0px 15px",
+                        marginLeft: "5%",
                         marginTop: "20px",
                         boxShadow: " 1px 1px 3px #888888",
                         border: "0.5px solid #f3f3f3",
@@ -266,7 +195,7 @@ function Home({ appState, dispNoti }) {
                     textAlign: "center",
                   }}
                 >
-                  No notification
+                  No Buzz me record
                 </div>
               )}
               <div
@@ -280,10 +209,7 @@ function Home({ appState, dispNoti }) {
               ></div>
             </div>
           </div>
-        </div>
-
-        <Desktopleft />
-        <Desktopright />
+        </div> 
       </>
     </div>
   );

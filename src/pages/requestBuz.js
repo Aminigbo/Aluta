@@ -414,7 +414,37 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
                     id="postArea1"
                     variant="standard"
                     style={rec_inputs2}
-                  >
+                    >
+                      
+
+                      {privacy == 1 && (
+                    <FormControl
+                      style={{
+                        margin: "0px 1px",
+                        marginBottom: "10px",
+                        background: "green ",
+                        height: "55px",
+                      }}
+                      id="postArea1"
+                      variant="standard"
+                      style={rec_inputs2}
+                    >
+                      <AsyncSelect
+                        id="sendto"
+                        style={rec_inputs}
+                        closeMenuOnSelect={false}
+                        components={animatedComponents}
+                        // defaultValue={[options[0], options[1]]}
+                        isMulti
+                        loadOptions={loadOptions}
+                        onChange={(e) => {
+                          handleInputChange(e);
+                        }}
+                      />
+                    </FormControl>
+                  )}
+
+                      
                     <InputLabel id="demo-simple-select-label">
                       Private request &nbsp; &nbsp; <VpnLockOutlined />
                     </InputLabel>
@@ -442,32 +472,7 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
                     </Select>
                   </FormControl>
 
-                  {privacy == 1 && (
-                    <FormControl
-                      style={{
-                        margin: "0px 1px",
-                        marginBottom: "10px",
-                        background: "green ",
-                        height: "55px",
-                      }}
-                      id="postArea1"
-                      variant="standard"
-                      style={rec_inputs2}
-                    >
-                      <AsyncSelect
-                        id="sendto"
-                        style={rec_inputs}
-                        closeMenuOnSelect={false}
-                        components={animatedComponents}
-                        // defaultValue={[options[0], options[1]]}
-                        isMulti
-                        loadOptions={loadOptions}
-                        onChange={(e) => {
-                          handleInputChange(e);
-                        }}
-                      />
-                    </FormControl>
-                  )}
+                  
 
                   <br />
 
@@ -486,7 +491,7 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
                         </button>
                       </div>
                     )}{" "}
-                    <small>Maximum of 5000 Buz per day.</small>
+                    <small>Maximum of <b>NGN 5000 </b> per day.</small>
                   </div>
                 </div>
               </div>

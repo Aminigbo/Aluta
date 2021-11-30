@@ -18,6 +18,7 @@ export function cashbackCurrency(
   generatedToken,
   user,
   amount,
+  isActive,
   toggleDrawer
 ) {
   return (
@@ -61,7 +62,7 @@ export function cashbackCurrency(
                 color: "#706e3b",
               }}
             >
-              NGN-{amount}
+              NGN {amount}
             </b>
             <b
               style={{
@@ -88,7 +89,9 @@ export function cashbackCurrency(
             >
               @{user}
             </b>
-            <b
+            {/* {console.log(isActive)} */}
+            
+            {isActive == true ? <b
               style={{
                 position: "absolute",
                 bottom: "2px",
@@ -99,7 +102,18 @@ export function cashbackCurrency(
               }}
             >
              VALID
-            </b>
+            </b> : <b
+              style={{
+                position: "absolute",
+                bottom: "2px",
+                right: "4px",
+                fontSize: "13px",
+                fontFamily: "OCR A Std, monospace",
+                color: "crimson",
+              }}
+            >
+             INVALID
+            </b>}
             <div
               style={{ 
                 height: "60%",
@@ -145,7 +159,7 @@ export function cashbackCurrency(
                       />
                     )}
                   </>
-                ): <b style={{fontSize:"20px"}}>NGN - {amount}</b> }
+                ): <b style={{fontSize:"20px"}}>NGN {amount}</b> }
                 </b>{" "}
                
               </div>
