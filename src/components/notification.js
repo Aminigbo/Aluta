@@ -51,7 +51,7 @@ function Home({ appState, dispNoti }) {
           setStates({
             ...compState,
             loader: false,
-            data: null,
+            data: [],
           });
         }
       })
@@ -59,7 +59,7 @@ function Home({ appState, dispNoti }) {
         setStates({
           ...compState,
           loader: false,
-          data: null,
+          data: [],
         });
       });
   };
@@ -73,58 +73,157 @@ function Home({ appState, dispNoti }) {
   const renderNotifications = () => {
     if (compState.data) {
       return compState.data.map((e) => {
-        return (
-          <>
-            {console.log(compState.data)}
-            <div style={{ background: "" }}>
-              <div
-                style={{
-                  backgroundColor: "",
-                  width: "100%",
-                  padding: "10px 20px",
-                }}
-              >
-                <b>{e.type} </b> &nbsp;&nbsp;{" "}
-                <span style={{ fontSize: "14px" }}>
-                  {" "}
-                  {`From ${e.meta.sender.fullname}`}{" "}
-                </span>{" "}
-                <br />
-              </div>
-              <div
-                style={{
-                  backgroundColor: " ",
-                  width: "100%",
-                  padding: "10px 20px",
-                  marginTop: "-15px",
-                  borderBottom:"0.5px solid lightgray"
-                }}
-              >
-                {e.meta.data.desc} <br /><br />
-                <b
+        if (e.type == "BUZZ REQUEST" || e.type == "BUZZ ALERT") {
+          return (
+            <>
+              {console.log(compState.data)}
+              <div style={{ background: "" }}>
+                <div
                   style={{
-                    background: "#0a3d62",
-                    color: "white",
-                    padding: "3px 10px",
-                    borderRadius: "5px",
-                    marginTop:"20px"
+                    backgroundColor: "",
+                    width: "100%",
+                    padding: "10px 20px",
                   }}
                 >
-                  {" "}
-                  B
-                  <EuroSymbolOutlined
+                  <b>{e.type} </b> &nbsp;&nbsp;{" "}
+                  <span style={{ fontSize: "14px" }}>
+                    {" "}
+                    From
+                    <b> {e.meta.sender.fullname.split(" ")[0]}</b>
+                  </span>{" "}
+                  <b
                     style={{
-                      transform: "rotateZ(-90deg)",
-                      fontSize: "15px",
+                      color: "#0a3d62",
+                      padding: "3px 10px",
+                      borderRadius: "5px",
+                      float: "right",
                     }}
-                  />{" "}
-                  {e.meta.data.amount}
-                </b>
+                  >
+                    {" "}
+                    B
+                    <EuroSymbolOutlined
+                      style={{
+                        transform: "rotateZ(-90deg)",
+                        fontSize: "15px",
+                      }}
+                    />{" "}
+                    {e.meta.data.amount}
+                  </b>
+                  <br />
+                </div>
+                <div
+                  style={{
+                    backgroundColor: " ",
+                    width: "100%",
+                    padding: "10px 20px",
+                    marginTop: "-15px",
+                    borderBottom: "0.5px solid lightgray",
+                  }}
+                >
+                  <small>{e.meta.data.desc}</small> <br />
+                  <br />
+                  {e.type == "BUZZ REQUEST" && (
+                    <b
+                      style={{
+                        background: "#0a3d62",
+                        color: "white",
+                        padding: "3px 10px",
+                        borderRadius: "5px",
+                        marginTop: "20px",
+                      }}
+                    >
+                      {" "}
+                      BUZZ {e.meta.sender.fullname.split(" ")[0]}
+                      &nbsp;&nbsp; B
+                      <EuroSymbolOutlined
+                        style={{
+                          transform: "rotateZ(-90deg)",
+                          fontSize: "15px",
+                        }}
+                      />{" "}
+                      {e.meta.data.amount}
+                    </b>
+                  )}
+                </div>
               </div>
-            </div>
-            {/* <Divider /> */}
-          </>
-        );
+              {/* <Divider /> */}
+            </>
+          );
+        } else if (e.type == "CASHBACK RESOLVED") {
+          return (
+            <>
+              {console.log(compState.data)}
+              <div style={{ background: "" }}>
+                <div
+                  style={{
+                    backgroundColor: "",
+                    width: "100%",
+                    padding: "10px 20px",
+                  }}
+                >
+                  <b>{e.type} </b> &nbsp;&nbsp;{" "}
+                  <b
+                    style={{
+                      color: "#0a3d62",
+                      padding: "3px 10px",
+                      borderRadius: "5px",
+                      float: "right",
+                    }}
+                  >
+                    {" "}
+                    B
+                    <EuroSymbolOutlined
+                      style={{
+                        transform: "rotateZ(-90deg)",
+                        fontSize: "15px",
+                      }}
+                    />{" "}
+                    {e.meta.amount}
+                  </b>
+                  <br />
+                  <span style={{ fontSize: "14px" }}>
+                    {" "}
+                    By
+                    <b> {e.meta.resolvedby.split(" ")[0]}</b>
+                  </span>{" "}
+                  <br />
+                </div>
+                <div
+                  style={{
+                    backgroundColor: " ",
+                    width: "100%",
+                    padding: "10px 20px",
+                    marginTop: "-15px",
+                    borderBottom: "0.5px solid lightgray",
+                  }}
+                >
+                  <small>
+                    Your generated cashback of   <b
+                    style={{
+                      color: "#0a3d62",
+                      padding: "3px 10px",
+                      borderRadius: "5px", 
+                    }}
+                  >
+                    {" "}
+                    B
+                    <EuroSymbolOutlined
+                      style={{
+                        transform: "rotateZ(-90deg)",
+                        fontSize: "15px",
+                      }}
+                    />{" "}
+                    {e.meta.amount}
+                  </b> has been resolved by <b>{e.meta.resolvedby} </b>
+                  
+                  </small>{" "}
+                  <br />
+                </div>
+              </div>
+              {/* <Divider /> */}
+            </>
+          );
+        }
       });
     }
   };
@@ -160,30 +259,32 @@ function Home({ appState, dispNoti }) {
                 {" "}
                 <b>Notifications</b>
               </div>{" "}
-              {compState.loader != true && compState.data.length > 0 && (
-                <>
-                  {" "}
-                  <div
-                    style={{
-                      width: "100%",
-                      background: "white",
-                      padding: "0px 3px",
-                      marginLeft: "0%",
-                      marginTop: "20px",
-                      boxShadow: " 1px 1px 3px #888888",
-                      border: "0.5px solid #f3f3f3",
-                    }}
-                  >
-                    <List
-                      sx={style}
-                      component="nav"
-                      aria-label="mailbox folders"
+              {compState.loader != true &&
+                compState.data !== null &&
+                compState.data.length > 0 && (
+                  <>
+                    {" "}
+                    <div
+                      style={{
+                        width: "100%",
+                        background: "white",
+                        padding: "0px 3px",
+                        marginLeft: "0%",
+                        marginTop: "20px",
+                        boxShadow: " 1px 1px 3px #888888",
+                        border: "0.5px solid #f3f3f3",
+                      }}
                     >
-                      {renderNotifications()}
-                    </List>{" "}
-                  </div>
-                </>
-              )}
+                      <List
+                        sx={style}
+                        component="nav"
+                        aria-label="mailbox folders"
+                      >
+                        {renderNotifications()}
+                      </List>{" "}
+                    </div>
+                  </>
+                )}
               <br />
               {compState.loader === false && compState.data.length == 0 && (
                 <div

@@ -325,5 +325,5 @@ export async function allBuzMe(userId) {
 // @========  FETCH ALL USER'S NOTIFICATION
 // @======== VERIFY CASHBACK TOKEN
 export async function fetchNotification(payload) {
-  return new_supabase.from("notifications").select("*").eq("to", payload);
+  return new_supabase.from("notifications").select("*").eq("to", payload).order('id', { ascending: false })
 }

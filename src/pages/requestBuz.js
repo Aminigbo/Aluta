@@ -74,6 +74,7 @@ let modal_footer2_btn_holder = {
   marginBottom: "10px",
   // backgroundColor: '#f3f3f3',
   width: "100%",
+  opacity: "70000",
 };
 
 const paymentTitle = {
@@ -118,7 +119,7 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
   const state = appState;
   const new_supabase = supabase();
   const loggedInUserSchool = state.loggedInUser.user.meta.school;
-  const { fullname, email, phone,id } = state.loggedInUser.user;
+  const { fullname, email, phone, id } = state.loggedInUser.user;
   const userId = state.loggedInUser.meta.user.id;
 
   const [compState, setStates] = useState({
@@ -135,7 +136,7 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
     // setStates({ ...compState, loader: true });
     // setTimeout(() => setStates({ ...compState, loader: false }), 500);
     let filterOpt = [];
-    fetchUsersOfUniversity(loggedInUserSchool,id)
+    fetchUsersOfUniversity(loggedInUserSchool, id)
       .then((res) => {
         res.body.map((resp) => {
           let prepared = {
@@ -143,6 +144,7 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
             label: resp.fullname,
             email: resp.email,
             phone: resp.phone,
+            id: resp.id,
           };
           filterOpt.push(prepared);
         });
@@ -348,7 +350,7 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
             {/* <div className="explore desktop"><span>Explore</span>  <span className="logout" onClick={()=>{logout()}}>Logout</span>  </div> */}
 
             <div animateIn="fadeIn">
-              <div className=""  >
+              <div className="">
                 {compState.loader === true && (
                   <progress
                     style={{
@@ -362,22 +364,26 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
                   ></progress>
                 )}
 
-                <div className="paypanel" style={{
-                  width: "90%",
-                  background: "white",
-                  padding: "10px",
-                  // marginLeft: "5%",
-                  marginTop: "20px",
-                  borderRadius: "40px 40px 2px 3px",
-                  boxShadow: " 1px 1px 3px #888888",
-                  border: "0.5px solid #f3f3f3",
-                }}>
+                <div
+                  className="paypanel"
+                  style={{
+                    width: "90%",
+                    background: "white",
+                    padding: "10px",
+                    // marginLeft: "5%",
+                    marginTop: "20px",
+                    borderRadius: "40px 40px 2px 3px",
+                    boxShadow: " 1px 1px 3px #888888",
+                    border: "0.5px solid #f3f3f3",
+                  }}
+                >
                   <div style={paymentTitle}>
                     <p>Request Buz</p>
                   </div>
                   {/* <SecurityOutlined style={secured}/>  */}
 
                   <input
+                    type="number"
                     onChange={(e) => {
                       setAMOUNT(e.target.value);
                     }}
@@ -463,23 +469,23 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
                     </FormControl>
                   )}
 
-                  {compState.resolved != true && (
-                    <div style={modal_footer2_btn_holder}>
-                      <button
-                        onClick={(e) => {
-                          placeRequest(reason);
-                        }}
-                        style={action_btn_success2}
-                      >
-                        Request
-                      </button>
-                    </div>
-                  )}
-
                   <br />
 
                   <div style={secured_env}>
-                    {" "}
+                    {compState.resolved != true && (
+                        <div
+                          // style={modal_footer2_btn_holder}
+                        >
+                        <button
+                          onClick={(e) => {
+                            placeRequest(reason);
+                          }}
+                          style={action_btn_success2}
+                        >
+                          Request
+                        </button>
+                      </div>
+                    )}{" "}
                     <small>Maximum of 5000 Buz per day.</small>
                   </div>
                 </div>

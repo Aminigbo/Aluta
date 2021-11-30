@@ -226,24 +226,26 @@ function Desktopright({
       .from(`notifications:to=eq.${userId}`)
       .on("INSERT", (payload) => {
         dispNoti(true);
+        var audio = new Audio(mp3);
+          audio.play();
       })
       .subscribe();
 
     // @======== SUBSCRIBE TO BUZZ REQUEST TABLE
-    new_supabase
-      .from(`buzz-request`)
-      .on("INSERT", (payload) => {
-        const response = payload.new;
-        console.log(response);
-        let check = response.to.filter((e) => e.value == beneficiaryId);
-        if (check.length > 0) {
-          window.navigator.vibrate([2000, 100, 2000]);
-          var audio = new Audio(mp3);
-          audio.play();
-          dispRequest(true);
-        }
-      })
-      .subscribe();
+    // new_supabase
+    //   .from(`buzz-request`)
+    //   .on("INSERT", (payload) => {
+    //     const response = payload.new;
+    //     console.log(response);
+    //     let check = response.to.filter((e) => e.value == beneficiaryId);
+    //     if (check.length > 0) {
+    //       window.navigator.vibrate([2000, 100, 2000]);
+    //       var audio = new Audio(mp3);
+    //       audio.play();
+    //       dispRequest(true);
+    //     }
+    //   })
+    //   .subscribe();
   };
 
   // @=====  claim the alert

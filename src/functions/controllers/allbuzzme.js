@@ -5,7 +5,8 @@ export async function getAllBuzz(userId, buzState, setBuzState) {
     loading: true,
   });
   allBuzMe(userId).then((res) => {
-    if (res.body.length > 0) {
+    if(res.body !== null){
+       if (res.body.length > 0) {
       let recieved = res.body.filter((e) => e.to == userId);
       let sent = res.body.filter((e) => e.from == userId);
 
@@ -34,6 +35,7 @@ export async function getAllBuzz(userId, buzState, setBuzState) {
         loading: false,
         data,
       });
+    }
     }
   });
 }

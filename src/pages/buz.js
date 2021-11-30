@@ -299,7 +299,7 @@ function Home({ appState, login_suc, logout }) {
                             from: meta.sender.id,
                             to: meta.reciever.id,
                             meta: meta,
-                            type:"BUZ ALERT"
+                            type:"BUZZ ALERT"
                           },
                         ])
                         .then((resX) => {
@@ -412,7 +412,8 @@ function Home({ appState, login_suc, logout }) {
                   </div>
                   {/* <SecurityOutlined style={secured}/>  */}
 
-                  <input
+                    <input
+                      type="number"
                     onKeyUp={() => {
                       clearBeneficiary();
                     }}
@@ -422,7 +423,7 @@ function Home({ appState, login_suc, logout }) {
                     value={amount}
                       style={rec_inputs}
                       type="number"
-                    placeholder=" Enter Amount to Buz "
+                    placeholder=" Enter Amount to Buzz"
                   />
 
                   <br />
