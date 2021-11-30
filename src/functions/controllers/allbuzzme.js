@@ -5,6 +5,7 @@ export async function getAllBuzz(userId, buzState, setBuzState) {
     loading: true,
   });
   allBuzMe(userId).then((res) => {
+    console.log(res)
     if(res.body !== null){
        if (res.body.length > 0) {
       let recieved = res.body.filter((e) => e.to == userId);
@@ -29,6 +30,16 @@ export async function getAllBuzz(userId, buzState, setBuzState) {
       let data = {
         from: sentAmountArry.reduce(add, 0),
         to: recieveAmountArry.reduce(add, 0),
+      };
+      setBuzState({
+        ...buzState,
+        loading: false,
+        data,
+      });
+       } else {
+         let data = {
+        from:0,
+        to:0,
       };
       setBuzState({
         ...buzState,

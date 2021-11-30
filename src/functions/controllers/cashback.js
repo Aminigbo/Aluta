@@ -197,8 +197,9 @@ export async function settleCashbackToWallet(
   const to = {
     ...state.user.meta,
     fullname: state.user.fullname,
-    phone: state.user.hpone,
+    phone: state.user.phone,
     email: state.user.email,
+    id: state.user.id,
     wallet: null,
     transactionPin: null,
     password: null,
@@ -206,7 +207,7 @@ export async function settleCashbackToWallet(
   };
 
   let newTokenData = {
-    ...payload.data,
+    ...payload.data.meta,
     to: to,
   };
   let userWallet = state.user.meta.wallet;

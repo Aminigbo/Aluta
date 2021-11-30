@@ -21,11 +21,11 @@ const smile = {
 
 function Home({ appState, dispNoti }) {
   let history = useHistory();
-   const state = appState;
-   let userId = ""
-   if (state.loggedIn == true) {
-      userId = state.loggedInUser.user.id
-   }
+  const state = appState;
+  let userId = "";
+  if (state.loggedIn == true) {
+    userId = state.loggedInUser.user.id;
+  }
 
   const style = {
     width: "100%",
@@ -44,8 +44,8 @@ function Home({ appState, dispNoti }) {
       loader: true,
     });
     allBuzzMe(user)
-       .then((res) => {
-         console.log(res)
+      .then((res) => {
+        console.log(res);
         if (res.error === null) {
           setStates({
             ...compState,
@@ -77,67 +77,75 @@ function Home({ appState, dispNoti }) {
 
   const renderNotifications = () => {
     if (compState.data) {
-      return compState.data.map((e) => { 
-          return (
-            <>
-              {console.log(compState.data)}
-              <div style={{ background: "" }}>
-                <div
+      return compState.data.map((e) => {
+        return (
+          <>
+            {console.log(compState.data)}
+            <div style={{ background: "" }}>
+              <div
+                style={{
+                  backgroundColor: "",
+                  width: "100%",
+                  padding: " 10px 0px",
+                }}
+              >
+                <b>{e.type} </b> &nbsp;&nbsp;{" "}
+                <span style={{ fontSize: "14px" }}>
+                  {e.from == userId ? "Debit To" : "Cradit From"}
+
+                  <b>
+                    {" "}
+                    {e.from == userId ? (
+                      <> {e.meta.reciever.Fullname.split(" ")[0]} </>
+                    ) : (
+                      <> {e.meta.sender.fullname.split(" ")[0]} </>
+                    )}{" "}
+                  </b>
+                  {/* reciever */}
+                </span>{" "}
+                <b
                   style={{
-                    backgroundColor: "",
-                    width: "100%",
-                    padding: " 10px 0px",
+                    color: "#0a3d62",
+                    padding: "3px 10px",
+                    borderRadius: "5px",
+                    float: "right",
                   }}
                 >
-                  <b>{e.type} </b> &nbsp;&nbsp;{" "}
-                  <span style={{ fontSize: "14px" }}>
-                    {e.from == userId ? "Debit ":"Cradit "}
-                    From
-                    <b> {e.meta.sender.fullname.split(" ")[0]}</b>
-                  </span>{" "}
+                  NGN {e.meta.data.amount}
+                </b>
+                <br />
+              </div>
+              <div
+                style={{
+                  backgroundColor: " ",
+                  width: "100%",
+                  padding: "10px",
+                  marginTop: "-15px",
+                  borderBottom: "0.5px solid lightgray",
+                }}
+              >
+                <small>{e.meta.data.desc}</small> <br />
+                <br />
+                {e.type == "BUZZ REQUEST" && (
                   <b
                     style={{
-                      color: "#0a3d62",
+                      background: "#0a3d62",
+                      color: "white",
                       padding: "3px 10px",
                       borderRadius: "5px",
-                      float: "right",
+                      marginTop: "20px",
                     }}
-                  >NGN {e.meta.data.amount}
+                  >
+                    {" "}
+                    BUZZ {e.meta.sender.fullname.split(" ")[0]}
+                    &nbsp;&nbsp; NGN {e.meta.data.amount}
                   </b>
-                  <br />
-                </div>
-                <div
-                  style={{
-                    backgroundColor: " ",
-                    width: "100%",
-                    padding: "10px",
-                    marginTop: "-15px",
-                    borderBottom: "0.5px solid lightgray",
-                  }}
-                >
-                  <small>{e.meta.data.desc}</small> <br />
-                  <br />
-                  {e.type == "BUZZ REQUEST" && (
-                    <b
-                      style={{
-                        background: "#0a3d62",
-                        color: "white",
-                        padding: "3px 10px",
-                        borderRadius: "5px",
-                        marginTop: "20px",
-                      }}
-                    >
-                      {" "}
-                      BUZZ {e.meta.sender.fullname.split(" ")[0]}
-                      &nbsp;&nbsp;
-                      NGN {e.meta.data.amount}
-                    </b>
-                  )}
-                </div>
+                )}
               </div>
-              {/* <Divider /> */}
-            </>
-          ); 
+            </div>
+            {/* <Divider /> */}
+          </>
+        );
       });
     }
   };
@@ -152,14 +160,27 @@ function Home({ appState, dispNoti }) {
         {console.log(compState)}
         {compState.loader === true && <> {cashbackloader()}</>}
         <div className="mobile">
-
           <div>
-            <div> 
+            <div>
               {compState.loader != true &&
                 compState.data !== null &&
                 compState.data.length > 0 && (
                   <>
-                    {" "}
+                    <div
+                      style={{
+                        textAlign: "left",
+                        marginTop: "10px",
+                        background: " #f4f6f7",
+                        position: "sticky",
+                        top: "0px",
+                        // zIndex: "1000",
+                        padding: "16px",
+                      }}
+                    >
+                      {" "}
+                      {compState.loader === false &&
+                        compState.data.length > 0 && <b>Buzzme histories</b>}
+                    </div>{" "}
                     <div
                       style={{
                         width: "90%",
@@ -195,7 +216,7 @@ function Home({ appState, dispNoti }) {
                     textAlign: "center",
                   }}
                 >
-                  No Buzz me record
+                  No buzz me record
                 </div>
               )}
               <div
@@ -209,7 +230,7 @@ function Home({ appState, dispNoti }) {
               ></div>
             </div>
           </div>
-        </div> 
+        </div>
       </>
     </div>
   );

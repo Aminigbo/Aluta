@@ -8,7 +8,7 @@ import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
 import { add_wallet, logOut, loginSuc, disp_noti } from "../redux";
 import { cashbackloader } from "../components/loading";
-import { allBuzzMe } from "../functions/models/index";
+import { allCashback } from "../functions/models/index";
 
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -21,11 +21,12 @@ const smile = {
 
 function Home({ appState, dispNoti }) {
   let history = useHistory();
-   const state = appState;
-   let userId = ""
-   if (state.loggedIn == true) {
-      userId = state.loggedInUser.user.id
-   }
+  const state = appState;
+  let userId = ""
+
+  if (state.loggedIn === true) {
+    userId = state.loggedInUser.user.id
+  }
 
   const style = {
     width: "100%",
@@ -43,9 +44,8 @@ function Home({ appState, dispNoti }) {
       ...compState,
       loader: true,
     });
-    allBuzzMe(user)
-       .then((res) => {
-         console.log(res)
+    allCashback(user)
+      .then((res) => {
         if (res.error === null) {
           setStates({
             ...compState,
@@ -77,24 +77,19 @@ function Home({ appState, dispNoti }) {
 
   const renderNotifications = () => {
     if (compState.data) {
-      return compState.data.map((e) => { 
+      return compState.data.map((e) => {
+        console.log(e)
           return (
-            <>
-              {console.log(compState.data)}
+            <> 
               <div style={{ background: "" }}>
                 <div
                   style={{
                     backgroundColor: "",
                     width: "100%",
-                    padding: " 10px 0px",
+                    padding: "10px 20px",
                   }}
                 >
-                  <b>{e.type} </b> &nbsp;&nbsp;{" "}
-                  <span style={{ fontSize: "14px" }}>
-                    {e.from == userId ? "Debit ":"Cradit "}
-                    From
-                    <b> {e.meta.sender.fullname.split(" ")[0]}</b>
-                  </span>{" "}
+                  <b>{e.isActive === true ? "VALID":"INVALID"} </b> &nbsp;&nbsp;{" "}
                   <b
                     style={{
                       color: "#0a3d62",
@@ -102,37 +97,56 @@ function Home({ appState, dispNoti }) {
                       borderRadius: "5px",
                       float: "right",
                     }}
-                  >NGN {e.meta.data.amount}
+                  >NGN {e.meta.amount}
                   </b>
+                  <br />
+                  <span style={{ fontSize: "14px" }}>
+                    {" "}
+                    By
+                    {e.user == userId ? <b>  You</b> : <b> {e.meta.name.split(" ")[0]}</b>}
+                    
+                  </span>{" "}
                   <br />
                 </div>
                 <div
                   style={{
                     backgroundColor: " ",
                     width: "100%",
-                    padding: "10px",
+                    padding: "10px 20px",
                     marginTop: "-15px",
                     borderBottom: "0.5px solid lightgray",
                   }}
                 >
-                  <small>{e.meta.data.desc}</small> <br />
-                  <br />
-                  {e.type == "BUZZ REQUEST" && (
-                    <b
-                      style={{
-                        background: "#0a3d62",
-                        color: "white",
-                        padding: "3px 10px",
-                        borderRadius: "5px",
-                        marginTop: "20px",
-                      }}
+                  {e.user == userId ?  <small>
+                      You generated a cashback of   <b
+                        style={{
+                          color: "#0a3d62",
+                          padding: "3px 4px",
+                          borderRadius: "5px",
+                        }}
                     >
-                      {" "}
-                      BUZZ {e.meta.sender.fullname.split(" ")[0]}
-                      &nbsp;&nbsp;
-                      NGN {e.meta.data.amount}
+                       NGN {e.meta.amount}
+                     <br />
+                      <div style={{marginTop:"5px"}}>
+                        <b style={{fontSize:"16px",color:"#0a3d62"}}>{e.token} </b>
+                      </div>
                     </b>
-                  )}
+                  
+                    </small> :
+                    <small>
+                      You resolved a cashback of   <b
+                        style={{
+                          color: "#0a3d62",
+                          padding: "3px 4px",
+                          borderRadius: "5px",
+                        }}
+                      >NGN {e.meta.amount}
+                      </b><br /> <div style={{marginTop:"5px"}}>
+                        <b style={{fontSize:"16px",color:"#0a3d62"}}>{e.token} </b>
+                      </div>
+                  
+                    </small>}
+                  <br />
                 </div>
               </div>
               {/* <Divider /> */}
@@ -151,10 +165,25 @@ function Home({ appState, dispNoti }) {
       <>
         {console.log(compState)}
         {compState.loader === true && <> {cashbackloader()}</>}
-        <div className="mobile">
+        <div className="mobile"> 
 
           <div>
-            <div> 
+            <div>
+              <div
+                style={{
+                  textAlign: "left",
+                  marginTop: "10px",
+                  background: " #f4f6f7",
+                  position: "sticky",
+                  top: "0px",
+                  zIndex: "1000",
+                  padding: "10px 15px",
+                }}
+              >
+                  {" "}
+                  {compState.loader === false && compState.data.length > 0 && <b>Cashback histories</b>}
+                
+              </div>{" "}
               {compState.loader != true &&
                 compState.data !== null &&
                 compState.data.length > 0 && (
@@ -164,7 +193,7 @@ function Home({ appState, dispNoti }) {
                       style={{
                         width: "90%",
                         background: "white",
-                        padding: "0px 15px",
+                        padding: "0px",
                         marginLeft: "5%",
                         marginTop: "20px",
                         boxShadow: " 1px 1px 3px #888888",
@@ -195,7 +224,7 @@ function Home({ appState, dispNoti }) {
                     textAlign: "center",
                   }}
                 >
-                  No Buzz me record
+                  No cashback record
                 </div>
               )}
               <div
@@ -209,7 +238,10 @@ function Home({ appState, dispNoti }) {
               ></div>
             </div>
           </div>
-        </div> 
+        </div>
+
+        <Desktopleft />
+        <Desktopright />
       </>
     </div>
   );

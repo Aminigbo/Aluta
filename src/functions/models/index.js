@@ -250,6 +250,7 @@ export async function deactivateToken(payload, data) {
     .update({
       isActive: false,
       meta: data,
+      to:data.to.id
     })
     .eq("token", payload);
 }
@@ -329,10 +330,19 @@ export async function fetchNotification(payload) {
 }
 
 
-// @======== CHECK IF USER EXISTS
+// @======== GET ALL BUZZ ME
 export async function allBuzzMe(userId) {
   return new_supabase
     .from("buz-me")
     .select("*")
     .or(`from.eq.${userId},to.eq.${userId}`);
+}
+
+
+// @========   ALL CASHBACKS 
+export async function allCashback(userId) {
+  return new_supabase
+    .from("cashback")
+    .select("*")
+    .or(`user.eq.${userId},to.eq.${userId}`);
 }

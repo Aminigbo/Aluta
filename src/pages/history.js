@@ -14,7 +14,7 @@ import { cashbackloader } from "../components/loading";
 import { errorComponent } from "../components/error"; // error component for error handling
 import Cashbackdrawer from "../components/cashbackdrawer";
 // @========  IMPORT CUSTOMER ACCOUNT SUMMARY
-import Accountsummery from "../components/ccountsummary";
+import Allcashback from "../components/allcashback";
 import Allbuzzme from "../components/allbuzz-me";
 
 function Home({ appState, login_suc }) {
@@ -29,7 +29,7 @@ function Home({ appState, login_suc }) {
   });
 
   const [tokenamount, setTokenamount] = useState(""); // amount to be generated
-  const [allbuzzme, setAllbuzzme] = useState(true);
+  const [allbuzzme, setAllbuzzme] = useState(false);
 
   let userWallet = "";
   if (state.loggedIn === true) {
@@ -103,13 +103,16 @@ function Home({ appState, login_suc }) {
                   }}
                 >
                   <span
-                    onClick={() => [setAllbuzzme(true)]}
+                    onClick={() => [setAllbuzzme(false)]}
                     // to="/cashback-create"
                     style={{
                       marginLeft: " ",
                       fontSize: "15px",
                       color: "#0a3d62",
                       textDecoration: "none",
+                      background: allbuzzme == false && "lightgray",
+                      padding: "0px 5px",
+                      borderRadius: "5px",
                     }}
                   >
                     {/* <ViewAgenda style={{ marginLeft: "-4px" }} /> */}
@@ -117,12 +120,17 @@ function Home({ appState, login_suc }) {
                   </span>
                   &nbsp;&nbsp;
                   <span
-                    onClick={() => [setAllbuzzme(true)]}
+                    onClick={() => {
+                      setAllbuzzme(true);
+                    }}
                     style={{
                       marginLeft: "10px",
                       fontSize: "15px",
                       color: "#0a3d62",
                       textDecoration: "none",
+                      background: allbuzzme == true && "lightgray",
+                      padding: "0px 5px",
+                      borderRadius: "5px",
                     }}
                   >
                     {/* <HistoryOutlined style={{ marginLeft: "-4px" }} /> */}
@@ -145,9 +153,10 @@ function Home({ appState, login_suc }) {
                 </div>
               </div>{" "}
               <div style={{ zIndex: "80000", background: " " }}>
-               <Cashbackdrawer />
-                {allbuzzme === true && <Allbuzzme />} 
-                {/* {allbuzzme === null && <Accountsummery />} */}
+                <Cashbackdrawer />
+                {allbuzzme === true && <Allbuzzme />}
+
+                {allbuzzme === false && <Allcashback />}
               </div>
             </div>
           </div>
