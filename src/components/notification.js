@@ -201,7 +201,7 @@ function Home({ appState, dispNoti }) {
                     Your generated cashback of   <b
                     style={{
                       color: "#0a3d62",
-                      padding: "3px 10px",
+                      padding: "3px 4px",
                       borderRadius: "5px", 
                     }}
                   >
