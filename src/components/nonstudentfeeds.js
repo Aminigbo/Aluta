@@ -512,7 +512,7 @@ function Home({ appState, login_suc }) {
                   background: " #f4f6f7",
                   position: "sticky",
                   top: "0px",
-                  zIndex: "1000",
+                  zIndex: "1100",
                   padding: "0px",
                 }}
               >

@@ -304,7 +304,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
           <ExitToAppOutlined />
         </b>
 
-        <b
+        {/* <b
           style={{ float: "right", marginRight: "10px", color: "crimson" }}
           onClick={() => {
             syncDB().then((res) => {
@@ -313,7 +313,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
           }}
         >
           <ExitToAppOutlined />
-        </b>
+        </b> */}
       </List>
     </Box>
   );

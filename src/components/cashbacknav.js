@@ -254,6 +254,8 @@ function Home({ appState, login_suc }) {
         errorMsg: "You Provided a wrong transaction pin",
       });
     } else {
+      setTokenamount("")
+      setPin("")
       setInitiateCreate(true);
     }
   };
@@ -377,7 +379,23 @@ function Home({ appState, login_suc }) {
                           handleGeneratecashback();
                         }}
                       >
-                        {btn_primary("Generate")}
+                        <button
+                          onClick={toggleDrawer("bottom", false)}
+                          style={{
+                            // background:"#1e272e",
+                            backgroundColor: "#0a3d62",
+                            //   background:"#706e3b",
+                            padding: "2px 14px",
+                            //   marginLeft: "15px",
+                            color: "white",
+                            borderRadius: "3px",
+                            float: "  ",
+                            border: "none",
+                          }}
+                        >
+                          Generate
+                        </button>
+                        {/* {btn_primary("Generatesss")} */}
                       </span>
                     </div>{" "}
                     <br />{" "}
@@ -448,8 +466,8 @@ function Home({ appState, login_suc }) {
         </>
       )}
       {state.loggedInUser.user.meta.schoolmode === true && history.push("/")}
-      {console.log(state)}
-      {console.log(verifyPayload)}
+      {/* {console.log(state)}
+      {console.log(verifyPayload)} */}
       {/* IF TOKEN VERIFICATION TURNS ERROR */}
       {verifyPayload.success === false && <> </>}
 

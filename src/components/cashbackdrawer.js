@@ -288,6 +288,10 @@ function Home({ appState, login_suc }) {
     // setInitiateCreate(false);
     // setGeneratedcode(true);
   };
+   
+   const closeDrawer = ()=>{
+      toggleDrawer("bottom", false)
+   }
 
   // @======== CREATE TOKEN INTERFACE
   const createCashback = () => {
@@ -376,7 +380,7 @@ function Home({ appState, login_suc }) {
                           handleGeneratecashback();
                         }}
                       >
-                        {btn_primary("Generate")}
+                        {btn_primary("Generate",closeDrawer)}
                       </span>
                     </div>{" "}
                     <br />{" "}

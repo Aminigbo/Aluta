@@ -85,7 +85,7 @@ function Home({ appState, dispNoti }) {
                     padding: "10px 20px",
                   }}
                 >
-                  <b>{e.type} </b> &nbsp;&nbsp;{" "}
+                  <b style={{fontSize:"13px"}}>{e.type} </b> &nbsp;&nbsp;{" "}
                   <span style={{ fontSize: "14px" }}>
                     {" "}
                     From
@@ -97,6 +97,7 @@ function Home({ appState, dispNoti }) {
                       padding: "3px 10px",
                       borderRadius: "5px",
                       float: "right",
+                      fontSize:"13px"
                     }}
                   >NGN {e.meta.data.amount}
                   </b>
@@ -146,18 +147,19 @@ function Home({ appState, dispNoti }) {
                     padding: "10px 20px",
                   }}
                 >
-                  <b>{e.type} </b> &nbsp;&nbsp;{" "}
+                  <b style={{fontSize:"13px"}}>{e.type} </b> &nbsp;&nbsp;{" "}
                   <b
                     style={{
                       color: "#0a3d62",
                       padding: "3px 10px",
                       borderRadius: "5px",
                       float: "right",
+                      fontSize:"13px"
                     }}
                   >NGN {e.meta.amount}
                   </b>
                   <br />
-                  <span style={{ fontSize: "14px" }}>
+                  <span style={{ fontSize: "13px" }}>
                     {" "}
                     By
                     <b> {e.meta.resolvedby.split(" ")[0]}</b>
@@ -181,7 +183,7 @@ function Home({ appState, dispNoti }) {
                       borderRadius: "5px", 
                     }}
                   >NGN {e.meta.amount}
-                  </b> has been resolved by <b>{e.meta.resolvedby} </b>
+                  </b> has been resolved by {e.meta.resolvedby}
                   
                   </small>{" "}
                   <br />

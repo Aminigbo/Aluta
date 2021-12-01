@@ -147,7 +147,7 @@ function Home({ appState, login_suc }) {
                     }}
                   >
                     {/* <Person style={{ marginLeft: "-4px" }} /> */}
-                    &nbsp;<b>Requests</b>
+                    &nbsp;<b>Profile</b>
                   </Link>
                   <br />
                 </div>

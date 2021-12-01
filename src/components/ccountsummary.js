@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { Redirect, useHistory,  } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import "../static/css/home/index.css";
 
- 
-import {Divider } from "@mui/material"; 
-import { add_wallet, logOut, loginSuc } from "../redux"; 
+import { Divider } from "@mui/material";
+import { add_wallet, logOut, loginSuc } from "../redux";
 
 // @======== ALLL BUZZME CONTROLLER
 import { getAllBuzz } from "../functions/controllers/allbuzzme";
-function Home({ appState, }) { 
+import { getAllCashback } from "../functions/controllers/allcashback";
+function Home({ appState }) {
   const state = appState;
   let userId = "";
   if (state.loggedIn === true) {
@@ -25,28 +25,28 @@ function Home({ appState, }) {
     confirmpwderror: null,
     confirmpwderrormsg: "",
     error: null,
-  }); 
+  });
 
   const [buzzState, setBuzzState] = useState({
     leading: false,
     data: [],
   });
 
-  
+  const [cashbackstate, setCashbackstate] = useState({
+    leading: false,
+    data: [],
+  });
 
   React.useEffect(() => {
     getAllBuzz(userId, buzzState, setBuzzState);
+    getAllCashback(userId, cashbackstate, setCashbackstate);
     window.scrollTo(0, 0);
     setStates({
       ...compState,
       loading: false,
       wallethidden: true,
     });
-  }, []); 
- 
-
-  
- 
+  }, []);
 
   return state.loggedIn === false ? (
     <div>
@@ -73,7 +73,7 @@ function Home({ appState, }) {
         </div>
 
         <div>
-          <span>All Buz In</span>{" "}
+          <span>All Buzz In</span>{" "}
           <span style={{ float: "right" }}>
             {buzzState.loading === true ? (
               <small style={{ fontSize: "11px" }}>Fetching.....</small>
@@ -88,7 +88,7 @@ function Home({ appState, }) {
         <Divider style={{ marginBottom: "28px", color: "#0a3d62" }} />
 
         <div>
-          <span>All Buz Out</span>{" "}
+          <span>All Buzz Out</span>{" "}
           <span style={{ float: "right" }}>
             {buzzState.loading === true ? (
               <small style={{ fontSize: "11px" }}>Fetching.....</small>
@@ -105,7 +105,14 @@ function Home({ appState, }) {
         <div>
           <span>Cashback generated</span>{" "}
           <span style={{ float: "right" }}>
-            {buzzState.loading === true ? "A sec.." : "---"}
+            {buzzState.loading === true ? (
+              <small style={{ fontSize: "11px" }}>Fetching.....</small>
+            ) : (
+              <>
+                {" "}
+                <b>NGN {cashbackstate.data.from} </b>{" "}
+              </>
+            )}
           </span>
         </div>
         <Divider style={{ marginBottom: "28px", color: "#0a3d62" }} />
@@ -113,7 +120,15 @@ function Home({ appState, }) {
         <div>
           <span>Cashback resolved</span>{" "}
           <span style={{ float: "right" }}>
-            {buzzState.loading === true ? "A sec.." : "---"}
+            {buzzState.loading === true ? (
+              <small style={{ fontSize: "11px" }}>Fetching.....</small>
+            ) : (
+              <>
+                {" "}
+                <b>NGN {cashbackstate.data.to} </b>{" "}
+              </>
+            )}
+            {/* cashbackstate */}
           </span>
         </div>
         <Divider style={{ marginBottom: "28px", color: "#0a3d62" }} />
