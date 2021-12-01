@@ -15,6 +15,7 @@ import {
   RemoveRedEye,
   ViewAgenda,
   LibraryAddCheckOutlined,
+  VisibilityOffOutlined
 } from "@material-ui/icons";
 
 import { confirmCashbackCreation } from "../functions/workers_functions/cashback"; // CASHBACK CONTROLLER
@@ -648,7 +649,16 @@ function Home({ appState, login_suc }) {
                           <b>
                             {" "}
                             NGN {state.loggedInUser.user.meta.buzzmewallet}
-                          </b>{" "}
+                            </b>{" "}
+                            <VisibilityOffOutlined
+                                onClick={() => {
+                                setStates({
+                                  ...compState,
+                                  wallethidden:true
+                                  });
+                                }}
+                                style={{ fontSize: "25px", color: "#0a3d62" }}
+                              />
                         </>
                       ) : (
                         <>
@@ -662,7 +672,8 @@ function Home({ appState, login_suc }) {
                                 style={{ fontSize: "25px", color: "#0a3d62" }}
                               />
                             </>
-                          )}
+                              ) 
+                              }
                         </>
                       )}
                     </b>
@@ -734,7 +745,16 @@ function Home({ appState, login_suc }) {
                           {" "}
                           <b style={{ fontSize: " ", marginRight: "4px" }}>
                             NGN {state.loggedInUser.user.meta.wallet}
-                          </b>{" "}
+                            </b>{" "}
+                            <VisibilityOffOutlined
+                                onClick={() => {
+                                setStates({
+                                  ...compState,
+                                  wallethidden:true
+                                  });
+                                }}
+                                style={{ fontSize: "25px", color: "#0a3d62" }}
+                              />
                         </>
                       ) : (
                         <>
