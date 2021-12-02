@@ -108,9 +108,8 @@ function Home({ appState }) {
             {buzzState.loading === true ? (
               <small style={{ fontSize: "11px" }}>Fetching.....</small>
             ) : (
-              <>
-                {" "}
-                <b>NGN {cashbackstate.data.from} </b>{" "}
+              <> 
+                    {cashbackstate.data.from && <> <b>NGN {cashbackstate.data.from} </b> </>}
               </>
             )}
           </span>

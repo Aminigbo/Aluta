@@ -4,14 +4,14 @@ import { connect } from "react-redux";
 import "../static/css/home/index.css";
 
 import Header from "../components/includes/mobile_header.js";
-import { LinearProgress } from "@material-ui/core";
+// import { LinearProgress } from "@material-ui/core";
 import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
 import { add_wallet, logOut, loginSuc } from "../redux";
 import Toppills from "../components/includes/topdesktoppills";
-import { allUniversities } from "../functions/utils/index";
+// import { allUniversities } from "../functions/utils/index";
 import { updateUserMeta } from "../functions/models/index";
-import { LanguageOutlined } from "@material-ui/icons";
+// import { LanguageOutlined } from "@material-ui/icons";
 import { cashbackloader } from "../components/loading";
 // @=== import success response from worker function
 import { alert } from "../functions/workers_functions/alert";
@@ -124,7 +124,7 @@ function Home({ appState, login_suc }) {
           setStates({
             ...compState,
             alertMsg:
-              "Your profile is set and ready to be recognized. Have fun while you explore Aluta Meter",
+              "Your profile is set and ready to be recognized. Have fun while you explore Buzz",
           });
         } else {
           setStateAlert(false);

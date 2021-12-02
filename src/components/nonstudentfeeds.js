@@ -15,7 +15,7 @@ import {
   RemoveRedEye,
   ViewAgenda,
   LibraryAddCheckOutlined,
-  VisibilityOffOutlined
+  VisibilityOffOutlined,
 } from "@material-ui/icons";
 
 import { confirmCashbackCreation } from "../functions/workers_functions/cashback"; // CASHBACK CONTROLLER
@@ -146,8 +146,16 @@ function Home({ appState, login_suc }) {
 
   // ===   function to move Buzz me balance to wallet
   function moveBuzzmeBalance() {
-    setClickToViewPwd(true);
-    setResolvedPinVerification(true);
+    if (state.loggedInUser.user.meta.buzzmewallet < 1) {
+      setStates({
+        ...compState,
+        error: true,
+        errorMsg: "You have insufficient Buzz Me balance",
+      });
+    } else {
+      setClickToViewPwd(true);
+      setResolvedPinVerification(true);
+    }
   }
 
   // @======== GET AMOUNT TO BE DEDUCTED
@@ -649,16 +657,16 @@ function Home({ appState, login_suc }) {
                           <b>
                             {" "}
                             NGN {state.loggedInUser.user.meta.buzzmewallet}
-                            </b>{" "}
-                            <VisibilityOffOutlined
-                                onClick={() => {
-                                setStates({
-                                  ...compState,
-                                  wallethidden:true
-                                  });
-                                }}
-                                style={{ fontSize: "25px", color: "#0a3d62" }}
-                              />
+                          </b>{" "}
+                          <VisibilityOffOutlined
+                            onClick={() => {
+                              setStates({
+                                ...compState,
+                                wallethidden: true,
+                              });
+                            }}
+                            style={{ fontSize: "25px", color: "#0a3d62" }}
+                          />
                         </>
                       ) : (
                         <>
@@ -672,8 +680,7 @@ function Home({ appState, login_suc }) {
                                 style={{ fontSize: "25px", color: "#0a3d62" }}
                               />
                             </>
-                              ) 
-                              }
+                          )}
                         </>
                       )}
                     </b>
@@ -745,16 +752,16 @@ function Home({ appState, login_suc }) {
                           {" "}
                           <b style={{ fontSize: " ", marginRight: "4px" }}>
                             NGN {state.loggedInUser.user.meta.wallet}
-                            </b>{" "}
-                            <VisibilityOffOutlined
-                                onClick={() => {
-                                setStates({
-                                  ...compState,
-                                  wallethidden:true
-                                  });
-                                }}
-                                style={{ fontSize: "25px", color: "#0a3d62" }}
-                              />
+                          </b>{" "}
+                          <VisibilityOffOutlined
+                            onClick={() => {
+                              setStates({
+                                ...compState,
+                                wallethidden: true,
+                              });
+                            }}
+                            style={{ fontSize: "25px", color: "#0a3d62" }}
+                          />
                         </>
                       ) : (
                         <>
@@ -806,7 +813,7 @@ function Home({ appState, login_suc }) {
                         padding: "4px 0px",
                       }}
                     >
-                      <span>Beneficiary ID</span> <br />
+                      <span>Buzz ID</span> <br />
                       <b>
                         {state.loggedInUser.user.meta.beneficiaryId}{" "}
                         {compState.copy == true ? (
@@ -845,7 +852,7 @@ function Home({ appState, login_suc }) {
                 <Cashbackdrawal />
 
                 {/* @========      */}
-                <Accountsummery />  
+                <Accountsummery />
               </div>
             </div>
           </div>
