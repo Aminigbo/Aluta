@@ -7,6 +7,10 @@ import {
   insertNotification,
 } from "../models/index";
 
+import {
+  generate_cashback,
+  resolve_cashback,
+} from "../workers_functions/notifications";
 // @======== VERIFY CASHBACK TOKEN
 export async function handleVerifyToken(
   token,
@@ -116,6 +120,13 @@ export async function handleChashbackGeneration(
     payload.amount
   );
 
+  // @==  generate token send sms payload
+  let generateSMSPayload = {
+     phone:  `+234${payload.user.phone.substring(1, 11)}`,
+    token,
+    amount: payload.amount
+  }
+
   updateUserMeta(metaDataPayload)
     .then((res) => {
       if (res.success === true) {
@@ -127,12 +138,20 @@ export async function handleChashbackGeneration(
             name: payload.user.fullname,
             user: metaDataPayload,
             token,
+            phone:payload.user.phone,
           },
         };
         saveCashBack(saveCashbackTokenData)
           .then((res2) => {
             console.log(res2);
-            if (res2.body.length > 0) {
+            if (res.body === null) {
+              return setStates({
+                ...compState,
+                loading: false,
+                error: true,
+                errorMsg: "Sorry, this operation could not be completed.",
+              });
+            }else if (res2.body.length > 0) {
               setStates({
                 ...compState,
                 error: false,
@@ -146,6 +165,8 @@ export async function handleChashbackGeneration(
               setInitiateCreate(false);
               setGeneratedcode(true);
               setPin(null);
+              console.log(generateSMSPayload)
+              generate_cashback(generateSMSPayload)
             } else {
               return setStates({
                 ...compState,
@@ -200,7 +221,7 @@ export async function settleCashbackToWallet(
     phone: state.user.phone,
     email: state.user.email,
     id: state.user.id,
-    wallet: null,
+    // wallet: null,
     transactionPin: null,
     password: null,
     uuid: null,
@@ -233,21 +254,39 @@ export async function settleCashbackToWallet(
     newUser: { ...state.user.meta, wallet: userNewAmount },
   };
 
-  verifyCashbackToken(token).then((res) => { 
+  verifyCashbackToken(token).then((res) => {
     if (res.body.length > 0) {
       deactivateToken(token, newTokenData).then((res2) => {
         if (res2.body.length > 0) {
           updateUserMeta(userDBupdataData).then((res3) => {
             if (res3.success === true) {
-                let notificationPayload = {
-                  sendeId: state.user.id ,
-                  recieverId:res.body[0].user,
-                  meta: {amount:res.body[0].meta.amount, resolvedby:res.body[0].meta.name,token},
-                  type:"CASHBACK RESOLVED"
-                }
+              let notificationPayload = {
+                sendeId: state.user.id,
+                recieverId: res.body[0].user,
+                meta: {
+                  amount: res.body[0].meta.amount,
+                  resolvedby: res2.body[0].meta.to.fullname,
+                  token,
+                },
+                type: "CASHBACK RESOLVED",
+              };
               insertNotification(notificationPayload).then((res4) => {
                 login_suc(loginData);
                 setResolved(true);
+
+                console.log(res2);
+                console.log(res3)
+
+                // @== ALERT PAYLOAD
+                let alertPayload = {
+                  phone1: `+234${to.phone.substring(1, 11)}`,  // who resolved
+                  phone2: `+234${ res2.body[0].meta.phone.substring(1, 11)}`, // who created
+                  amount: res2.body[0].meta.amount,
+                  name: to.fullname,
+                  bal1: to.wallet,  // who resolve
+                  bal2: res2.body[0].meta.user.newUser.wallet,  // who created
+                };
+                resolve_cashback(alertPayload);
                 setStates({
                   ...compState,
                   loading: false,

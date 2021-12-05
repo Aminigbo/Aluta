@@ -59,7 +59,8 @@ export async function fetchAllFeeds(payload) {
     .from("feeds")
     .select(
       `*, comments(*), post_likes(*), unlikes(*), giveaway-lucky-winners(*)`
-    );
+    )
+    .order("id", { ascending: false });
   // .eq("school", payload);
 }
 
@@ -250,7 +251,7 @@ export async function deactivateToken(payload, data) {
     .update({
       isActive: false,
       meta: data,
-      to:data.to.id
+      to: data.to.id,
     })
     .eq("token", payload);
 }
@@ -323,28 +324,30 @@ export async function allBuzMe(userId) {
     .or(`from.eq.${userId},to.eq.${userId}`);
 }
 
- 
-
 // @========  FETCH ALL USER'S NOTIFICATION
 // @======== VERIFY CASHBACK TOKEN
 export async function fetchNotification(payload) {
-  return new_supabase.from("notifications").select("*").eq("to", payload).order('id', { ascending: false })
+  return new_supabase
+    .from("notifications")
+    .select("*")
+    .eq("to", payload)
+    .order("id", { ascending: false });
 }
-
 
 // @======== GET ALL BUZZ ME
 export async function allBuzzMe(userId) {
   return new_supabase
     .from("buz-me")
     .select("*")
-    .or(`from.eq.${userId},to.eq.${userId}`);
+    .or(`from.eq.${userId},to.eq.${userId}`)
+    .order("id", { ascending: false });
 }
 
-
-// @========   ALL CASHBACKS 
+// @========   ALL CASHBACKS
 export async function allCashback(userId) {
   return new_supabase
     .from("cashback")
     .select("*")
-    .or(`user.eq.${userId},to.eq.${userId}`);
+    .or(`user.eq.${userId},to.eq.${userId}`)
+    .order("id", { ascending: false });
 }

@@ -61,13 +61,8 @@ export function BuzAlert(payload, redirect) {
                   }}
                 >
                   {" "}
-                  B
-                  <EuroSymbolOutlined
-                    style={{
-                      transform: "rotateZ(-90deg)",
-                      fontSize: "15px",
-                    }}
-                  />  {payload.meta.data.amount}
+                  
+                  NGN  {payload.meta.data.amount}
             </b>{" "}
             &nbsp; from {payload.meta.sender.fullname}
           </div>

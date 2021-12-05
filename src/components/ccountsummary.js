@@ -80,7 +80,7 @@ function Home({ appState }) {
             ) : (
               <>
                 {" "}
-                <b>NGN {buzzState.data.to} </b>
+                <b style={{fontSize:"12px"}}>NGN {buzzState.data.to} </b>
               </>
             )}
           </span>
@@ -95,7 +95,7 @@ function Home({ appState }) {
             ) : (
               <>
                 {" "}
-                <b>NGN {buzzState.data.from} </b>{" "}
+                <b style={{fontSize:"12px"}}>NGN {buzzState.data.from} </b>{" "}
               </>
             )}
           </span>
@@ -108,8 +108,9 @@ function Home({ appState }) {
             {buzzState.loading === true ? (
               <small style={{ fontSize: "11px" }}>Fetching.....</small>
             ) : (
-              <> 
-                    {cashbackstate.data.from && <> <b>NGN {cashbackstate.data.from} </b> </>}
+                  <>
+                    {console.log(cashbackstate)}
+                  <b style={{fontSize:"12px"}}>NGN {cashbackstate.data.from} </b>{" "}
               </>
             )}
           </span>
@@ -124,7 +125,7 @@ function Home({ appState }) {
             ) : (
               <>
                 {" "}
-                <b>NGN {cashbackstate.data.to} </b>{" "}
+                <b style={{fontSize:"12px"}}>NGN {cashbackstate.data.to} </b>{" "}
               </>
             )}
             {/* cashbackstate */}

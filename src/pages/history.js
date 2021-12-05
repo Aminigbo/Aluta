@@ -97,7 +97,7 @@ function Home({ appState, login_suc }) {
                 <div
                   style={{
                     marginTop: "5px",
-                    textAlign: "center",
+                    textAlign: "left",
                     width: "90%",
                     marginLeft: "5%",
                   }}
@@ -153,7 +153,7 @@ function Home({ appState, login_suc }) {
                 </div>
               </div>{" "}
               <div style={{ zIndex: "80000", background: " " }}>
-                <Cashbackdrawer />
+                {/* <Cashbackdrawer /> */}
                 {allbuzzme === true && <Allbuzzme />}
 
                 {allbuzzme === false && <Allcashback />}

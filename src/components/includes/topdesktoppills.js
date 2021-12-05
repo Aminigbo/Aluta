@@ -156,42 +156,51 @@ function Desktopright({
 
   // @========  REALTIME SUBSCRIPTION
   const sub = () => {
+    console.log(userId);
     new_supabase
-      .from(`buz-me:to=eq.${userId}`)
+      .from(`buz-me`)
       .on("INSERT", (payload) => {
         const response = payload.new;
-        let myNewWallet =
-          parseInt(state.wallet) + parseInt(response.meta.data.amount);
+        console.log(response);
+        // let check = response.filter((e) => e.to == userId);
+        if (response.to == userId) {
+          let myNewWallet =
+            parseInt(state.wallet) + parseInt(response.meta.data.amount);
 
-        // addwallet(myNewWallet)
-        setStates({
-          ...compState,
-          payload: response,
-          myNewWallet,
-        });
-        window.navigator.vibrate([2000, 100, 2000]);
-        var audio = new Audio(mp3);
-        audio.play();
-        setStateAlert("buzAlert");
+          // addwallet(myNewWallet)
+          setStates({
+            ...compState,
+            payload: response,
+            myNewWallet,
+          });
+          window.navigator.vibrate([2000, 100, 2000]);
+          var audio = new Audio(mp3);
+          audio.play();
+          setStateAlert("buzAlert");
+        }
       })
       .subscribe();
 
     // @======== subscribe to cashback resolve
     new_supabase
-      .from(`cashback:user=eq.${userId}`)
+      .from(`cashback`)
       .on("UPDATE", (payload) => {
         const response = payload.new;
-        window.navigator.vibrate([2000, 100, 2000]);
-        var audio = new Audio(mp3);
-        audio.play();
+        if (response.user == userId) {
+          dispNoti(true);
+          window.navigator.vibrate([2000, 100, 2000]);
+          var audio = new Audio(mp3);
+          audio.play();
+        }
       })
       .subscribe();
 
     new_supabase
-      .from(`giveaway-lucky-winners:beneficiaryId=eq.${beneficiaryId}`)
+      .from(`giveaway-lucky-winners`)
       .on("INSERT", (payload) => {
         const response = payload.new;
-        let myNewWallet =
+        if (response.beneficiaryId == beneficiaryId) {
+          let myNewWallet =
           parseInt(state.wallet) +
           parseInt(response.meta.giveawayData.userGets);
         console.log(response);
@@ -218,43 +227,44 @@ function Desktopright({
           myNewWallet,
         });
         setStateAlert("buzAlert");
+        }
       })
       .subscribe();
 
     // @======== SUBSCRIBE TO NOTIFICATION TABLE
     new_supabase
-      .from(`notifications:to=eq.${userId}`)
+      .from(`notifications`)
       .on("INSERT", (payload) => {
-        dispNoti(true);
-        var audio = new Audio(mp3);
+        if (payload.new.to == userId) {
+          dispNoti(true);
+          var audio = new Audio(mp3);
           audio.play();
+        }
       })
       .subscribe();
 
     // @======== SUBSCRIBE TO BUZZ REQUEST TABLE
-    // new_supabase
-    //   .from(`buzz-request`)
-    //   .on("INSERT", (payload) => {
-    //     const response = payload.new;
-    //     console.log(response);
-    //     let check = response.to.filter((e) => e.value == beneficiaryId);
-    //     if (check.length > 0) {
-    //       window.navigator.vibrate([2000, 100, 2000]);
-    //       var audio = new Audio(mp3);
-    //       audio.play();
-    //       dispRequest(true);
-    //     }
-    //   })
-    //   .subscribe();
+    new_supabase
+      .from(`buzz-request`)
+      .on("INSERT", (payload) => {
+        const response = payload.new;
+        console.log(response);
+        let check = response.to.filter((e) => e.value == beneficiaryId);
+        if (check.length > 0) {
+          dispNoti(true);
+          var audio = new Audio(mp3);
+          audio.play();
+          window.navigator.vibrate([2000, 100, 2000]);
+        }
+      })
+      .subscribe();
   };
 
   // @=====  claim the alert
   const claimBuz = () => {
     // addwallet(compState.myNewWallet)
     setStateAlert(null);
-    history.push(
-      `/notification`
-    );
+    history.push(`/notification`);
   };
 
   React.useEffect(() => {

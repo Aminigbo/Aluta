@@ -89,7 +89,7 @@ function Home({ appState, dispNoti }) {
                     padding: "10px 20px",
                   }}
                 >
-                  <b>{e.isActive === true ? "VALID":"INVALID"} </b> &nbsp;&nbsp;{" "}
+                  <b>{e.isActive === true ? <span style={{fontSize:"12px",color:"mediumseagreen"}}>Valid</span>:<span style={{fontSize:"12px",color:"crimson"}}>Resolved</span>} </b> &nbsp;&nbsp;{" "}
                   <b
                     style={{
                       color: "#0a3d62",
@@ -102,8 +102,8 @@ function Home({ appState, dispNoti }) {
                   <br />
                   <span style={{ fontSize: "14px" }}>
                     {" "}
-                    By
-                    {e.user == userId ? <b>  You</b> : <b> {e.meta.name.split(" ")[0]}</b>}
+                  
+                    {e.isActive === false && <b>  By {e.meta.to.fullname.split(" ")[0]}</b>}
                     
                   </span>{" "}
                   <br />
@@ -177,7 +177,9 @@ function Home({ appState, dispNoti }) {
                   position: "sticky",
                   top: "0px",
                   zIndex: "1000",
-                  padding: "10px 15px",
+                    padding: "30px 20px",
+                    color: "gray",
+                  fontSize:"14px"
                 }}
               >
                   {" "}

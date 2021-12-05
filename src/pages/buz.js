@@ -133,7 +133,7 @@ function Home({ appState, login_suc, logout }) {
 
         new_supabase
           .from("users")
-          .select("*")
+          .select("*",)
           // .eq("beneficiaryId", beneficiary)
           .contains("meta", { beneficiaryId: beneficiary })
           .then((resolve) => {
@@ -400,7 +400,7 @@ function Home({ appState, login_suc, logout }) {
                     padding: "10px",
                     // marginLeft: "5%",
                     marginTop: "20px",
-                    borderRadius: "40px 40px 2px 3px",
+                    // borderRadius: "40px 40px 2px 3px",
                     boxShadow: " 1px 1px 3px #888888",
                     border: "0.5px solid #f3f3f3",
                   }}
@@ -504,7 +504,7 @@ function Home({ appState, login_suc, logout }) {
             </div>
           </div>
           <br />
-          <div style={{ textAlign: "center" }}>
+          {/* <div style={{ textAlign: "center" }}>
             <small>OR </small> <br /> <br />
             <button
               onClick={(e) => {
@@ -526,7 +526,7 @@ function Home({ appState, login_suc, logout }) {
           <br />
           <br />
           <br />
-          <br />
+          <br /> */}
         </div>
       </div>
 

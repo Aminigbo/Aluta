@@ -2,9 +2,10 @@ import "../../static/css/home/index.css";
 import React, { useState } from "react";
 import logo from "../../static/logos/amm.png";
 import am from "../../static/logos/logo-icon.png";
+import { Redirect } from "react-router-dom";
 import { Dehaze, Search } from "@material-ui/icons";
 import { connect } from "react-redux";
-import { logOut, loginSuc,disp_noti,disp_request } from "../../redux";
+import { logOut, loginSuc, disp_noti, disp_request } from "../../redux";
 import { useHistory, Link } from "react-router-dom";
 import { syncDB } from "../../functions/models/index";
 import {
@@ -23,6 +24,7 @@ import {
   ExitToAppOutlined,
   EuroSymbolOutlined,
   MailOutlined,
+  AccountBalanceOutlined,
 } from "@material-ui/icons";
 
 import avar from "../../static/logos/logo2.png";
@@ -59,7 +61,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
   const schoolmode = (event) => {
     switchschool(event);
   };
-  const label = { inputProps: { 'aria-label': 'Switch demo' } };
+  const label = { inputProps: { "aria-label": "Switch demo" } };
 
   const switchschool = (mood) => {
     const moodSwitch = mood.target.checked;
@@ -227,6 +229,33 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
         {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
       </List>
       <Divider />
+
+      <List
+        onClick={() => {
+          setDrawerState({ ...drawerState, ["left"]: false });
+          history.push("/transfer");
+        }}
+        style={{ padding: "15px" }}
+      >
+        <AccountBalanceOutlined /> &nbsp;
+        <span>Deposit from bank</span>
+        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
+      </List>
+      <Divider />
+
+      <List
+        onClick={() => {
+          setDrawerState({ ...drawerState, ["left"]: false });
+          history.push("/transfer");
+        }}
+        style={{ padding: "15px", background: "", opacity: "0.2" }}
+      >
+        <AccountBalanceOutlined /> &nbsp;
+        <span>Withdraw to bank</span>
+        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
+      </List>
+      <Divider />
+
       {/* <List
         onClick={() => {
           setDrawerState({ ...drawerState, ["left"]: false }); 
@@ -251,18 +280,18 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
           <SchoolOutlined /> &nbsp;
           <span>School mode</span>
           <div style={{ display: "inline-block", float: "right" }}>
-            <Switch 
+            <Switch
               style={{ float: "right" }}
               checked={state.loggedInUser.user.meta.schoolmode}
               onChange={schoolmode}
               inputProps={{ "aria-label": "controlled" }}
-            /> 
+            />
           </div>
         </List>
         <Divider />
       </>
 
-      <List
+      {/* <List
         onClick={() => {
           setDrawerState({ ...drawerState, ["left"]: false });
           history.push("/updateprofile");
@@ -270,31 +299,28 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
         style={{ padding: "15px" }}
       >
         <SettingsOutlined /> &nbsp;
-        <span>Settings</span>
-        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
+        <span>Settings</span> 
       </List>
 
-      <Divider />
+      <Divider /> */}
 
-      <List style={select}>
-        <b
-          style={{ float: "left", marginLeft: "10px" }}
-          onClick={() => {
-            setStates({ ...compState, copy: true });
-            navigator.clipboard.writeText(
-              state.loggedInUser.user.meta.beneficiaryId
-            );
-          }}
-        >
-          {" "}
-          {state.loggedInUser.user.meta.beneficiaryId} &nbsp;&nbsp;
-          {compState.copy == true ? (
-            <LibraryAddCheckOutlined style={selected} />
-          ) : (
-            <FileCopyOutlined />
-          )}
-        </b>
-
+      <List
+        onClick={() => {
+          setStates({ ...compState, copy: true });
+          navigator.clipboard.writeText(
+            // state.loggedInUser.user.meta.beneficiaryId
+            "hello"
+          );
+        }}
+        style={{ padding: "15px" }}
+      >
+        {compState.copy == true ? (
+          <LibraryAddCheckOutlined style={selected} />
+        ) : (
+          <FileCopyOutlined />
+        )}
+        &nbsp;&nbsp;
+        {state.loggedInUser.user.meta.beneficiaryId}
         <b
           style={{ float: "right", marginRight: "10px", color: "orange" }}
           onClick={() => {
@@ -303,22 +329,23 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
         >
           <ExitToAppOutlined />
         </b>
+      </List>
 
-        {/* <b
-          style={{ float: "right", marginRight: "10px", color: "crimson" }}
-          onClick={() => {
-            syncDB().then((res) => {
-              alert(res.message);
-            });
-          }}
-        >
-          <ExitToAppOutlined />
-        </b> */}
+      <Divider />
+
+      <List style={select}>
+        <div style={{fontSize:"11px",textAlign:"left",padding:"10px"}}>
+          Upgrade your account to be able to withdraw to your bank.
+        </div>
       </List>
     </Box>
   );
 
-  return (
+  return  state.loggedIn === false ? (
+    <div>
+      <Redirect to="/login" />
+    </div>
+  ) : (
     <div>
       {compState.loader === true && <> {cashbackloader()} </>}
       {console.log(checked)}
@@ -351,9 +378,11 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
             color: "white",
           }}
         >
-          <ListItemAvatar onClick={() => {
-            history.push("/")
-          }}>
+          <ListItemAvatar
+            onClick={() => {
+              history.push("/");
+            }}
+          >
             {/* <img alt="Aluta Meter" style={{width:"70px"}}  src={logo}/>  */}
             {/* <img alt="Aluta Meter" style={{ width: "60px" }} src={am} /> */}
             <div
@@ -375,15 +404,17 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
                   secondary="+99 new activities"
           /></b> */}
           <NotificationsActiveOutlined
-            onClick={() => { dispNoti(false); history.push("/notification")}}
+            onClick={() => {
+              dispNoti(false);
+              history.push("/notification");
+            }}
             className="menu"
             style={{
-              color: state.notification  === true ? "red" : "#0a3d62",
+              color: state.notification === true ? "red" : "#0a3d62",
               position: " absolute",
               right: "75px",
             }}
           />
-
           <MailOutlined
             onClick={() => {
               dispRequest(false);
@@ -391,10 +422,11 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
             }}
             className="menu"
             style={{
-              color: state.request  === true ? "red" : "#0a3d62",
+              color: state.request === true ? "red" : "#0a3d62",
               position: " absolute",
               right: "140px",
-            }}/>
+            }}
+          />
           <Dehaze
             style={{ color: "#0a3d62", position: " absolute", right: "10px" }}
             className="menu"
@@ -458,7 +490,7 @@ const mapDispatchToProps = (dispatch, encoded) => {
     log_out: () => dispatch(logOut()),
     login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
     dispNoti: (payload) => dispatch(disp_noti(payload)),
-     dispRequest: (bolean) => dispatch(disp_request(bolean)),
+    dispRequest: (bolean) => dispatch(disp_request(bolean)),
   };
 };
 

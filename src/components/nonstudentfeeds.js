@@ -527,8 +527,8 @@ function Home({ appState, login_suc }) {
               >
                 {" "}
                 <Toppills />
-                <Cashbacknav />
               </div>{" "}
+                <Cashbacknav />
               <div style={{ zIndex: "80000", background: " " }}>
                 {/* @======== START OF RESOLVE BLOCK */}
                 <div
@@ -565,7 +565,7 @@ function Home({ appState, login_suc }) {
                               {text_input(
                                 "Enter pin to cashback",
                                 value,
-                                "text",
+                                "number",
                                 setValue
                               )}
                               <br />
@@ -627,7 +627,7 @@ function Home({ appState, login_suc }) {
                 <div
                   style={{
                     width: "90%",
-                    height: "70px",
+                    height: "60px",
                     background: "white",
                     boxShadow: " 1px 1px 3px #888888",
                     border: "2px solid #f3f3f3",
@@ -653,9 +653,7 @@ function Home({ appState, login_suc }) {
                     <b>
                       {compState.wallethidden === false ? (
                         <>
-                          {" "}
-                          <b>
-                            {" "}
+                          <b style={{ fontSize: "15px", marginRight: "4px" }}>
                             NGN {state.loggedInUser.user.meta.buzzmewallet}
                           </b>{" "}
                           <VisibilityOffOutlined
@@ -665,19 +663,21 @@ function Home({ appState, login_suc }) {
                                 wallethidden: true,
                               });
                             }}
-                            style={{ fontSize: "25px", color: "#0a3d62" }}
+                            style={{ fontSize: "17px", color: "#0a3d62",float:"right" }}
                           />
                         </>
                       ) : (
                         <>
                           {clickToViewPwd === false && (
                             <>
-                              {" "}
+                               <b style={{ fontSize: "10px", marginRight: "4px",color:"gray" }}>
+                            ⚫ ⚫ ⚫ ⚫
+                          </b> 
                               <RemoveRedEye
                                 onClick={() => {
                                   setClickToViewPwd(true);
                                 }}
-                                style={{ fontSize: "25px", color: "#0a3d62" }}
+                                style={{ fontSize: "17px", color: "#0a3d62",float:" ",marginLeft:"20px" }}
                               />
                             </>
                           )}
@@ -731,26 +731,24 @@ function Home({ appState, login_suc }) {
                   >
                     <AccountBalanceWallet
                       style={{ margin: "5px", color: "#0a3d62" }}
-                    />
+                    /><span>Wallet balance</span>
 
                     <div
                       style={{
-                        // height: "70px",
+                        height: "30px",
                         background: " ",
                         textAlign: "center",
-                        marginTop: "5px",
-                        padding: "4px 0px",
+                        // marginTop: "5px",
+                        padding: "0px",
                       }}
-                    >
-                      <span>Wallet balance</span>
-                      <br />
+                    > 
 
                       {/* <b>{state.loggedInUser.user.meta.wallet}</b> */}
 
                       {compState.wallethidden === false ? (
                         <>
                           {" "}
-                          <b style={{ fontSize: " ", marginRight: "4px" }}>
+                          <b style={{ fontSize: "15px", marginRight: "4px" }}>
                             NGN {state.loggedInUser.user.meta.wallet}
                           </b>{" "}
                           <VisibilityOffOutlined
@@ -760,25 +758,41 @@ function Home({ appState, login_suc }) {
                                 wallethidden: true,
                               });
                             }}
-                            style={{ fontSize: "25px", color: "#0a3d62" }}
+                            style={{ fontSize: "17px", color: "#0a3d62",float:"right" }}
                           />
                         </>
                       ) : (
                         <>
                           {clickToViewPwd === false && (
-                            <>
-                              {" "}
+                                <>
+                                   <b style={{ fontSize: "10px", marginRight: "4px",color:"gray" }}>
+                            ⚫ ⚫ ⚫ ⚫
+                          </b> 
                               <RemoveRedEye
                                 onClick={() => {
                                   setClickToViewPwd(true);
                                 }}
-                                style={{ fontSize: "25px", color: "#0a3d62" }}
+                                style={{ fontSize: "17px", color: "#0a3d62",float:" ",marginLeft:"20px" }}
                               />
                             </>
                           )}
                         </>
                       )}
-                    </div>
+                      </div>
+                      
+                      <div
+                      style={{
+                        // height: "40px",
+                        background: "#0a3d62",
+                        textAlign: "center",
+                        marginTop: "5px",
+                          padding: "10px 0px",
+                          borderRadius: "30px 16px",
+                        color:"white"
+                      }}
+                      >
+                        Withdraw
+                      </div>
                   </div>
 
                   <div
@@ -831,24 +845,9 @@ function Home({ appState, login_suc }) {
                       </b>
                     </div>
                   </div>
-                </div>
-                {/* <div
-                  style={{
-                    width: "90%",
-                    background: "white",
-                    padding: "40px 20px",
-                    marginLeft: "5%",
-                    marginTop: "20px",
-                    borderRadius: "3px",
-                    boxShadow: " 1px 1px 3px #c1cfd9",
-                    backgroundImage:'linear-gradient(to right, #385b74,lightgray)',
-                  }}
-                          >
-                             <AttachMoneyOutlined style={{ color: "white", position: "absolute", top: "10px", left: "10px", fontSize: "30px" }} />
-                              <b style={{fontSize:"20px"}}>
-                                Generate Cashback token
-                             </b>
-                </div> */}
+                  </div>
+                  
+
                 <Cashbackdrawal />
 
                 {/* @========      */}
