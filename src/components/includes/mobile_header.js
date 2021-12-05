@@ -363,7 +363,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
               fontSize: "14px",
             }}
           >
-            You are currently offline &nbsp;{" "}
+            You are currently offline. &nbsp;{" "}
             <SignalCellularConnectedNoInternet1BarOutlined />
           </div>
         )}
