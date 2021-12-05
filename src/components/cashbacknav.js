@@ -4,9 +4,7 @@ import { connect } from "react-redux";
 import "../static/css/home/index.css";
 
 import Header from "../components/includes/mobile_header.js";
-import { 
-  HistoryOutlined,
-} from "@material-ui/icons";
+import { HistoryOutlined } from "@material-ui/icons";
 
 import {
   Person,
@@ -22,7 +20,7 @@ import {
 
 import { confirmCashbackCreation } from "../functions/workers_functions/cashback"; // CASHBACK CONTROLLER
 import { Drawer, Divider } from "@mui/material";
-import Accountsummery from "../components/ccountsummary"
+import Accountsummery from "../components/ccountsummary";
 import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
 import { add_wallet, logOut, loginSuc } from "../redux";
@@ -38,19 +36,18 @@ import {
   handleChashbackGeneration,
   handleVerifyToken,
   settleCashbackToWallet,
-} from "../functions/controllers/cashback"; // CASHBACK TOKEN CONTROLLER 
-import  {pinConfirmPop} from "../components/confirmPin"
+} from "../functions/controllers/cashback"; // CASHBACK TOKEN CONTROLLER
+import { pinConfirmPop } from "../components/confirmPin";
 
 // @======== ALLL BUZZME CONTROLLER
-import {getAllBuzz} from "../functions/controllers/allbuzzme"
+import { getAllBuzz } from "../functions/controllers/allbuzzme";
 function Home({ appState, login_suc }) {
   let history = useHistory();
   const state = appState;
-  let userId =""
+  let userId = "";
   if (state.loggedIn === true) {
-    userId = state.loggedInUser.user.id
+    userId = state.loggedInUser.user.id;
   }
-
 
   const [compState, setStates] = useState({
     data: [],
@@ -60,7 +57,7 @@ function Home({ appState, login_suc }) {
     wallethidden: true,
     confirmpwderror: null,
     confirmpwderrormsg: "",
-    error:null
+    error: null,
   });
   const [value, setValue] = useState(null); //TOKEN TO BE VERIFIED
   const [verifyPayload, setVerifypayload] = useState({
@@ -70,8 +67,8 @@ function Home({ appState, login_suc }) {
 
   const [buzzState, setBuzzState] = useState({
     leading: false,
-    data:[]
-  })
+    data: [],
+  });
 
   const [tokenamount, setTokenamount] = useState(""); // amount to be generated
   const [cashbackpinresolved, setcashbackpinresolved] = useState(false); // state to control resolving cashback
@@ -82,9 +79,9 @@ function Home({ appState, login_suc }) {
   const [resolved, setResolved] = useState(null); // return true if the cashback has been resolved to the
   const [pwd, setPwd] = useState(""); // set password requird to view balance
   const [clickToViewPwd, setClickToViewPwd] = useState(false);
-  const [resolvedVerifyPin, setResolvedPinVerification] = useState(false)
+  const [resolvedVerifyPin, setResolvedPinVerification] = useState(false);
 
-  const [movebuzzResolved, setmovebuzzResolved] = useState(false)
+  const [movebuzzResolved, setmovebuzzResolved] = useState(false);
 
   // @========  FUNCTION TO VERIFY pin AND SHOW balance
   const showPwd = () => {
@@ -97,7 +94,7 @@ function Home({ appState, login_suc }) {
       });
       setPwd("");
     } else {
-      console.log("true"); 
+      console.log("true");
       setClickToViewPwd(false);
       setStates({
         ...compState,
@@ -108,25 +105,32 @@ function Home({ appState, login_suc }) {
       setPwd("");
       // @==== if the action was to move buzzme balance to wallet
       if (resolvedVerifyPin === true) {
-        moveBuzzmeFunds(state.loggedInUser, compState, setStates, login_suc,setmovebuzzResolved).then(res => {
+        moveBuzzmeFunds(
+          state.loggedInUser,
+          compState,
+          setStates,
+          login_suc,
+          setmovebuzzResolved
+        ).then((res) => {
           if (res === true) {
             setStates({
-               ...compState, error:false
-             })
+              ...compState,
+              error: false,
+            });
           }
           // else {
           //   setStates({
           //      ...compState, error:true
           //    })
           //  }
-         })
+        });
       }
     }
   };
 
   const closePwd = () => {
     setClickToViewPwd(false);
-    setResolvedPinVerification(false)
+    setResolvedPinVerification(false);
     setStates({
       ...compState,
       confirmpwderrormsg: "",
@@ -140,8 +144,8 @@ function Home({ appState, login_suc }) {
 
   // ===   function to move Buzz me balance to wallet
   function moveBuzzmeBalance() {
-    setClickToViewPwd(true)
-    setResolvedPinVerification(true)
+    setClickToViewPwd(true);
+    setResolvedPinVerification(true);
   }
 
   // @======== GET AMOUNT TO BE DEDUCTED
@@ -185,9 +189,9 @@ function Home({ appState, login_suc }) {
   // @======== close success pop
   const closeSuccessPop = () => {
     setResolved(false);
-    setmovebuzzResolved(false)
-    setResolvedPinVerification(false)
-  }; 
+    setmovebuzzResolved(false);
+    setResolvedPinVerification(false);
+  };
 
   const [drawerState, setDrawerState] = React.useState({
     bottom: false,
@@ -212,16 +216,13 @@ function Home({ appState, login_suc }) {
   };
 
   React.useEffect(() => {
-    getAllBuzz(userId,buzzState,setBuzzState)
+    getAllBuzz(userId, buzzState, setBuzzState);
     window.scrollTo(0, 0);
     setStates({
       ...compState,
       loading: false,
       wallethidden: true,
     });
-
-
-
   }, []);
 
   const clearError = () => {
@@ -289,10 +290,10 @@ function Home({ appState, login_suc }) {
     // setInitiateCreate(false);
     // setGeneratedcode(true);
   };
-   
-   const closeDrawer = ()=>{
-      toggleDrawer("bottom", false)
-   }
+
+  const closeDrawer = () => {
+    toggleDrawer("bottom", false);
+  };
 
   // @======== CREATE TOKEN INTERFACE
   const createCashback = () => {
@@ -381,7 +382,7 @@ function Home({ appState, login_suc }) {
                           handleGeneratecashback();
                         }}
                       >
-                        {btn_primary("Generate",closeDrawer)}
+                        {btn_primary("Generate", closeDrawer)}
                       </span>
                     </div>{" "}
                     <br />{" "}
@@ -436,7 +437,21 @@ function Home({ appState, login_suc }) {
     </div>
   ) : (
     <div id="body bg">
-      {clickToViewPwd === true && <> {pinConfirmPop(compState, pwd, setPwd,closePwd,showPwd,text_input,btn_danger,btn_primary)} </>}
+      {clickToViewPwd === true && (
+        <>
+          {" "}
+          {pinConfirmPop(
+            compState,
+            pwd,
+            setPwd,
+            closePwd,
+            showPwd,
+            text_input,
+            btn_danger,
+            btn_primary
+          )}{" "}
+        </>
+      )}
       {state.loggedInUser.user.meta.schoolmode === true && history.push("/")}
       {console.log(state)}
       {console.log(verifyPayload)}
@@ -454,8 +469,8 @@ function Home({ appState, login_suc }) {
         </>
       )}
 
-        {/* @======== WHEN USER SUCCESSFULLY MOVE BUZZ ME BALANCE TO WALLET */}
-        {movebuzzResolved === true && (
+      {/* @======== WHEN USER SUCCESSFULLY MOVE BUZZ ME BALANCE TO WALLET */}
+      {movebuzzResolved === true && (
         <>
           {" "}
           {successComponent(
@@ -464,7 +479,6 @@ function Home({ appState, login_suc }) {
           )}{" "}
         </>
       )}
-
 
       {compState.loading === true && <> {cashbackloader()}</>}
       {compState.error === true && (
@@ -486,39 +500,39 @@ function Home({ appState, login_suc }) {
             )}{" "}
           </>
         )}
-        <div className="mobile">  
+        <div className="mobile">
           <div>
-            <div> 
-              <div style={{ zIndex: "80000", background: " " }}> 
+            <div>
+              <div style={{ zIndex: "80000", background: " " }}>
                 <span
-              onClick={toggleDrawer("bottom", true)}
-              style={{
-                marginLeft: "15px",
-                fontSize: "11px",
-                color: "#0a3d62",
-                textDecoration: "none",
-              }}
-            >
-              Create Cashback
-              <ArrowRightOutlined
-                style={{ marginLeft: "-4px", fontSize: "30px" }}
-              />
-            </span>
-            <Link
-              to="history"
-              style={{
-                marginLeft: "-5px",
-                fontSize: "11px",
-                color: "#0a3d62",
-                textDecoration: "none",
-              }}
-            >
-              Summary
-              <ArrowRightOutlined
-                style={{ marginLeft: "-8px", fontSize: "30px" }}
-              />
-            </Link>{" "}
-            <Link
+                  onClick={toggleDrawer("bottom", true)}
+                  style={{
+                    marginLeft: "15px",
+                    fontSize: "11px",
+                    color: "#0a3d62",
+                    textDecoration: "none",
+                  }}
+                >
+                  Create Cashback
+                  <ArrowRightOutlined
+                    style={{ marginLeft: "-4px", fontSize: "30px" }}
+                  />
+                </span>
+                <Link
+                  to="history"
+                  style={{
+                    marginLeft: "5px",
+                    fontSize: "11px",
+                    color: "#0a3d62",
+                    textDecoration: "none",
+                  }}
+                >
+                  Summary
+                  <ArrowRightOutlined
+                    style={{ marginLeft: "-8px", fontSize: "30px" }}
+                  />
+                </Link>{" "}
+                {/* <Link
               to="updateprofile"
               style={{
                 marginLeft: "-5px",
@@ -531,22 +545,24 @@ function Home({ appState, login_suc }) {
               <ArrowRightOutlined
                 style={{ marginLeft: "-8px", fontSize: "30px" }}
               />
-            </Link>{" "}
-            <Link
-              to="updateprofile"
-              style={{
-                marginLeft: "-5px",
-                fontSize: "11px",
-                color: "#0a3d62",
-                textDecoration: "none",
-              }}
-            >
-              Bank Deposite
-              <ArrowRightOutlined
-                style={{ marginLeft: "-8px", fontSize: "30px" }}
-              />
-            </Link>{" "}
-
+            </Link>{" "} */}
+                <Link
+                  onClick={() => {
+                    alert("To be completed");
+                  }}
+                  to=""
+                  style={{
+                    marginLeft: "5px",
+                    fontSize: "11px",
+                    color: "#0a3d62",
+                    textDecoration: "none",
+                  }}
+                >
+                  Bank Deposite
+                  <ArrowRightOutlined
+                    style={{ marginLeft: "-8px", fontSize: "30px" }}
+                  />
+                </Link>{" "}
               </div>
             </div>
           </div>
@@ -560,7 +576,7 @@ function Home({ appState, login_suc }) {
           >
             {createCashback("bottom")}
           </Drawer>
-        </React.Fragment> 
+        </React.Fragment>
       </>
     </div>
   );

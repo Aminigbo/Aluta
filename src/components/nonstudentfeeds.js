@@ -630,7 +630,7 @@ function Home({ appState, login_suc }) {
                     height: "60px",
                     background: "white",
                     boxShadow: " 1px 1px 3px #888888",
-                    border: "2px solid #f3f3f3",
+                    // border: "2px solid #f3f3f3",
                     marginBottom: "20px",
                     marginTop: "20px",
                     marginLeft: "5%",
@@ -691,7 +691,7 @@ function Home({ appState, login_suc }) {
                       moveBuzzmeBalance();
                     }}
                     style={{
-                      height: "100%",
+                      // height: "100%",
                       background: " #0a3d62",
                       textAlign: "center",
                       display: "inline-block",
@@ -700,7 +700,7 @@ function Home({ appState, login_suc }) {
                       width: "45%",
                       right: "0px",
                       color: "white",
-                      borderRadius: "30px 16px",
+                      // borderRadius: "30px 16px",
                       fontSize: "15px",
                     }}
                   >
@@ -715,8 +715,9 @@ function Home({ appState, login_suc }) {
                     background: "",
                     padding: "",
                     marginLeft: "5%",
-                    marginTop: "20px",
-                    borderRadius: "3px",
+                    marginTop: "25px",
+                      borderRadius: "3px",
+                    marginBottom:"25px"
                   }}
                 >
                   <div
@@ -726,7 +727,8 @@ function Home({ appState, login_suc }) {
                       background: "white",
                       display: "inline-block",
                       boxShadow: " 1px 1px 3px #888888",
-                      border: "2px solid #f3f3f3",
+                        border: "2px solid #f3f3f3",
+                      position:"relative"
                     }}
                   >
                     <AccountBalanceWallet
@@ -781,14 +783,21 @@ function Home({ appState, login_suc }) {
                       </div>
                       
                       <div
+                        onClick={() => {
+                          alert("To be completed")
+                        }}
                       style={{
                         // height: "40px",
                         background: "#0a3d62",
                         textAlign: "center",
                         marginTop: "5px",
-                          padding: "10px 0px",
+                          padding: "3px 0px",
                           borderRadius: "30px 16px",
-                        color:"white"
+                          color: "white",
+                          position: "absolute",
+                          bottom: "0px",
+                          width: "100%",
+                        left:"0px"
                       }}
                       >
                         Withdraw
@@ -803,10 +812,12 @@ function Home({ appState, login_suc }) {
                       display: "inline-block",
                       float: "right",
                       boxShadow: " 1px 1px 3px #888888",
-                      border: "2px solid #f3f3f3",
+                        border: "2px solid #f3f3f3",
+                      position:"relative"
                     }}
                   >
-                    <FiberPin style={{ margin: "5px", color: "#0a3d62" }} />
+                      <FiberPin style={{ margin: "5px", color: "#0a3d62" }} />
+                      &nbsp;<span>Buzz ID</span>
                     <div
                       onClick={() => {
                         setStates({
@@ -826,11 +837,42 @@ function Home({ appState, login_suc }) {
                         marginTop: "5px",
                         padding: "4px 0px",
                       }}
-                    >
-                      <span>Buzz ID</span> <br />
+                    > 
                       <b>
                         {state.loggedInUser.user.meta.beneficiaryId}{" "}
-                        {compState.copy == true ? (
+                       
+                      </b>
+                      </div>
+                      
+                      <div
+                        onClick={() => {
+                        setStates({
+                          ...compState,
+                          copy: true,
+                        });
+                        if (navigator && navigator.clipboard) {
+                          navigator.clipboard.writeText(
+                            state.loggedInUser.user.meta.beneficiaryId
+                          );
+                        }
+                      }}
+                      style={{
+                        // height: "40px",
+                        background: " #f3f3f3",
+                        textAlign: "center",
+                        marginTop: "5px",
+                          padding: "3px 0px",
+                          // borderRadius: "30px 16px",
+                          color: "#0a3d62",
+                          position: "absolute",
+                          bottom: "0px",
+                        width: "100%",
+                           fontSize: "16px",
+                        left:"0px"
+                      }}
+                      >
+                        copy &nbsp;&nbsp;
+                         {compState.copy == true ? (
                           <LibraryAddCheckOutlined
                             style={{
                               fontSize: "24px",
@@ -842,8 +884,8 @@ function Home({ appState, login_suc }) {
                             style={{ fontSize: "24px", color: "orange" }}
                           />
                         )}{" "}
-                      </b>
-                    </div>
+                      </div>
+
                   </div>
                   </div>
                   

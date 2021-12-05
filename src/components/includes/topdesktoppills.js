@@ -23,6 +23,7 @@ import {
   StorefrontOutlined,
   AssignmentReturnedOutlined,
   NotificationsActiveOutlined,
+  AccountBalanceWallet
 } from "@material-ui/icons";
 
 // strong tin.mp3
@@ -449,10 +450,12 @@ function Desktopright({
             </span>
             <p className="top-nav-pills-title">Post</p>
           </div>
-        ) : (
+        )
+          : (
           <div
             onClick={() => {
-              history.push("/listmart");
+              // history.push("/listmart");
+                alert("To be completed")
             }}
             className="top-nav-pills-holder"
           >
@@ -465,11 +468,14 @@ function Desktopright({
               // nonstudentfeed
             >
               {" "}
-              <StorefrontOutlined />{" "}
+              {/* <StorefrontOutlined />{" "} */}
+
+                <AccountBalanceWallet />
             </span>
-            <p className="top-nav-pills-title">Market</p>
+            <p className="top-nav-pills-title">Add cash</p>
           </div>
-        )}
+          )
+        }
       </div>
     </>
   );
