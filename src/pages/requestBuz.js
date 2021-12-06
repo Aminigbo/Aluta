@@ -27,6 +27,8 @@ import makeAnimated from "react-select/animated";
 // @=== import success response from worker function
 import { alert } from "../functions/workers_functions/alert";
 import { handleCreateRequest } from "../functions/controllers/requestbuz";
+
+import {buzz_request} from "../functions/workers_functions/notifications"
 const rec_inputs = {
   margin: "5%",
   width: "90%",
@@ -74,7 +76,7 @@ let modal_footer2_btn_holder = {
   marginBottom: "10px",
   // backgroundColor: '#f3f3f3',
   width: "100%",
-  opacity:"70000"
+  opacity: "70000",
 };
 
 const paymentTitle = {
@@ -119,7 +121,7 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
   const state = appState;
   const new_supabase = supabase();
   const loggedInUserSchool = state.loggedInUser.user.meta.school;
-  const { fullname, email, phone,id } = state.loggedInUser.user;
+  const { fullname, email, phone, id } = state.loggedInUser.user;
   const userId = state.loggedInUser.meta.user.id;
 
   const [compState, setStates] = useState({
@@ -136,7 +138,7 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
     // setStates({ ...compState, loader: true });
     // setTimeout(() => setStates({ ...compState, loader: false }), 500);
     let filterOpt = [];
-    fetchUsersOfUniversity(loggedInUserSchool,id)
+    fetchUsersOfUniversity(loggedInUserSchool, id)
       .then((res) => {
         res.body.map((resp) => {
           let prepared = {
@@ -144,7 +146,7 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
             label: resp.fullname,
             email: resp.email,
             phone: resp.phone,
-            id:resp.id
+            id: resp.id,
           };
           filterOpt.push(prepared);
         });
@@ -200,7 +202,7 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
           setStates({
             ...compState,
             loader: false,
-            alertMsg: "Please give a clear reason for your request",
+            alertMsg: "please give a clear reason for your request",
           });
         } else {
           let postPrivacy = "";
@@ -260,7 +262,27 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
           }, 1000);
           handleCreateRequest(postBody, state, loadFeeds, disp_draft).then(
             (res) => {
+              console.log(sendTo);
               if (res.success == true) {
+                let sendToPhones = [];
+                for (let i = 0; i < sendTo.length; i++) {
+                  sendToPhones.push(`+234${sendTo[i].phone.substring(1, 11)}`);
+                }
+                let desc = ""
+                if (reason.length > 40) {
+                  desc = reason.substring(0, 36)+"...."
+                } else {
+                  desc = reason
+                }
+                let smsPayload = {
+                  phones: sendToPhones, // array[]
+                  sender: fullname,
+                  amount: amount,
+                  desc,
+                };
+                console.log(smsPayload)
+                buzz_request(smsPayload) //call sms function
+
                 document.getElementById("progressBar").value = 100;
                 setStateAlert(true);
                 setStates({
@@ -350,7 +372,7 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
             {/* <div className="explore desktop"><span>Explore</span>  <span className="logout" onClick={()=>{logout()}}>Logout</span>  </div> */}
 
             <div animateIn="fadeIn">
-              <div className=""  >
+              <div className="">
                 {compState.loader === true && (
                   <progress
                     style={{
@@ -364,23 +386,26 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
                   ></progress>
                 )}
 
-                <div className="paypanel" style={{
-                  width: "90%",
-                  background: "white",
-                  padding: "10px",
-                  // marginLeft: "5%",
-                  marginTop: "20px",
-                  // borderRadius: "40px 40px 2px 3px",
-                  boxShadow: " 1px 1px 3px #888888",
-                  border: "0.5px solid #f3f3f3",
-                }}>
+                <div
+                  className="paypanel"
+                  style={{
+                    width: "90%",
+                    background: "white",
+                    padding: "10px",
+                    // marginLeft: "5%",
+                    marginTop: "20px",
+                    // borderRadius: "40px 40px 2px 3px",
+                    boxShadow: " 1px 1px 3px #888888",
+                    border: "0.5px solid #f3f3f3",
+                  }}
+                >
                   <div style={paymentTitle}>
                     <p>Request Buz</p>
                   </div>
                   {/* <SecurityOutlined style={secured}/>  */}
 
-                    <input
-                      type="number"
+                  <input
+                    type="number"
                     onChange={(e) => {
                       setAMOUNT(e.target.value);
                     }}

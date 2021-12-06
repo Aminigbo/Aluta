@@ -238,8 +238,8 @@ function Desktopright({
       .on("INSERT", (payload) => {
         if (payload.new.to == userId) {
           dispNoti(true);
-          var audio = new Audio(mp3);
-          audio.play();
+          // var audio = new Audio(mp3);
+          // audio.play();
         }
       })
       .subscribe();

@@ -1,5 +1,6 @@
 var axios = require("axios");
 const url = "http://localhost:1100/api/v1/notifications/";
+// const url = "https://buzz-servre.herokuapp.com/api/v1/notifications/"
 
 // @======== Send OTP
 export function send_otp(payload) {

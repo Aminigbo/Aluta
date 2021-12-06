@@ -18,7 +18,7 @@ import Toppills from "../components/includes/topdesktoppills";
 
 // @=== import success response from worker function
 import { alert } from "../functions/workers_functions/alert";
-
+import { send_buzz_alert } from "../functions/workers_functions/notifications";
 const rec_inputs = {
   margin: "5%",
   width: "90%",
@@ -133,7 +133,7 @@ function Home({ appState, login_suc, logout }) {
 
         new_supabase
           .from("users")
-          .select("*",)
+          .select("*")
           // .eq("beneficiaryId", beneficiary)
           .contains("meta", { beneficiaryId: beneficiary })
           .then((resolve) => {
@@ -249,6 +249,7 @@ function Home({ appState, login_suc, logout }) {
               fullname: state.loggedInUser.user.fullname,
               beneficiaryID: state.loggedInUser.user.meta.beneficiaryID,
               id: state.loggedInUser.user.id,
+              phone: state.loggedInUser.user.phone,
             },
             reciever: {
               Fullname: compState.benef,
@@ -299,10 +300,19 @@ function Home({ appState, login_suc, logout }) {
                             from: meta.sender.id,
                             to: meta.reciever.id,
                             meta: meta,
-                            type:"BUZZ ALERT"
+                            type: "BUZZ ALERT",
                           },
                         ])
-                        .then((resX) => {
+                        .then((resX) => { 
+                          let smsPayload = {
+                            phone: [`+234${resX.body[0].meta.reciever.beneficiaryID}`],
+                            sender:resX.body[0].meta.sender.fullname,
+                            amount: resX.body[0].meta.data.amount,
+                            desc: resX.body[0].meta.data.desc,
+                            balance: state.loggedInUser.user.meta.wallet,
+                          };
+                          send_buzz_alert(smsPayload);
+                          console.log(smsPayload);
                           login_suc(newUserData);
                           setStateAlert(true);
                           setStates({
@@ -412,8 +422,8 @@ function Home({ appState, login_suc, logout }) {
                   </div>
                   {/* <SecurityOutlined style={secured}/>  */}
 
-                    <input
-                      type="number"
+                  <input
+                    type="number"
                     onKeyUp={() => {
                       clearBeneficiary();
                     }}
@@ -421,14 +431,14 @@ function Home({ appState, login_suc, logout }) {
                       setAMOUNT(e.target.value);
                     }}
                     value={amount}
-                      style={rec_inputs}
-                      type="number"
+                    style={rec_inputs}
+                    type="number"
                     placeholder=" Enter Amount to Buzz"
                   />
 
                   <br />
-                    <input
-                      type="number"
+                  <input
+                    type="number"
                     id="beneficiary"
                     onChange={(e) => {
                       setbeneficiary(e.target.value);

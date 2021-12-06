@@ -307,10 +307,11 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
       <List
         onClick={() => {
           setStates({ ...compState, copy: true });
-          navigator.clipboard.writeText(
-            // state.loggedInUser.user.meta.beneficiaryId
-            "hello"
+          if (navigator && navigator.clipboard && state.loggedIn === true) {
+            navigator.clipboard.writeText(
+            state.loggedInUser.user.meta.beneficiaryId 
           );
+          } 
         }}
         style={{ padding: "15px" }}
       >

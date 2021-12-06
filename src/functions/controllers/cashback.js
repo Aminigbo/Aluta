@@ -279,10 +279,11 @@ export async function settleCashbackToWallet(
 
                 // @== ALERT PAYLOAD
                 let alertPayload = {
-                  phone1: `+234${to.phone.substring(1, 11)}`,  // who resolved
-                  phone2: `+234${ res2.body[0].meta.phone.substring(1, 11)}`, // who created
+                  phone1: [`+234${to.phone.substring(1, 11)}`],  // who resolved
+                  phone2: [`+234${ res2.body[0].meta.phone.substring(1, 11)}`], // who created
                   amount: res2.body[0].meta.amount,
                   name: to.fullname,
+                  name2:state.user.fullname,
                   bal1: to.wallet,  // who resolve
                   bal2: res2.body[0].meta.user.newUser.wallet,  // who created
                 };
