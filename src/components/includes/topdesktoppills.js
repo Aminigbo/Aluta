@@ -23,8 +23,10 @@ import {
   StorefrontOutlined,
   AssignmentReturnedOutlined,
   NotificationsActiveOutlined,
-  AccountBalanceWallet
+  AccountBalanceWallet,
 } from "@material-ui/icons";
+
+import { Drawer, Divider } from "@mui/material";
 
 // strong tin.mp3
 import mp3 from "../../static/audio/Doorbell.mp3";
@@ -202,32 +204,32 @@ function Desktopright({
         const response = payload.new;
         if (response.beneficiaryId == beneficiaryId) {
           let myNewWallet =
-          parseInt(state.wallet) +
-          parseInt(response.meta.giveawayData.userGets);
-        console.log(response);
+            parseInt(state.wallet) +
+            parseInt(response.meta.giveawayData.userGets);
+          console.log(response);
 
-        // addwallet(myNewWallet)
-        let load = {
-          meta: {
-            data: {
-              amount: response.meta.giveawayData.userGets,
-              desc:
-                "You are one of the beneficiaries of " +
-                response.giver.name +
-                "'s give away. Cheers ",
+          // addwallet(myNewWallet)
+          let load = {
+            meta: {
+              data: {
+                amount: response.meta.giveawayData.userGets,
+                desc:
+                  "You are one of the beneficiaries of " +
+                  response.giver.name +
+                  "'s give away. Cheers ",
+              },
+              sender: { fullname: response.giver.name },
             },
-            sender: { fullname: response.giver.name },
-          },
-        };
-        window.navigator.vibrate([2000, 100, 2000]);
-        var audio = new Audio(mp3);
-        audio.play();
-        setStates({
-          ...compState,
-          payload: load,
-          myNewWallet,
-        });
-        setStateAlert("buzAlert");
+          };
+          window.navigator.vibrate([2000, 100, 2000]);
+          var audio = new Audio(mp3);
+          audio.play();
+          setStates({
+            ...compState,
+            payload: load,
+            myNewWallet,
+          });
+          setStateAlert("buzAlert");
         }
       })
       .subscribe();
@@ -293,6 +295,23 @@ function Desktopright({
   } else {
     allow = false;
   }
+
+  const [drawerState, setDrawerState] = React.useState({
+    bottom: false,
+  });
+
+  const toggleDrawer = (anchor, open, post) => (event) => {
+    // console.log("okk");
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setDrawerState({ ...drawerState, [anchor]: open });
+  };
+
   return (
     <>
       {allow === false && (
@@ -450,13 +469,9 @@ function Desktopright({
             </span>
             <p className="top-nav-pills-title">Post</p>
           </div>
-        )
-          : (
+        ) : (
           <div
-            onClick={() => {
-              // history.push("/listmart");
-                alert("To be completed")
-            }}
+            onClick={toggleDrawer("bottom", true)}
             className="top-nav-pills-holder"
           >
             <span
@@ -469,14 +484,32 @@ function Desktopright({
             >
               {" "}
               {/* <StorefrontOutlined />{" "} */}
-
-                <AccountBalanceWallet />
+              <AccountBalanceWallet />
             </span>
             <p className="top-nav-pills-title">Add cash</p>
           </div>
-          )
-        }
+        )}
       </div>
+
+      <React.Fragment key="bottom">
+        <Drawer
+          anchor="bottom"
+          open={drawerState["bottom"]}
+          onClose={toggleDrawer("bottom", false, false)}
+        >
+          <div style={{ height: "200px", background: " ",padding:"15px",
+          textAlign:"center" }}>
+            {/* <div>Enter amount to top up</div>
+            */}
+            <br />
+            <div style={{padding:"10px 0px"}}>
+              <input placeholder="Enter top up amount" type="number" style={{ padding: "5px", outline: "none", width: "180px", border: "none", borderBottom: "0.5px solid lightgray",textAlign:"center" }} /> <br /><br />
+              <input type='button' value="Continue" style={{ padding: "5px", outline: "none", width: "180px", border: "none", background: "#0a3d62", color: "white", borderRadius: "6px" }}
+                onClick={toggleDrawer("bottom", false)} />
+            </div>
+          </div>
+        </Drawer>
+      </React.Fragment>
     </>
   );
 }

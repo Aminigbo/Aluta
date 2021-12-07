@@ -18,7 +18,7 @@ export function confirmCashbackCreation(
            <b> Confirm Cashback Generation</b> 
           </div>
           <div className="realtimeBody" style={{ color: "gray" }}>
-            You are about to generation a cashback of {amount} which will be deducted from your wallet.
+            You are about to generate a cashback of {amount} which will be deducted from your wallet.
             <br /> <br />
             <div style={{textAlign:"left "}}>
               

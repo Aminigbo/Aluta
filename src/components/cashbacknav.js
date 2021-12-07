@@ -558,7 +558,7 @@ function Home({ appState, login_suc }) {
                     textDecoration: "none",
                   }}
                 >
-                  Bank Deposite
+                  Bank withdrawal
                   <ArrowRightOutlined
                     style={{ marginLeft: "-8px", fontSize: "30px" }}
                   />
