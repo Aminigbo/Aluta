@@ -172,7 +172,9 @@ function Home({ appState, login_suc, logout,set_session }) {
     }
   };
 
-  React.useEffect(() => {}, []);
+   React.useEffect(() => {
+      set_session(new Date().getTime())
+  }, []);
 
   const buttons = () => {
     let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, "out", "0", "clear"];
@@ -236,8 +238,7 @@ function Home({ appState, login_suc, logout,set_session }) {
   ) : (
     <div id="body bg">
       <>
-        {pin == "validated" && <> {cashbackloader()}</>}
-
+        {pin == "validated" && <> {cashbackloader()}</>} 
         <div
           style={{
             position: "fixed",
@@ -268,7 +269,8 @@ function Home({ appState, login_suc, logout,set_session }) {
                 textAlign: "center",
               }}
             >
-              <b style={{ fontSize: "50px" }}>🔐</b>
+              <b style={{ fontSize: "50px" }}>🔐</b> <br />
+              <span>Reauthenticate</span>
             </div>
             <div
               style={{
