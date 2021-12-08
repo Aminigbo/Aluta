@@ -1,4 +1,4 @@
-export const checkSession = (logout, set_session, state) => {
+export const checkSession = (logout, set_session, state, refresh) => {
   function msToTime(ms) {
     let seconds = (ms / 1000).toFixed(1);
     let minutes = (ms / (1000 * 60)).toFixed(1);
@@ -11,43 +11,35 @@ export const checkSession = (logout, set_session, state) => {
   }
   // < -1005
 
-  let timeDiff = msToTime(state.session - new Date().getTime()); 
+   let timeDiff = msToTime(state.session - new Date().getTime());
+   
+  if (timeDiff < -500) {
+    logout();
+    set_session(9999999999999);
+    console.log("logout");
+  } else {
+    set_session(new Date().getTime());
+  }
 
-if (timeDiff < -200) {
-      logout();
-      set_session(new Date().getTime());
-     //  console.log("logout");
-    } 
+     const check = () => {
 
-  
-   const check = () => {
-    
-    let delaysecond = "";
-    delaysecond = 0;
-    var timeleft = delaysecond;
-      var downloadTimer = setInterval(function () { 
-      if (timeleft > 20) {
-        clearInterval(downloadTimer);
-         set_session(new Date().getTime())
-         logout()
-      } else {
-        if (state.loggedIn == false) {
-          clearInterval(downloadTimer);
-        } else {
-           
-         }
-         set_session(new Date().getTime())
-         timeleft += 1;
-         console.log(timeleft)
-      }
-    }, 1000);
-  };
+      let delaysecond = "";
+      delaysecond = 0;
+      var timeleft = delaysecond;
+        var downloadTimer = setInterval(function () {
+        if (state.session  == 9999999999999) {
+          clearInterval(downloadTimer); 
+        } else {  
+           timeleft += 1;
+           console.log(timeleft)
+           console.log(timeDiff)
+        }
+      }, 1000);
+    };
 
-   setTimeout(() => check(), 10000);
+     setTimeout(() => check(), 10000);
 
   //  setInterval(() => check(), 1000);
-
-    
 
   return;
 };
