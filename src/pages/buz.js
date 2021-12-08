@@ -391,7 +391,7 @@ function Home({ appState, login_suc, logout }) {
               {" "}
               <Toppills />
             </div>
-            {console.log(compState)}
+            {/* {console.log(compState)} */}
 
             {/* <div className="explore desktop"><span>Explore</span>  <span className="logout" onClick={()=>{logout()}}>Logout</span>  </div> */}
 

@@ -5,7 +5,7 @@ export async function getAllBuzz(userId, buzState, setBuzState) {
     loading: true,
   });
   allBuzMe(userId).then((res) => {
-    console.log(res)
+    // console.log(res)
     if(res.body !== null){
        if (res.body.length > 0) {
       let recieved = res.body.filter((e) => e.to == userId);

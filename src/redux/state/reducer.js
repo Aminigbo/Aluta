@@ -101,7 +101,7 @@ const reducer = (state = initialState, action) => {
          wallet: 0, 
          refresh: [],
          loading: false, 
-         session: -0.1, 
+         session:0, 
          
          // admin withdrawal request noti
          withdrawal_request_noti:[]

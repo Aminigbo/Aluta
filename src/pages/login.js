@@ -131,6 +131,7 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
                     };
                     walletAdd(data.user.meta.wallet);
                     login_suc(data);
+                    set_session(new Date().getTime())
                   }
                 });
             }
@@ -279,7 +280,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, encoded) => {
-  return {
+  return { 
     login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
     walletAdd: (wallet) => dispatch(add_wallet(wallet)),
     set_session: (time) => dispatch(disp_session(time)),

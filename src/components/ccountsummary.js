@@ -109,7 +109,7 @@ function Home({ appState }) {
               <small style={{ fontSize: "11px" }}>Fetching.....</small>
             ) : (
                   <>
-                    {console.log(cashbackstate)}
+                    {/* {console.log(cashbackstate)} */}
                   <b style={{fontSize:"12px"}}>NGN {cashbackstate.data.from} </b>{" "}
               </>
             )}

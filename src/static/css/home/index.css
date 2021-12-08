@@ -8,6 +8,10 @@ progress::-webkit-progress-value { background: #0a3d62; }
 progress { color: #0a3d62; }
 
 
+.customInput:active{
+   background-color: #0a3d62;
+   color:white
+}
 
 .div{
    width:100%;

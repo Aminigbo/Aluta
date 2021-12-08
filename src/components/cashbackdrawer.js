@@ -453,8 +453,8 @@ function Home({ appState, login_suc }) {
         </>
       )}
       {state.loggedInUser.user.meta.schoolmode === true && history.push("/")}
-      {console.log(state)}
-      {console.log(verifyPayload)}
+      {/* {console.log(state)}
+      {console.log(verifyPayload)} */}
       {/* IF TOKEN VERIFICATION TURNS ERROR */}
       {verifyPayload.success === false && <> </>}
 

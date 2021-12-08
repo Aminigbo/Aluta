@@ -13,7 +13,8 @@ import {
   Backspace,
   InputOutlined,
   Lock,
-  LockOpenOutlined
+  LockOpenOutlined,
+  KeyboardBackspace
 } from "@material-ui/icons";
 
 import { Drawer, Divider, alertTitleClasses } from "@mui/material";
@@ -141,8 +142,8 @@ function Home({ appState, login_suc }) {
   };
 
   const [pin, setPin] = useState("");
-  let error = ""
-  const [pinError, setpinError] = useState("")
+  let error = "";
+  const [pinError, setpinError] = useState("");
 
   const verify = () => {
     if (pin.length == 4) {
@@ -173,10 +174,9 @@ function Home({ appState, login_suc }) {
           });
         }
       } else {
-        
-        error = "Wrong pin"
-        setpinError('Wrong pin')
-         setPin('')
+        error = "Wrong pin";
+        setpinError("Wrong pin");
+        setPin("");
       }
     }
   };
@@ -188,7 +188,7 @@ function Home({ appState, login_suc }) {
     if (pin.length > 2) {
       verify();
     }
-    setpinError()
+    setpinError();
   };
 
   const clear = (e) => {
@@ -201,7 +201,7 @@ function Home({ appState, login_suc }) {
     if (e == "clear") {
       return <Backspace />;
     } else if (e == "out") {
-      return <InputOutlined />;
+      return <KeyboardBackspace />;
     } else {
       return <>{e}</>;
     }
@@ -317,26 +317,32 @@ function Home({ appState, login_suc }) {
   };
 
   const buttons = () => {
-    let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "00", "clear"];
+    let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'out', 0, "clear"];
     return numbers.map((e) => {
       return (
         <>
           <button
+            className="customInput"
             style={{
+              width: "60px",
               padding: "10px 10px",
               fontWeight: "bold",
               border: "none",
-              background: "white",
-              color: "black",
-              margin: "10px 40px",
+              //   background: "white",
+              //   color: "black",
+              margin: "15px 20px",
               fontSize: "20px",
-              textAlign: "left",
+              textAlign: "center",
+              borderRadius: "5px",
             }}
             value={e}
             onClick={() => {
               if (e == "clear") {
                 clear(e);
-              } else {
+              } else if (e == "out") {
+                 setDrawerState({ ...drawerState, bottom: false });
+              }
+              else {
                 append(e);
               }
             }}
@@ -676,17 +682,24 @@ function Home({ appState, login_suc }) {
                 style={{
                   padding: "15px",
                   // background: "black",
-                    color: "white",
+                  color: "white",
                   //  marginBottom:"5px"
                 }}
               >
                 {pinVal()}
                 {/* {pin} */}
-                  {verify()}
-                  <br /> 
-                  <div style={{ color: "crimson",height:"30px",background:' ',padding:"15px" }}>
-                    {pinError}
-                  </div> 
+                {verify()}
+                <br />
+                <div
+                  style={{
+                    color: "crimson",
+                    height: "30px",
+                    background: " ",
+                    padding: "15px",
+                  }}
+                >
+                  {pinError}
+                </div>
               </div>
               {buttons()}
             </div>

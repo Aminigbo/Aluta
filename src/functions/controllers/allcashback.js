@@ -6,7 +6,7 @@ export async function getAllCashback(userId, cashbackstate, setCashbackstate) {
   // });
   allCashback(userId)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.body !== null) {
         if (res.body.length > 0) {
           let recieved = res.body.filter((e) => e.to == userId);

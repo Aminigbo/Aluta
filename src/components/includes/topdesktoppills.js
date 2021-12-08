@@ -272,7 +272,10 @@ function Desktopright({
 
   React.useEffect(() => {
     sub();
-    checkSession(logout, set_session, state);
+   checkSession(logout, set_session, state)
+    if(state.loggedIn == true ){
+      // setInterval(() => , 10000);
+    } 
   }, []);
 
   let successPayload = {

@@ -349,7 +349,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
   ) : (
     <div>
       {compState.loader === true && <> {cashbackloader()} </>}
-      {console.log(checked)}
+      {/* {console.log(checked)} */}
       <div>
         {state.signal == false && (
           <div
