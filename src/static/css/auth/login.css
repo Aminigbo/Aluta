@@ -7,7 +7,7 @@ body{
    #formHolder{
       position: absolute;
       width: 95%;
-      height: 432px;
+      /* height: 432px; */
       left: 2.5%;
       top: 100px;
       padding:50px 10px;
@@ -40,7 +40,7 @@ body{
    }
 
    .form{
-      margin-top:-15px;
+      margin-top:-30px;
       width:100%; 
       text-align: center;
       /* background-color: #01001A; */

@@ -7,6 +7,7 @@ import loaderImg from "../static/logos/animation.gif";
 import { loginSuc, add_wallet } from "../redux";
 import { Helmet } from "react-helmet";
 import logo from "../static/logos/aluta.png";
+import { EuroSymbolOutlined } from "@material-ui/icons";
 import {
   validatePhoneNumber,
   validateEmail,
@@ -32,7 +33,7 @@ function Register({ appState, login_suc, walletAdd }) {
 
   React.useEffect((compState) => {
     window.scrollTo(0, 0);
-    setStates({ ...compState, loader: true });
+    // setStates({ ...compState, loader: true });
     setTimeout(() => setStates({ ...compState, loader: false }), 500);
   }, []);
 
@@ -151,9 +152,26 @@ function Register({ appState, login_suc, walletAdd }) {
       </Helmet>
 
       <div id="regformHolder">
-        <img style={logoStyle} src={logo} />
+        {/* <img style={logoStyle} src={logo} /> */}
+        <div
+          style={{
+            marginLeft: "15px",
+            fontSize: "35px",
+            color: "#0a3d62",
+            textAlign: "left",
+            marginTop: "-20px",
+          }}
+        >
+          <b>
+            B
+            <EuroSymbolOutlined
+              style={{ transform: "rotateZ(-90deg)", fontSize: "35px" }}
+            />
+            zz
+          </b>
+        </div>
         <div id="">
-          <b> Register for free</b>
+          <b> Create a free account</b>
         </div>
 
         <form
@@ -225,15 +243,22 @@ function Register({ appState, login_suc, walletAdd }) {
           />{" "}
           <br />
           <br />
-          <Button
-            style={{ background: "#0a3d62", color: "white" }}
+          <button
             type="submit"
-            variant=" "
-            id=" "
+            style={{
+              background: "#0a3d62",
+              color: "white",
+              border: "none",
+              outline: "none",
+              padding: "7px 20px",
+              margin: "10px",
+              borderRadius: "6px",
+            }}
           >
             {" "}
-            Register{" "}
-          </Button>{"  "} 
+            Create account{" "}
+          </button>
+          {"  "}
           <div class="option">
             <span>Already have an account? </span>{" "}
             <Link

@@ -1,11 +1,12 @@
-import {text_input} from "../../components/forms"
+import { text_input } from "../../components/forms";
 
 export function confirmCashbackCreation(
   amount,
-   cancel,
+  amountPlusCharge,
+  cancel,
   confirm,
   btn_danger,
-   btn_primary,
+  btn_primary,
   compState,
   setPin,
   pin
@@ -15,24 +16,26 @@ export function confirmCashbackCreation(
       <div className="realtime">
         <div className="realtimeParent">
           <div className="realtimeHeader" style={{ background: "lightblue" }}>
-           <b> Confirm Cashback Generation</b> 
+            <b> Confirm Cashback Generation</b>
           </div>
           <div className="realtimeBody" style={{ color: "gray" }}>
-            You are about to generate a cashback of {amount} which will be deducted from your wallet.
-            <br /> <br />
-            <div style={{textAlign:"left "}}>
-              
+            You are about to generate a cashback of <b>NGN {amount}</b>.<br />  <br />
+            <div style={{fontSize:"12px"}}>
+              You will be charged
+              <b> NGN {amountPlusCharge - amount}</b> as service fee.
+            </div>
+            <br />
+            <div style={{ textAlign: "left " }}>
               {btn_danger("Cancel", cancel)}
-            {compState.miniLoad === true ? (
-             <> {btn_primary("Confirming",null)} </>
-            ) : (
-              <> {btn_primary("Confirm", confirm)} </>
-            )}
+              {compState.miniLoad === true ? (
+                <> {btn_primary("Confirming", null)} </>
+              ) : (
+                <> {btn_primary("Confirm", confirm)} </>
+              )}
             </div>
           </div>
         </div>
       </div>
-      
     </div>
   );
 }

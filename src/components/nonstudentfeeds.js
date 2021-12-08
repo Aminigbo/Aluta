@@ -43,6 +43,8 @@ import { pinConfirmPop } from "../components/confirmPin";
 
 // @======== ALLL BUZZME CONTROLLER
 import { getAllBuzz } from "../functions/controllers/allbuzzme";
+import Balance from "./walletbalances";
+import Lockscreen from "./lock";
 function Home({ appState, login_suc }) {
   let history = useHistory();
   const state = appState;
@@ -439,7 +441,7 @@ function Home({ appState, login_suc }) {
 
   return state.loggedIn === false ? (
     <div>
-      <Redirect to="/login" />
+      <Redirect to="/lockout" />
     </div>
   ) : (
     <div id="body bg">
@@ -528,7 +530,7 @@ function Home({ appState, login_suc }) {
                 {" "}
                 <Toppills />
               </div>{" "}
-                <Cashbacknav />
+              <Cashbacknav />
               <div style={{ zIndex: "80000", background: " " }}>
                 {/* @======== START OF RESOLVE BLOCK */}
                 <div
@@ -623,272 +625,8 @@ function Home({ appState, login_suc }) {
                 {/* @======== RESOLVE CASHBACK TOKEN ENDS */}
 
                 {/* @======== SHOW SIDE BUZZ ME WALLET */}
-
-                <div
-                  style={{
-                    width: "90%",
-                    height: "60px",
-                    background: "white",
-                    boxShadow: " 1px 1px 3px #888888",
-                    // border: "2px solid #f3f3f3",
-                    marginBottom: "20px",
-                    marginTop: "20px",
-                    marginLeft: "5%",
-                    position: "relative",
-                  }}
-                >
-                  {/* <FiberPin style={{ margin: "5px", color: "#0a3d62" }} /> */}
-                  <div
-                    style={{
-                      height: "100%",
-                      background: " ",
-                      textAlign: "center",
-                      display: "inline-block",
-                      padding: "4px 0px",
-                      position: "absolute",
-                      width: "45%",
-                    }}
-                  >
-                    <span>Buzz me balance</span> <br />
-                    <b>
-                      {compState.wallethidden === false ? (
-                        <>
-                          <b style={{ fontSize: "15px", marginRight: "4px" }}>
-                            NGN {state.loggedInUser.user.meta.buzzmewallet}
-                          </b>{" "}
-                          <VisibilityOffOutlined
-                            onClick={() => {
-                              setStates({
-                                ...compState,
-                                wallethidden: true,
-                              });
-                            }}
-                            style={{ fontSize: "17px", color: "#0a3d62",float:"right" }}
-                          />
-                        </>
-                      ) : (
-                        <>
-                          {clickToViewPwd === false && (
-                            <>
-                               <b style={{ fontSize: "10px", marginRight: "4px",color:"gray" }}>
-                            ⚫ ⚫ ⚫ ⚫
-                          </b> 
-                              <RemoveRedEye
-                                onClick={() => {
-                                  setClickToViewPwd(true);
-                                }}
-                                style={{ fontSize: "17px", color: "#0a3d62",float:" ",marginLeft:"20px" }}
-                              />
-                            </>
-                          )}
-                        </>
-                      )}
-                    </b>
-                  </div>
-
-                  <div
-                    onClick={() => {
-                      moveBuzzmeBalance();
-                    }}
-                    style={{
-                      // height: "100%",
-                      background: " #0a3d62",
-                      textAlign: "center",
-                      display: "inline-block",
-                      padding: "18px 0px",
-                      position: "absolute",
-                      width: "45%",
-                      right: "0px",
-                      color: "white",
-                      // borderRadius: "30px 16px",
-                      fontSize: "15px",
-                    }}
-                  >
-                    <b> Move to wallet</b>
-                  </div>
-                </div>
-
-                {/* account balance and beneficiary id */}
-                <div
-                  style={{
-                    width: "90%",
-                    background: "",
-                    padding: "",
-                    marginLeft: "5%",
-                    marginTop: "25px",
-                      borderRadius: "3px",
-                    marginBottom:"25px"
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "49%",
-                      height: "120px",
-                      background: "white",
-                      display: "inline-block",
-                      boxShadow: " 1px 1px 3px #888888",
-                        border: "2px solid #f3f3f3",
-                      position:"relative"
-                    }}
-                  >
-                    <AccountBalanceWallet
-                      style={{ margin: "5px", color: "#0a3d62" }}
-                    /><span>Wallet balance</span>
-
-                    <div
-                      style={{
-                        height: "30px",
-                        background: " ",
-                        textAlign: "center",
-                        // marginTop: "5px",
-                        padding: "0px",
-                      }}
-                    > 
-
-                      {/* <b>{state.loggedInUser.user.meta.wallet}</b> */}
-
-                      {compState.wallethidden === false ? (
-                        <>
-                          {" "}
-                          <b style={{ fontSize: "15px", marginRight: "4px" }}>
-                            NGN {state.loggedInUser.user.meta.wallet}
-                          </b>{" "}
-                          <VisibilityOffOutlined
-                            onClick={() => {
-                              setStates({
-                                ...compState,
-                                wallethidden: true,
-                              });
-                            }}
-                            style={{ fontSize: "17px", color: "#0a3d62",float:"right" }}
-                          />
-                        </>
-                      ) : (
-                        <>
-                          {clickToViewPwd === false && (
-                                <>
-                                   <b style={{ fontSize: "10px", marginRight: "4px",color:"gray" }}>
-                            ⚫ ⚫ ⚫ ⚫
-                          </b> 
-                              <RemoveRedEye
-                                onClick={() => {
-                                  setClickToViewPwd(true);
-                                }}
-                                style={{ fontSize: "17px", color: "#0a3d62",float:" ",marginLeft:"20px" }}
-                              />
-                            </>
-                          )}
-                        </>
-                      )}
-                      </div>
-                      
-                      <div
-                        onClick={() => {
-                          alert("To be completed")
-                        }}
-                      style={{
-                        // height: "40px",
-                        background: "#0a3d62",
-                        textAlign: "center",
-                        marginTop: "5px",
-                          padding: "3px 0px",
-                          borderRadius: "30px 16px",
-                          color: "white",
-                          position: "absolute",
-                          bottom: "0px",
-                          width: "100%",
-                        left:"0px"
-                      }}
-                      >
-                        Withdraw
-                      </div>
-                  </div>
-
-                  <div
-                    style={{
-                      width: "49%",
-                      height: "120px",
-                      background: "white",
-                      display: "inline-block",
-                      float: "right",
-                      boxShadow: " 1px 1px 3px #888888",
-                        border: "2px solid #f3f3f3",
-                      position:"relative"
-                    }}
-                  >
-                      <FiberPin style={{ margin: "5px", color: "#0a3d62" }} />
-                      &nbsp;<span>Buzz ID</span>
-                    <div
-                      onClick={() => {
-                        setStates({
-                          ...compState,
-                          copy: true,
-                        });
-                        if (navigator && navigator.clipboard) {
-                          navigator.clipboard.writeText(
-                            state.loggedInUser.user.meta.beneficiaryId
-                          );
-                        }
-                      }}
-                      style={{
-                        // height: "70px",
-                        background: " ",
-                        textAlign: "center",
-                        marginTop: "5px",
-                        padding: "4px 0px",
-                      }}
-                    > 
-                      <b>
-                        {state.loggedInUser.user.meta.beneficiaryId}{" "}
-                       
-                      </b>
-                      </div>
-                      
-                      <div
-                        onClick={() => {
-                        setStates({
-                          ...compState,
-                          copy: true,
-                        });
-                        if (navigator && navigator.clipboard) {
-                          navigator.clipboard.writeText(
-                            state.loggedInUser.user.meta.beneficiaryId
-                          );
-                        }
-                      }}
-                      style={{
-                        // height: "40px",
-                        background: " #f3f3f3",
-                        textAlign: "center",
-                        marginTop: "5px",
-                          padding: "3px 0px",
-                          // borderRadius: "30px 16px",
-                          color: "#0a3d62",
-                          position: "absolute",
-                          bottom: "0px",
-                        width: "100%",
-                           fontSize: "16px",
-                        left:"0px"
-                      }}
-                      >
-                        copy &nbsp;&nbsp;
-                         {compState.copy == true ? (
-                          <LibraryAddCheckOutlined
-                            style={{
-                              fontSize: "24px",
-                              color: "mediumseagreen",
-                            }}
-                          />
-                        ) : (
-                          <FileCopyOutlined
-                            style={{ fontSize: "24px", color: "orange" }}
-                          />
-                        )}{" "}
-                      </div>
-
-                  </div>
-                  </div>
-                  
+                {/* <Lockscreen /> */}
+                <Balance />
 
                 <Cashbackdrawal />
 

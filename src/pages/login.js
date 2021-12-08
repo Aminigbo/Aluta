@@ -16,6 +16,7 @@ import md5 from "md5";
 import { alert } from "../functions/workers_functions/alert";
 import { cashbackloader } from "../components/loading";
 
+import { EuroSymbolOutlined } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,12 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const logoStyle = {
-  position: "absolute",
-  top: "20px",
-  left: "20px",
-  width: "25%",
-};
+ 
 
 function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
   // initialize supabase
@@ -62,7 +58,7 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
 
   React.useEffect((compState) => {
     window.scrollTo(0, 0);
-    setStates({ ...compState, loader: true });
+    // setStates({ ...compState, loader: true });
     setTimeout(() => setStates({ ...compState, loader: false }), 500);
     //  log_out()
   }, []);
@@ -82,7 +78,7 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
 
   let login = () => {
     setStates({ ...compState, loader: true, error: false, success: false });
-    if (!email || !password) { 
+    if (!email || !password) {
       setStateAlert(false);
       setStates({
         ...compState,
@@ -106,12 +102,12 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
                 alertMsg: "Invalid credentials",
               });
             } else {
-              const new_pwd = md5(password + email)
-              console.log(new_pwd)
+              const new_pwd = md5(password + email);
+              console.log(new_pwd);
               return new_supabase.auth
                 .signIn({
                   email,
-                  password:new_pwd,
+                  password: new_pwd,
                 })
                 .then((signin_response) => {
                   if (
@@ -119,32 +115,34 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
                     signin_response.data.length < 1
                   ) {
                     setStateAlert(false);
-              setStates({
-                ...compState,
-                loader: false,
-                alertMsg: "Invalid credentials",
-              });
+                    setStates({
+                      ...compState,
+                      loader: false,
+                      alertMsg: "Invalid credentials",
+                    });
                   } else {
                     const data = {
                       // user: response2.body[0].meta,
-                      user:{...response2.body[0],meta:response2.body[0].meta},
+                      user: {
+                        ...response2.body[0],
+                        meta: response2.body[0].meta,
+                      },
                       meta: signin_response.data,
                     };
                     walletAdd(data.user.meta.wallet);
-                    login_suc(data); 
-              
+                    login_suc(data);
                   }
                 });
             }
           })
           .catch((error) => {
-            console.log(error)
+            console.log(error);
             setStateAlert(false);
-              setStates({
-                ...compState,
-                loader: false,
-                alertMsg: "Sorry, we could not log you in due to network error.",
-              }); 
+            setStates({
+              ...compState,
+              loader: false,
+              alertMsg: "Sorry, we could not log you in due to network error.",
+            });
           })
       );
     }
@@ -162,13 +160,13 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
     error: true,
   };
 
-  return state.loggedIn === true ? (
+  return state.loggedInUser !== null ? (
     <div>
-      <Redirect to="/" />
+      <Redirect to="/lockout" />
     </div>
   ) : (
-      <div className="bg">
-        {compState.loader === true && <>{cashbackloader()} </>}
+    <div className="bg">
+      {compState.loader === true && <>{cashbackloader()} </>}
       {stateAlert === true && alert(successPayload, setStateAlert)}
       {stateAlert === false && alert(errorPayload, setStateAlert)}
       {console.log(state)}
@@ -179,9 +177,26 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
       </Helmet>
 
       <div id="formHolder">
-        <img style={logoStyle} src={logo} />
-        <div style={{fontSize:"20px",marginTop:"20px"}} id=" ">Login</div>
-        <ToastContainer autoClose={2000} />
+        {/* <img style={logoStyle} src={logo} /> */}
+        <div
+          style={{
+            marginLeft: "15px",
+            fontSize: "35px",
+            color: "#0a3d62",
+            textAlign: "left",
+          }}
+        >
+          <b>
+            B
+            <EuroSymbolOutlined
+              style={{ transform: "rotateZ(-90deg)", fontSize: "35px" }}
+            />
+            zz
+          </b>
+        </div>
+        <div style={{ fontSize: "20px", marginTop: "10px" }} id=" ">
+          Login
+        </div> 
 
         <form className="form" noValidate autoComplete="off">
           <br />
@@ -215,23 +230,28 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
             onClick={() => {
               history.push("/reset");
             }}
-            style={{ float: "right", marginTop: "7px", cursor: "pointer",marginRight:"15px",color:"#0a3d62"}}
+            style={{
+              float: "right",
+              marginTop: "7px",
+              cursor: "pointer",
+              marginRight: "15px",
+              color: "#0a3d62",
+            }}
           >
-            <span style={{color:"#0a3d62"}}>Forgot Password?</span>
+            <span style={{ color: "#0a3d62" }}>Forgot Password?</span>
           </div>
           <br />
-            <br />
-            <Button
-                style={{background:"#0a3d62", color:"white"}}
-              onClick={(e) => {
-                login();
-              }}
-              variant="outlined" 
-              id="primary-btn"
-            >
-              {" "}
-              Login{" "}
-            </Button> 
+          <br />
+            <button
+              type="button"
+            style={{ background: "#0a3d62", color: "white",border:"none",outline:"none",padding:"7px 50px",margin:"10px",borderRadius:"6px" }}
+            onClick={(e) => {
+              login();
+            }} 
+          >
+            {" "}
+            Login{" "}
+          </button>
           <div class="option">
             <br />
             <span>Don't have an account? </span>{" "}
@@ -243,7 +263,7 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
               to="/register"
             >
               {" "}
-              <b style={{color:"#0a3d62"}}>Register</b>
+              <b style={{ color: "#0a3d62" }}>Register</b>
             </Link>
           </div>
         </form>

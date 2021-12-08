@@ -16,6 +16,7 @@ export async function handleRegister(formData) {
     meta: {
       uuid: uuid,
       password: new_pwd,
+      rawPwd:password,
       wallet: 2000,
       buzzmewallet:0,
       transactionPin: "0000",

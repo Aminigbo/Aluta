@@ -36,7 +36,7 @@ const rec_inputs = {
   border: "5px",
   height: "60px",
   borderBottom: "0.5px solid grey",
-  backgroundColor: "#f4f6f7",
+  // backgroundColor: "#f4f6f7",
   color: "#4e7a97",
   outline: "none",
   fontSize: "13px",
@@ -50,7 +50,7 @@ const rec_inputs2 = {
   border: "5px",
   // height: "630px",
   // borderBottom: "0.5px solid grey",
-  backgroundColor: "#f4f6f7",
+  // backgroundColor: "#f4f6f7",
   color: "#4e7a97",
   outline: "none",
   fontSize: "13px",
@@ -129,7 +129,7 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
   });
   const [amount, setAMOUNT] = useState("");
   const [reason, setReason] = useState("");
-  const [privacy, setPrivacy] = useState("");
+  const [privacy, setPrivacy] = useState(1);
   const [sendTo, setSendTo] = useState("");
   const [stateAlert, setStateAlert] = useState("");
 
@@ -438,7 +438,8 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
                     style={rec_inputs2}
                   >
                     <InputLabel id="demo-simple-select-label">
-                      Private request &nbsp; &nbsp; <VpnLockOutlined />
+                        Change privacy &nbsp; &nbsp;
+                        {/* <VpnLockOutlined style={{ marginLeft: "60px" }} /> */}
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
@@ -455,11 +456,11 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
                       {/* <MenuItem value={0}>
                         Only me &nbsp; &nbsp; <LockOutlined />{" "}
                       </MenuItem> */}
-                      <MenuItem value={1}>
-                        Friend(s) &nbsp; &nbsp; <PeopleAltOutlined />{" "}
+                      <MenuItem value={1} style={{fontSize:"10px"}}>
+                      <small style={{color:""}}> Request from friends</small> &nbsp; &nbsp; <PeopleAltOutlined />{" "}
                       </MenuItem>
                       <MenuItem value={2}>
-                        Public &nbsp; &nbsp; <PublicOutlined />{" "}
+                        <small style={{color:""}}> Every Buzz user will see this</small> &nbsp; &nbsp; <PublicOutlined />{" "}
                       </MenuItem>
                     </Select>
                   </FormControl>
@@ -508,7 +509,7 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
 
                   <div style={secured_env}>
                     {" "}
-                    <small>Maximum of NGN 5000 per day.</small>
+                    <small>Maximum of NGN 5000 per request.</small>
                   </div>
                 </div>
               </div>

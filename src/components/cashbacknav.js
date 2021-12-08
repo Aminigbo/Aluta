@@ -7,14 +7,6 @@ import Header from "../components/includes/mobile_header.js";
 import { HistoryOutlined } from "@material-ui/icons";
 
 import {
-  Person,
-  AccountBalanceWallet,
-  FiberPin,
-  EuroSymbolOutlined,
-  FileCopyOutlined,
-  RemoveRedEye,
-  AddCircleOutlined,
-  LibraryAddCheckOutlined,
   ArrowRightOutlined,
 } from "@material-ui/icons";
 
@@ -263,6 +255,7 @@ function Home({ appState, login_suc }) {
   const closecreatepop = () => {
     setInitiateCreate(false);
     setGeneratedcode(false);
+    // setDrawerState({ ...drawerState, bottom: false });
   };
 
   // @======== USER ACCEPTS TO CREATE  THE CASHBACK
@@ -415,7 +408,7 @@ function Home({ appState, login_suc }) {
                   <>
                     {" "}
                     <div style={{ marginTop: "20px", textAlign: "left" }}>
-                      <i style={{ fontSize: "12px", color: "orange" }}>
+                      <i style={{ fontSize: "12px", color: "black" }}>
                         {" "}
                         Using this service, you agree to our Cashback terms of
                         service and policies
@@ -490,6 +483,7 @@ function Home({ appState, login_suc }) {
             {" "}
             {confirmCashbackCreation(
               tokenamount,
+              amountPlusCharge,
               closecreatepop,
               finallyGenerateCashbackCode,
               btn_danger,

@@ -5,6 +5,7 @@ import {
    ALL_MATCHES,
    LOGIN_SUCCESS,
    LOG_OUT,
+   LOG_OUT_HARD,
    GIVEAWAY_BENEFICIARIES,
    TEST_RESULT,
    INIT_TOPUP,
@@ -96,23 +97,25 @@ const reducer = (state = initialState, action) => {
       case LOG_OUT:
       return {
          ...state,
-         loggedIn:false,
-         loggedInUser:'',
-         pickedMatches:0,
-         allMatches: [],
-         benefited: [],
-         testresult: [],
-         wallet: 0,
-         allOneOnOne: [],
-         stagged: [],
+         loggedIn:false, 
+         wallet: 0, 
          refresh: [],
-         loading: false,
-         jackpots: [],
-         session: -0.1,
-         betslip: [],
-         withdrawal: [],
-         feeds:[],
+         loading: false, 
+         session: -0.1, 
          
+         // admin withdrawal request noti
+         withdrawal_request_noti:[]
+      }
+      
+      case LOG_OUT_HARD:
+         return {
+             ...state,
+         loggedIn:false, 
+         wallet: 0, 
+         refresh: [],
+         loading: false, 
+         session: -0.1, 
+         loggedInUser :null, 
          // admin withdrawal request noti
          withdrawal_request_noti:[]
          }

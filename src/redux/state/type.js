@@ -8,6 +8,7 @@ export const ALL_MATCHES = "ALL_MATCHES"
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
 
 export const LOG_OUT = "LOG_OUT"
+export const LOG_OUT_HARD = "LOG_OUT_HARD"
 
 export const GIVEAWAY_BENEFICIARIES = "GIVEAWAY_BENEFICIARIES"
 

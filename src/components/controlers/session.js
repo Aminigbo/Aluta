@@ -9,13 +9,13 @@ export const checkSession = (logout,set_session,state,errorToast) => {
       else if (hours < 24) return hours;
       else return days
    }
-   // < -305
+   // < -1005
 
    let timeDiff = msToTime(state.session - new Date().getTime())
    console.log(timeDiff) 
    
-    if (timeDiff  < -1005 && state.session  != -0.1) {
-      //  logout()
+    if (timeDiff  < -300 && state.session  != -0.1) {
+       logout()
        set_session(new Date().getTime())
       //  errorToast("Session expired")
        console.log("logout")
