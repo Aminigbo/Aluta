@@ -13,7 +13,7 @@ export const checkSession = (logout, set_session, state, refresh) => {
 
    let timeDiff = msToTime(state.session - new Date().getTime());
    
-  if (timeDiff < -50 && state.session != 0) {
+  if (timeDiff < -150 && state.session != 0) {
     logout();
     set_session(9999999999999);
     console.log("logout");
