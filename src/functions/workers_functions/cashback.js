@@ -15,7 +15,7 @@ export function confirmCashbackCreation(
     <div>
       <div className="realtime">
         <div className="realtimeParent">
-          <div className="realtimeHeader" style={{ background: "lightblue" }}>
+          <div className="realtimeHeader" style={{ background: "#0a3d62",color:"white" }}>
             <b> Confirm Cashback Generation</b>
           </div>
           <div className="realtimeBody" style={{ color: "gray" }}>

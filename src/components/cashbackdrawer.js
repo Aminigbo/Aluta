@@ -403,7 +403,7 @@ function Home({ appState, login_suc }) {
                         compState,
                         generatedToken,
                         state.loggedInUser.user.fullname,
-                        userTakes,
+                        amountPlusCharge,
                         true,
                         toggleDrawer
                       )}
