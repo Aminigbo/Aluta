@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 export function text_input(placeholder, value, type, callback) {
   return (
      <TextField
-        style={{width:"100%"}}
+        style={{width:"100%",textAlign:"center"}}
       onChange={(e) => {
         callback(e.target.value);
       }}

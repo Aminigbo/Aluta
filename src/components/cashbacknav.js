@@ -6,10 +6,8 @@ import "../static/css/home/index.css";
 import Header from "../components/includes/mobile_header.js";
 import { HistoryOutlined } from "@material-ui/icons";
 
-import {
-  ArrowRightOutlined,
-} from "@material-ui/icons";
-
+import { ArrowRightOutlined } from "@material-ui/icons";
+import { confirmPinLockScreen } from "./confirmPinLockScreen";
 import { confirmCashbackCreation } from "../functions/workers_functions/cashback"; // CASHBACK CONTROLLER
 import { Drawer, Divider } from "@mui/material";
 import Accountsummery from "../components/ccountsummary";
@@ -188,6 +186,11 @@ function Home({ appState, login_suc }) {
   const [drawerState, setDrawerState] = React.useState({
     bottom: false,
   });
+  const [drawerState2, setDrawerState2] = React.useState({
+    bottom: false,
+  });
+
+  const [auth, setAuth] = React.useState(false);
 
   const toggleDrawer = (anchor, open, post) => (event) => {
     // console.log("okk");
@@ -199,6 +202,24 @@ function Home({ appState, login_suc }) {
     }
 
     setDrawerState({ ...drawerState, [anchor]: open });
+    setcashbackpinresolved(false);
+    setGeneratedcode(false);
+    setStates({
+      ...compState,
+      copy: false,
+    });
+  };
+
+  const toggleDrawer2 = (anchor, open, post) => (event) => {
+    // console.log("okk");
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setDrawerState2({ ...drawerState2, [anchor]: open });
     setcashbackpinresolved(false);
     setGeneratedcode(false);
     setStates({
@@ -240,14 +261,10 @@ function Home({ appState, login_suc }) {
         error: true,
         errorMsg: "You have insufficient wallet balance",
       });
-    } else if (pin !== state.loggedInUser.user.meta.transactionPin) {
-      setStates({
-        ...compState,
-        error: true,
-        errorMsg: "You Provided a wrong transaction pin",
-      });
     } else {
-      setInitiateCreate(true);
+      setDrawerState2({ ...drawerState2, bottom: false });
+      setDrawerState({ ...drawerState, bottom: true });
+      setAuth(true);
     }
   };
 
@@ -295,16 +312,14 @@ function Home({ appState, login_suc }) {
         <div
           className=" "
           style={{
-            marginTop: "25px",
+            marginTop: "5px",
             width: "90%",
             background: " ",
             marginLeft: "5%",
           }}
         >
           <div style={{ textAlign: "center" }}>
-            {generatedcode !== true ? (
-              <b>Generate a cashback token </b>
-            ) : (
+            {generatedcode !== false && (
               <>
                 <b>TOKEN GENERATED</b>
                 <div>
@@ -319,8 +334,8 @@ function Home({ appState, login_suc }) {
           <div
             style={{
               // height: "100px",
-              marginBottom: "30px",
-              marginTop: "20px",
+              marginBottom: "10px",
+              // marginTop: "5px",
             }}
           >
             <div className=" ">
@@ -335,8 +350,10 @@ function Home({ appState, login_suc }) {
                     <div
                       style={{
                         width: "50%",
-                        display: "inline-block",
-                        float: "left",
+                        // display: "inline-block",
+                        float: " ",
+                        marginLeft: "25%",
+                        textAlign: "center",
                       }}
                     >
                       {text_input(
@@ -346,7 +363,7 @@ function Home({ appState, login_suc }) {
                         setTokenamount
                       )}
                     </div>
-                    <div
+                    {/* <div
                       style={{
                         width: "25%",
                         display: "inline-block",
@@ -354,28 +371,34 @@ function Home({ appState, login_suc }) {
                       }}
                     >
                       {text_input("Your pin", pin, "number", setPin)}
-                    </div>
-                    <div style={{ marginTop: "10px", textAlign: "left" }}>
+                    </div> */}
+                    <div
+                      style={{
+                        marginTop: "10px",
+                        textAlign: " ",
+                        fontSize: "12px",
+                      }}
+                    >
                       {tokenamount.length > 0 && (
                         <>
                           {" "}
                           <b>
-                            ={" "}
+                            {" "}
+                            NGN{" "}
                             {parseInt(tokenamount) +
                               cashbackchargecentage(tokenamount)}{" "}
-                            BUZ
                           </b>{" "}
                         </>
                       )}
                     </div>
                     <br />
-                    <div style={{ float: "left ", textAlign: "left" }}>
+                    <div style={{ float: "  ", textAlign: " " }}>
                       <span
                         onClick={() => {
                           handleGeneratecashback();
                         }}
                       >
-                        {btn_primary("Generate", closeDrawer)}
+                        {btn_primary("Continue", closeDrawer)}
                       </span>
                     </div>{" "}
                     <br />{" "}
@@ -407,11 +430,10 @@ function Home({ appState, login_suc }) {
                 {generatedcode !== true && (
                   <>
                     {" "}
-                    <div style={{ marginTop: "20px", textAlign: "left" }}>
+                    <div style={{ marginTop: " ", textAlign: " " }}>
                       <i style={{ fontSize: "12px", color: "black" }}>
                         {" "}
-                        Using this service, you agree to our Cashback terms of
-                        service and policies
+                        You agree to our Cashback terms of service and policies
                       </i>
                     </div>{" "}
                   </>
@@ -423,6 +445,8 @@ function Home({ appState, login_suc }) {
       </>
     );
   };
+
+  const [pinError, setpinError] = useState("");
 
   return state.loggedIn === false ? (
     <div>
@@ -499,7 +523,7 @@ function Home({ appState, login_suc }) {
             <div>
               <div style={{ zIndex: "80000", background: " " }}>
                 <span
-                  onClick={toggleDrawer("bottom", true)}
+                  onClick={toggleDrawer2("bottom", true)}
                   style={{
                     marginLeft: "15px",
                     fontSize: "11px",
@@ -560,13 +584,34 @@ function Home({ appState, login_suc }) {
               </div>
             </div>
           </div>
+
+          {/* {confirmPinLockScreen(drawerState,setDrawerState,setStates,compState,pin,setPin,pinError,setpinError,state)} */}
+          {auth === true && (
+            <>
+              {" "}
+              {confirmPinLockScreen(
+                drawerState,
+                setDrawerState,
+                setStates,
+                compState,
+                pin,
+                setPin,
+                pinError,
+                setpinError,
+                state,
+                setInitiateCreate,
+                drawerState2,
+                setDrawerState2
+              )}{" "}
+            </>
+          )}
         </div>
 
         <React.Fragment key="bottom">
           <Drawer
             anchor="bottom"
-            open={drawerState["bottom"]}
-            onClose={toggleDrawer("bottom", false, false)}
+            open={drawerState2["bottom"]}
+            onClose={toggleDrawer2("bottom", false, false)}
           >
             {createCashback("bottom")}
           </Drawer>

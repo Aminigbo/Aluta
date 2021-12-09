@@ -368,9 +368,9 @@ function Home({ appState, login_suc }) {
                           {" "}
                           <b>
                             ={" "}
-                            {parseInt(tokenamount) +
+                            NGN {parseInt(tokenamount) +
                               cashbackchargecentage(tokenamount)}{" "}
-                            BUZ
+                            
                           </b>{" "}
                         </>
                       )}
