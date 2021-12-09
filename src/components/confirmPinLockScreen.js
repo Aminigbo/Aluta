@@ -270,7 +270,8 @@ export function confirmPinLockScreen(
                 padding: "10px",
                 textAlign: "center",
               }}
-            >
+                 >
+                    <span>Authenticate </span>
               <div
                 style={{
                   padding: "15px",
