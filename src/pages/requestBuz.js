@@ -268,17 +268,17 @@ function Home({ appState, disp_draft, logout, loadFeeds }) {
                 for (let i = 0; i < sendTo.length; i++) {
                   sendToPhones.push(`+234${sendTo[i].phone.substring(1, 11)}`);
                 }
-                let desc = ""
-                if (reason.length > 40) {
-                  desc = reason.substring(0, 36)+"...."
-                } else {
-                  desc = reason
-                }
+                // let desc = ""
+                // if (reason.length > 40) {
+                //   desc = reason.substring(0, 36)+"...."
+                // } else {
+                //   desc = reason
+                // }
                 let smsPayload = {
                   phones: sendToPhones, // array[]
                   sender: fullname,
                   amount: amount,
-                  desc,
+                  reason,
                 };
                 console.log(smsPayload)
                 buzz_request(smsPayload) //call sms function
