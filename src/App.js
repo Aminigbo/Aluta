@@ -33,7 +33,8 @@ import Requestbuz from "./pages/requestBuz"
 import Reactions from "./pages/reactions"
 import History  from "./pages/history"
 import Notification from "./components/notification"
- import Lock from "./components/lock"
+import Lock from "./components/lock"
+ import Buzzpay from "./components/buzzpay"
 import {
   BrowserRouter as Router,
   Switch,
@@ -92,6 +93,10 @@ export default function App() {
 
                <Route path="/lockout">
                 <Lock />
+              </Route>
+
+              <Route path="/buzzpay">
+                <Buzzpay />
               </Route>
 
               

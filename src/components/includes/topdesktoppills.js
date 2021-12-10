@@ -353,7 +353,9 @@ function Desktopright({
 
         <div
           onClick={() => {
-            history.push("/transfer");
+            // history.push("/transfer");
+            history.push("/buzzpay");
+
           }}
           className="top-nav-pills-holder"
         >
@@ -415,7 +417,7 @@ function Desktopright({
 
         {/* <div
           onClick={() => {
-            history.push("/listmart");
+            history.push("/buzzpay");
           }}
           className="top-nav-pills-holder"
         >
@@ -429,7 +431,7 @@ function Desktopright({
             {" "}
             <StorefrontOutlined />{" "} 
           </span>
-          <p className="top-nav-pills-title">Redeem</p>
+          <p className="top-nav-pills-title">New Buzz</p>
         </div> */}
 
         <div

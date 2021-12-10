@@ -544,7 +544,8 @@ function Home({ appState, login_suc }) {
                     boxShadow: " 1px 1px 3px #888888",
                     border: "0.5px solid #f3f3f3",
                   }}
-                >
+                  >
+                    <div style={{marginTop:"-25px",marginBottom:"40px",textAlign:"center"}}>Resolve cashback token </div>
                   <div
                     className=" "
                     style={{
@@ -565,7 +566,7 @@ function Home({ appState, login_suc }) {
                               }}
                             >
                               {text_input(
-                                "Enter pin to cashback",
+                                "Enter cashback token to cashback",
                                 value,
                                 "number",
                                 setValue
@@ -628,7 +629,7 @@ function Home({ appState, login_suc }) {
                 {/* <Lockscreen /> */}
                 <Balance />
 
-                <Cashbackdrawal />
+                {/* <Cashbackdrawal /> */}
 
                 {/* @========      */}
                 <Accountsummery />

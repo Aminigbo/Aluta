@@ -1,23 +1,15 @@
 import React, { useState } from "react";
 import { Redirect, useHistory, Link } from "react-router-dom";
 import { connect } from "react-redux";
-import "../static/css/home/index.css";
-
-import Header from "../components/includes/mobile_header.js";
-import { HistoryOutlined } from "@material-ui/icons";
-
-import { ArrowRightOutlined } from "@material-ui/icons";
+import "../static/css/home/index.css"; 
 import { confirmPinLockScreen } from "./confirmPinLockScreen";
+import { ViewAgenda } from "@material-ui/icons"; 
 import { confirmCashbackCreation } from "../functions/workers_functions/cashback"; // CASHBACK CONTROLLER
-import { Drawer, Divider } from "@mui/material";
-import Accountsummery from "../components/ccountsummary";
-import Desktopleft from "../components/includes/desktopleft";
-import Desktopright from "../components/includes/desktopright";
+import { Drawer, Divider } from "@mui/material"; 
 import { add_wallet, logOut, loginSuc } from "../redux";
 import { moveBuzzmeFunds } from "../functions/controllers/movebuzzmefunds";
 import { btn_primary, btn_danger } from "../components/buttons";
-import { text_input } from "../components/forms";
-import Toppills from "../components/includes/topdesktoppills";
+import { text_input } from "../components/forms"; 
 import { cashbackCurrency } from "../components/currency";
 import { cashbackchargecentage } from "../functions/utils/index";
 import { cashbackloader } from "../components/loading";
@@ -313,9 +305,10 @@ function Home({ appState, login_suc }) {
           className=" "
           style={{
             marginTop: "5px",
-            width: "90%",
+            width: "100%",
             background: " ",
-            marginLeft: "5%",
+            marginLeft: "0%",
+            borderRadius:"30px 30px 0px 0px"
           }}
         >
           <div style={{ textAlign: "center" }}>
@@ -518,69 +511,45 @@ function Home({ appState, login_suc }) {
             )}{" "}
           </>
         )}
+       
         <div className="mobile">
           <div>
             <div>
               <div style={{ zIndex: "80000", background: " " }}>
-                <span
+                <div
                   onClick={toggleDrawer2("bottom", true)}
                   style={{
-                    marginLeft: "15px",
-                    fontSize: "11px",
-                    color: "#0a3d62",
-                    textDecoration: "none",
+                    width: "90%",
+                    background: "white",
+                    padding: "20px 20px",
+                    marginLeft: "5%",
+                    marginTop: "20px",
+                    borderRadius: "3px",
+                    boxShadow: " 1px 1px 3px #c1cfd9",
+                    backgroundImage:
+                      "linear-gradient(to right,lightgray, #385b74)",
+                    position: "relative",
+                    height: "110px",
                   }}
                 >
-                  Create Cashback
-                  <ArrowRightOutlined
-                    style={{ marginLeft: "-4px", fontSize: "30px" }}
+                  <ViewAgenda
+                    style={{
+                      color: "white",
+                      position: "absolute",
+                      top: "10px",
+                      right: "10px",
+                      fontSize: "30px",
+                    }}
                   />
-                </span>
-                <Link
-                  to="history"
-                  style={{
-                    marginLeft: "5px",
-                    fontSize: "11px",
-                    color: "#0a3d62",
-                    textDecoration: "none",
-                  }}
-                >
-                  Summary
-                  <ArrowRightOutlined
-                    style={{ marginLeft: "-8px", fontSize: "30px" }}
-                  />
-                </Link>{" "}
-                {/* <Link
-              to="updateprofile"
-              style={{
-                marginLeft: "-5px",
-                fontSize: "11px",
-                color: "#0a3d62",
-                textDecoration: "none",
-              }}
-            >
-              Profile
-              <ArrowRightOutlined
-                style={{ marginLeft: "-8px", fontSize: "30px" }}
-              />
-            </Link>{" "} */}
-                <Link
-                  onClick={() => {
-                    alert("To be completed");
-                  }}
-                  to=""
-                  style={{
-                    marginLeft: "5px",
-                    fontSize: "11px",
-                    color: "#0a3d62",
-                    textDecoration: "none",
-                  }}
-                >
-                  Bank withdrawal
-                  <ArrowRightOutlined
-                    style={{ marginLeft: "-8px", fontSize: "30px" }}
-                  />
-                </Link>{" "}
+                  <b style={{ fontSize: "18px", color: "#0a3d62" }}>
+                    Generate Cashback token
+                  </b>{" "}
+                  <br />
+                  <small style={{ color: "" }}>
+                    When you click me, i will guide you through generating
+                    cashback token{" "}
+                  </small>
+                </div>
               </div>
             </div>
           </div>
@@ -606,9 +575,10 @@ function Home({ appState, login_suc }) {
             </>
           )}
         </div>
-
+ 
         <React.Fragment key="bottom">
-          <Drawer
+            <Drawer
+              
             anchor="bottom"
             open={drawerState2["bottom"]}
             onClose={toggleDrawer2("bottom", false, false)}
