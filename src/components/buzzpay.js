@@ -200,7 +200,7 @@ function Home({ appState, login_suc, logout, set_session }) {
               width: "100px",
               height: "50px",
               top: "15px",
-              right: "1px",
+              right: "20px",
               fontWeight: "bold",
               padding: "4px",
             }}
