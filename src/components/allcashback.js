@@ -12,7 +12,7 @@ import { allCashback } from "../functions/models/index";
 
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
-import { EuroSymbolOutlined } from "@material-ui/icons";
+import { EuroSymbolOutlined ,FileCopyOutlined} from "@material-ui/icons";
 const smile = {
   color: "white",
   fontSize: "20px",
@@ -22,10 +22,10 @@ const smile = {
 function Home({ appState, dispNoti }) {
   let history = useHistory();
   const state = appState;
-  let userId = ""
+  let userId = "";
 
   if (state.loggedIn === true) {
-    userId = state.loggedInUser.user.id
+    userId = state.loggedInUser.user.id;
   }
 
   const style = {
@@ -78,83 +78,119 @@ function Home({ appState, dispNoti }) {
   const renderNotifications = () => {
     if (compState.data) {
       return compState.data.map((e) => {
-        console.log(e)
-          return (
-            <> 
-              <div style={{ background: "" }}>
-                <div
+        console.log(e);
+        return (
+          <>
+            <div style={{ background: "" }}>
+              <div
+                style={{
+                  backgroundColor: "",
+                  width: "100%",
+                  padding: "10px 20px",
+                }}
+              >
+                <b>
+                  {e.isActive === true ? (
+                    <span style={{ fontSize: "12px", color: "mediumseagreen" }}>
+                      Valid
+                    </span>
+                  ) : (
+                    <span style={{ fontSize: "12px", color: "crimson" }}>
+                      Resolved
+                    </span>
+                  )}{" "}
+                </b>{" "}
+                &nbsp;&nbsp;{" "}
+                <b
                   style={{
-                    backgroundColor: "",
-                    width: "100%",
-                    padding: "10px 20px",
+                    color: "#0a3d62",
+                    padding: "3px 10px",
+                    borderRadius: "5px",
+                    float: "right",
                   }}
                 >
-                  <b>{e.isActive === true ? <span style={{fontSize:"12px",color:"mediumseagreen"}}>Valid</span>:<span style={{fontSize:"12px",color:"crimson"}}>Resolved</span>} </b> &nbsp;&nbsp;{" "}
-                  <b
-                    style={{
-                      color: "#0a3d62",
-                      padding: "3px 10px",
-                      borderRadius: "5px",
-                      float: "right",
-                    }}
-                  >NGN {e.meta.amount}
-                  </b>
-                  <br />
-                  <span style={{ fontSize: "14px" }}>
-                    {" "}
-                  
-                    {e.isActive === false && <b>  By {e.meta.to.fullname.split(" ")[0]}</b>}
-                    
-                  </span>{" "}
-                  <br />
-                </div>
-                <div
-                  style={{
-                    backgroundColor: " ",
-                    width: "100%",
-                    padding: "10px 20px",
-                    marginTop: "-15px",
-                    borderBottom: "0.5px solid lightgray",
-                  }}
-                >
-                  {e.user == userId ?  <small>
-                      You generated a cashback of   <b
-                        style={{
-                          color: "#0a3d62",
-                          padding: "3px 4px",
-                          borderRadius: "5px",
-                        }}
+                  NGN {e.meta.amount}
+                </b>
+                <br />
+                <span style={{ fontSize: "14px" }}>
+                  {" "}
+                  {e.isActive === false && (
+                    <b> By {e.meta.to.fullname.split(" ")[0]}</b>
+                  )}
+                </span>{" "}
+                <br />
+              </div>
+              <div
+                style={{
+                  backgroundColor: " ",
+                  width: "100%",
+                  padding: "10px 20px",
+                  marginTop: "-15px",
+                  borderBottom: "0.5px solid lightgray",
+                }}
+              >
+                {e.user == userId ? (
+                  <small>
+                    You generated a cashback of{" "}
+                    <b
+                      style={{
+                        color: "#0a3d62",
+                        padding: "3px 4px",
+                        borderRadius: "5px",
+                      }}
                     >
-                       NGN {e.meta.amount}
-                     <br />
-                      <div style={{marginTop:"5px"}}>
-                        <b style={{fontSize:"16px",color:"#0a3d62"}}>{e.token} </b>
+                      NGN {e.meta.amount}
+                      <br />
+                      <div style={{ marginTop: "5px" }}>
+                        <b style={{ fontSize: "16px", color: "#0a3d62" }}>
+                          {e.token}{" "}
+                        </b>{" "}
+                        <FileCopyOutlined
+                          onClick={()=>{
+                            copy()
+                          }}
+                          style={{ fontSize: "20px", color: copyState == true ? "Mediumseagreen": "orange",marginLeft:"35px" }}
+                        />
                       </div>
                     </b>
-                  
-                    </small> :
-                    <small>
-                      You resolved a cashback of   <b
-                        style={{
-                          color: "#0a3d62",
-                          padding: "3px 4px",
-                          borderRadius: "5px",
-                        }}
-                      >NGN {e.meta.amount}
-                      </b><br /> <div style={{marginTop:"5px"}}>
-                        <b style={{fontSize:"16px",color:"#0a3d62"}}>{e.token} </b>
-                      </div>
-                  
-                    </small>}
-                  <br />
-                </div>
+                  </small>
+                ) : (
+                  <small>
+                    You resolved a cashback of{" "}
+                    <b
+                      style={{
+                        color: "#0a3d62",
+                        padding: "3px 4px",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      NGN {e.meta.amount}
+                    </b>
+                    <br />{" "}
+                    <div style={{ marginTop: "5px" }}>
+                      <b style={{ fontSize: "16px", color: "#0a3d62" }}>
+                        {e.token}{" "}
+                      </b>
+                    </div>
+                  </small>
+                )}
+                <br />
               </div>
-              {/* <Divider /> */}
-            </>
-          ); 
+            </div>
+            {/* <Divider /> */}
+          </>
+        );
       });
     }
   };
+const [copyState, setCopyState] = useState(false)
+  const copy = () => {
+    setCopyState(true)
+    setTimeout(() => {
+      setCopyState(false)
+    }, 2000);
+    // setInterval(() => checkSession(logout, set_session, state), 2000);
+  }
 
   return state.loggedIn === false ? (
     <div>
@@ -165,8 +201,7 @@ function Home({ appState, dispNoti }) {
       <>
         {console.log(compState)}
         {compState.loader === true && <> {cashbackloader()}</>}
-        <div className="mobile"> 
-
+        <div className="mobile">
           <div>
             <div>
               <div
@@ -177,14 +212,15 @@ function Home({ appState, dispNoti }) {
                   position: "sticky",
                   top: "0px",
                   zIndex: "1000",
-                    padding: "30px 20px",
-                    color: "gray",
-                  fontSize:"14px"
+                  padding: "30px 20px",
+                  color: "gray",
+                  fontSize: "14px",
                 }}
               >
-                  {" "}
-                  {compState.loader === false && compState.data.length > 0 && <b>Cashback histories</b>}
-                
+                {" "}
+                {compState.loader === false && compState.data.length > 0 && (
+                  <b>Cashback histories</b>
+                )}
               </div>{" "}
               {compState.loader != true &&
                 compState.data !== null &&

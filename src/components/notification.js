@@ -176,7 +176,7 @@ function Home({ appState, dispNoti, login_suc }) {
                   <span style={{ fontSize: "13px" }}>
                     {" "}
                     By
-                    <b> {e.meta.resolvedby.split(" ")[0]}</b>
+                    <b> {e.from == e.to ? 'You': e.meta.resolvedby.split(" ")[0]}</b>
                   </span>{" "}
                   <br />
                 </div>
@@ -200,7 +200,7 @@ function Home({ appState, dispNoti, login_suc }) {
                     >
                       NGN {e.meta.amount}
                     </b>{" "}
-                    has been resolved by {e.meta.resolvedby}
+                    has been resolved by {e.from == e.to ? 'You': e.meta.resolvedby}
                   </small>{" "}
                   <br />
                 </div>
