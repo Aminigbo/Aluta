@@ -8,7 +8,7 @@ import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
 import { add_wallet, logOut, loginSuc, disp_noti } from "../redux";
 import { cashbackloader } from "../components/loading";
-import { fetchNotification } from "../functions/models/index";
+import { fetchNotification, fetchUserProfile } from "../functions/models/index";
 
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -19,7 +19,7 @@ const smile = {
   background: "#f3f3f3",
 };
 
-function Home({ appState, dispNoti }) {
+function Home({ appState, dispNoti, login_suc }) {
   let history = useHistory();
   const state = appState;
 
@@ -38,6 +38,18 @@ function Home({ appState, dispNoti }) {
     setStates({
       ...compState,
       loader: true,
+    });
+    fetchUserProfile(user).then((resX) => {
+      console.log(resX.body[0].meta);
+      const newUserData = {
+        user: {
+          ...state.loggedInUser.user,
+          meta: resX.body[0].meta,
+        },
+        meta: state.loggedInUser.meta,
+      };
+      // console.log(newUserData)
+      login_suc(newUserData);
     });
     fetchNotification(user)
       .then((res) => {
@@ -67,6 +79,7 @@ function Home({ appState, dispNoti }) {
   React.useEffect(() => {
     window.scrollTo(0, 0);
     setSchool();
+    console.log(compState);
     dispNoti(false);
   }, []);
 
@@ -85,7 +98,7 @@ function Home({ appState, dispNoti }) {
                     padding: "10px 20px",
                   }}
                 >
-                  <b style={{fontSize:"13px"}}>{e.type} </b> &nbsp;&nbsp;{" "}
+                  <b style={{ fontSize: "13px" }}>{e.type} </b> &nbsp;&nbsp;{" "}
                   <span style={{ fontSize: "14px" }}>
                     {" "}
                     From
@@ -97,9 +110,10 @@ function Home({ appState, dispNoti }) {
                       padding: "3px 10px",
                       borderRadius: "5px",
                       float: "right",
-                      fontSize:"13px"
+                      fontSize: "13px",
                     }}
-                  >NGN {e.meta.data.amount}
+                  >
+                    NGN {e.meta.data.amount}
                   </b>
                   <br />
                 </div>
@@ -126,8 +140,7 @@ function Home({ appState, dispNoti }) {
                     >
                       {" "}
                       BUZZ {e.meta.sender.fullname.split(" ")[0]}
-                      &nbsp;&nbsp;
-                      NGN {e.meta.data.amount}
+                      &nbsp;&nbsp; NGN {e.meta.data.amount}
                     </b>
                   )}
                 </div>
@@ -147,16 +160,17 @@ function Home({ appState, dispNoti }) {
                     padding: "10px 20px",
                   }}
                 >
-                  <b style={{fontSize:"13px"}}>{e.type} </b> &nbsp;&nbsp;{" "}
+                  <b style={{ fontSize: "13px" }}>{e.type} </b> &nbsp;&nbsp;{" "}
                   <b
                     style={{
                       color: "#0a3d62",
                       padding: "3px 10px",
                       borderRadius: "5px",
                       float: "right",
-                      fontSize:"13px"
+                      fontSize: "13px",
                     }}
-                  >NGN {e.meta.amount}
+                  >
+                    NGN {e.meta.amount}
                   </b>
                   <br />
                   <span style={{ fontSize: "13px" }}>
@@ -176,15 +190,17 @@ function Home({ appState, dispNoti }) {
                   }}
                 >
                   <small>
-                    Your generated cashback of   <b
-                    style={{
-                      color: "#0a3d62",
-                      padding: "3px 4px",
-                      borderRadius: "5px", 
-                    }}
-                  >NGN {e.meta.amount}
-                  </b> has been resolved by {e.meta.resolvedby}
-                  
+                    Your generated cashback of{" "}
+                    <b
+                      style={{
+                        color: "#0a3d62",
+                        padding: "3px 4px",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      NGN {e.meta.amount}
+                    </b>{" "}
+                    has been resolved by {e.meta.resolvedby}
                   </small>{" "}
                   <br />
                 </div>

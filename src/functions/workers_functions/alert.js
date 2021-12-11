@@ -1,6 +1,6 @@
 
 import { EuroSymbolOutlined } from "@material-ui/icons";
-export function alert(payload, setStateAlert) {
+export function alert(payload, setStateAlert,sendToDefault) {
   return (
     <div>
       <div className="realtime">
@@ -26,6 +26,7 @@ export function alert(payload, setStateAlert) {
               }}
               onClick={() => {
                 setStateAlert(null);
+                sendToDefault()
               }}
               className="active"
             >

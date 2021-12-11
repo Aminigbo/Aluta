@@ -8,11 +8,7 @@ export async function moveBuzzmeFunds(
   setStates,
    login_suc,
   setmovebuzzResolved
-) {
-  setStates({
-    ...compState,
-    loading: true,
-  });
+) { 
 
   let userWallet = state.user.meta.wallet;
   let amount = state.user.meta.buzzmewallet;
@@ -39,7 +35,7 @@ export async function moveBuzzmeFunds(
       login_suc(loginData); 
       setStates({
         ...compState,
-        loading: false,
+        loader: false,
         error: false,
         errorMsg: "",
       });
@@ -48,7 +44,7 @@ export async function moveBuzzmeFunds(
     } else {
       setStates({
         ...compState,
-        loading: false,
+        loader: false,
         error: true,
         errorMsg: "Sorry, a network error occured",
       });

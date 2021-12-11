@@ -14,9 +14,9 @@ import {
   InputOutlined,
   Lock,
   LockOpenOutlined,
-  KeyboardBackspace
+  KeyboardBackspace,
 } from "@material-ui/icons";
-
+import { cashbackloader } from "../components/loading";
 import { Drawer, Divider, alertTitleClasses } from "@mui/material";
 import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
@@ -50,43 +50,23 @@ function Home({ appState, login_suc }) {
   const [movebuzzResolved, setmovebuzzResolved] = useState(false);
 
   // @========  FUNCTION TO VERIFY pin AND SHOW balance
-  const showPwd = () => {
-    if (state.loggedInUser.user.meta.transactionPin != pwd) {
-      setStates({
-        ...compState,
-        wallethidden: true,
-        confirmpwderror: true,
-        confirmpwderrormsg: "Wrong pin",
-      });
-      setPwd(null);
-    } else {
-      setClickToViewPwd(false);
-      setStates({
-        ...compState,
-        wallethidden: false,
-        confirmpwderror: false,
-        confirmpwderrormsg: "",
-      });
-      setPwd("");
-      setDrawerState({ ...drawerState, bottom: false });
-      // @==== if the action was to move buzzme balance to wallet
-      if (resolvedVerifyPin === true) {
-        moveBuzzmeFunds(
-          state.loggedInUser,
-          compState,
-          setStates,
-          login_suc,
-          setmovebuzzResolved
-        ).then((res) => {
-          if (res === true) {
-            setStates({
-              ...compState,
-              error: false,
-            });
-          }
-        });
-      }
-    }
+  const moveBuzzBalance = () => {
+    
+    moveBuzzmeFunds(
+      state.loggedInUser,
+      compState,
+      setStates,
+      login_suc,
+      setmovebuzzResolved
+    ).then((res) => {
+      // if (res === true) {
+      //   setStates({
+      //     ...compState,
+      //     error: false,
+      //     loader:false
+      //   });
+      // }
+    });
   };
 
   let userWallet = "";
@@ -103,8 +83,11 @@ function Home({ appState, login_suc }) {
         errorMsg: "You have insufficient Buzz Me balance",
       });
     } else {
-      setClickToViewPwd(true);
-      setResolvedPinVerification(true);
+      setStates({
+      ...compState,
+      loader: true,
+    });
+      moveBuzzBalance();
     }
   }
 
@@ -177,6 +160,7 @@ function Home({ appState, login_suc }) {
         error = "Wrong pin";
         setpinError("Wrong pin");
         setPin("");
+         window.navigator.vibrate([200]);
       }
     }
   };
@@ -317,7 +301,7 @@ function Home({ appState, login_suc }) {
   };
 
   const buttons = () => {
-    let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'out', 0, "clear"];
+    let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, "out", 0, "clear"];
     return numbers.map((e) => {
       return (
         <>
@@ -340,9 +324,8 @@ function Home({ appState, login_suc }) {
               if (e == "clear") {
                 clear(e);
               } else if (e == "out") {
-                 setDrawerState({ ...drawerState, bottom: false });
-              }
-              else {
+                setDrawerState({ ...drawerState, bottom: false });
+              } else {
                 append(e);
               }
             }}
@@ -364,6 +347,10 @@ function Home({ appState, login_suc }) {
         {compState.error === true && (
           <> {errorComponent(compState.errorMsg, clearError)} </>
         )}
+
+          {compState.loader === true && <>{cashbackloader()} </>}
+          {}
+
         <div className="mobile">
           <div>
             <div>
@@ -466,7 +453,7 @@ function Home({ appState, login_suc }) {
                       fontSize: "15px",
                     }}
                   >
-                    <b> Move to wallet</b>
+                   <button style={{background:"white",border:"none",outline:"none"}}> <b> Move to walletss</b></button>
                   </div>
                 </div>
 
@@ -564,14 +551,14 @@ function Home({ appState, login_suc }) {
                       }}
                       style={{
                         // height: "40px",
-                        // background: "#0a3d62",
+                        background: "#f3f3f3",
                         textAlign: "center",
                         marginTop: "5px",
                         padding: "3px 0px",
-                        borderRadius: "30px 16px",
+                        // borderRadius: "30px 16px",
                         color: " #0a3d62",
                         position: "absolute",
-                        bottom: "5px",
+                        bottom: "0px",
                         width: "100%",
                         left: "0px",
                       }}
@@ -614,7 +601,7 @@ function Home({ appState, login_suc }) {
                         padding: "4px 0px",
                       }}
                     >
-                      {state.loggedInUser.user.meta.beneficiaryId}
+                     <b> {state.loggedInUser.user.meta.beneficiaryId}</b>
                     </div>
                     <div
                       onClick={() => {

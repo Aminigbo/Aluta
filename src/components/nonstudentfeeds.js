@@ -566,7 +566,7 @@ function Home({ appState, login_suc }) {
                               }}
                             >
                               {text_input(
-                                "Enter cashback token to cashback",
+                                "Enter cashback token",
                                 value,
                                 "number",
                                 setValue

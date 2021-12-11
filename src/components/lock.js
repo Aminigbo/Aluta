@@ -34,6 +34,7 @@ function Home({ appState, login_suc, logout,set_session }) {
       } else {
         console.log("Not correct");
         setPin("");
+         window.navigator.vibrate([200]);
       }
     }
   };

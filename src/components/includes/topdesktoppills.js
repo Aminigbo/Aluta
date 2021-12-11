@@ -176,10 +176,11 @@ function Desktopright({
             payload: response,
             myNewWallet,
           });
-          window.navigator.vibrate([2000, 100, 2000]);
+          window.navigator.vibrate([2000, 1000, 2000]);
           var audio = new Audio(mp3);
           audio.play();
           setStateAlert("buzAlert");
+          console.log(compState.myNewWallet)
         }
       })
       .subscribe();
@@ -221,7 +222,7 @@ function Desktopright({
               sender: { fullname: response.giver.name },
             },
           };
-          window.navigator.vibrate([2000, 100, 2000]);
+          window.navigator.vibrate([6000, 100, 6000]);
           var audio = new Audio(mp3);
           audio.play();
           setStates({
@@ -372,7 +373,7 @@ function Desktopright({
           <p className="top-nav-pills-title">Buz Me</p>
         </div>
 
-        <div
+        {/* <div
           onClick={() => {
             history.push("/request");
           }}
@@ -389,7 +390,7 @@ function Desktopright({
             <CardGiftcardOutlined />{" "}
           </span>
           <p className="top-nav-pills-title">Request</p>
-        </div>
+        </div> */}
 
         <div
           onClick={() => {
@@ -456,6 +457,9 @@ function Desktopright({
           <p className="top-nav-pills-title">Cash Back</p>
         </div>
 
+        
+
+
         {state.loggedInUser.user.meta.schoolmode !== false ? (
           <div
             onClick={() => {
@@ -495,6 +499,25 @@ function Desktopright({
             <p className="top-nav-pills-title">Add cash</p>
           </div>
         )}
+
+        <div
+          onClick={() => {
+            history.push("/history");
+          }}
+          className="top-nav-pills-holder"
+        >
+          <span
+            style={{
+              background: split == "history" && "#0a3d62",
+              color: split == "history" && "white",
+            }}
+            className="top-nav-pills"
+          >
+            {" "}
+            <Person />{" "}
+          </span>
+          <p className="top-nav-pills-title">Account</p>
+        </div>
       </div>
 
       <React.Fragment key="bottom">
