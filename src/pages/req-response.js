@@ -624,7 +624,8 @@ function Home({ appState, login_suc, logout, set_session }) {
       return;
     }
 
-    setDrawerState({ ...drawerState, [anchor]: open });
+     setDrawerState({ ...drawerState, [anchor]: open });
+     history.push("/notification")
   };
 
   return (
