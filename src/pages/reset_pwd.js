@@ -105,9 +105,11 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
   let error = "";
   const [pinError, setpinError] = useState("");
 
-  const verify = () => {
-    if (pin.length == 4) {
-      if (pin == "0019") {  
+  const verify = (pin) => {
+    // if (pin.length == 4) {
+    if (pin == "0019") {
+      console.log(compState)
+         setStates({ ...compState, loader: true});
         const new_pwd = md5(compState.data.meta.rawPwd + compState.data.email); 
         return new_supabase.auth
           .signIn({
@@ -127,7 +129,7 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
                 meta: signin_response.data,
               };
               login_suc(data);
-              history.push("/");
+              history.push("/"); 
             }
           });
 
@@ -136,16 +138,18 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
         error = "Wrong pin";
         setpinError("Incorrect OTP");
         setPin("");
+        window.navigator.vibrate([200]);
+        // alert(pin)
       }
-    }
+    // }
   };
   const append = (e) => {
     let newPin = pin + e;
     if (pin.length !== 4) {
       setPin(newPin);
     }
-    if (pin.length > 2) {
-      verify();
+    if (newPin.length == 4) {
+      verify(newPin);
     }
     setpinError();
   };
@@ -276,27 +280,31 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
   };
 
   const buttons = () => {
-    let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, "out", 0, "clear"];
+    let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, "out", "0", "clear"];
     return numbers.map((e) => {
       return (
         <>
-          <button
-            style={{
+          {/* {console.log(state)} */}
+            <button
+               className="customInput"
+               style={{
+               width:"60px",
               padding: "10px 10px",
               fontWeight: "bold",
               border: "none",
-              background: "white",
-              color: "black",
-              margin: "7px 40px",
+            //   background: "white",
+            //   color: "black",
+              margin: "15px 17px",
               fontSize: "20px",
-              textAlign: "left",
+                  textAlign: "center",
+              borderRadius:"5px"
             }}
             value={e}
             onClick={() => {
               if (e == "clear") {
                 clear(e);
               } else if (e == "out") {
-                history.push("/");
+                setDrawerState({ ...drawerState, bottom: true });
               } else {
                 append(e);
               }
@@ -468,7 +476,7 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
             >
               {pinVal()}
               {/* {pin} */}
-              {verify()}
+              {/* {verify()} */}
               <br />
               <div
                 style={{

@@ -9,12 +9,12 @@ body{
       width: 95%;
       /* height: 432px; */
       left: 2.5%;
-      top: 100px;
+      top: 50px;
       padding:50px 10px;
-      background: #FFFFFF;
-      border: 1px solid rgba(1, 0, 26, 0.36);
+      /* background: #FFFFFF; */ 
+      /* border: 1px solid rgba(1, 0, 26, 0.36); */
       box-sizing: border-box;
-      box-shadow: -1px 1px 10px rgba(1, 0, 26, 0.36);
+      /* box-shadow: -1px 1px 10px rgba(1, 0, 26, 0.36); */
       border-radius: 5px;
       text-align: center;
       justify-content: center;

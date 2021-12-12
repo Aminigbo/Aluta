@@ -26,7 +26,9 @@ export function alert(payload, setStateAlert,sendToDefault) {
               }}
               onClick={() => {
                 setStateAlert(null);
-                sendToDefault()
+                if(sendToDefault){
+                  sendToDefault()
+                }
               }}
               className="active"
             >

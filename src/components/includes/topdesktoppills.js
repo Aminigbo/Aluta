@@ -3,6 +3,7 @@ import "../../static/css/top-nav.css";
 import { LinearProgress } from "@material-ui/core";
 import React, { useState } from "react";
 import { connect } from "react-redux";
+
 import {
   logOut,
   loginSuc,
@@ -11,7 +12,7 @@ import {
   disp_session,
   disp_request,
 } from "../../redux";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import {
   LocalAtm,
   Person,
@@ -33,7 +34,7 @@ import mp3 from "../../static/audio/Doorbell.mp3";
 import { checkSession } from "../controlers/session";
 import { cashbackloader } from "../../components/loading";
 
-import { updateUserMeta } from "../../functions/models/index";
+import { updateUserMeta,fetchUserProfile } from "../../functions/models/index";
 
 //  function that checkes if the user is still using the default transaction pin
 import { trigger, resetPin } from "../../functions/controllers/resetPin";
@@ -272,8 +273,23 @@ function Desktopright({
   };
 
   React.useEffect(() => {
+    setStates({
+      ...compState,
+      loading:true
+    })
     sub();
-   
+    fetchUserProfile(userId).then(res => {
+      if (res.body == null || res.body.length < 1) {
+        logout("HARD")
+         history.push("/login")
+      } else {
+        setStates({
+      ...compState,
+      loading:false
+    })
+      }
+      console.log(res)
+    })
     // if(state.loggedIn == true ){
     //   setInterval(() => checkSession(logout, set_session, state), 5000);
     // } 
@@ -317,7 +333,12 @@ function Desktopright({
     setDrawerState({ ...drawerState, [anchor]: open });
   };
 
-  return (
+  return state.loggedIn === false ? (
+    <div>
+      {state.loggedInUser == null ? <Redirect to="login" /> : <Redirect to="/lockout" /> }
+      
+    </div>
+  ) :  (
     <>
       {allow === false && (
         <div>
@@ -553,7 +574,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, encoded) => {
   return {
     set_session: (time) => dispatch(disp_session(time)),
-    logout: () => dispatch(logOut()),
+    logout: (type) => dispatch(logOut(type)),
     login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
     addwallet: (walletBal) => dispatch(add_wallet(walletBal)),
     dispNoti: (payload) => dispatch(disp_noti(payload)),

@@ -39,23 +39,20 @@ import {
 
 const initialState = {
    loggedIn: false,
-   loggedInUser : '', 
-   benefited:[],
-   allMatches: [],
-   testresult: [],
+   loggedInUser :null, 
+   benefited:[],  
    payment: "",
    WALLET: 0,
    notification:false,
-   winner: [],
-   stagged: [], 
-   refresh: [],
+   // winner: [],
+   // stagged: [], 
+   // refresh: [],
    loading:false,
    whoRequested:null,
    request: false,
    realtime: [],
    draft: [],
-   session: '',
-   betslip: [],
+   session: '', 
    withdrawal: [],
    feeds: [],
    signal:"",
@@ -79,9 +76,10 @@ const reducer = (state = initialState, action) => {
          }
       case LOGGED_IN_SUCCESS:
          return {
-            ...state,
-            loggedInUser: action.user,
-            loggedIn:true
+           ...state,
+         loggedIn:true,
+         loggedInUser:action.userMetadata
+            
          } 
       case ALL_MATCHES:
       return {
@@ -108,7 +106,7 @@ const reducer = (state = initialState, action) => {
       }
       
       case LOG_OUT_HARD:
-         return {
+         return { 
              ...state,
          loggedIn:false, 
          wallet: 0, 

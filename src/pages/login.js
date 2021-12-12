@@ -173,7 +173,7 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
       {console.log(state)}
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Aluta-Mata</title>
+        <title>Pay with buzz</title>
         <link rel="icon" href={logo} />
       </Helmet>
 

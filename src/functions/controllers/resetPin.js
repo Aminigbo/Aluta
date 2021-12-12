@@ -15,7 +15,7 @@ export function resetPin(state, resetTPin, smile, setPins, pins) {
     <div>
       {state.loggedInUser.user.meta.transactionPin == "0000" && (
         <div className="realtime">
-          <div className="realtimeParent">
+          <div className="realtimeParent" style={{top:"20%"}}>
             <div className="realtimeHeader" style={smile}>
               Reset your Pin
             </div>

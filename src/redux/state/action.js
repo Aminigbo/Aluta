@@ -78,6 +78,7 @@ export const loginSuc = (userMetadata) => {
 };
 
 export const logOut = (type) => {
+     console.log(type)
    if (type == "HARD") {
      return {
       type:LOG_OUT_HARD

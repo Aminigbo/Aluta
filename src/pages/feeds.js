@@ -31,9 +31,12 @@ import { returnFeeds } from "../functions/controllers/feeds";
 function Home({ appState, loadFeeds, disp_signal }) {
   let history = useHistory();
   const state = appState;
-  const schoolFeeds = state.feeds.filter(
-    (e) => e.poster.school == state.loggedInUser.user.meta.school
-  );
+  let schoolFeeds = "";
+  if (state.loggedInUser !== null && state.loggedIn !== false) {
+    schoolFeeds = state.feeds.filter(
+      (e) => e.poster.school == state.loggedInUser.user.meta.school
+    );
+  }
   function renderFeeds(allFeeds) {
     allFeeds.sort(function (a, b) {
       return parseFloat(b.id) - parseFloat(a.id);
@@ -109,7 +112,6 @@ function Home({ appState, loadFeeds, disp_signal }) {
       // window.pageYOffset === 0 && console.log("back at top");
       // console.log(window.pageYOffset)
     };
- 
 
     // fetch_feeds()
     loadFeeds(state.feeds);
@@ -191,7 +193,8 @@ function Home({ appState, loadFeeds, disp_signal }) {
     </div>
   ) : (
     <div id="body bg">
-      {state.loggedInUser.user.meta.schoolmode === false && history.push("/nonstudentfeed")}
+      {state.loggedInUser.user.meta.schoolmode === false &&
+        history.push("/nonstudentfeed")}
       {/* {state.realtime.length > 0 && <Realtime />} */}
       <Realtime />
 

@@ -211,6 +211,7 @@ function Register({ appState, login_suc, walletAdd }) {
           <br />
           <br />
           <TextField
+          type="number"
             id="input"
             onChange={(e) => {
               setPhone(e.target.value);

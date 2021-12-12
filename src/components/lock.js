@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import "../static/css/home/index.css";
-import { add_wallet, logOut, loginSuc,disp_session } from "../redux";
+import { add_wallet, logOut, loginSuc, disp_session } from "../redux";
 import {
   Backspace,
   InputOutlined,
@@ -12,30 +12,38 @@ import {
 import { cashbackloader } from "./loading";
 import { Drawer, Divider, alertTitleClasses } from "@mui/material";
 
-function Home({ appState, login_suc, logout,set_session }) {
+function Home({ appState, login_suc, logout, set_session }) {
   const state = appState;
   const history = useHistory();
   const [pin, setPin] = useState("");
 
   const validate = () => {
-    const data = {
-      user: state.loggedInUser.user,
-      meta: state.loggedInUser.meta,
-     };
-     set_session(new Date().getTime())
-    return setTimeout(() => login_suc(data), 500);
+    if (state.loggedInUser !== null) {
+      const data = {
+        user: state.loggedInUser.user,
+        meta: state.loggedInUser.meta,
+      };
+      set_session(new Date().getTime());
+      return setTimeout(() => login_suc(data), 500);
+    } else {
+      history.push("/login");
+    }
   };
 
   const verify = () => {
-    if (pin.length == 4) {
+    if(state.loggedInUser !== null){
+      if (pin.length == 4) {
       if (pin == state.loggedInUser.user.meta.transactionPin) {
         setPin("validated");
         return validate();
       } else {
         console.log("Not correct");
         setPin("");
-         window.navigator.vibrate([200]);
+        window.navigator.vibrate([200]);
       }
+    }
+    } else {
+      history.push("/login")
     }
   };
   const append = (e) => {
@@ -173,8 +181,8 @@ function Home({ appState, login_suc, logout,set_session }) {
     }
   };
 
-   React.useEffect(() => {
-      set_session(new Date().getTime())
+  React.useEffect(() => {
+    set_session(new Date().getTime());
   }, []);
 
   const buttons = () => {
@@ -183,19 +191,19 @@ function Home({ appState, login_suc, logout,set_session }) {
       return (
         <>
           {/* {console.log(state)} */}
-            <button
-               className="customInput"
-               style={{
-               width:"60px",
+          <button
+            className="customInput"
+            style={{
+              width: "60px",
               padding: "10px 10px",
               fontWeight: "bold",
               border: "none",
-            //   background: "white",
-            //   color: "black",
+              //   background: "white",
+              //   color: "black",
               margin: "15px 20px",
               fontSize: "20px",
-                  textAlign: "center",
-              borderRadius:"5px"
+              textAlign: "center",
+              borderRadius: "5px",
             }}
             value={e}
             onClick={() => {
@@ -233,13 +241,18 @@ function Home({ appState, login_suc, logout,set_session }) {
 
   return state.loggedIn === true ? (
     <div>
-      {/* {state.loggedInUser == null ? <Redirect to="login" /> : <Redirect to="/" />} */}
-       <Redirect to="/" />
+      {state.loggedInUser == null ? (
+        <Redirect to="login" />
+      ) : (
+        <Redirect to="/" />
+      )}
+      <Redirect to="/" />
     </div>
   ) : (
     <div id="body bg">
       <>
-        {pin == "validated" && <> {cashbackloader()}</>} 
+        {console.log(state)}
+        {pin == "validated" && <> {cashbackloader()}</>}
         <div
           style={{
             position: "fixed",
@@ -261,26 +274,28 @@ function Home({ appState, login_suc, logout,set_session }) {
           >
             <div
               style={{
-                padding: "15px",
+                padding: "",
                 // background: "lightgray",
                 color: "black",
-                position: "absolute",
-                top: "5%",
+                // position: "absolute",
+                // top: "0%",
+                marginTop: "20px",
                 width: "100%",
                 textAlign: "center",
               }}
             >
-              <b style={{ fontSize: "50px" }}>🔐</b> <br />
-              <span>Reauthenticate</span>
+              <b style={{ fontSize: "40px" }}>🔐</b> <br />
+              <span>Enter your pin</span>
             </div>
             <div
               style={{
                 padding: "15px",
                 // background: "lightgray",
                 color: "white",
-                position: "absolute",
-                top: "27%",
+                // position: "absolute",
+                // top: "7%",
                 width: "100%",
+                marginTop: "20px",
                 textAlign: "center",
               }}
             >
@@ -288,7 +303,12 @@ function Home({ appState, login_suc, logout,set_session }) {
               {verify()}
             </div>
             <div
-              style={{ position: "absolute", bottom: "40px", width: "100%" }}
+              style={{
+                position: " ",
+                bottom: "30px",
+                width: "100%",
+                marginTop: "50px",
+              }}
             >
               {buttons()}
             </div>
@@ -344,8 +364,8 @@ function Home({ appState, login_suc, logout,set_session }) {
                   margin: "10px 19px",
                 }}
                 onClick={() => {
-                   logout("HARD");
-                   history.push("/login")
+                  logout("HARD");
+                  history.push("/login");
                 }}
               />
               <br />
@@ -368,7 +388,7 @@ const mapDispatchToProps = (dispatch, encoded) => {
   return {
     walletAdd: (wallet) => dispatch(add_wallet(wallet)),
     logout: (type) => dispatch(logOut(type)),
-     login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
+    login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
     set_session: (time) => dispatch(disp_session(time)),
   };
 };
