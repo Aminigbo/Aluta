@@ -149,7 +149,7 @@ export function cashbackCurrency(
                    {copy !== null ? (
                   <> {generatedToken} &nbsp;&nbsp;
                     {" "}
-                    {compState.copy == true ? (
+                    {/* {compState.copy == true ? (
                       <LibraryAddCheckOutlined
                         style={{ fontSize: "24px", color: "mediumseagreen" }}
                       />
@@ -157,7 +157,7 @@ export function cashbackCurrency(
                       <FileCopyOutlined
                         style={{ fontSize: "24px", color: "orange" }}
                       />
-                    )}
+                    )} */}
                   </>
                 ): <b style={{fontSize:"20px"}}>NGN {amount}</b> }
                 </b>{" "}

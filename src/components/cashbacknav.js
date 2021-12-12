@@ -426,7 +426,7 @@ function Home({ appState, login_suc }) {
                     <div style={{ marginTop: " ", textAlign: " " }}>
                       <i style={{ fontSize: "12px", color: "black" }}>
                         {" "}
-                        You agree to our Cashback terms of service and policies
+                        {/* You agree to our Cashback terms of service and policies */}
                       </i>
                     </div>{" "}
                   </>

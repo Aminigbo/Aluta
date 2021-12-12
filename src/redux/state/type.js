@@ -28,7 +28,7 @@ export const ISSIGNAL = "ISSIGNAL"
 
 export const DRAFT = "DRAFT" 
 
-export const CASHOUT = "CASHOUT"
+export const WHOREQUEESTED = "WHOREQUEESTED"
 
 export const NOTIFICATION = "NOTIFICATION"
 

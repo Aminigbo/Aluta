@@ -500,6 +500,8 @@ function Desktopright({
           </div>
         )}
 
+        {console.log(state)}
+
         <div
           onClick={() => {
             history.push("/history");

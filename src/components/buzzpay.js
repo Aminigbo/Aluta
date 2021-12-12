@@ -11,6 +11,7 @@ import {
   ArrowBackIosOutlined,
   PeopleAltOutlined,
   PublicOutlined,
+  CloseOutlined
 } from "@material-ui/icons";
 import Naira from "react-naira";
 import { Drawer, Divider, alertTitleClasses } from "@mui/material";
@@ -39,6 +40,22 @@ const rec_inputs = {
   outline: "none",
   fontSize: "13px",
   resize: "none",
+};
+
+const rec_inputs3 = {
+  // margin: "5%",
+  width: "100%",
+  padding: "4px",
+  border: "5px",
+  height: "70px",
+  border: "0.3px solid lightgrey",
+  // backgroundColor: "#f4f6f7",
+  color: "#4e7a97",
+  outline: "none",
+  fontSize: "13px",
+  resize: "none",
+  marginTop: "10px",
+  borderRadius: "4px",
 };
 
 const rec_inputs2 = {
@@ -81,7 +98,7 @@ function Home({ appState, login_suc, logout, set_session }) {
   const state = appState;
   const history = useHistory();
   const new_supabase = supabase();
-
+  const [desc, setDesc] = useState("");
   const [amount, setAmount] = useState(0);
   const [max, setMax] = useState("");
   const [pin, setPin] = useState("");
@@ -94,7 +111,7 @@ function Home({ appState, login_suc, logout, set_session }) {
   const [finallySend, setFinallysend] = useState("");
   const [stateAlert, setStateAlert] = useState("");
   const [actionType, setActiontype] = useState(null); // set treu if action type is send else set false if action type is request
-
+  const [maxDesc, setMaxDesc] = useState(false);
   // @==== RESET ALL STATE UON SUCCESS
   const sendToDefault = () => {
     setProceedSend(false);
@@ -103,6 +120,7 @@ function Home({ appState, login_suc, logout, set_session }) {
     setPin("");
     setAmount(0);
     setDrawerState({ ...drawerState, bottom: false });
+    setStates("")
   };
   const validate = () => {
     const data = {
@@ -121,10 +139,10 @@ function Home({ appState, login_suc, logout, set_session }) {
     if (newPin < state.loggedInUser.user.meta.wallet) {
       setAmount(newPin);
     }
-   //  if (newPin > 9999) {
-   //    setMax("Maximum amount reached");
-   //  } else
-       if (newPin > state.loggedInUser.user.meta.wallet) {
+    //  if (newPin > 9999) {
+    //    setMax("Maximum amount reached");
+    //  } else
+    if (newPin > state.loggedInUser.user.meta.wallet) {
       setMax("Insufficient wallet balance");
     } else {
       setMax("");
@@ -530,42 +548,46 @@ function Home({ appState, login_suc, logout, set_session }) {
   // ============================================================================================
 
   async function verifyBeneficiary() {
-    if (beneficiary.length == 10) {
-      setStates({ ...compState, loader: true }); //  set loader to true
-
-      new_supabase
-        .from("users")
-        .select("*")
-        // .eq("beneficiaryId", beneficiary)
-        .contains("meta", { beneficiaryId: beneficiary })
-        .then((resolve) => {
-          if (resolve.data.length > 0) {
-            let beneficiary = resolve.body[0];
-            setverifyError("");
-            setProceedSend(true);
-            setStates({
-              ...compState,
-              loader: false,
-              resolved: true,
-              benef: beneficiary.fullname,
-              benefId: beneficiary.id,
-              benefWallet: beneficiary.meta.buzzmewallet,
-              beneficiaryMeta: beneficiary.meta,
-            });
-            console.log(beneficiary.id);
-          } else {
-            setverifyError("Beneficiary not found");
-            setStates({ ...compState, loader: false });
-            setbeneficiary("");
-          }
-        })
-        .catch((error) => {
-          setverifyError("Network error");
-          setStates({ ...compState, loader: false });
-        });
+    if (beneficiary == state.loggedInUser.user.meta.beneficiaryId) {
+      setverifyError("Can't buzz yourself");
     } else {
-      setverifyError("Beneficiary ID");
-      setStates({ ...compState, loader: false });
+      if (beneficiary.length == 10) {
+        setStates({ ...compState, loader: true }); //  set loader to true
+
+        new_supabase
+          .from("users")
+          .select("*")
+          // .eq("beneficiaryId", beneficiary)
+          .contains("meta", { beneficiaryId: beneficiary })
+          .then((resolve) => {
+            if (resolve.data.length > 0) {
+              let beneficiary = resolve.body[0];
+              setverifyError("");
+              setProceedSend(false);
+              setStates({
+                ...compState,
+                loader: false,
+                resolved: true,
+                benef: beneficiary.fullname,
+                benefId: beneficiary.id,
+                benefWallet: beneficiary.meta.buzzmewallet,
+                beneficiaryMeta: beneficiary.meta,
+              });
+              console.log(beneficiary.id);
+            } else {
+              setverifyError("Beneficiary not found");
+              setStates({ ...compState, loader: false });
+              setbeneficiary("");
+            }
+          })
+          .catch((error) => {
+            setverifyError("Network error");
+            setStates({ ...compState, loader: false });
+          });
+      } else {
+        setverifyError("Beneficiary ID");
+        setStates({ ...compState, loader: false });
+      }
     }
   }
 
@@ -1037,18 +1059,88 @@ function Home({ appState, login_suc, logout, set_session }) {
                   {compState.resolved == true && actionType === true && (
                     <div
                       style={{
-                        fontSize: "20px",
-                        fontWeight: "bold",
-                        textAlign: "center",
+                        fontSize: " ",
+                        fontWeight: " ",
+                        textAlign: "left",
                         width: " ",
                         marginLeft: "",
-                        background: "#efedc4",
+                        // background: "#efedc4",
                         padding: " 10px",
                       }}
                     >
-                      <Naira>{amount}</Naira>
-                      <br />
-                      {`${compState.benef}`}
+                      <p style={{ fontWeight: "bold" }}>Buzz Me Details</p>
+                      <div
+                        style={{
+                          boxShadow: " 1px 1px 3px #888888",
+                          padding: "5px 10px",
+                        }}
+                      >
+                        <spall style={{ fontSize: "11px" }}>
+                          You want to Buzz
+                        </spall>
+                        <div>
+                          <b> {`${compState.benef}`}</b>
+                        </div>
+                        <div style={{ fontWeight: "bold" }}>
+                          <Naira>{amount}</Naira>
+                        </div>
+                        {/* <br /> */}
+                        <textarea
+                          onChange={(e) => {
+                            if (desc.length < 100) {
+                              setMaxDesc(false);
+                              setDesc(e.target.value);
+                            } else {
+                              // setMaxDesc(true)
+                              if (
+                                e.nativeEvent.inputType ==
+                                "deleteContentBackward"
+                              ) {
+                                setDesc(e.target.value);
+                                setMaxDesc(false);
+                              } else {
+                                setMaxDesc(true);
+                              }
+                            }
+                          }}
+                          value={desc}
+                          style={rec_inputs3}
+                          placeholder="Description  e.g  Pay some bills with this little token and remain happy.."
+                        ></textarea>
+                        {maxDesc === true && (
+                          <small style={{ color: "crimson" }}>
+                            maximum reaches
+                          </small>
+                        )}
+                      </div>
+                      {/* sendToDefault */}
+                      {proceedSend === false && (
+                        <div style={{ textAlign: "center" }}>
+                           <CloseOutlined onClick={()=>{
+                             sendToDefault()
+                           }} style={{marginRight:"30px",fontSize:"30px"}} />
+
+                          <input
+                            onClick={() => {
+                              setProceedSend(true)
+                            }}
+                            type="button"
+                            value="Authenticate"
+                            style={{
+                              padding: "5px",
+                              outline: "none",
+                              width: "150px",
+                              background: "#0a3d62",
+                              border: "0.5px solid #0a3d62",
+                              color: "white",
+                              borderRadius: "6px",
+                              //   margin: "10px 19px",
+                              fontWeight: "bold",
+                              marginTop: "10px",
+                            }}
+                          />
+                        </div>
+                      )}
                     </div>
                   )}
 

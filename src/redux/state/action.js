@@ -16,7 +16,7 @@ import {
   STAGGED_MATCHES,
   ISSIGNAL,
   DRAFT,
-  CASHOUT,
+  WHOREQUEESTED,
   NOTIFICATION,
   REQUEST,
   REALTIME,
@@ -154,10 +154,10 @@ export const draft = (payload) => {
   };
 };
 
-export const disp_cashout = (cashout) => {
+export const disp_whoRequested = (who) => {
   return {
-    type: CASHOUT,
-    cashout,
+    type: WHOREQUEESTED,
+    who,
   };
 };
 

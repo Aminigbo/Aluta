@@ -6,7 +6,13 @@ import "../static/css/home/index.css";
 import Header from "../components/includes/mobile_header.js";
 import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
-import { add_wallet, logOut, loginSuc, disp_noti } from "../redux";
+import {
+  add_wallet,
+  logOut,
+  loginSuc,
+  disp_noti,
+  disp_whoRequested,
+} from "../redux";
 import { cashbackloader } from "../components/loading";
 import { fetchNotification, fetchUserProfile } from "../functions/models/index";
 
@@ -19,7 +25,7 @@ const smile = {
   background: "#f3f3f3",
 };
 
-function Home({ appState, dispNoti, login_suc }) {
+function Home({ appState, dispNoti, login_suc, dispWho }) {
   let history = useHistory();
   const state = appState;
 
@@ -130,6 +136,19 @@ function Home({ appState, dispNoti, login_suc }) {
                   <br />
                   {e.type == "BUZZ REQUEST" && (
                     <b
+                      onClick={() => {
+                        console.log("Hello");
+                        // disp_whoRequested()
+
+                        let data = {
+                          buzzId: e.meta.sender.beneficiaryId,
+                          name: e.meta.sender.fullname,
+                          desc: e.meta.data.desc,
+                          amount: e.meta.data.amount,
+                        };
+                        dispWho(data)
+                        history.push('/req-response')
+                      }}
                       style={{
                         background: "#0a3d62",
                         color: "white",
@@ -139,7 +158,7 @@ function Home({ appState, dispNoti, login_suc }) {
                       }}
                     >
                       {" "}
-                      BUZZ {e.meta.sender.fullname.split(" ")[0]}
+                      {e.meta.sender.fullname.split(" ")[0]}
                       &nbsp;&nbsp; NGN {e.meta.data.amount}
                     </b>
                   )}
@@ -176,7 +195,10 @@ function Home({ appState, dispNoti, login_suc }) {
                   <span style={{ fontSize: "13px" }}>
                     {" "}
                     By
-                    <b> {e.from == e.to ? 'You': e.meta.resolvedby.split(" ")[0]}</b>
+                    <b>
+                      {" "}
+                      {e.from == e.to ? "You" : e.meta.resolvedby.split(" ")[0]}
+                    </b>
                   </span>{" "}
                   <br />
                 </div>
@@ -200,7 +222,8 @@ function Home({ appState, dispNoti, login_suc }) {
                     >
                       NGN {e.meta.amount}
                     </b>{" "}
-                    has been resolved by {e.from == e.to ? 'You': e.meta.resolvedby}
+                    has been resolved by{" "}
+                    {e.from == e.to ? "You" : e.meta.resolvedby}
                   </small>{" "}
                   <br />
                 </div>
@@ -220,7 +243,6 @@ function Home({ appState, dispNoti, login_suc }) {
   ) : (
     <div id="body bg">
       <>
-        {console.log(compState)}
         {compState.loader === true && <> {cashbackloader()}</>}
         <div className="mobile">
           <div className="header_footer">
@@ -319,7 +341,8 @@ const mapDispatchToProps = (dispatch, encoded) => {
     logout: () => dispatch(logOut()),
     login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
     dispNoti: (payload) => dispatch(disp_noti(payload)),
+    dispWho: (who) => dispatch(disp_whoRequested(who)),
   };
 };
-
+// disp_whoRequested
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

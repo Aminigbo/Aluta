@@ -12,7 +12,7 @@ import { allCashback } from "../functions/models/index";
 
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
-import { EuroSymbolOutlined ,FileCopyOutlined} from "@material-ui/icons";
+import { EuroSymbolOutlined, FileCopyOutlined } from "@material-ui/icons";
 const smile = {
   color: "white",
   fontSize: "20px",
@@ -145,12 +145,20 @@ function Home({ appState, dispNoti }) {
                         <b style={{ fontSize: "16px", color: "#0a3d62" }}>
                           {e.token}{" "}
                         </b>{" "}
-                        <FileCopyOutlined
-                          onClick={()=>{
-                            copy()
+                        {/* <FileCopyOutlined
+                          onClick={() => {
+                            copy(e.token);
                           }}
-                          style={{ fontSize: "20px", color: copyState == true ? "Mediumseagreen": "orange",marginLeft:"35px" }}
-                        />
+                          style={{
+                            fontSize: "26px",
+                            color:
+                              copyState.status == true &&
+                              copyState.id == e.token
+                                ? "Mediumseagreen"
+                                : "orange",
+                            marginLeft: "35px",
+                          }}
+                        /> */}
                       </div>
                     </b>
                   </small>
@@ -183,14 +191,28 @@ function Home({ appState, dispNoti }) {
       });
     }
   };
-const [copyState, setCopyState] = useState(false)
-  const copy = () => {
-    setCopyState(true)
+  const [copyState, setCopyState] = useState({
+    status: false,
+  });
+  const copy = (e) => {
+    setCopyState({
+      ...copyState,
+      status: true,
+      id: e,
+    });
+    window.navigator.vibrate([200]);
+    if (navigator && navigator.clipboard) {
+      navigator.clipboard.writeText(e);
+    }
     setTimeout(() => {
-      setCopyState(false)
+      setCopyState({
+        ...copyState,
+        status: false,
+        id: "",
+      });
     }, 2000);
     // setInterval(() => checkSession(logout, set_session, state), 2000);
-  }
+  };
 
   return state.loggedIn === false ? (
     <div>

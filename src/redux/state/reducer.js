@@ -15,7 +15,7 @@ import {
    STAGGED_MATCHES,
    ISSIGNAL,
    DRAFT, 
-   CASHOUT,
+   WHOREQUEESTED,
    NOTIFICATION,
    REQUEST,
 
@@ -50,7 +50,7 @@ const initialState = {
    stagged: [], 
    refresh: [],
    loading:false,
-   cashout: "NO",
+   whoRequested:null,
    request: false,
    realtime: [],
    draft: [],
@@ -170,10 +170,10 @@ const reducer = (state = initialState, action) => {
             draft:action.payload
          } 
       
-      case CASHOUT:
+      case WHOREQUEESTED:
          return {
             ...state,
-            cashout:action.cashout
+            whoRequested:action.who
          }
       
       case NOTIFICATION:

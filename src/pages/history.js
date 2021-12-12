@@ -30,6 +30,7 @@ function Home({ appState, login_suc }) {
 
   const [tokenamount, setTokenamount] = useState(""); // amount to be generated
   const [allbuzzme, setAllbuzzme] = useState(false);
+  const [bankSettlement, setbankSettlement] = useState(false)
 
   let userWallet = "";
   if (state.loggedIn === true) {
@@ -111,45 +112,64 @@ function Home({ appState, login_suc }) {
                       color: "#0a3d62",
                       textDecoration: "none",
                       background: allbuzzme == false && "lightgray",
-                      padding: "0px 5px",
+                      padding: "5px",
                       borderRadius: "5px",
                     }}
                   >
                     {/* <ViewAgenda style={{ marginLeft: "-4px" }} /> */}
-                    &nbsp;<b>All Cashbacks</b>
+                    &nbsp;<cb>Cashbacks</cb>
                   </span>
-                  &nbsp;&nbsp;
+                  
                   <span
                     onClick={() => {
-                      setAllbuzzme(true);
+                        setAllbuzzme(true);
+                        setbankSettlement(false)
                     }}
                     style={{
-                      marginLeft: "10px",
+                      marginLeft: "",
                       fontSize: "15px",
                       color: "#0a3d62",
                       textDecoration: "none",
                       background: allbuzzme == true && "lightgray",
-                      padding: "0px 5px",
+                      padding: "5px",
                       borderRadius: "5px",
                     }}
                   >
                     {/* <HistoryOutlined style={{ marginLeft: "-4px" }} /> */}
-                    &nbsp;<b>Buzz me</b>
+                    &nbsp;<buzz>Buzz me</buzz>
                   </span>
-                  &nbsp;&nbsp;
+
+                    <span
+                    onClick={() => {
+                      setbankSettlement(true);
+                      setAllbuzzme(null)
+                    }}
+                    style={{
+                      marginLeft: " ",
+                      fontSize: "15px",
+                      color: "#0a3d62",
+                      textDecoration: "none",
+                      background: bankSettlement == true && "lightgray",
+                      padding: "5px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    {/* <HistoryOutlined style={{ marginLeft: "-4px" }} /> */}
+                    &nbsp;<width>Bank settlement</width>
+                  </span>
+                  
                   <Link
                     to="updateprofile"
                     style={{
-                      marginLeft: "10px",
+                      marginLeft: "",
                       fontSize: "15px",
                       color: "#0a3d62",
                       textDecoration: "none",
                     }}
                   >
                     {/* <Person style={{ marginLeft: "-4px" }} /> */}
-                    &nbsp;<b>Profile</b>
-                  </Link>
-                  <br />
+                    &nbsp;<prf>Profile</prf>
+                  </Link> 
                 </div>
               </div>{" "}
               <div style={{ zIndex: "80000", background: " " }}>

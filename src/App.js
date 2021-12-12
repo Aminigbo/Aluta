@@ -34,7 +34,8 @@ import Reactions from "./pages/reactions"
 import History  from "./pages/history"
 import Notification from "./components/notification"
 import Lock from "./components/lock"
- import Buzzpay from "./components/buzzpay"
+import Buzzpay from "./components/buzzpay"
+ import Reqresponse from "./pages/req-response"
 import {
   BrowserRouter as Router,
   Switch,
@@ -120,6 +121,11 @@ export default function App() {
 
               <Route path="/cashback">
                 <CASHBACK />
+              </Route>
+
+              {/* Reqresponse */}
+              <Route path="/req-response">
+                <Reqresponse />
               </Route>
 
               <Route path="/cashback-create">
