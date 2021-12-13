@@ -283,17 +283,22 @@ function Desktopright({
         logout("HARD")
          history.push("/login")
       } else {
-        setStates({
+        if (res.body[0].meta.isActive !== true) {
+           history.push(`/otp/${res.body[0].phone}`)
+        } else {
+           setStates({
       ...compState,
       loading:false
     })
+        }
+       
       }
       console.log(res)
     })
     // if(state.loggedIn == true ){
     //   setInterval(() => checkSession(logout, set_session, state), 5000);
     // } 
-     checkSession(logout, set_session, state)
+     checkSession(logout, set_session, state,new_supabase)
   }, []);
 
   let successPayload = {

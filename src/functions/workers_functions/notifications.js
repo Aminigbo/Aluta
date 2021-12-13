@@ -2,10 +2,17 @@ var axios = require("axios");
 // const url = "http://localhost:1100/api/v1/notifications/";
 const url = "https://buzz-servre.herokuapp.com/api/v1/notifications/"
 
+// // generate otp
+// const generateOTP = (min, max) => {
+//   let randomNum = Math.random() * (max - min) + min;
+//   return Math.floor(randomNum);
+// };
+
 // @======== Send OTP
-export function send_otp(payload) {
+export function send_otp(payload,otp) {
   var data = JSON.stringify({
     phone: payload.phone,
+    otp
   });
 
   var config = {

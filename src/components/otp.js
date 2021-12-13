@@ -216,12 +216,13 @@ function Otp({ appState, pay_init_suc,walletAdd }) {
       });
    }
 
-  return state.loggedIn === false ? (
-    <div>
-          <Redirect to="/login" />  
-    </div>
+//  state.loggedIn === false ? (
+//     <div>
+//           <Redirect to="/login" />  
+//     </div>
     
-  ):
+//   ):
+  return
   (
     <div className="bg"> 
     {compState.loader && <div className="loader">  <LinearProgress /> </div>}

@@ -4,7 +4,7 @@ import { success, error, beneficaryID } from "../../utils/index";
 import md5 from "md5";
 export async function handleRegister(formData) {
   let loadedData = null;
-  let { email, phone, name, password } = formData;
+  let { email, phone, name, password,otp } = formData;
   const ben_id = beneficaryID(name, email, phone, password);  // beneficiary id gotten from md5
   let curvedBenId = phone.substring(1,11)  // beneficiary id gotten from phone number
   const new_pwd = md5(password+email);
@@ -29,6 +29,8 @@ export async function handleRegister(formData) {
       school: null,
       badge: "Young LAD",
       avater: null,
+      otp: otp,
+      isActive:false,
     },
   };
 

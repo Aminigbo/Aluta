@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
- 
 
 function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
   // initialize supabase
@@ -129,9 +128,16 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
                       },
                       meta: signin_response.data,
                     };
-                    walletAdd(data.user.meta.wallet);
-                    login_suc(data);
-                    set_session(new Date().getTime())
+
+                    if (response2.body[0].meta.isActive === false) {
+                      login_suc(data);
+                      history.push(`/otp/${response2.body[0].phone}`);
+                    } else {
+                      walletAdd(data.user.meta.wallet);
+                      login_suc(data);
+                      set_session(new Date().getTime());
+                      history.push("/")
+                    }
                   }
                 });
             }
@@ -161,7 +167,7 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
     error: true,
   };
 
-  return state.loggedInUser !== null ? (
+  return state.loggedInUser !== null && state.loggedInUser.user.meta.isActive === true && state.loggedInUser.user.meta.transactionPin !== '0000' ? (
     <div>
       <Redirect to="/lockout" />
     </div>
@@ -197,7 +203,7 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
         </div>
         <div style={{ fontSize: "20px", marginTop: "10px" }} id=" ">
           Login
-        </div> 
+        </div>
 
         <form className="form" noValidate autoComplete="off">
           <br />
@@ -243,12 +249,20 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
           </div>
           <br />
           <br />
-            <button
-              type="button"
-            style={{ background: "#0a3d62", color: "white",border:"none",outline:"none",padding:"7px 50px",margin:"10px",borderRadius:"6px" }}
+          <button
+            type="button"
+            style={{
+              background: "#0a3d62",
+              color: "white",
+              border: "none",
+              outline: "none",
+              padding: "7px 50px",
+              margin: "10px",
+              borderRadius: "6px",
+            }}
             onClick={(e) => {
               login();
-            }} 
+            }}
           >
             {" "}
             Login{" "}
@@ -280,7 +294,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, encoded) => {
-  return { 
+  return {
     login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
     walletAdd: (wallet) => dispatch(add_wallet(wallet)),
     set_session: (time) => dispatch(disp_session(time)),

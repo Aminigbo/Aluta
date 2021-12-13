@@ -8,6 +8,7 @@ import { loginSuc, add_wallet } from "../redux";
 import { Helmet } from "react-helmet";
 import logo from "../static/logos/aluta.png";
 import { EuroSymbolOutlined } from "@material-ui/icons";
+import { send_otp } from "../functions/workers_functions/notifications";
 import {
   validatePhoneNumber,
   validateEmail,
@@ -59,11 +60,18 @@ function Register({ appState, login_suc, walletAdd }) {
 
   // register user
   async function registerUser() {
+    // generate otp
+    const generateOTP = (min, max) => {
+      let randomNum = Math.random() * (max - min) + min;
+      return Math.floor(randomNum);
+    };
+    const otp = generateOTP(10000, 99999);
     let formData = {
       email,
       phone,
       password,
       name,
+      otp
     };
     if (
       !name ||
@@ -104,12 +112,18 @@ function Register({ appState, login_suc, walletAdd }) {
             login_suc(data);
             walletAdd(2000);
             setStateAlert(true);
+            console.log(res);
             setStates({
               ...compState,
               loader: false,
+              resPhone: res.data[0].phone,
               alertMsg:
                 "You have successfully created an account. OK to complete the process.",
             });
+            // history.push("/otp")
+            let otpPhone = `+234${res.data[0].phone.substring(1, 11)}`;
+
+            send_otp(otpPhone, otp);
           } else {
             setStateAlert(false);
             setStates({
@@ -135,15 +149,16 @@ function Register({ appState, login_suc, walletAdd }) {
     setStates({ ...compState, loader: true });
   };
 
-  return state.loggedIn == true ? (
-    <div>
-      <Redirect to="/" />
-    </div>
-  ) : (
+  // redirect after registration
+  const redir = () => {
+    history.push(`/otp/${compState.resPhone}`);
+  };
+
+  return (
     <div>
       {compState.loader === true && <>{cashbackloader()} </>}
       {/* {stateAlert === null && <small>{history.push("/")}</small>} */}
-      {stateAlert === true && alert(successPayload, setStateAlert)}
+      {stateAlert === true && alert(successPayload, setStateAlert, redir)}
       {stateAlert === false && alert(errorPayload, setStateAlert)}
       <Helmet>
         <meta charSet="utf-8" />
@@ -170,9 +185,10 @@ function Register({ appState, login_suc, walletAdd }) {
             zz
           </b>
         </div>
-        <div id="">
+        <div id="" style={{ marginTop: "20px" }}>
           <b> Create a free account</b>
         </div>
+        {console.log(state)}
 
         <form
           className="regform"
@@ -211,7 +227,7 @@ function Register({ appState, login_suc, walletAdd }) {
           <br />
           <br />
           <TextField
-          type="number"
+            type="number"
             id="input"
             onChange={(e) => {
               setPhone(e.target.value);

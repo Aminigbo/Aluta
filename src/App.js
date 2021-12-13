@@ -18,7 +18,7 @@ import Account from "./pages/account.js"
 import Setschool from "./pages/setschool.js"
 import Topup from "./components/topup"
 import Withdraw from "./components/withdraw"
-import Otp from "./components/otp" 
+// import Otp from "./components/otp" 
 import Giveaway from "./pages/giveaway"
 import Terms from "./components/tc"
 import Responsible from "./components/responsible"
@@ -35,7 +35,8 @@ import History  from "./pages/history"
 import Notification from "./components/notification"
 import Lock from "./components/lock"
 import Buzzpay from "./components/buzzpay"
- import Reqresponse from "./pages/req-response"
+import Reqresponse from "./pages/req-response"
+ import Otp from './pages/otp'
 import {
   BrowserRouter as Router,
   Switch,
@@ -68,7 +69,7 @@ export default function App() {
               <Route path="/withdraw">
                 <Withdraw />
               </Route>
-              <Route path="/otp">
+              <Route path="/otp/:phone">
                 <Otp />
               </Route>
               <Route path="/giveaway">
@@ -78,6 +79,9 @@ export default function App() {
 
               <Route path="/cb">
                 <Nonstudentfeeds />
+              </Route>
+              <Route path="/otp">
+                <Otp />
               </Route> 
               
                <Route path="/nonstudentfeed">
