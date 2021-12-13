@@ -1249,12 +1249,12 @@ function Home({ appState, login_suc, logout, set_session }) {
                   variant="standard"
                   style={rec_inputs2}
                 >
-                  <InputLabel id="demo-simple-select-label">
+                  {/* <InputLabel id="demo-simple-select-label">
                     Change privacy &nbsp; &nbsp;
-                    {/* <VpnLockOutlined style={{ marginLeft: "60px" }} /> */}
-                  </InputLabel>
+                    <VpnLockOutlined style={{ marginLeft: "60px" }} />
+                  </InputLabel> */}
 
-                  <Select
+                  {/* <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={privacy}
@@ -1265,10 +1265,7 @@ function Home({ appState, login_suc, logout, set_session }) {
                       }
                       setPrivacy(e.target.value);
                     }}
-                  >
-                    {/* <MenuItem value={0}>
-                        Only me &nbsp; &nbsp; <LockOutlined />{" "}
-                      </MenuItem> */}
+                  > 
                     <MenuItem value={1} style={{ fontSize: "10px" }}>
                       <small style={{ color: "" }}> Request from friends</small>{" "}
                       &nbsp; &nbsp; <PeopleAltOutlined />{" "}
@@ -1280,10 +1277,10 @@ function Home({ appState, login_suc, logout, set_session }) {
                       </small>{" "}
                       &nbsp; &nbsp; <PublicOutlined />{" "}
                     </MenuItem>
-                  </Select>
+                  </Select> */}
                 </FormControl>
-                <br />
-                <span style={{ marginLeft: "20px", fontSize: "11px" }}>
+                {/* <br /> */}
+                <span style={{ marginLeft: "20px", fontSize: "11px",marginTop:"-10px" }}>
                   Who are you requesting from?
                 </span>
                 {privacy == 1 && (
