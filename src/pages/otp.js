@@ -140,11 +140,15 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
         email,
         newUser: data,
       };
-      //  login_suc
+
       updateUserMeta(metaDataPayload).then((res) => {
         if (res.success === true) {
-           set_session(9999999999999)
-         history.push("/")
+          set_session(9999999999999);
+          login_suc({
+            user: { ...compState.data, meta: data },
+            meta: state.loggedInUser.meta,
+          });
+          history.push("/");
         } else {
           history.push("/login");
         }
@@ -206,8 +210,8 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
-            </span>
-             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </span>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
@@ -231,8 +235,8 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
-            </span>
-             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </span>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
@@ -256,11 +260,11 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
-            </span>
-             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </span>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
-            </span> 
+          </span>
         </>
       );
     } else if (pin.length == 4) {
@@ -281,8 +285,8 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
-            </span>
-             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </span>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
@@ -306,8 +310,8 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
-            </span>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </span>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
           </span>
@@ -332,7 +336,7 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
-           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
@@ -366,7 +370,7 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
               if (e == "clear") {
                 clear(e);
               } else if (e == "out") {
-                history.push("/login")
+                history.push("/login");
               } else {
                 append(e);
               }

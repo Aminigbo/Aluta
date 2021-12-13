@@ -1215,9 +1215,11 @@ function Home({ appState, login_suc, logout, set_session }) {
                   </small>
                   <div style={{ fontSize: "12px" }}>
                     {actionType === false &&
-                      sendTo.map((e) => {
+                      <>
+                      {typeof sendTo === "object" ? sendTo.map((e) => {
                         return <> {e.label},</>;
-                      })}
+                      }):"PUBLIC"}
+                      </>}
                   </div>
                 </div>
               </div>
@@ -1314,7 +1316,7 @@ function Home({ appState, login_suc, logout, set_session }) {
                   <button
                     onClick={(e) => {
                       //   placeRequest(reason);
-                      console.log(sendTo);
+                      console.log(typeof sendTo);
                       console.log(privacy);
                       proceedAuthForRequest();
                     }}

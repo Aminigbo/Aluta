@@ -15,7 +15,7 @@ export const checkSession = (logout, set_session, state, supabase) => {
   supabase.auth.api.getUser(state.loggedInUser.meta.access_token).then(res => {
     console.log(res)
   })
-  if (timeDiff < -150 && state.session != 9999999999999) {
+  if (timeDiff < -250 && state.session != 9999999999999) {
     logout();
     set_session(9999999999999);
     console.log("logout");
