@@ -251,7 +251,7 @@ function Home({ appState, login_suc, logout, set_session }) {
   ) : (
     <div id="body bg">
         <>
-          {state.loggedInUser.user.meta.transactionPin == '0000' && <>{ history.push("/login")} </>}
+          {state.loggedInUser !== null && state.loggedInUser.user.meta.transactionPin == '0000' && <>{ history.push("/login")} </>}
         {console.log(state)}
         {pin == "validated" && <> {cashbackloader()}</>}
         <div

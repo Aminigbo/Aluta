@@ -85,7 +85,7 @@ let action_btn_success2 = {
   // background:"#1e272e",
   backgroundColor: "#2C3A47",
   // background:"#58B19F",
-  padding: "2px 14px",
+  padding: "10px 14px",
   marginLeft: "5%",
   color: "white",
   borderRadius: "3px",
