@@ -273,28 +273,28 @@ function Desktopright({
   };
 
   React.useEffect(() => {
-    setStates({
-      ...compState,
-      loading:true
-    })
+    // setStates({
+    //   ...compState,
+    //   loading:true
+    // })
     sub();
-    fetchUserProfile(userId).then(res => {
-      if (res.body == null || res.body.length < 1) {
-        logout("HARD")
-         history.push("/login")
-      } else {
-        if (res.body[0].meta.isActive !== true) {
-           history.push(`/otp/${res.body[0].phone}`)
-        } else {
-           setStates({
-      ...compState,
-      loading:false
-    })
-        }
+    // fetchUserProfile(userId).then(res => {
+    //   if (res.body == null || res.body.length < 1) {
+    //     logout("HARD")
+    //      history.push("/login")
+    //   } else {
+    //     if (res.body[0].meta.isActive !== true) {
+    //        history.push(`/otp/${res.body[0].phone}`)
+    //     } else {
+    //        setStates({
+    //   ...compState,
+    //   loading:false
+    // })
+    //     }
        
-      }
-      console.log(res)
-    })
+    //   }
+    //   console.log(res)
+    // })
     // if(state.loggedIn == true ){
     //   setInterval(() => checkSession(logout, set_session, state), 5000);
     // } 

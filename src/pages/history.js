@@ -155,7 +155,7 @@ function Home({ appState, login_suc }) {
                     }}
                   >
                     {/* <HistoryOutlined style={{ marginLeft: "-4px" }} /> */}
-                    &nbsp;<width>Bank settlement</width>
+                    &nbsp;<width>My Bank</width>
                   </span>
                   
                   <Link
