@@ -163,14 +163,14 @@ function Register({ appState, login_suc, walletAdd }) {
         <link rel="icon" href={logo} />
       </Helmet>
 
-      <div id="regformHolder">
+      <div id="regformHolder" >
         {/* <img style={logoStyle} src={logo} /> */}
         <div
           style={{
             marginLeft: "15px",
             fontSize: "35px",
             color: "#0a3d62",
-            textAlign: "left",
+            textAlign: "center",
             marginTop: "-20px",
           }}
         >
@@ -181,11 +181,11 @@ function Register({ appState, login_suc, walletAdd }) {
             />
             zz
           </b>
-        </div>
+        </div> <br />
         <div id="" style={{ marginTop: "20px" }}>
           <b> Create a free account</b>
         </div>
-        {console.log(state)}
+        {console.log(state)} <br /> 
 
         <form
           className="regform"
@@ -221,8 +221,8 @@ function Register({ appState, login_suc, walletAdd }) {
             type="email"
             variant="standard"
           />
-          <br />
-          <br />
+          <div style={{textAlign:"left",paddingLeft:"35px"}}><small style={{fontSize:"11px",color:"#0a3d62"}}>OTP will be sent</small></div> 
+          {/* <br /> */}
           <TextField
             type="number"
             id="input"
@@ -235,6 +235,8 @@ function Register({ appState, login_suc, walletAdd }) {
             type="text"
             variant="standard"
           />
+           <div style={{textAlign:"left",paddingLeft:"35px"}}><small style={{fontSize:"11px",color:"#0a3d62"}}>OTP will be sent</small></div> 
+
           {/* <div>
             <small style={{ fontSize: "12px" }}>
               You will recieve an OTP to verify your number
@@ -242,8 +244,8 @@ function Register({ appState, login_suc, walletAdd }) {
           </div> */}
           {/* <br /><br />
                <TextField id="input" onChange={(e)=>{ setDob(e.target.value)  }} value={dob} required label="" type="date" variant="outlined" /> */}
-          <br />
-          <br />
+          {/* <br />
+          <br /> */}
           <TextField
             id="input"
             onChange={(e) => {

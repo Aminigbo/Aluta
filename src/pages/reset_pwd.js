@@ -87,7 +87,8 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
               loader: false,
               data: res.body[0],
             });
-            setDrawerState({ ...drawerState, bottom: true });
+            // setDrawerState({ ...drawerState, bottom: true });
+            history.push(`/otp/${res.body[0].phone}`)
           }
         })
         .catch((error) => {

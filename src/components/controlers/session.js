@@ -13,16 +13,16 @@ export const checkSession = (logout, set_session, state, supabase) => {
 
   let timeDiff = msToTime(state.session - new Date().getTime());
 
-  supabase.auth.api.getUser(state.loggedInUser.meta.access_token).then(res => {
-    console.log(res)
-    if (res.data === null && res.error.status == '401') {
-      //  logout("HARD");
-    } else {
+  // supabase.auth.api.getUser(state.loggedInUser.meta.access_token).then(res => {
+  //   console.log(res)
+  //   if (res.data === null && res.error.status == '401') {
+  //     //  logout("HARD");
+  //   } else {
       
-    }
-  })
+  //   }
+  // })
   if (timeDiff < -250 && state.session != 9999999999999) {
-    logout();
+    logout('HARD');
     set_session(9999999999999);
     console.log("logout");
   } else {

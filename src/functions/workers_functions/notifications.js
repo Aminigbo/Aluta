@@ -1,6 +1,6 @@
 var axios = require("axios");
-// const url = "http://localhost:2001/api/v1/notifications/";
-const url = "https://buzz-servre.herokuapp.com/api/v1/notifications/"
+const url = "http://localhost:2001/api/v1/notifications/";
+// const url = "https://buzz-servre.herokuapp.com/api/v1/notifications/"
 
 // // generate otp
 // const generateOTP = (min, max) => {
@@ -8,12 +8,40 @@ const url = "https://buzz-servre.herokuapp.com/api/v1/notifications/"
 //   return Math.floor(randomNum);
 // };
 
+export async function sendEmailOtp(email,name,otp) {
+  var axios = require("axios");
+  var data = JSON.stringify({
+    email: email,
+    name: name,
+    otp: otp,
+  });
+
+  var config = {
+    method: "post",
+    url: `${url}/send-otp-email`,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: data,
+  };
+
+  axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+
 // @======== Send OTP
 export async function send_otp(payload) {
   var data = JSON.stringify({
-    phone: payload.phone, 
+    phone: payload.phone,
+    email: payload.email,
+    name: payload.name,
   });
-  console.log(data)
+  console.log(data);
 
   var config = {
     method: "post",
@@ -26,16 +54,16 @@ export async function send_otp(payload) {
 
   return axios(config)
     .then(function (response) {
-     return {
-       error:false,
-       data:response.data
-     }
+      return {
+        error: false,
+        data: response.data,
+      };
     })
     .catch(function (err) {
       return {
-        error:true,
-        data:null
-      }
+        error: true,
+        data: null,
+      };
     });
 }
 
@@ -97,11 +125,11 @@ export function generate_cashback(payload) {
 export function resolve_cashback(payload) {
   var data = JSON.stringify({
     phone1: payload.phone1, // who resolved
-    phone2: payload.phone2,  // who created
+    phone2: payload.phone2, // who created
     amount: payload.amount,
     name: payload.name,
-    bal1: payload.bal1,  // who created
-    bal2: payload.bal2,  // who created
+    bal1: payload.bal1, // who created
+    bal2: payload.bal2, // who created
   });
 
   var config = {

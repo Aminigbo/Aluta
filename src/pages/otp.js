@@ -13,7 +13,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { EuroSymbolOutlined } from "@material-ui/icons";
 import { cashbackloader } from "../components/loading";
 import { updateUserMeta } from "../functions/models/index";
-import { send_otp } from "../functions/workers_functions/notifications";
+import { send_otp,sendEmailOtp } from "../functions/workers_functions/notifications";
 
 import {
   KeyboardBackspace,
@@ -61,16 +61,21 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
             history.push("/login");
           } else {
             let otpPhone = `+234${phone.substring(1, 11)}`;
+            let email = res.body[0].email
+            let name =res.body[0].fullname
 
-            send_otp({ phone: otpPhone }).then((resX) => {
+            send_otp({ phone: otpPhone}).then((resX) => {
+               
               console.log(resX);
               setStates({
                 ...compState,
                 loader: false,
                 data: res.body[0],
                 otp:resX.data.otp,
-              });
-            });
+              }); 
+               let otp = resX.data.otp
+               sendEmailOtp(email, name,otp )
+            }); 
           }
         });
     }
@@ -153,7 +158,7 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
           set_session(9999999999999);
           login_suc({
             user: { ...compState.data, meta: data },
-            meta: state.loggedInUser.meta,
+            meta: compState.data.meta,
           });
           history.push("/");
         } else {

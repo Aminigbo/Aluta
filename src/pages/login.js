@@ -183,14 +183,15 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
         <link rel="icon" href={logo} />
       </Helmet>
 
-      <div id="formHolder">
+      <div id="formHolder" style={{paddingTop:"0px"}}>
         {/* <img style={logoStyle} src={logo} /> */}
         <div
           style={{
             marginLeft: "15px",
             fontSize: "35px",
             color: "#0a3d62",
-            textAlign: "left",
+            textAlign: "center",
+            marginTop:"-20px"
           }}
         >
           <b>
@@ -199,11 +200,11 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
               style={{ transform: "rotateZ(-90deg)", fontSize: "35px" }}
             />
             zz
-          </b>
+          </b> <br /><br />
         </div>
         <div style={{ fontSize: "20px", marginTop: "10px" }} id=" ">
-          Login
-        </div>
+          Login to your account
+        </div> <br />
 
         <form className="form" noValidate autoComplete="off">
           <br />
@@ -248,7 +249,7 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
             <span style={{ color: "#0a3d62" }}>Forgot Password?</span>
           </div>
           <br />
-          <br />
+          <br /> 
           <button
             type="button"
             style={{
