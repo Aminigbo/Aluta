@@ -1,5 +1,5 @@
 var axios = require("axios");
-// const url = "http://localhost:1100/api/v1/notifications/";
+// const url = "http://localhost:2001/api/v1/notifications/";
 const url = "https://buzz-servre.herokuapp.com/api/v1/notifications/"
 
 // // generate otp
@@ -9,11 +9,11 @@ const url = "https://buzz-servre.herokuapp.com/api/v1/notifications/"
 // };
 
 // @======== Send OTP
-export function send_otp(payload,otp) {
+export async function send_otp(payload) {
   var data = JSON.stringify({
-    phone: payload.phone,
-    otp
+    phone: payload.phone, 
   });
+  console.log(data)
 
   var config = {
     method: "post",
@@ -24,12 +24,18 @@ export function send_otp(payload,otp) {
     data: data,
   };
 
-  axios(config)
+  return axios(config)
     .then(function (response) {
-      console.log(JSON.stringify(response.data));
+     return {
+       error:false,
+       data:response.data
+     }
     })
-    .catch(function (error) {
-      console.log(error);
+    .catch(function (err) {
+      return {
+        error:true,
+        data:null
+      }
     });
 }
 

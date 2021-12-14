@@ -71,7 +71,7 @@ function Register({ appState, login_suc, walletAdd }) {
       phone,
       password,
       name,
-      otp
+      otp,
     };
     if (
       !name ||
@@ -120,10 +120,7 @@ function Register({ appState, login_suc, walletAdd }) {
               alertMsg:
                 "You have successfully created an account. OK to complete the process.",
             });
-            // history.push("/otp")
-            let otpPhone = `+234${res.data[0].phone.substring(1, 11)}`;
-
-            send_otp(otpPhone, otp);
+            
           } else {
             setStateAlert(false);
             setStates({

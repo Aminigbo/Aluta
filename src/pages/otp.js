@@ -13,6 +13,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { EuroSymbolOutlined } from "@material-ui/icons";
 import { cashbackloader } from "../components/loading";
 import { updateUserMeta } from "../functions/models/index";
+import { send_otp } from "../functions/workers_functions/notifications";
+
 import {
   KeyboardBackspace,
   Backspace,
@@ -44,7 +46,7 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
 
   React.useEffect((compState) => {
     window.scrollTo(0, 0);
-    //  setStates({ ...compState, loader: true });
+     setStates({ ...compState, loader: true });
     // setTimeout(() => setStates({ ...compState, loader: false}), 500);
     if (!phone || phone == undefined) {
       history.push("/login");
@@ -58,11 +60,16 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
           if (res.body === null || res.body.length < 1) {
             history.push("/login");
           } else {
-            setStates({
-              ...compState,
-              loader: false,
-              data: res.body[0],
-              otp: res.body[0].meta.otp,
+            let otpPhone = `+234${phone.substring(1, 11)}`;
+
+            send_otp({ phone: otpPhone }).then((resX) => {
+              console.log(resX);
+              setStates({
+                ...compState,
+                loader: false,
+                data: res.body[0],
+                otp:resX.data.otp,
+              });
             });
           }
         });
