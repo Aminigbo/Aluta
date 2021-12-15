@@ -1,6 +1,6 @@
 var axios = require("axios");
-const url = "http://localhost:2001/api/v1/notifications/";
-// const url = "https://buzz-servre.herokuapp.com/api/v1/notifications/"
+// const url = "http://localhost:2001/api/v1/notifications/";
+const url = "https://buzz-servre.herokuapp.com/api/v1/notifications/"
 
 // // generate otp
 // const generateOTP = (min, max) => {

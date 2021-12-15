@@ -44,6 +44,8 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
   const { phone } = useParams();
   let history = useHistory();
 
+  
+
   React.useEffect((compState) => {
     window.scrollTo(0, 0);
      setStates({ ...compState, loader: true });
@@ -440,6 +442,7 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
         </div>
       </div>
 
+      {compState.loader !==true && <>
       <React.Fragment key="bottom">
         <Drawer
           anchor="bottom"
@@ -469,6 +472,7 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
                 Enter the OTP sent to <br /> *********{" "}
                 {phone !== undefined && phone && <>{phone.substring(8, 11)} </>}{" "}
               </b>
+             <div> <small>Also copied to your registered email</small></div>
             </div>
             <div
               style={{
@@ -512,6 +516,7 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
           </div>
         </Drawer>
       </React.Fragment>
+      </>}
     </div>
   );
 }
