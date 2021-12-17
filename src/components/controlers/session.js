@@ -22,7 +22,7 @@ export const checkSession = (logout, set_session, state, supabase) => {
   //   }
   // })
   if (timeDiff < -250 && state.session != 9999999999999) {
-    logout('HARD');
+    logout();
     set_session(9999999999999);
     console.log("logout");
   } else {

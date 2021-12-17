@@ -110,7 +110,8 @@ function Home({ appState }) {
             ) : (
                   <>
                     {/* {console.log(cashbackstate)} */}
-                  <b style={{fontSize:"12px"}}>NGN {cashbackstate.data.from} </b>{" "}
+                    <b style={{ fontSize: "12px" }}>NGN {cashbackstate.data.from} </b>{" "}
+                    {console.log(cashbackstate)}
               </>
             )}
           </span>

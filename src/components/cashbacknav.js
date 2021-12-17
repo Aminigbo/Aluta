@@ -529,7 +529,7 @@ function Home({ appState, login_suc }) {
                     backgroundImage:
                       "linear-gradient(to right,lightgray, #385b74)",
                     position: "relative",
-                    height: "110px",
+                    // height: "110px",
                   }}
                 >
                   <ViewAgenda

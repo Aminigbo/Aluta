@@ -136,17 +136,22 @@ function Home({ appState, login_suc, logout, set_session }) {
     //   setPin(newPin);
 
     let newPin = amount + "" + e;
-    if (newPin < state.loggedInUser.user.meta.wallet) {
       setAmount(newPin);
-    }
+    // if (newPin < state.loggedInUser.user.meta.wallet) {
+    // }
+
+
     //  if (newPin > 9999) {
     //    setMax("Maximum amount reached");
     //  } else
-    if (newPin > state.loggedInUser.user.meta.wallet) {
-      setMax("Insufficient wallet balance");
-    } else {
-      setMax("");
-    }
+
+
+
+    // if (newPin > state.loggedInUser.user.meta.wallet) {
+    //   setMax("Insufficient wallet balance");
+    // } else {
+    //   setMax("");
+    // }
   };
 
   const clear = (e) => {
@@ -185,15 +190,15 @@ function Home({ appState, login_suc, logout, set_session }) {
           <b style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
           </b>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
@@ -206,15 +211,15 @@ function Home({ appState, login_suc, logout, set_session }) {
           <span style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
@@ -227,15 +232,15 @@ function Home({ appState, login_suc, logout, set_session }) {
           <span style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
@@ -248,15 +253,15 @@ function Home({ appState, login_suc, logout, set_session }) {
           <span style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
           </span>
@@ -269,15 +274,15 @@ function Home({ appState, login_suc, logout, set_session }) {
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
@@ -684,6 +689,14 @@ function Home({ appState, login_suc, logout, set_session }) {
       ...state.loggedInUser.user.meta,
       wallet: newBoxerWallet,
     };
+    let descX = ""
+    if (desc.length < 1) {
+      descX = desc
+    } else {
+      descX =  `NGN ${parseInt(amount)} Buzz alert from ${
+          state.loggedInUser.user.fullname
+        }-${new Date().getTime()}`
+    }
 
     let meta = {
       sender: {
@@ -699,9 +712,10 @@ function Home({ appState, login_suc, logout, set_session }) {
       },
       data: {
         amount: parseInt(amount),
-        desc: `NGN ${parseInt(amount)} Buzz alert from ${
-          state.loggedInUser.user.fullname
-        }-${new Date().getTime()}`,
+        // desc: `NGN ${parseInt(amount)} Buzz alert from ${
+        //   state.loggedInUser.user.fullname
+        // }-${new Date().getTime()}`,
+        desc:descX
       },
     };
 
@@ -876,7 +890,7 @@ function Home({ appState, login_suc, logout, set_session }) {
               padding: "4px",
             }}
           >
-            {parseInt(state.loggedInUser.user.meta.wallet) - parseInt(amount) >
+            {parseInt(state.loggedInUser.user.meta.wallet) >
             1 ? (
               <div
                 style={{
@@ -889,8 +903,7 @@ function Home({ appState, login_suc, logout, set_session }) {
               >
                 {" "}
                 <Naira style={{ color: "crimson" }}>
-                  {parseInt(state.loggedInUser.user.meta.wallet) -
-                    parseInt(amount)}
+                  {parseInt(state.loggedInUser.user.meta.wallet) }
                 </Naira>
               </div>
             ) : (

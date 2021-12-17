@@ -416,7 +416,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
               right: "75px",
             }}
           />
-          <MailOutlined
+          {/* <MailOutlined
             onClick={() => {
               dispRequest(false);
               // history.push("/notification")
@@ -427,7 +427,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
               position: " absolute",
               right: "140px",
             }}
-          />
+          /> */}
           <Dehaze
             style={{ color: "#0a3d62", position: " absolute", right: "10px" }}
             className="menu"

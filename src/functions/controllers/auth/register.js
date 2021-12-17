@@ -30,7 +30,8 @@ export async function handleRegister(formData) {
       badge: "Young LAD",
       avater: null,
       otp: null,
-      isActive:false,
+      isActive: false,
+      verified:false
     },
   };
 

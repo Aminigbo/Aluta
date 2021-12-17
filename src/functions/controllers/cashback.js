@@ -134,6 +134,8 @@ export async function handleChashbackGeneration(
           token,
           user: payload.user.id,
           meta: {
+            amountPlusCharge:amountPlusCharge,
+            serviceCharge:adminPercentage,
             amount: userTakes,
             name: payload.user.fullname,
             user: metaDataPayload,

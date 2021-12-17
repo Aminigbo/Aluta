@@ -417,8 +417,10 @@ function Desktopright({
           </span>
           <p className="top-nav-pills-title">Request</p>
         </div> */}
+          
+          {state.loggedInUser.user.meta.schoolmode !== false && ""}
 
-        <div
+        {/* <div
           onClick={() => {
             history.push("/tour");
           }}
@@ -435,7 +437,7 @@ function Desktopright({
             <EmojiTransportationOutlined />{" "}
           </span>
           <p className="top-nav-pills-title">Tour</p>
-        </div>
+        </div> */}
 
         {/* <div className="top-nav-pills-holder">
             <span  className="top-nav-pills" >  <ForumOutlined/> </span>

@@ -159,13 +159,13 @@ function Register({ appState, login_suc, walletAdd }) {
       {stateAlert === false && alert(errorPayload, setStateAlert)}
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Aluta Meter</title>
+        <title>Buzz</title>
         <link rel="icon" href={logo} />
       </Helmet>
 
       <div id="regformHolder" >
         {/* <img style={logoStyle} src={logo} /> */}
-        <div
+        {/* <div
           style={{
             marginLeft: "15px",
             fontSize: "35px",
@@ -181,13 +181,13 @@ function Register({ appState, login_suc, walletAdd }) {
             />
             zz
           </b>
-        </div> <br />
-        <div id="" style={{ marginTop: "20px" }}>
+        </div> <br /> */}
+        <div id="" style={{ marginTop: "" }}>
           <b> Create a free account</b>
-        </div>
-        {console.log(state)} <br /> 
+        </div> 
 
         <form
+          
           className="regform"
           onSubmit={(e) => {
             e.preventDefault();
@@ -198,6 +198,7 @@ function Register({ appState, login_suc, walletAdd }) {
         >
           <br />
           <TextField
+            autoFocus
             id="input"
             onChange={(e) => {
               setName(e.target.value);

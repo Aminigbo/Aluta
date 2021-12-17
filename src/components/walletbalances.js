@@ -453,7 +453,7 @@ function Home({ appState, login_suc }) {
                       fontSize: "15px",
                     }}
                   >
-                   <button style={{background:"white",border:"none",outline:"none"}}> <b> Move to walletss</b></button>
+                   <button style={{background:"white",border:"none",outline:"none"}}> <b> Move to wallet</b></button>
                   </div>
                 </div>
 
@@ -483,7 +483,7 @@ function Home({ appState, login_suc }) {
                     <AccountBalanceWallet
                       style={{ margin: "5px", color: "#0a3d62" }}
                     />
-                    <span>Wallet balance</span>
+                    <span>Wallet</span>
 
                     <div
                       style={{
@@ -561,9 +561,10 @@ function Home({ appState, login_suc }) {
                         bottom: "0px",
                         width: "100%",
                         left: "0px",
+                        opacity:"0.5"
                       }}
                     >
-                      <b>Withdraw</b>
+                      <b>Move to bank</b>
                     </div>
                   </div>
 

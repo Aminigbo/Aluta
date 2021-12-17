@@ -3,7 +3,8 @@
 @media only screen and (max-width: 690px) {
    .top-nav-pills-holder{
       /* height:60px; */
-      width:16%;
+      /* width:16%; */
+      width:20%;
       background-color: none ;
       position:relative;
       text-align: center; 

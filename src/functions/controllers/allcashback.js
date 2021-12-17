@@ -29,7 +29,7 @@ export async function getAllCashback(userId, cashbackstate, setCashbackstate) {
           console.log(recieved);
 
           for (let i = 0; i < sent.length; i++) {
-            const amount = parseInt(sent[i].meta.amount);
+            const amount = parseInt(sent[i].meta.amountPlusCharge);
             sentAmountArry.push(amount);
           }
           let from = "";

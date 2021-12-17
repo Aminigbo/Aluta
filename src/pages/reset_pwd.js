@@ -350,7 +350,7 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
       </Helmet>
 
       <div id="formHolder">
-        <div
+        {/* <div
           style={{
             marginLeft: "15px",
             fontSize: "35px",
@@ -367,13 +367,14 @@ function Login({ appState, login_suc, walletAdd, set_session }) {
           </b>
         </div>
         <br />
-        <br />
+        <br /> */}
         <div id=" ">Reset your assword</div>
 
         <form className="form" noValidate autoComplete="off">
           <br />
           <br />
           <TextField
+          autoFocus
             onChange={(e) => {
               setEmail(e.target.value);
               setStates({
