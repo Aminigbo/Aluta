@@ -1,5 +1,5 @@
 import { supabase } from "../configs/index";
-import { error, success } from "../utils/index";
+import { error, success,formatAMPM,daysOfTheWeek, monthsOfTheYear } from "../utils/index";
 
 let new_supabase = supabase();
 
@@ -33,7 +33,7 @@ export async function handleCreateRequest(payload, state) {
         sender: {
           fullname: new_payload.poster.name,
           id: new_payload.poster.id,
-          beneficiaryId : new_payload.poster.beneficiaryId  
+          beneficiaryId: new_payload.poster.beneficiaryId,
         },
         reciever: {
           fullname: element.label,
@@ -43,6 +43,13 @@ export async function handleCreateRequest(payload, state) {
         data: {
           desc: new_payload.postText,
           amount: new_payload.post.meta.payload.amount,
+        },
+        date: {
+          day: daysOfTheWeek(new Date()),
+          month: monthsOfTheYear(),
+          year: new Date().getFullYear(),
+          date: new Date().getDate(),
+          time: formatAMPM(new Date()),
         },
       };
 

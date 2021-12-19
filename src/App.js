@@ -123,8 +123,9 @@ export default function App() {
                 <Listmart />
               </Route>
 
-              <Route path="/cashback">
+              <Route path="/student-cashback">
                 <CASHBACK />
+                {/* <Buzzpay /> */}
               </Route>
 
               {/* Reqresponse */}

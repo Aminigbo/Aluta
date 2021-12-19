@@ -132,13 +132,12 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
                     borderBottom: "0.5px solid lightgray",
                   }}
                 >
-                  <small>{e.meta.data.desc}</small> <br />
-                  <br />
-                  {e.type == "BUZZ REQUEST" && (
-                    <b
+                  <small>{e.meta.data.desc}</small> <br /> 
+                  {/* {e.type == "BUZZ REQUEST" && (
+                    <div style={{marginTop:"20px"}}>
+                       <b
                       onClick={() => {
-                        console.log("Hello");
-                        // disp_whoRequested()
+                        console.log("Hello"); 
 
                         let data = {
                           buzzId: e.meta.sender.beneficiaryId,
@@ -146,22 +145,29 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
                           desc: e.meta.data.desc,
                           amount: e.meta.data.amount,
                         };
-                        dispWho(data)
-                        history.push('/req-response')
+                        dispWho(data);
+                        history.push("/req-response");
                       }}
                       style={{
                         background: "#0a3d62",
                         color: "white",
                         padding: "3px 10px",
-                        borderRadius: "5px",
-                        marginTop: "20px",
+                        borderRadius: "5px", 
                       }}
                     >
                       {" "}
                       {e.meta.sender.fullname.split(" ")[0]}
                       &nbsp;&nbsp; NGN {e.meta.data.amount}
-                    </b>
+                      </b>
+                      </div>
                   )}
+                  <br /> */}
+                  <small>
+                    {e.meta.date.day} {e.meta.date.date} {e.meta.date.month},{" "}
+                    {e.meta.date.year}
+                  </small>{" "}
+                  &nbsp;&nbsp;{" "}
+                  <small style={{ float: "right" }}>{e.meta.date.time}</small>
                 </div>
               </div>
               {/* <Divider /> */}
@@ -225,7 +231,13 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
                     has been resolved by{" "}
                     {e.from == e.to ? "You" : e.meta.resolvedby}
                   </small>{" "}
-                  <br />
+                  <br /> <br /> 
+                  <small>
+                    {e.meta.date.day} {e.meta.date.date} {e.meta.date.month},{" "}
+                    {e.meta.date.year}
+                  </small>{" "}
+                  &nbsp;&nbsp;{" "}
+                  <small style={{ float: "right" }}>{e.meta.date.time}</small>
                 </div>
               </div>
               {/* <Divider /> */}

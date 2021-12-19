@@ -547,7 +547,7 @@ function Home({ appState, login_suc }) {
 
                     <div
                       onClick={() => {
-                        alert("To be completed");
+                        // alert("To be completed");
                       }}
                       style={{
                         // height: "40px",
@@ -561,10 +561,10 @@ function Home({ appState, login_suc }) {
                         bottom: "0px",
                         width: "100%",
                         left: "0px",
-                        opacity:"0.5"
+                        
                       }}
                     >
-                      <b>Move to bank</b>
+                      <b style={{opacity:"0.1"}}>Move to bank</b>
                     </div>
                   </div>
 

@@ -4,7 +4,7 @@ import {addLikes,addUnlike} from "../models/index"
 export async function handleAddLike(state, postId, loadFeeds) { 
   const sessionUser = {
     name: state.loggedInUser.user.fullname,
-    id: state.loggedInUser.meta.user.id,
+    id: state.loggedInUser.user.id,
     school: state.loggedInUser.user.meta.school,
     gender: state.loggedInUser.user.meta.gender,
     badge: state.loggedInUser.user.meta.badge,
@@ -67,7 +67,7 @@ export async function handleAddLike(state, postId, loadFeeds) {
 export async function handleUnlike(state, postId, loadFeeds) {
   const sessionUser = {
     name: state.loggedInUser.user.fullname,
-    id: state.loggedInUser.meta.user.id,
+    id: state.loggedInUser.user.id,
     school: state.loggedInUser.user.meta.school,
     gender: state.loggedInUser.user.meta.gender,
     badge: state.loggedInUser.user.meta.badge,
@@ -248,8 +248,10 @@ export function likedPost(postLikesArr, state) {
 };
 
   
-   let filterLiked = postLikesArr.filter(e => e.userId == sessionUser.id)
-   
+  let filterLiked = postLikesArr.filter(e => e.userId == sessionUser.id)
+  console.log(postLikesArr)
+  // console.log(filterLiked)
+  // console.log(sessionUser.id)
    if (filterLiked.length > 0) {
       return true
    }else{

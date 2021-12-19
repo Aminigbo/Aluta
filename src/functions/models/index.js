@@ -139,6 +139,7 @@ export async function addUnlike(payload) {
     });
 }
 
+// @==========  update user data
 export async function updateUserMeta(payload) {
   let { email, newUser } = payload;
   console.log(email);
@@ -350,4 +351,16 @@ export async function allCashback(userId) {
     .select("*")
     .or(`user.eq.${userId},to.eq.${userId}`)
     .order("id", { ascending: false });
+}
+
+
+// @========  save to topup history
+export async function saveTopupHistory(payload) {
+  return new_supabase.from("topup").insert([
+    {
+      user: payload.user,
+      amount: payload.amount,
+      meta: payload.meta,
+    },
+  ]);
 }

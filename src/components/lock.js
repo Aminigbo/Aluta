@@ -24,7 +24,11 @@ function Home({ appState, login_suc, logout, set_session }) {
         meta: state.loggedInUser.meta,
       };
       set_session(new Date().getTime());
-      return setTimeout(() => login_suc(data), 500);
+      let action = () => {
+        login_suc(data)
+        history.goBack()
+      }
+      return setTimeout(() => action(), 500);
     } else {
       history.push("/login");
     }
@@ -239,16 +243,7 @@ function Home({ appState, login_suc, logout, set_session }) {
     setDrawerState({ ...drawerState, [anchor]: open });
   };
 
-  return state.loggedIn === true ? (
-    <div>
-      {state.loggedInUser == null ? (
-        <Redirect to="login" />
-      ) : (
-        <Redirect to="/" />
-      )}
-      <Redirect to="/" />
-    </div>
-  ) : (
+  return   (
     <div id="body bg">
         <>
           {state.loggedInUser !== null && state.loggedInUser.user.meta.transactionPin == '0000' && <>{ history.push("/login")} </>}

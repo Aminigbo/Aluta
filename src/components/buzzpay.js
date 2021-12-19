@@ -27,7 +27,7 @@ import AsyncSelect from "react-select/async";
 import makeAnimated from "react-select/animated";
 import { fetchUsersOfUniversity } from "../functions/models/index";
 import { handleCreateRequest } from "../functions/controllers/requestbuz";
-
+import {formatAMPM,daysOfTheWeek, monthsOfTheYear} from "../functions/utils/index"
 const rec_inputs = {
   margin: "0px 5%",
   width: "90%",
@@ -299,7 +299,8 @@ function Home({ appState, login_suc, logout, set_session }) {
         res.body.map((resp) => {
           let prepared = {
             value: resp.meta.beneficiaryId,
-            label: resp.fullname,
+            // label: resp.fullname,
+            label:resp.meta.beneficiaryId,
             email: resp.email,
             phone: resp.phone,
             id: resp.id,
@@ -377,7 +378,7 @@ function Home({ appState, login_suc, logout, set_session }) {
 
   const filterSchoolMates = (inputValue) => {
     return compState.filterOption.filter((i) =>
-      i.label.toLowerCase().includes(inputValue.toLowerCase())
+      i.value.toLowerCase().includes(inputValue.toLowerCase())
     );
   };
 
@@ -690,7 +691,7 @@ function Home({ appState, login_suc, logout, set_session }) {
       wallet: newBoxerWallet,
     };
     let descX = ""
-    if (desc.length < 1) {
+    if (desc.length > 0) {
       descX = desc
     } else {
       descX =  `NGN ${parseInt(amount)} Buzz alert from ${
@@ -717,6 +718,13 @@ function Home({ appState, login_suc, logout, set_session }) {
         // }-${new Date().getTime()}`,
         desc:descX
       },
+      date: {
+        day:daysOfTheWeek(new Date),
+        month:monthsOfTheYear(),
+        year: new Date().getFullYear(),
+        date: new Date().getDate(),
+        time:formatAMPM(new Date())
+      }
     };
 
     new_supabase
@@ -1007,7 +1015,7 @@ function Home({ appState, login_suc, logout, set_session }) {
                     }
                   }}
                 />
-              </div>
+              </div> 
             </div>
           </div>
         </div>
@@ -1036,7 +1044,7 @@ function Home({ appState, login_suc, logout, set_session }) {
                     //   textAlign: "left",
                     background: " ",
                   }}
-                >
+                >  
                   {compState.resolved !== true && (
                     <>
                       {actionType === true && (
@@ -1294,7 +1302,7 @@ function Home({ appState, login_suc, logout, set_session }) {
                 </FormControl>
                 {/* <br /> */}
                 <span style={{ marginLeft: "20px", fontSize: "11px",marginTop:"-10px" }}>
-                  Who are you requesting from?
+                  Who are you requesting from? (Buzz ID)
                 </span>
                 {privacy == 1 && (
                   <FormControl

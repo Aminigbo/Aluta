@@ -350,7 +350,7 @@ function Home({ appState, login_suc }) {
                       }}
                     >
                       {text_input(
-                        "Amount to generate ",
+                        "Cashback amount ",
                         tokenamount,
                         "number",
                         setTokenamount
@@ -462,7 +462,7 @@ function Home({ appState, login_suc }) {
           )}{" "}
         </>
       )}
-      {state.loggedInUser.user.meta.schoolmode === true && history.push("/")}
+      {/* {state.loggedInUser.user.meta.schoolmode === true && history.push("/")} */}
       {/* {console.log(state)}
       {console.log(verifyPayload)} */}
       {/* IF TOKEN VERIFICATION TURNS ERROR */}

@@ -132,11 +132,11 @@ function Home({ appState, login_suc }) {
                         {" "}
                         Welcome {state.loggedInUser.user.fullname.split(" ")[0]}
                       </b>
-                      <div>
+                      <div style={{fontSize:"12px"}}>
                         Smart Campus helps you get in touch with your.
                         schoolmates
                       </div> 
-                      <div className="description" style={{color:"gold", marginTop: "10px",}}>
+                      <div className="description" style={{color:"orange", marginTop: "10px",}}>
                         You can turn this off in your menu section
                       </div>{" "}
                       <div

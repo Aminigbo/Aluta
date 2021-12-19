@@ -4,60 +4,74 @@ import { connect } from "react-redux";
 import "../static/css/home/index.css";
 
 import Header from "../components/includes/mobile_header.js";
-import {
-  LinearProgress,
-  AssignmentReturnedOutlined,
-  HistoryOutlined,
-} from "@material-ui/icons";
+import { HistoryOutlined } from "@material-ui/icons";
 
 import {
   Person,
-  LocalAtm,
   AccountBalanceWallet,
-  AddBoxOutlined,
   FiberPin,
-  CardGiftcardOutlined,
+  EuroSymbolOutlined,
   FileCopyOutlined,
-  HomeOutlined,
-  StorefrontOutlined,
+  RemoveRedEye,
   ViewAgenda,
   LibraryAddCheckOutlined,
+  VisibilityOffOutlined,
 } from "@material-ui/icons";
 
-import { confirmCashbackCreation } from "../functions/workers_functions/cashback";
+import { confirmCashbackCreation } from "../functions/workers_functions/cashback"; // CASHBACK CONTROLLER
 import { Drawer, Divider } from "@mui/material";
-
+import Accountsummery from "../components/ccountsummary";
+import Cashbacknav from "../components/cashbacknav";
+import Cashbackdrawal from "../components/cashbackdrawer";
 import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
 import { add_wallet, logOut, loginSuc } from "../redux";
-import { updateUserMeta } from "../functions/models/index";
+import { moveBuzzmeFunds } from "../functions/controllers/movebuzzmefunds";
 import { btn_primary, btn_danger } from "../components/buttons";
 import { text_input } from "../components/forms";
 import Toppills from "../components/includes/topdesktoppills";
 import { cashbackCurrency } from "../components/currency";
 import { cashbackchargecentage } from "../functions/utils/index";
 import { cashbackloader } from "../components/loading";
-import { errorComponent,successComponent } from "../components/error"; // error component for error handling
+import { errorComponent, successComponent } from "../components/error"; // error component for error handling
 import {
   handleChashbackGeneration,
   handleVerifyToken,
-  settleCashbackToWallet
+  settleCashbackToWallet,
 } from "../functions/controllers/cashback"; // CASHBACK TOKEN CONTROLLER
+import { pinConfirmPop } from "../components/confirmPin";
 
+// @======== ALLL BUZZME CONTROLLER
+import { getAllBuzz } from "../functions/controllers/allbuzzme";
+import Balance from "../components/walletbalances";
+import Lockscreen from "../components/lock";
 function Home({ appState, login_suc }) {
   let history = useHistory();
   const state = appState;
+  let userId = "";
+  if (state.loggedIn === true) {
+    userId = state.loggedInUser.user.id;
+  }
 
   const [compState, setStates] = useState({
     data: [],
     value: "",
     done: false,
     miniLoad: false,
+    wallethidden: true,
+    confirmpwderror: null,
+    confirmpwderrormsg: "",
+    error: null,
   });
   const [value, setValue] = useState(null); //TOKEN TO BE VERIFIED
   const [verifyPayload, setVerifypayload] = useState({
     data: null,
     success: null,
+  });
+
+  const [buzzState, setBuzzState] = useState({
+    leading: false,
+    data: [],
   });
 
   const [tokenamount, setTokenamount] = useState(""); // amount to be generated
@@ -66,12 +80,84 @@ function Home({ appState, login_suc }) {
   const [generatedcode, setGeneratedcode] = useState(null); // return true or false if code is generated
   const [generatedToken, setGeneratedToken] = useState(null); // set the returned generated token
   const [pin, setPin] = useState("");
-  const [resolved, setResolved] = useState(null)  // return true if the cashback has been resolved to the wallet
+  const [resolved, setResolved] = useState(null); // return true if the cashback has been resolved to the
+  const [pwd, setPwd] = useState(""); // set password requird to view balance
+  const [clickToViewPwd, setClickToViewPwd] = useState(false);
+  const [resolvedVerifyPin, setResolvedPinVerification] = useState(false);
 
+  const [movebuzzResolved, setmovebuzzResolved] = useState(false);
+
+  // @========  FUNCTION TO VERIFY pin AND SHOW balance
+  const showPwd = () => {
+    if (state.loggedInUser.user.meta.transactionPin != pwd) {
+      setStates({
+        ...compState,
+        wallethidden: true,
+        confirmpwderror: true,
+        confirmpwderrormsg: "Wrong pin",
+      });
+      setPwd("");
+    } else {
+      console.log("true");
+      setClickToViewPwd(false);
+      setStates({
+        ...compState,
+        wallethidden: false,
+        confirmpwderror: false,
+        confirmpwderrormsg: "",
+      });
+      setPwd("");
+      // @==== if the action was to move buzzme balance to wallet
+      if (resolvedVerifyPin === true) {
+        moveBuzzmeFunds(
+          state.loggedInUser,
+          compState,
+          setStates,
+          login_suc,
+          setmovebuzzResolved
+        ).then((res) => {
+          if (res === true) {
+            setStates({
+              ...compState,
+              error: false,
+            });
+          }
+          // else {
+          //   setStates({
+          //      ...compState, error:true
+          //    })
+          //  }
+        });
+      }
+    }
+  };
+
+  const closePwd = () => {
+    setClickToViewPwd(false);
+    setResolvedPinVerification(false);
+    setStates({
+      ...compState,
+      confirmpwderrormsg: "",
+    });
+  };
 
   let userWallet = "";
   if (state.loggedIn === true) {
     userWallet = state.loggedInUser.user.meta.wallet;
+  }
+
+  // ===   function to move Buzz me balance to wallet
+  function moveBuzzmeBalance() {
+    if (state.loggedInUser.user.meta.buzzmewallet < 1) {
+      setStates({
+        ...compState,
+        error: true,
+        errorMsg: "You have insufficient Buzz Me balance",
+      });
+    } else {
+      setClickToViewPwd(true);
+      setResolvedPinVerification(true);
+    }
   }
 
   // @======== GET AMOUNT TO BE DEDUCTED
@@ -99,18 +185,25 @@ function Home({ appState, login_suc }) {
     setValue(null);
   };
 
-  const confirmCashback = () => { 
-    settleCashbackToWallet(verifyPayload,setcashbackpinresolved,setValue,state.loggedInUser,compState,setStates,login_suc,setResolved)
+  const confirmCashback = () => {
+    settleCashbackToWallet(
+      verifyPayload,
+      setcashbackpinresolved,
+      setValue,
+      state.loggedInUser,
+      compState,
+      setStates,
+      login_suc,
+      setResolved
+    );
   };
 
   // @======== close success pop
   const closeSuccessPop = () => {
-    setResolved(false)
-  }
-
-  React.useEffect((compState) => {
-    window.scrollTo(0, 0);
-  }, []);
+    setResolved(false);
+    setmovebuzzResolved(false);
+    setResolvedPinVerification(false);
+  };
 
   const [drawerState, setDrawerState] = React.useState({
     bottom: false,
@@ -135,10 +228,12 @@ function Home({ appState, login_suc }) {
   };
 
   React.useEffect(() => {
+    getAllBuzz(userId, buzzState, setBuzzState);
     window.scrollTo(0, 0);
     setStates({
       ...compState,
       loading: false,
+      wallethidden: true,
     });
   }, []);
 
@@ -150,7 +245,7 @@ function Home({ appState, login_suc }) {
     });
   };
 
-  // @======== INITATE THE  TOKEN GENERATION 
+  // @======== INITATE THE  TOKEN GENERATION
   const handleGeneratecashback = () => {
     if (!tokenamount || tokenamount.length < 1 || tokenamount < 100) {
       setStates({
@@ -159,6 +254,7 @@ function Home({ appState, login_suc }) {
         errorMsg: "Please provide a valid amount greater than 100 BUZ",
       });
     } else if (amountPlusCharge > userWallet) {
+      console.log(amountPlusCharge);
       setStates({
         ...compState,
         error: true,
@@ -182,12 +278,14 @@ function Home({ appState, login_suc }) {
   };
 
   // @======== USER ACCEPTS TO CREATE  THE CASHBACK
+
   const finallyGenerateCashbackCode = () => {
     let payload = {
       user: state.loggedInUser.user,
       amount: tokenamount,
       amountPlusCharge,
     };
+    // console.log(pin);
     setInitiateCreate(false);
     handleChashbackGeneration(
       setInitiateCreate,
@@ -200,6 +298,7 @@ function Home({ appState, login_suc }) {
       setStates,
       setPin
     );
+
     // setInitiateCreate(false);
     // setGeneratedcode(true);
   };
@@ -269,7 +368,7 @@ function Home({ appState, login_suc }) {
                         textAlign: "center",
                       }}
                     >
-                      {text_input("Your pin", pin, "password", setPin)}
+                      {text_input("Your pin", pin, "number", setPin)}
                     </div>
                     <div style={{ marginTop: "10px", textAlign: "left" }}>
                       {tokenamount.length > 0 && (
@@ -313,6 +412,7 @@ function Home({ appState, login_suc }) {
                         generatedToken,
                         state.loggedInUser.user.fullname,
                         userTakes,
+                        true,
                         toggleDrawer
                       )}
                     </div>{" "}
@@ -341,18 +441,52 @@ function Home({ appState, login_suc }) {
 
   return state.loggedIn === false ? (
     <div>
-      <Redirect to="/login" />
+      <Redirect to="/lockout" />
     </div>
   ) : (
-      <div id="body bg">
-        {state.loggedInUser.user.meta.school !== null && <> {history.push("/nonstudentfeed")} </>}
-      {console.log(state)}
-      {console.log(verifyPayload)}
+    <div id="body bg">
+      {clickToViewPwd === true && (
+        <>
+          {" "}
+          {pinConfirmPop(
+            compState,
+            pwd,
+            setPwd,
+            closePwd,
+            showPwd,
+            text_input,
+            btn_danger,
+            btn_primary
+          )}{" "}
+        </>
+      )}
+      {/* {state.loggedInUser.user.meta.schoolmode === true && history.push("/")} */}
+      {/* {console.log(state)}
+      {console.log(verifyPayload)} */}
       {/* IF TOKEN VERIFICATION TURNS ERROR */}
-        {verifyPayload.success === false && <> </>}
-        
-        {/* if the user successfully resolved the cashback */}
-        {resolved === true && <> {successComponent("The cashback has been resolved to your wallet successfully", closeSuccessPop)}  </>}
+      {verifyPayload.success === false && <> </>}
+
+      {/* if the user successfully resolved the cashback */}
+      {resolved === true && (
+        <>
+          {" "}
+          {successComponent(
+            "The cashback has been resolved to your wallet successfully",
+            closeSuccessPop
+          )}{" "}
+        </>
+      )}
+
+      {/* @======== WHEN USER SUCCESSFULLY MOVE BUZZ ME BALANCE TO WALLET */}
+      {movebuzzResolved === true && (
+        <>
+          {" "}
+          {successComponent(
+            "Balance successfully moved to wallet",
+            closeSuccessPop
+          )}{" "}
+        </>
+      )}
 
       {compState.loading === true && <> {cashbackloader()}</>}
       {compState.error === true && (
@@ -368,7 +502,9 @@ function Home({ appState, login_suc }) {
               finallyGenerateCashbackCode,
               btn_danger,
               btn_primary,
-              compState
+              compState,
+              setPin,
+              pin
             )}{" "}
           </>
         )}
@@ -387,62 +523,14 @@ function Home({ appState, login_suc }) {
                   background: " #f4f6f7",
                   position: "sticky",
                   top: "0px",
-                  zIndex: "1000",
+                  zIndex: "1100",
                   padding: "0px",
                 }}
               >
                 {" "}
                 <Toppills />
-                <div
-                  style={{
-                    marginTop: "5px",
-                    textAlign: "center",
-                    width: "90%",
-                    marginLeft: "5%",
-                  }}
-                >
-                  <span
-                    onClick={toggleDrawer("bottom", true)}
-                    // to="/cashback-create"
-                    style={{
-                      marginLeft: " ",
-                      fontSize: "15px",
-                      color: "#0a3d62",
-                      textDecoration: "none",
-                    }}
-                  >
-                    <ViewAgenda style={{ marginLeft: "-4px" }} />
-                    &nbsp;<b>Generate</b>
-                  </span>
-                  &nbsp;&nbsp;
-                  <Link
-                    to="history"
-                    style={{
-                      marginLeft: "10px",
-                      fontSize: "15px",
-                      color: "#0a3d62",
-                      textDecoration: "none",
-                    }}
-                  >
-                    <HistoryOutlined style={{ marginLeft: "-4px" }} />
-                    &nbsp;<b>History</b>
-                  </Link>
-                  &nbsp;&nbsp;
-                  <Link
-                    to="updateprofile"
-                    style={{
-                      marginLeft: "10px",
-                      fontSize: "15px",
-                      color: "#0a3d62",
-                      textDecoration: "none",
-                    }}
-                  >
-                    <Person style={{ marginLeft: "-4px" }} />
-                    &nbsp;<b>Profile</b>
-                  </Link>
-                  <br />
-                </div>
               </div>{" "}
+              <Cashbacknav />
               <div style={{ zIndex: "80000", background: " " }}>
                 {/* @======== START OF RESOLVE BLOCK */}
                 <div
@@ -452,11 +540,12 @@ function Home({ appState, login_suc }) {
                     padding: "40px 20px",
                     marginLeft: "5%",
                     marginTop: "20px",
-                    borderRadius: "40px 40px 2px 3px",
+                    // borderRadius: "40px 40px 2px 3px",
                     boxShadow: " 1px 1px 3px #888888",
                     border: "0.5px solid #f3f3f3",
                   }}
-                >
+                  >
+                    <div style={{marginTop:"-25px",marginBottom:"40px",textAlign:"center"}}>Accept cashback token </div>
                   <div
                     className=" "
                     style={{
@@ -477,9 +566,9 @@ function Home({ appState, login_suc }) {
                               }}
                             >
                               {text_input(
-                                "Enter pin to cashback",
+                                "Enter cashback token",
                                 value,
-                                "text",
+                                "number",
                                 setValue
                               )}
                               <br />
@@ -507,6 +596,7 @@ function Home({ appState, login_suc }) {
                   {/* @======== SHOW THE CASH BACK CURRENCY WITH THE GENERATED CODE */}
                   {verifyPayload && (
                     <>
+                      {/* {console.log(verifyPayload.data.isActive)} */}
                       {cashbackpinresolved === true && (
                         <>
                           {verifyPayload.success === true && (
@@ -523,6 +613,7 @@ function Home({ appState, login_suc }) {
                                 verifyPayload.data.meta.token,
                                 verifyPayload.data.meta.name,
                                 verifyPayload.data.meta.amount,
+                                verifyPayload.data.isActive,
                                 null
                               )}{" "}
                             </>
@@ -534,88 +625,14 @@ function Home({ appState, login_suc }) {
                 </div>
                 {/* @======== RESOLVE CASHBACK TOKEN ENDS */}
 
-                {/* <div
-                  style={{
-                    width: "90%",
-                    background: "white",
-                    padding: "40px 20px",
-                    marginLeft: "5%",
-                    marginTop: "20px",
-                    borderRadius: "3px",
-                    boxShadow: " 1px 1px 3px #c1cfd9",
-                    backgroundImage:'linear-gradient(to right, #385b74,lightgray)',
-                  }}
-                          >
-                             <AttachMoneyOutlined style={{ color: "white", position: "absolute", top: "10px", left: "10px", fontSize: "30px" }} />
-                              <b style={{fontSize:"20px"}}>
-                                Generate Cashback token
-                             </b>
-                </div> */}
-                <div
-                  onClick={toggleDrawer("bottom", true)}
-                  style={{
-                    width: "90%",
-                    background: "white",
-                    padding: "20px 20px",
-                    marginLeft: "5%",
-                    marginTop: "20px",
-                    borderRadius: "3px",
-                    boxShadow: " 1px 1px 3px #c1cfd9",
-                    backgroundImage:
-                      "linear-gradient(to right,lightgray, #385b74)",
-                    position: "relative",
-                    height: "110px",
-                  }}
-                >
-                  <ViewAgenda
-                    style={{
-                      color: "white",
-                      position: "absolute",
-                      top: "10px",
-                      right: "10px",
-                      fontSize: "30px",
-                    }}
-                  />
-                  <b style={{ fontSize: "18px", color: "#0a3d62" }}>
-                    Generate Cashback token
-                  </b>{" "}
-                  <br />
-                  <small style={{ color: "" }}>
-                    When you click me, i will guide you through generating
-                    cashback token{" "}
-                  </small>
-                </div>
+                {/* @======== SHOW SIDE BUZZ ME WALLET */}
+                {/* <Lockscreen /> */}
+                <Balance />
 
-                <div
-                  style={{
-                    width: "90%",
-                    background: "white",
-                    padding: "40px 20px",
-                    marginLeft: "5%",
-                    marginTop: "20px",
-                    borderRadius: "3px 3px 40px 40px",
-                    marginBottom: "20px",
-                    boxShadow: " 1px 1px 3px #888888",
-                    paddingTop: "20px",
-                    border: "0.5px solid #f3f3f3",
-                  }}
-                >
-                  <div style={{ marginBottom: "20px" }}>
-                    <b>Cashback summary</b>
-                  </div>
+                {/* <Cashbackdrawal /> */}
 
-                  <div>
-                    <span>Cashback generated</span>{" "}
-                    <span style={{ float: "right" }}>2100</span>
-                  </div>
-                  <Divider style={{ marginBottom: "28px", color: "#0a3d62" }} />
-
-                  <div>
-                    <span>Cashback resolved</span>{" "}
-                    <span style={{ float: "right" }}>2100</span>
-                  </div>
-                  <Divider style={{ marginBottom: "28px", color: "#0a3d62" }} />
-                </div>
+                {/* @========      */}
+                <Accountsummery />
               </div>
             </div>
           </div>

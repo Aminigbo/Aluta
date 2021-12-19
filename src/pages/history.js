@@ -108,7 +108,7 @@ function Home({ appState, login_suc }) {
                     // to="/cashback-create"
                     style={{
                       marginLeft: " ",
-                      fontSize: "15px",
+                      fontSize: "13px",
                       color: "#0a3d62",
                       textDecoration: "none",
                       background: allbuzzme == false && "lightgray",
@@ -127,7 +127,7 @@ function Home({ appState, login_suc }) {
                     }}
                     style={{
                       marginLeft: "",
-                      fontSize: "15px",
+                      fontSize: "13px",
                       color: "#0a3d62",
                       textDecoration: "none",
                       background: allbuzzme == true && "lightgray",
@@ -146,7 +146,7 @@ function Home({ appState, login_suc }) {
                     }}
                     style={{
                       marginLeft: " ",
-                      fontSize: "15px",
+                      fontSize: "13px",
                       color: "#0a3d62",
                       textDecoration: "none",
                       background: bankSettlement == true && "lightgray",
@@ -155,14 +155,14 @@ function Home({ appState, login_suc }) {
                     }}
                   >
                     {/* <HistoryOutlined style={{ marginLeft: "-4px" }} /> */}
-                    &nbsp;<width>My Bank</width>
+                    &nbsp;<width>Topup History</width>
                   </span>
                   
                   <Link
                     to="updateprofile"
                     style={{
                       marginLeft: "",
-                      fontSize: "15px",
+                      fontSize: "13px",
                       color: "#0a3d62",
                       textDecoration: "none",
                     }}

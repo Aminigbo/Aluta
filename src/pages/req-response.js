@@ -357,7 +357,7 @@ function Home({ appState, login_suc, logout, set_session }) {
   const animatedComponents = makeAnimated();
   const loggedInUserSchool = state.loggedInUser.user.meta.school;
   const { fullname, email, phone, id } = state.loggedInUser.user;
-  const userId = state.loggedInUser.meta.user.id;
+  // const userId = state.loggedInUser.meta.user.id;
 
   const filterSchoolMates = (inputValue) => {
     return compState.filterOption.filter((i) =>

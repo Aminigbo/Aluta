@@ -25,7 +25,7 @@ import {
   AssignmentReturnedOutlined,
   NotificationsActiveOutlined,
   AccountBalanceWallet,
-} from "@material-ui/icons";
+} from "@material-ui/icons"; 
 
 import { Drawer, Divider } from "@mui/material";
 
@@ -33,8 +33,12 @@ import { Drawer, Divider } from "@mui/material";
 import mp3 from "../../static/audio/Doorbell.mp3";
 import { checkSession } from "../controlers/session";
 import { cashbackloader } from "../../components/loading";
-
-import { updateUserMeta,fetchUserProfile } from "../../functions/models/index";
+import { PaystackButton, PaystackConsumer } from "react-paystack";
+import {
+  updateUserMeta,
+  fetchUserProfile,
+  saveTopupHistory,
+} from "../../functions/models/index";
 
 //  function that checkes if the user is still using the default transaction pin
 import { trigger, resetPin } from "../../functions/controllers/resetPin";
@@ -70,6 +74,7 @@ function Desktopright({
   const userId = state.loggedInUser.user.id;
   const beneficiaryId = state.loggedInUser.user.meta.beneficiaryId;
   const new_supabase = supabase();
+  // const publicKey = "pk_your_public_key_here"
 
   const [pins, setPins] = useState({
     first: "",
@@ -78,11 +83,13 @@ function Desktopright({
   const [stateAlert, setStateAlert] = useState("");
   const [compState, setStates] = useState({
     title: "",
+    topupErr: false,
   });
   const [gotbuzzed, setGotbuzzed] = useState({
     status: false,
     data: null,
   });
+  const [amount, setAmount] = useState("");
 
   const resetTPin = () => {
     if (pins.first.length != 4 || pins.second.length != 4) {
@@ -181,7 +188,7 @@ function Desktopright({
           var audio = new Audio(mp3);
           audio.play();
           setStateAlert("buzAlert");
-          console.log(compState.myNewWallet)
+          console.log(compState.myNewWallet);
         }
       })
       .subscribe();
@@ -291,14 +298,14 @@ function Desktopright({
     //   loading:false
     // })
     //     }
-       
+
     //   }
     //   console.log(res)
     // })
     // if(state.loggedIn == true ){
     //   setInterval(() => checkSession(logout, set_session, state), 5000);
-    // } 
-     checkSession(logout, set_session, state,new_supabase)
+    // }
+    checkSession(logout, set_session, state, new_supabase);
   }, []);
 
   let successPayload = {
@@ -338,13 +345,99 @@ function Desktopright({
     setDrawerState({ ...drawerState, [anchor]: open });
   };
 
+  // paystack payload
+  const config = {
+    reference: new Date().getTime().toString(),
+    email: state.loggedInUser.user.email,
+    amount: amount + "00",
+    publicKey: "pk_live_bd2306790af6962d941c0f45888d5335328f1b15",
+  };
+
+  // you can call this function anything
+  const handleSuccess = (reference) => {
+    // Implementation for whatever you want to do with reference and after success call.
+    setStates({
+      ...compState,
+      loader: true,
+    });
+    console.log(reference);
+    let newWallet =
+      parseInt(amount) + parseInt(state.loggedInUser.user.meta.wallet);
+    let dataToUpdate = {
+      email: state.loggedInUser.user.email,
+      newUser: {
+        ...state.loggedInUser.user.meta,
+        wallet: newWallet,
+      },
+    };
+    let newLoginData = {
+      user: {
+        ...state.loggedInUser.user,
+        meta: dataToUpdate.newUser,
+      },
+      meta: state.loggedInUser.meta,
+    };
+
+    // @= top up payload
+    let topupPayload = {
+      user: state.loggedInUser.user.id,
+      amount,
+      meta: reference,
+    };
+
+    updateUserMeta(dataToUpdate)
+      .then((res) => {
+        if (res.success == true) {
+          saveTopupHistory(topupPayload);
+          login_suc(newLoginData);
+          setStateAlert(true);
+          setStates({
+            ...compState,
+            loader: false,
+            alertMsg: "Top up was successful.",
+          });
+        } else {
+          setStateAlert(false);
+          setStates({
+            ...compState,
+            loader: false,
+            alertMsg: "Sorry, a network error occured",
+          });
+        }
+      })
+      .catch((errer) => {
+        alert("A network error occured");
+        setStates({
+          ...compState,
+          loader: false,
+        });
+      });
+  };
+
+  // you can call this function anything
+  const handleClose = () => {
+    // implementation for  whatever you want to do when the Paystack dialog closed.
+    console.log("closed");
+  };
+
+  const componentProps = {
+    ...config,
+    text: "Paystack Button Implementation",
+    onSuccess: (reference) => handleSuccess(reference),
+    onClose: handleClose,
+  };
+
   return state.loggedIn === false ? (
     <div>
-      {state.loggedInUser == null ? <Redirect to="login" /> : <Redirect to="/lockout" /> }
-      
+      {state.loggedInUser == null ? (
+        <Redirect to="login" />
+      ) : (
+        <Redirect to="/lockout" />
+      )}
     </div>
-  ) :  (
+  ) : (
     <>
+      {compState.loading === true && <> {cashbackloader()}</>}
       {allow === false && (
         <div>
           {resetPin(state, resetTPin, smile, setPins, pins)}
@@ -382,7 +475,6 @@ function Desktopright({
           onClick={() => {
             // history.push("/transfer");
             history.push("/buzzpay");
-
           }}
           className="top-nav-pills-holder"
         >
@@ -417,27 +509,6 @@ function Desktopright({
           </span>
           <p className="top-nav-pills-title">Request</p>
         </div> */}
-          
-          {state.loggedInUser.user.meta.schoolmode !== false && ""}
-
-        {/* <div
-          onClick={() => {
-            history.push("/tour");
-          }}
-          className="top-nav-pills-holder"
-        >
-          <span
-            style={{
-              background: split == "tour" && "#0a3d62",
-              color: split == "tour" && "white",
-            }}
-            className="top-nav-pills"
-          >
-            {" "}
-            <EmojiTransportationOutlined />{" "}
-          </span>
-          <p className="top-nav-pills-title">Tour</p>
-        </div> */}
 
         {/* <div className="top-nav-pills-holder">
             <span  className="top-nav-pills" >  <ForumOutlined/> </span>
@@ -466,17 +537,25 @@ function Desktopright({
         <div
           onClick={() => {
             if (state.loggedInUser.user.meta.schoolmode === false) {
-              history.push("/cb");
+              history.push("/student-cashback");
+              console.log("non");
             } else {
-              history.push("/cashback");
+              history.push("/student-cashback");
+              console.log("go to cashback");
             }
           }}
           className="top-nav-pills-holder"
         >
           <span
             style={{
-              background: split == "cashback" || (split == "cb" && "#0a3d62"),
-              color: split == "cashback" || (split == "cb" && "white"),
+              background:
+                split == "cashback" ||
+                (split == "cb" && "#0a3d62") ||
+                (split === "student-cashback" && "#0a3d62"),
+              color:
+                split == "cashback" ||
+                (split == "cb" && "white") ||
+                (split === "student-cashback" && "white"),
             }}
             className="top-nav-pills"
           >
@@ -484,9 +563,6 @@ function Desktopright({
           </span>
           <p className="top-nav-pills-title">Cash Back</p>
         </div>
-
-        
-
 
         {state.loggedInUser.user.meta.schoolmode !== false ? (
           <div
@@ -530,24 +606,45 @@ function Desktopright({
 
         {console.log(state)}
 
-        <div
-          onClick={() => {
-            history.push("/history");
-          }}
-          className="top-nav-pills-holder"
-        >
-          <span
-            style={{
-              background: split == "history" && "#0a3d62",
-              color: split == "history" && "white",
+        {state.loggedInUser.user.meta.schoolmode === true ? (
+          <div
+            onClick={() => {
+              history.push("/tour");
             }}
-            className="top-nav-pills"
+            className="top-nav-pills-holder"
           >
-            {" "}
-            <Person />{" "}
-          </span>
-          <p className="top-nav-pills-title">Account</p>
-        </div>
+            <span
+              style={{
+                background: split == "tour" && "#0a3d62",
+                color: split == "tour" && "white",
+              }}
+              className="top-nav-pills"
+            >
+              {" "}
+              <EmojiTransportationOutlined />{" "}
+            </span>
+            <p className="top-nav-pills-title">Tour</p>
+          </div>
+        ) : (
+          <div
+            onClick={() => {
+              history.push("/history");
+            }}
+            className="top-nav-pills-holder"
+          >
+            <span
+              style={{
+                background: split == "history" && "#0a3d62",
+                color: split == "history" && "white",
+              }}
+              className="top-nav-pills"
+            >
+              {" "}
+              <Person />{" "}
+            </span>
+            <p className="top-nav-pills-title">Account</p>
+          </div>
+        )}
       </div>
 
       <React.Fragment key="bottom">
@@ -556,15 +653,85 @@ function Desktopright({
           open={drawerState["bottom"]}
           onClose={toggleDrawer("bottom", false, false)}
         >
-          <div style={{ height: "200px", background: " ",padding:"15px",
-          textAlign:"center" }}>
+          <div
+            style={{
+              height: "200px",
+              background: " ",
+              padding: "15px",
+              textAlign: "center",
+            }}
+          >
             {/* <div>Enter amount to top up</div>
-            */}
+             */}
             <br />
-            <div style={{padding:"10px 0px"}}>
-              <input placeholder="Enter top up amount" type="number" style={{ padding: "5px", outline: "none", width: "180px", border: "none", borderBottom: "0.5px solid lightgray",textAlign:"center" }} /> <br /><br />
-              <input type='button' value="Continue" style={{ padding: "5px", outline: "none", width: "180px", border: "none", background: "#0a3d62", color: "white", borderRadius: "6px" }}
-                onClick={toggleDrawer("bottom", false)} />
+            <div style={{ padding: "10px 0px" }}>
+              <input
+                onChange={(e) => {
+                  setAmount(e.target.value);
+                  setStates({
+                    ...compState,
+                    topupErr: false,
+                  });
+                }}
+                placeholder="Enter top up amount"
+                type="number"
+                style={{
+                  padding: "5px",
+                  outline: "none",
+                  width: "180px",
+                  border: "none",
+                  borderBottom:
+                    compState.topupErr == false
+                      ? "0.5px solid lightgray"
+                      : "3px solid crimson",
+                  textAlign: "center",
+                }}
+              />{" "}
+              <br />
+              <br />
+              {/* <input
+                type="button"
+                value="Continue"
+                style={{
+                  padding: "5px",
+                  outline: "none",
+                  width: "180px",
+                  border: "none",
+                  background: "#0a3d62",
+                  color: "white",
+                  borderRadius: "6px",
+                }}
+                onClick={toggleDrawer("bottom", false)}
+              /> */}
+              <PaystackConsumer {...componentProps}>
+                {({ initializePayment }) => (
+                  <button
+                    style={{
+                      padding: "5px",
+                      outline: "none",
+                      width: "180px",
+                      border: "none",
+                      background: "#0a3d62",
+                      color: "white",
+                      borderRadius: "6px",
+                    }}
+                    onClick={() => {
+                      if (amount > 49) {
+                        initializePayment(handleSuccess, handleClose);
+                        setDrawerState({ ...drawerState, bottom: false });
+                      } else {
+                        setStates({
+                          ...compState,
+                          topupErr: true,
+                        });
+                        window.navigator.vibrate([200]);
+                      }
+                    }}
+                  >
+                    Top up
+                  </button>
+                )}
+              </PaystackConsumer>
             </div>
           </div>
         </Drawer>

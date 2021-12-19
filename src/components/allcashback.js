@@ -9,7 +9,7 @@ import Desktopright from "../components/includes/desktopright";
 import { add_wallet, logOut, loginSuc, disp_noti } from "../redux";
 import { cashbackloader } from "../components/loading";
 import { allCashback } from "../functions/models/index";
-
+import Naira from "react-naira";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import { EuroSymbolOutlined, FileCopyOutlined } from "@material-ui/icons";
@@ -103,13 +103,13 @@ function Home({ appState, dispNoti }) {
                 &nbsp;&nbsp;{" "}
                 <b
                   style={{
-                    color: "#0a3d62",
+                    // color: "#0a3d62",
                     padding: "3px 10px",
                     borderRadius: "5px",
                     float: "right",
                   }}
                 >
-                  NGN {e.meta.amount}
+                 <Naira>{e.meta.amount}</Naira>
                 </b>
                 <br />
                 <span style={{ fontSize: "14px" }}>
@@ -130,16 +130,16 @@ function Home({ appState, dispNoti }) {
                 }}
               >
                 {e.user == userId ? (
-                  <small>
-                    You generated a cashback of{" "}
+                  <span>
+                    You generated a cashback of{" "} <Naira>{e.meta.amount}</Naira>
                     <b
                       style={{
-                        color: "#0a3d62",
+                        // color: "#0a3d62",
                         padding: "3px 4px",
                         borderRadius: "5px",
                       }}
-                    > <br />
-                      NGN {e.meta.amount}
+                    > 
+                      
                       <br />
                       <div style={{ marginTop: "5px" }}>
                         <b style={{ fontSize: "16px", color: "#0a3d62" }}>
@@ -161,19 +161,19 @@ function Home({ appState, dispNoti }) {
                         /> */}
                       </div>
                     </b>
-                  </small>
+                  </span>
                 ) : (
                   <small>
                     You resolved a cashback of{" "}
-                    <b
+                    <span
                       style={{
-                        color: "#0a3d62",
+                        // color: "#0a3d62",
                         padding: "3px 4px",
                         borderRadius: "5px",
                       }}
-                    >  <br />
-                      NGN {e.meta.amount}
-                    </b>
+                    > 
+                     <Naira>{e.meta.amount}</Naira>
+                    </span>
                     <br />{" "}
                     <div style={{ marginTop: "5px" }}>
                       <b style={{ fontSize: "16px", color: "#0a3d62" }}>
@@ -182,7 +182,13 @@ function Home({ appState, dispNoti }) {
                     </div>
                   </small>
                 )}
-                <br />
+                <br /> 
+                  <small>
+                    {e.meta.date.day} {e.meta.date.date} {e.meta.date.month},{" "}
+                    {e.meta.date.year}
+                  </small>{" "}
+                  &nbsp;&nbsp;{" "}
+                  <small style={{ float: "right" }}>{e.meta.date.time}</small>
               </div>
             </div>
             {/* <Divider /> */}

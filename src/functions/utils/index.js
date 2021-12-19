@@ -317,11 +317,51 @@ export function cashbackchargecentage(amount) {
   return charge;
 }
 
-export function notificationAlert(state) { 
-    if (state.notification === true) {
-      return true;
-    } else {
-      return false;
-    }
-  
+export function notificationAlert(state) {
+  if (state.notification === true) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+//  get current time
+export function formatAMPM(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? "pm" : "am";
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  var strTime = hours + ":" + minutes + " " + ampm;
+  return strTime;
+}
+
+// get days of the week
+export function daysOfTheWeek(date) {
+  var days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+  var d = new Date(date);
+  var dayName = days[d.getDay()];
+  return dayName;
+}
+
+// get curewnt month
+export function monthsOfTheYear() {
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const d = new Date();
+  return monthNames[d.getMonth()];
 }

@@ -76,7 +76,8 @@ function Home({ appState, loadFeeds, disp_signal }) {
       console.log("empty");
     } else {
       setStates({ ...compState, loader: true });
-      addComment(comment, postToComment, setComment, loadFeeds, state).then(
+      addComment(comment, postToComment, setComment, loadFeeds, state,setStates,
+  compState).then(
         (res) => {}
       );
       history.push(`/reaction/${postToComment}`);
@@ -249,7 +250,7 @@ function Home({ appState, loadFeeds, disp_signal }) {
                   EVENTS
                   <ArrowRightOutlined style={{ marginLeft: "-4px" }} />
                 </Link>{" "}
-                <Link
+                {/* <Link
                   to="events"
                   style={{
                     marginRight: "10px",
@@ -258,15 +259,12 @@ function Home({ appState, loadFeeds, disp_signal }) {
                     textDecoration: "none",
                     float: "right",
                   }}
-                >
-                  {/* <AccountBalanceWalletOutlined
-                    style={{ marginLeft: "" }}
-                  /> */}
+                > 
 
                   <b style={{ color: "#0a3d62", fontSize: "14px" }}>
                     {state.loggedInUser.user.meta.wallet} <s>BUZ</s>
                   </b>
-                </Link>{" "}
+                </Link> */}
                 <br />
               </div>
             </div>
@@ -294,22 +292,25 @@ function Home({ appState, loadFeeds, disp_signal }) {
             </React.Fragment>
 
             {compState.loader != true ? (
-              <div className="" style={{ background: " " }}>
-                {renderFeeds(state.feeds)}
-              </div>
+              <>
+                {" "}
+                <div className="" style={{ background: " " }}>
+                  {renderFeeds(state.feeds)}
+                </div>
+                {state.feeds.length < 1 && (
+                  <div style={{ textAlign: "center", marginTop: "30%" }}>
+                    No avilable feed ! <br />
+                    <br />
+                    <Link style={{ textDecoration: "none" }} to="/create">
+                      Create one
+                    </Link>
+                  </div>
+                )}{" "}
+              </>
             ) : (
               <ALLPOSTS loading data={[]} />
             )}
             {/* <Pills /> */}
-            {state.feeds.length < 1 && (
-              <div style={{ textAlign: "center", marginTop: "40%" }}>
-                No avilable feed ! <br />
-                <br />
-                <Link style={{ textDecoration: "none" }} to="/create">
-                  Create one
-                </Link>
-              </div>
-            )}
           </div>
           <br />
         </div>

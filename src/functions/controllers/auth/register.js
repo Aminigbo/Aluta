@@ -31,7 +31,8 @@ export async function handleRegister(formData) {
       avater: null,
       otp: null,
       isActive: false,
-      verified:false
+      verified: false,
+      isVendor:false
     },
   };
 

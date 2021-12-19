@@ -545,7 +545,7 @@ function Home({ appState, login_suc }) {
                     border: "0.5px solid #f3f3f3",
                   }}
                   >
-                    <div style={{marginTop:"-25px",marginBottom:"40px",textAlign:"center"}}>Resolve cashback token </div>
+                    <div style={{marginTop:"-25px",marginBottom:"40px",textAlign:"center"}}>Accept cashback token </div>
                   <div
                     className=" "
                     style={{

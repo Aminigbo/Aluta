@@ -25,6 +25,7 @@ import {
   EuroSymbolOutlined,
   MailOutlined,
   AccountBalanceOutlined,
+  AccountCircle
 } from "@material-ui/icons";
 
 import avar from "../../static/logos/logo2.png";
@@ -126,14 +127,14 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
 
   const list = () => (
     <Box sx={{ width: 270, height: "400px" }} role="presentation">
-      <List>
+      {/* <List>
         <small
           style={{ float: "right", marginRight: "30px", color: "crimson" }}
         >
           <DraftsOutlined /> <br />
           <small>Draft</small>
         </small>
-      </List>
+      </List> */}
 
       <List
         style={{ padding: "5px" }}
@@ -168,29 +169,63 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
           </b>
         </div> */}
       </List>
+      <Divider />
+      <List
+        onClick={() => {
+          setDrawerState({ ...drawerState, ["left"]: false });
+          history.push("/buzzpay");
+        }}
+        style={{ padding: "15px" }}
+      >
+        <LocalAtm /> &nbsp;
+        <span>Buz me</span>
+        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
+      </List>
+      <Divider />
+
+      <List
+        onClick={() => {
+          setDrawerState({ ...drawerState, ["left"]: false });
+          history.push("/tour");
+        }}
+        style={{ padding: "15px", opacity: "" }}
+      >
+        <EmojiTransportationOutlined /> &nbsp;
+        <span>Campus tour</span>{" "}
+        {/* <span style={{ float: "right", fontSize: "11px", color: "blue" }}>
+          coming soon
+        </span> */}
+        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
+      </List>
 
       <Divider />
       <List
         onClick={() => {
           setDrawerState({ ...drawerState, ["left"]: false });
-          history.push("/giveaway");
+          // history.push("/giveaway");
         }}
-        style={{ padding: "15px" }}
+        style={{ padding: "15px", opacity: "" }}
       >
         <Money /> &nbsp;
-        <span>Give away</span>
+        <span>Give away</span>{" "}
+        {/* <span style={{ float: "right", fontSize: "11px", color: "blue" }}>
+          coming soon
+        </span> */}
         {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
       </List>
       <Divider />
       <List
         onClick={() => {
           setDrawerState({ ...drawerState, ["left"]: false });
-          history.push("/events");
+          // history.push("/events");
         }}
-        style={{ padding: "15px" }}
+        style={{ padding: "15px", opacity: "" }}
       >
         <EventNote /> &nbsp;
-        <span>Events</span>
+        <span>Events</span>{" "}
+        {/* <span style={{ float: "right", fontSize: "11px", color: "blue" }}>
+          coming soon
+        </span> */}
         {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
       </List>
       <Divider />
@@ -205,32 +240,8 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
         <span>Aluta market</span> 
       </List>
       <Divider /> */}
-      <List
-        onClick={() => {
-          setDrawerState({ ...drawerState, ["left"]: false });
-          history.push("/tour");
-        }}
-        style={{ padding: "15px" }}
-      >
-        <EmojiTransportationOutlined /> &nbsp;
-        <span>Campus tour</span>
-        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
-      </List>
-      <Divider />
-      <List
-        onClick={() => {
-          setDrawerState({ ...drawerState, ["left"]: false });
-          history.push("/transfer");
-        }}
-        style={{ padding: "15px" }}
-      >
-        <LocalAtm /> &nbsp;
-        <span>Buz me</span>
-        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
-      </List>
-      <Divider />
 
-      <List
+      {/* <List
         onClick={() => {
           setDrawerState({ ...drawerState, ["left"]: false });
           history.push("/transfer");
@@ -238,17 +249,16 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
         style={{ padding: "15px" }}
       >
         <AccountBalanceOutlined /> &nbsp;
-        <span>Deposit from bank</span>
-        {/* <img alt="Aluta Meter" style={{ width: "60px",height:"60px",borderRadius:"60px" }} src={avar} /> */}
+        <span>Deposit from bank</span> 
       </List>
-      <Divider />
+      <Divider /> */}
 
       <List
         onClick={() => {
           setDrawerState({ ...drawerState, ["left"]: false });
           history.push("/transfer");
         }}
-        style={{ padding: "15px", background: "", opacity: "0.2" }}
+        style={{ padding: "15px", background: "", opacity: "0.3" }}
       >
         <AccountBalanceOutlined /> &nbsp;
         <span>Withdraw to bank</span>
@@ -275,7 +285,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
           //   setDrawerState({ ...drawerState, ["left"]: false });
           //   history.push("/setschool");
           // }}
-          style={{ padding: "15px" }}
+          style={{ padding: "15px", opacity: "" }}
         >
           <SchoolOutlined /> &nbsp;
           <span>School mode</span>
@@ -309,9 +319,9 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
           setStates({ ...compState, copy: true });
           if (navigator && navigator.clipboard && state.loggedIn === true) {
             navigator.clipboard.writeText(
-            state.loggedInUser.user.meta.beneficiaryId 
-          );
-          } 
+              state.loggedInUser.user.meta.beneficiaryId
+            );
+          }
         }}
         style={{ padding: "15px" }}
       >
@@ -334,15 +344,33 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
 
       <Divider />
 
-      <List style={select}>
-        <div style={{fontSize:"11px",textAlign:"left",padding:"10px"}}>
-          Upgrade your account to be able to withdraw to your bank.
-        </div>
-      </List>
+      {state.loggedInUser.user.meta.isVendor === false && (
+        <>
+          <List style={select}>
+            <div
+              style={{ fontSize: "11px", textAlign: "left", padding: "10px" }}
+            >
+              Only verified vendors can withdraw to their banks.
+            </div>
+          </List>
+          <button
+            style={{
+              marginLeft: "10px",
+              border: "none",
+              borderRadius: "5px",
+              padding: "3px 5px",
+              background: "#0a3d62",
+              color: "white",
+            }}
+          >
+            Become a vendor
+          </button>
+        </>
+      )}
     </Box>
   );
 
-  return  state.loggedIn === false ? (
+  return state.loggedIn === false ? (
     <div>
       <Redirect to="/login" />
     </div>
@@ -413,21 +441,34 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
             style={{
               color: state.notification === true ? "red" : "#0a3d62",
               position: " absolute",
-              right: "75px",
+              right: "60px",
             }}
           />
-          {/* <MailOutlined
+            {state.loggedInUser.user.meta.schoolmode === true && (
+                <AccountCircle
             onClick={() => {
-              dispRequest(false);
-              // history.push("/notification")
+              dispNoti(false);
+              history.push("/history");
             }}
             className="menu"
             style={{
-              color: state.request === true ? "red" : "#0a3d62",
+              color:"#0a3d62",
               position: " absolute",
-              right: "140px",
+              right: "110px",
             }}
-          /> */}
+          />
+            // <img style={{
+            //   color: state.request === true ? "red" : "#0a3d62",
+            //   position: " absolute",
+            //     right: "120px",
+            //     width: "30px",
+            //     height: "30px",
+            //     borderRadius: "30px",
+            //     top:"30px"
+              
+            // }} src="https://expertphotography.b-cdn.net/wp-content/uploads/2020/08/social-media-profile-photos-3.jpg" />
+            )}
+            
           <Dehaze
             style={{ color: "#0a3d62", position: " absolute", right: "10px" }}
             className="menu"

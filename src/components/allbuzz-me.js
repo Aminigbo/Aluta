@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import "../static/css/home/index.css";
-
+import Naira from "react-naira";
 import Header from "../components/includes/mobile_header.js";
 import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
@@ -111,7 +111,7 @@ function Home({ appState, dispNoti }) {
                     float: "right",
                   }}
                 >
-                  NGN {e.meta.data.amount}
+                <Naira>{e.meta.data.amount}</Naira>
                 </b>
                 <br />
               </div>
@@ -140,7 +140,14 @@ function Home({ appState, dispNoti }) {
                     BUZZ {e.meta.sender.fullname.split(" ")[0]}
                     &nbsp;&nbsp; NGN {e.meta.data.amount}
                   </b>
-                )}
+                )} 
+                  <small>
+                    {e.meta.date.day} {e.meta.date.date} {e.meta.date.month},{" "}
+                    {e.meta.date.year}
+                  </small>{" "}
+                  &nbsp;&nbsp;{" "}
+                <small style={{ float: "right" }}>{e.meta.date.time}</small>
+                
               </div>
             </div>
             {/* <Divider /> */}

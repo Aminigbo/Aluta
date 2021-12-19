@@ -37,7 +37,7 @@ import { Avatar, Typography, Grid, Paper, Divider } from "@mui/material";
 import {
   handleAddLike,
   handleUnlike,
-  likedPost,
+  // likedPost,
 } from "../functions/controllers/likes"; // importing likes controllers
 import { commentDuration, API_URL } from "../functions/utils/index";
 
@@ -334,7 +334,9 @@ function Home({ appState, loadFeeds, disp_allWhoBenefited, startLoading }) {
                   onClick={() => {
                     handleLike(data.id);
                   }}
-                />
+                  /> 
+                  {/* {console.log(data.likes)} */}
+                  {/* {likedPost(data.likes, state)} */}
                 &nbsp;<span>Love</span>
                 {/* <span style={{ fontSize: "11px" }}>{data.likes.length}</span> */}
               </div>
@@ -452,6 +454,28 @@ function Home({ appState, loadFeeds, disp_allWhoBenefited, startLoading }) {
     // loadFeeds(state.feeds);
     disp_all_who_benefited(postId, disp_allWhoBenefited, startLoading);
   }, []);
+
+  function likedPost(postLikesArr, state) {
+  let id=""
+  const sessionUser = {
+    name: state.loggedInUser.user.fullname,
+    id: state.loggedInUser.user.id,
+    school: state.loggedInUser.user.meta.school,
+    gender: state.loggedInUser.user.meta.gender,
+    badge: state.loggedInUser.user.meta.badge,
+};
+
+  
+  let filterLiked = postLikesArr.filter(e => e.userId == sessionUser.id)
+  console.log(postLikesArr)
+  console.log(filterLiked)
+  console.log(sessionUser.id)
+   if (filterLiked.length > 0) {
+      return true
+   }else{
+      return false
+   }
+}
 
   return state.loggedIn === false ? (
     <div>
