@@ -160,8 +160,8 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
                       &nbsp;&nbsp; NGN {e.meta.data.amount}
                       </b>
                       </div>
-                  )}
-                  <br /> */}
+                  )}*/}
+                  <br /> 
                   <small>
                     {e.meta.date.day} {e.meta.date.date} {e.meta.date.month},{" "}
                     {e.meta.date.year}
