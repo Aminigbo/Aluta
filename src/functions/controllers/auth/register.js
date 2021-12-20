@@ -4,11 +4,19 @@ import { success, error, beneficaryID } from "../../utils/index";
 import md5 from "md5";
 export async function handleRegister(formData) {
   let loadedData = null;
-  let { email, phone, name, password } = formData;
+  let { email, phone, name, password, referedBy} = formData;
   const ben_id = beneficaryID(name, email, phone, password);  // beneficiary id gotten from md5
   let curvedBenId = phone.substring(1,11)  // beneficiary id gotten from phone number
   const new_pwd = md5(password+email);
   const uuid = md5(ben_id + new_pwd);
+
+  const createRefCode = () => {
+    let first =  name.substring(0, 2)+phone[10]
+    let second = phone.substring(4, 6);
+    let third = name.substring(3, 5)+phone[5];
+    let combined = first + "-" + second + '-' + third
+    return combined.toUpperCase()
+  }
   let data = {
     email,
     phone,
@@ -32,7 +40,11 @@ export async function handleRegister(formData) {
       otp: null,
       isActive: false,
       verified: false,
-      isVendor:false
+      isVendor: false,
+      buzzcoin: 0,
+      refId: createRefCode(),
+      referedBy,
+      // refWallet:0
     },
   };
 

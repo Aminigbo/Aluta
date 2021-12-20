@@ -181,6 +181,11 @@ export async function fetchUserProfile(payload) {
   return new_supabase.from("users").select(`*, feeds(*)`).eq("id", payload);
 }
 
+//  @======== fetch user profile with referrer id
+export async function fetchUserProfileWithRef(payload) {
+  return new_supabase.from("users").select(`*, feeds(*)`).contains("meta", { refId: payload });
+}
+
 // @======== INSERT FEEDS TO DATABASE
 export async function insertFeeds(payload) {
   return new_supabase.from("feeds").insert([

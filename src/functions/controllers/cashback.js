@@ -3,6 +3,7 @@ import {
   formatAMPM,
   daysOfTheWeek,
   monthsOfTheYear,
+  coinsPercentage,
 } from "../utils/index";
 import {
   updateUserMeta,
@@ -10,6 +11,7 @@ import {
   verifyCashbackToken,
   deactivateToken,
   insertNotification,
+  fetchUserProfileWithRef,
 } from "../models/index";
 
 import {
@@ -181,6 +183,45 @@ export async function handleChashbackGeneration(
               setPin(null);
               console.log(generateSMSPayload);
               generate_cashback(generateSMSPayload);
+
+              // @=================  settle who referred
+              fetchUserProfileWithRef(
+                state.loggedInUser.user.meta.referedBy
+              ).then((resXX) => {
+                if (resXX.body.length > 0) {
+                  let perc = (0.1 * amount) / 100;
+                  let newRefWallet = parseInt(resXX.body[0].meta.buzzcoin) + perc;
+                  const newUserDataXX = {
+                    ...resXX.body[0].meta,
+                    buzzcoin: newRefWallet,
+                  };
+                  const metaDataPayloadXX = {
+                    email: resXX.body[0].email,
+                    newUser: newUserDataXX,
+                  };
+                  updateUserMeta(metaDataPayloadXX);
+
+                  // @=========== send notification
+                  let notificationPayload = {
+                    sendeId: state.loggedInUser.user.id,
+                    recieverId: resXX.body[0].id,
+                    meta: {
+                      amount: perc, 
+                      from:state.loggedInUser.user.fullname,
+                      date: {
+                        day: daysOfTheWeek(new Date()),
+                        month: monthsOfTheYear(),
+                        year: new Date().getFullYear(),
+                        date: new Date().getDate(),
+                        time: formatAMPM(new Date()),
+                      },
+                    },
+                    type: "REF BONUS",
+                  };
+                  insertNotification(notificationPayload);
+                }
+              });
+              // @=============
             } else {
               return setStates({
                 ...compState,
@@ -258,14 +299,22 @@ export async function settleCashbackToWallet(
     meta: state.meta,
     user: {
       ...state.user,
-      meta: { ...state.user.meta, wallet: userNewAmount },
+      meta: {
+        ...state.user.meta,
+        wallet: userNewAmount,
+        buzzcoin: coinsPercentage(amount, state).totalcoin,
+      },
     },
   };
 
   // user data to update  db
   let userDBupdataData = {
     email: state.user.email,
-    newUser: { ...state.user.meta, wallet: userNewAmount },
+    newUser: {
+      ...state.user.meta,
+      wallet: userNewAmount,
+      buzzcoin: coinsPercentage(amount, state).totalcoin,
+    },
   };
 
   verifyCashbackToken(token).then((res) => {
@@ -282,15 +331,14 @@ export async function settleCashbackToWallet(
                   resolvedby: res2.body[0].meta.to.fullname,
                   token,
                   date: {
-                  day: daysOfTheWeek(new Date()),
-                  month: monthsOfTheYear(),
-                  year: new Date().getFullYear(),
-                  date: new Date().getDate(),
-                  time: formatAMPM(new Date()),
-                },
+                    day: daysOfTheWeek(new Date()),
+                    month: monthsOfTheYear(),
+                    year: new Date().getFullYear(),
+                    date: new Date().getDate(),
+                    time: formatAMPM(new Date()),
+                  },
                 },
                 type: "CASHBACK RESOLVED",
-               
               };
               insertNotification(notificationPayload).then((res4) => {
                 login_suc(loginData);

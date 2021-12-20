@@ -132,7 +132,7 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
                     borderBottom: "0.5px solid lightgray",
                   }}
                 >
-                  <small>{e.meta.data.desc}</small> <br /> 
+                  <small>{e.meta.data.desc}</small> <br />
                   {/* {e.type == "BUZZ REQUEST" && (
                     <div style={{marginTop:"20px"}}>
                        <b
@@ -161,7 +161,7 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
                       </b>
                       </div>
                   )}*/}
-                  <br /> 
+                  <br />
                   <small>
                     {e.meta.date.day} {e.meta.date.date} {e.meta.date.month},{" "}
                     {e.meta.date.year}
@@ -231,7 +231,76 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
                     has been resolved by{" "}
                     {e.from == e.to ? "You" : e.meta.resolvedby}
                   </small>{" "}
-                  <br /> <br /> 
+                  <br /> <br />
+                  <small>
+                    {e.meta.date.day} {e.meta.date.date} {e.meta.date.month},{" "}
+                    {e.meta.date.year}
+                  </small>{" "}
+                  &nbsp;&nbsp;{" "}
+                  <small style={{ float: "right" }}>{e.meta.date.time}</small>
+                </div>
+              </div>
+              {/* <Divider /> */}
+            </>
+          );
+        } else {
+          return (
+            <>
+              {console.log(compState.data)}
+              <div style={{ background: "" }}>
+                <div
+                  style={{
+                    backgroundColor: "",
+                    width: "100%",
+                    padding: "10px 20px",
+                  }}
+                >
+                  <b style={{ fontSize: "13px" }}>{e.type} </b> &nbsp;&nbsp;{" "}
+                  <b
+                    style={{
+                      color: "#0a3d62",
+                      padding: "3px 10px",
+                      borderRadius: "5px",
+                      float: "right",
+                      fontSize: "13px",
+                    }}
+                  >
+                   <span style={{fontSize:"14px"}}> 🪙 </span> {e.meta.amount}
+                  </b>
+                  <br />
+                  <span style={{ fontSize: "13px" }}>
+                    {" "}
+                    By
+                    <b>
+                      {" "}
+                      {/* {e.meta.from.split(" ")[0]} */}
+                    </b>
+                  </span>{" "}
+                  <br />
+                </div>
+                <div
+                  style={{
+                    backgroundColor: " ",
+                    width: "100%",
+                    padding: "10px 20px",
+                    marginTop: "-15px",
+                    borderBottom: "0.5px solid lightgray",
+                  }}
+                >
+                  <small>
+                    You have received {" "}
+                    <b
+                      style={{
+                        color: "#0a3d62",
+                        padding: "3px 4px",
+                        borderRadius: "5px",
+                      }}
+                    >
+                       {e.meta.amount} Buzz coin(s)
+                    </b>{" "}
+                    as referrer bonus from {e.meta.from}'s cashback transaction
+                  </small>{" "}
+                  <br /> <br />
                   <small>
                     {e.meta.date.day} {e.meta.date.date} {e.meta.date.month},{" "}
                     {e.meta.date.year}

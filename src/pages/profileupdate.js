@@ -15,6 +15,8 @@ import { updateUserMeta } from "../functions/models/index";
 import { cashbackloader } from "../components/loading";
 // @=== import success response from worker function
 import { alert } from "../functions/workers_functions/alert";
+import { CheckCircleOutlined, HelpOutlineOutlined } from "@material-ui/icons";
+import { Drawer } from "@mui/material";
 const smile = {
   color: "white",
   fontSize: "20px",
@@ -26,6 +28,22 @@ function Home({ appState, login_suc }) {
     value: "",
     done: false,
   });
+
+  const [drawerState, setDrawerState] = React.useState({
+    bottom: false,
+  });
+
+  const toggleDrawer = (anchor, open, post) => (event) => {
+    // console.log("okk");
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setDrawerState({ ...drawerState, [anchor]: open });
+  };
 
   const [stateAlert, setStateAlert] = useState("");
 
@@ -97,20 +115,24 @@ function Home({ appState, login_suc }) {
     } else {
       let DOB = update.day + "-" + update.month + "-" + update.year;
       let user = state.loggedInUser.user;
-      
-      let newUser = {
-      ...user,
-      meta: {...state.loggedInUser.user.meta, DOB: DOB, gender: update.gender },
-    };
-    let payload = {
-      email: user.email,
-      newUser:newUser.meta,
-    };
 
-    const data = {
-      user: newUser,
-      meta: state.loggedInUser.meta,
-    };
+      let newUser = {
+        ...user,
+        meta: {
+          ...state.loggedInUser.user.meta,
+          DOB: DOB,
+          gender: update.gender,
+        },
+      };
+      let payload = {
+        email: user.email,
+        newUser: newUser.meta,
+      };
+
+      const data = {
+        user: newUser,
+        meta: state.loggedInUser.meta,
+      };
 
       setStates({
         ...compState,
@@ -194,8 +216,8 @@ function Home({ appState, login_suc }) {
                     Update your profile
                   </div> */}
                   <div className="realtimeBody" style={{ fontSize: "13px" }}>
-                    Update your details, this will help us serve you with the
-                    right contents .
+                    Your profile will help us serve you with the right contents
+                    .
                     <div className="description">
                       {/* @+============= set phone number */}
                       <div
@@ -241,6 +263,168 @@ function Home({ appState, login_suc }) {
                         </div>
                       </div>{" "}
                       <br />
+                      {/* Vendor verification section */}
+                      {state.loggedInUser.user.meta.DOB !== null && (
+                        <>
+                          <div
+                            style={{
+                              padding: "10px",
+                              background: "#f3f3f3",
+                              // background:"#121212",
+                              borderRadius: "6px",
+                              height: "370px",
+                              position: "relative",
+                            }}
+                          >
+                            <HelpOutlineOutlined
+                              style={{
+                                position: "absolute",
+                                right: "0px",
+                                top: "0px",
+                                color: "crimson",
+                              }}
+                              onClick={() => {
+                                setDrawerState({
+                                  ...drawerState,
+                                  bottom: true,
+                                });
+                              }}
+                            />
+                            <div style={{ color: " " }}>
+                              <b>Verify account</b>
+                            </div>{" "}
+                            <div style={{ marginTop: "10px" }}>
+                              <>
+                                <select
+                                  onChange={(e) => {
+                                    setUpdate({
+                                      ...update,
+                                      gender: e.target.value,
+                                    });
+                                  }}
+                                  style={{
+                                    margin: "7px 0px",
+                                    border: "none",
+                                    borderBottom: "1px solid lightgray",
+                                    padding: "6px",
+                                    borderRadius: "6px",
+                                    width: "100%",
+                                    outline: "none",
+                                  }}
+                                >
+                                  <option>
+                                    Select means of identification
+                                  </option>
+                                  <option>Driver's license</option>
+                                  <option>National ID</option>
+                                  <option>International passport</option>
+                                  <option>Voter's card</option>
+                                </select>
+
+                                <label id=" " style={{width:"100%"}}>
+                                  <input
+                                    // onChange={(event) => {
+                                    //   preview(event);
+                                    // }}
+                                    accept="image/png, image/gif, image/jpeg"
+                                    name="image"
+                                    id="upload"
+                                    type="file"
+                                    style={{ display: "none" }}
+                                  />
+                                  <input
+                                    placeholder="Enter acoount number"
+                                    type="button"
+                                    value="Select file"
+                                    style={{
+                                      margin: "7px 0px",
+                                      border: "none",
+                                      borderBottom: "1px solid #1212",
+                                      padding: "30px 6px",
+                                      borderRadius: "2px",
+                                      width: "100%",
+                                      outline: "none",
+                                      background: "lightgray",
+                                      color: "",
+                                    }}
+                                  />
+                                </label> 
+
+                                <input
+                                  placeholder="Enter residencial address"
+                                  type="text"
+                                  style={{
+                                    margin: "7px 0px",
+                                    border: "none",
+                                    borderBottom: "1px solid white",
+                                    padding: "6px",
+                                    borderRadius: "6px",
+                                    width: "100%",
+                                    outline: "none",
+                                  }}
+                                />
+
+                                <select
+                                  onChange={(e) => {
+                                    setUpdate({
+                                      ...update,
+                                      gender: e.target.value,
+                                    });
+                                  }}
+                                  style={{
+                                    margin: "7px 0px",
+                                    border: "none",
+                                    borderBottom: "1px solid lightgray",
+                                    padding: "6px",
+                                    borderRadius: "6px",
+                                    width: "100%",
+                                    outline: "none",
+                                  }}
+                                >
+                                  <option>Select bank</option>
+                                  <option>Driver's license</option>
+                                  <option>National ID</option>
+                                  <option>International passport</option>
+                                  <option>Voter's card</option>
+                                </select>
+
+                                <input
+                                  placeholder="Enter acoount number"
+                                  type="number"
+                                  style={{
+                                    margin: "7px 0px",
+                                    border: "none",
+                                    borderBottom: "1px solid white",
+                                    padding: "6px",
+                                    borderRadius: "6px",
+                                    width: "100%",
+                                    outline: "none",
+                                  }}
+                                />
+                                <br />
+
+                                <input
+                                  placeholder="Enter acoount number"
+                                  type="button"
+                                  value="Confirm"
+                                  style={{
+                                    marginTop: "17px",
+                                    border: "none",
+                                    borderBottom: "1px solid white",
+                                    padding: "6px",
+                                    borderRadius: "6px",
+                                    width: "100%",
+                                    outline: "none",
+                                    background: "#0a3d62",
+                                    color: "white",
+                                  }}
+                                />
+                              </>
+                            </div>{" "}
+                          </div>{" "}
+                          <br />{" "}
+                        </>
+                      )}
                       {/* @=========  date of birth section */}
                       <div
                         style={{
@@ -334,20 +518,26 @@ function Home({ appState, login_suc }) {
                             </>
                           ) : (
                             <>
-                             <div>
-                                <br />
+                              <div>
                                 <span
                                   style={{
-                                    margin: "7px",
+                                    margin: "0px",
                                     border: "none",
-                                    borderBottom: "1px solid lightgray",
-                                    padding: "6px 20px",
+                                    // borderBottom: "1px solid lightgray",
+                                    padding: "6px 0px",
                                     borderRadius: "6px",
-                                    background: "gray",
-                                    color: "white",
+                                    // background: "gray",
+                                    color: "gray",
                                   }}
                                 >
-                                  {state.loggedInUser.user.meta.DOB}
+                                  {/* {state.loggedInUser.user.meta.DOB} */}* *
+                                  / ** / ****{" "}
+                                  <CheckCircleOutlined
+                                    style={{
+                                      color: "#0a3d62",
+                                      fontSize: "18px",
+                                    }}
+                                  />
                                 </span>{" "}
                                 <br /> <br />
                               </div>
@@ -372,19 +562,25 @@ function Home({ appState, login_suc }) {
                           {state.loggedInUser.user.meta.gender !== null ? (
                             <>
                               <div>
-                                <br />
                                 <span
                                   style={{
-                                    margin: "7px",
+                                    margin: "px",
                                     border: "none",
-                                    borderBottom: "1px solid lightgray",
-                                    padding: "6px 20px",
+                                    // borderBottom: "1px solid lightgray",
+                                    padding: "6px 0px",
                                     borderRadius: "6px",
-                                    background: "gray",
-                                    color: "white",
+                                    // background: "gray",
+                                    color: "gray",
                                   }}
                                 >
-                                  {state.loggedInUser.user.meta.gender}
+                                  {/* {state.loggedInUser.user.meta.gender} */}
+                                  ********{" "}
+                                  <CheckCircleOutlined
+                                    style={{
+                                      color: "#0a3d62",
+                                      fontSize: "18px",
+                                    }}
+                                  />
                                 </span>{" "}
                                 <br /> <br />
                               </div>
@@ -438,13 +634,34 @@ function Home({ appState, login_suc }) {
                     <br />
                   </div>
 
-                   {compState.loader === true && <>{cashbackloader()} </>}
+                  {compState.loader === true && <>{cashbackloader()} </>}
                 </div>
               </div>
               <br />
             </div>
           </div>
         </div>
+
+        <React.Fragment key="bottom">
+          <Drawer
+            anchor="bottom"
+            open={drawerState["bottom"]}
+            onClose={toggleDrawer("bottom", false, false)}
+          >
+            <div style={{ padding: "17px" }}>
+              <b style={{ fontSize: " " }}>
+                Why do we need your means of identification?
+              </b>{" "}
+              <br /> <br />
+              <small>
+                Your means of identification is required for verification
+                purposes and ensures ease as well as safety of carrying out
+                transactions on our platform. It is legally required as part of
+                the Know Your Customer (KYC) process.
+              </small>
+            </div>
+          </Drawer>
+        </React.Fragment>
 
         <Desktopleft />
         <Desktopright />

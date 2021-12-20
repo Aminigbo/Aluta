@@ -127,14 +127,16 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
 
   const list = () => (
     <Box sx={{ width: 270, height: "400px" }} role="presentation">
-      {/* <List>
+      <List>
         <small
-          style={{ float: "right", marginRight: "30px", color: "crimson" }}
+          style={{ float: "right", marginRight: "30px", color: "#0a3d62" }}
         >
-          <DraftsOutlined /> <br />
-          <small>Draft</small>
+          {/* <DraftsOutlined /> */}
+         <span style={{fontSize:"20px"}}> 🪙 </span>
+          <br />
+          <small style={{marginLeft:"5px"}} >{state.loggedInUser.user.meta.buzzcoin}</small>
         </small>
-      </List> */}
+      </List>
 
       <List
         style={{ padding: "5px" }}
@@ -162,12 +164,12 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
             {state.loggedInUser.user.fullname[0]}
           </Avatar>
         </div>
-        &nbsp;&nbsp;<span>{state.loggedInUser.user.fullname}</span>
-        {/* <div style={{ textAlign: "center" }}>
-          <b style={{ color: "#0a3d62", fontSize: "14px" }}>
-            {state.loggedInUser.user.meta.wallet} <s>BUZ</s>
-          </b>
-        </div> */}
+        &nbsp;&nbsp;<span>Hello, {state.loggedInUser.user.fullname.split(" ")[0]}</span>
+        <div style={{ textAlign: "center" }}>
+          <small style={{ color: "#0a3d62", fontSize: "14px" }}>
+           <b>Ref ID:</b> &nbsp; {state.loggedInUser.user.meta.refId}
+          </small>
+        </div>
       </List>
       <Divider />
       <List
@@ -354,7 +356,11 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
             </div>
           </List>
           <button
+            onClick={()=>{
+              history.push("/updateprofile")
+            }}
             style={{
+              width:"95%",
               marginLeft: "10px",
               border: "none",
               borderRadius: "5px",

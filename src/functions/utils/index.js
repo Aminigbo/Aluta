@@ -365,3 +365,15 @@ export function monthsOfTheYear() {
   const d = new Date();
   return monthNames[d.getMonth()];
 }
+
+export const coinsPercentage = (amount, state) => {
+  console.log(state)
+  let coin = (1 * amount) / 100;
+  let newCoin = parseInt(
+    state.user.meta.buzzcoin + parseInt(coin)
+  );
+  return {
+    totalcoin: newCoin,
+    gained: coin,
+  };
+};

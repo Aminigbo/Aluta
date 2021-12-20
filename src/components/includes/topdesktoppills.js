@@ -3,7 +3,7 @@ import "../../static/css/top-nav.css";
 import { LinearProgress } from "@material-ui/core";
 import React, { useState } from "react";
 import { connect } from "react-redux";
-
+import {coinsPercentage} from '../../functions/utils/index'
 import {
   logOut,
   loginSuc,
@@ -363,11 +363,13 @@ function Desktopright({
     console.log(reference);
     let newWallet =
       parseInt(amount) + parseInt(state.loggedInUser.user.meta.wallet);
+    
     let dataToUpdate = {
       email: state.loggedInUser.user.email,
       newUser: {
         ...state.loggedInUser.user.meta,
         wallet: newWallet,
+        buzzcoin:coinsPercentage(amount,state.loggedInUser).totalcoin
       },
     };
     let newLoginData = {
@@ -384,6 +386,7 @@ function Desktopright({
       amount,
       meta: reference,
     };
+    
 
     updateUserMeta(dataToUpdate)
       .then((res) => {
@@ -394,7 +397,7 @@ function Desktopright({
           setStates({
             ...compState,
             loader: false,
-            alertMsg: "Top up was successful.",
+            alertMsg: `Top up was successful. You have been rewarded with ${coinsPercentage().gained} Buzz coin `,
           });
         } else {
           setStateAlert(false);

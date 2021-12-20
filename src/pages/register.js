@@ -45,6 +45,7 @@ function Register({ appState, login_suc, walletAdd }) {
   const [password, setPassword] = useState("");
   const [compState, setStates] = useState("");
   const [stateAlert, setStateAlert] = useState("");
+  const [ref, setRef] = useState("")
 
   let successPayload = {
     title: "SUCCESS",
@@ -72,6 +73,7 @@ function Register({ appState, login_suc, walletAdd }) {
       password,
       name,
       otp,
+      referedBy:ref
     };
     if (
       !name ||
@@ -223,7 +225,7 @@ function Register({ appState, login_suc, walletAdd }) {
             variant="standard"
           />
           <div style={{textAlign:"left",paddingLeft:"35px"}}><small style={{fontSize:"11px",color:"#0a3d62"}}>OTP will be sent</small></div> 
-          {/* <br /> */}
+          <br />
           <TextField
             type="number"
             id="input"
@@ -247,6 +249,7 @@ function Register({ appState, login_suc, walletAdd }) {
                <TextField id="input" onChange={(e)=>{ setDob(e.target.value)  }} value={dob} required label="" type="date" variant="outlined" /> */}
           {/* <br />
           <br /> */}
+          <br />
           <TextField
             id="input"
             onChange={(e) => {
@@ -260,6 +263,21 @@ function Register({ appState, login_suc, walletAdd }) {
           />{" "}
           <br />
           <br />
+
+          <TextField
+            id="input"
+            onChange={(e) => {
+              setRef(e.target.value);
+            }}
+            value={ref}
+            required
+            label="Referrer  (Optional)"
+            type="text"
+            variant="standard"
+          />{" "}
+          <br />
+          <br />
+          
           <button
             type="submit"
             style={{

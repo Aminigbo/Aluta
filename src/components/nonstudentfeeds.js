@@ -579,17 +579,7 @@ function Home({ appState, login_suc }) {
                               </div>
                             </div>
                           </>
-                        ) : (
-                          <div
-                            style={{
-                              textAlign: "center",
-                              marginTop: "-40px",
-                              marginBottom: "-20px",
-                            }}
-                          >
-                            Valid token
-                          </div>
-                        )}
+                        ) : ''}
                       </div>
                     </div>
                   </div>

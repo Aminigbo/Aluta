@@ -137,11 +137,11 @@ export function cashbackCurrency(
                     navigator.clipboard.writeText(generatedToken);
                   }
                 }}
-                style={{ color: "#706e3b", marginTop: "25px" }}
+                style={{ color: "#706e3b", marginTop: "25px", background: "#706e3b" }}
               >
                 <b
                   style={{
-                    background: "#706e3b",
+                   
                     color: "#efedc4",
                     padding: " 6px 10px",
                   }}
