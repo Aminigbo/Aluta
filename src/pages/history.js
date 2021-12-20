@@ -12,7 +12,7 @@ import Toppills from "../components/includes/topdesktoppills";
 import { cashbackchargecentage } from "../functions/utils/index";
 import { cashbackloader } from "../components/loading";
 import { errorComponent } from "../components/error"; // error component for error handling
-import Cashbackdrawer from "../components/cashbackdrawer";
+import Topup from "../components/topup-history";
 // @========  IMPORT CUSTOMER ACCOUNT SUMMARY
 import Allcashback from "../components/allcashback";
 import Allbuzzme from "../components/allbuzz-me";
@@ -31,7 +31,7 @@ function Home({ appState, login_suc }) {
   const [tokenamount, setTokenamount] = useState(""); // amount to be generated
   const [allbuzzme, setAllbuzzme] = useState(false);
   const [bankSettlement, setbankSettlement] = useState(false)
-
+const [allTopup, setAllTopup] = useState(false)
   let userWallet = "";
   if (state.loggedIn === true) {
     userWallet = state.loggedInUser.user.meta.wallet;
@@ -104,8 +104,12 @@ function Home({ appState, login_suc }) {
                   }}
                 >
                   <span
-                    onClick={() => [setAllbuzzme(false)]}
+                      onClick={() => {
+                        setAllbuzzme(false)
+                        setAllTopup(FontFaceSetLoadEvent)
+                    }}
                     // to="/cashback-create"
+                      
                     style={{
                       marginLeft: " ",
                       fontSize: "13px",
@@ -124,6 +128,7 @@ function Home({ appState, login_suc }) {
                     onClick={() => {
                         setAllbuzzme(true);
                         setbankSettlement(false)
+                        setAllTopup(false)
                     }}
                     style={{
                       marginLeft: "",
@@ -142,7 +147,8 @@ function Home({ appState, login_suc }) {
                     <span
                     onClick={() => {
                       setbankSettlement(true);
-                      setAllbuzzme(null)
+                        setAllbuzzme(null)
+                        setAllTopup(true)
                     }}
                     style={{
                       marginLeft: " ",
@@ -177,6 +183,8 @@ function Home({ appState, login_suc }) {
                 {allbuzzme === true && <Allbuzzme />}
 
                 {allbuzzme === false && <Allcashback />}
+
+                  {allTopup === true && <Topup />}
               </div>
             </div>
           </div>

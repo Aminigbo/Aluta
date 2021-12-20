@@ -5,7 +5,7 @@ import "../static/css/home/index.css";
 
 import { Divider } from "@mui/material";
 import { add_wallet, logOut, loginSuc } from "../redux";
-
+import Naira from "react-naira";
 // @======== ALLL BUZZME CONTROLLER
 import { getAllBuzz } from "../functions/controllers/allbuzzme";
 import { getAllCashback } from "../functions/controllers/allcashback";
@@ -73,66 +73,66 @@ function Home({ appState }) {
         </div>
 
         <div>
-          <span>All Buzz In</span>{" "}
+          <span> Buzz IN</span>{" "}
           <span style={{ float: "right" }}>
             {buzzState.loading === true ? (
               <small style={{ fontSize: "11px" }}>Fetching.....</small>
             ) : (
               <>
                 {" "}
-                <b style={{fontSize:"12px"}}>NGN {buzzState.data.to} </b>
+                <b style={{fontSize:"12px"}}><Naira>{buzzState.data.to}</Naira> </b>
               </>
             )}
           </span>
         </div>
-        <Divider style={{ marginBottom: "28px", color: "#0a3d62" }} />
+        <div style={{ marginBottom: "28px",marginTop:"10px", border: "1px solid #0a3d62" }} ></div>
 
         <div>
-          <span>All Buzz Out</span>{" "}
+          <span>Buzz OUT</span>{" "}
           <span style={{ float: "right" }}>
             {buzzState.loading === true ? (
               <small style={{ fontSize: "11px" }}>Fetching.....</small>
             ) : (
               <>
                 {" "}
-                <b style={{fontSize:"12px"}}>NGN {buzzState.data.from} </b>{" "}
+                <b style={{fontSize:"12px"}}><Naira>{buzzState.data.from}</Naira> </b>{" "}
               </>
             )}
           </span>
         </div>
-        <Divider style={{ marginBottom: "28px", color: "#0a3d62" }} />
+        <div style={{ marginBottom: "28px",marginTop:"10px", border: "1px solid crimson" }} ></div>
 
         <div>
-          <span>Cashback generated</span>{" "}
+          <span>Cashback IN</span>{" "}
           <span style={{ float: "right" }}>
             {buzzState.loading === true ? (
               <small style={{ fontSize: "11px" }}>Fetching.....</small>
             ) : (
                   <>
                     {/* {console.log(cashbackstate)} */}
-                    <b style={{ fontSize: "12px" }}>NGN {cashbackstate.data.from} </b>{" "}
+                    <b style={{ fontSize: "12px" }}><Naira>{cashbackstate.data.from}</Naira> </b>{" "}
                     {console.log(cashbackstate)}
               </>
             )}
           </span>
         </div>
-        <Divider style={{ marginBottom: "28px", color: "#0a3d62" }} />
+        <div style={{ marginBottom: "28px",marginTop:"10px", border: "1px solid #0a3d62" }} ></div>
 
         <div>
-          <span>Cashback resolved</span>{" "}
+          <span>Cashback OUT</span>{" "}
           <span style={{ float: "right" }}>
             {buzzState.loading === true ? (
               <small style={{ fontSize: "11px" }}>Fetching.....</small>
             ) : (
               <>
                 {" "}
-                <b style={{fontSize:"12px"}}>NGN {cashbackstate.data.to} </b>{" "}
+                <b style={{fontSize:"12px",color:"red"}}><Naira>{cashbackstate.data.to}</Naira> </b>{" "}
               </>
             )}
             {/* cashbackstate */}
           </span>
         </div>
-        <Divider style={{ marginBottom: "28px", color: "#0a3d62" }} />
+        <div style={{ marginBottom: "28px",marginTop:"10px", border: "1px solid crimson" }} ></div>
       </div>
     </div>
   );

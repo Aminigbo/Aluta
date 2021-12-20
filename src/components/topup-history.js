@@ -89,20 +89,10 @@ function Home({ appState, dispNoti }) {
                   padding: " 10px 0px",
                 }}
               >
-                <b>{e.type} </b> &nbsp;&nbsp;{" "}
+                {/* <b>{e.type} </b> &nbsp;&nbsp;{" "}
                 <span style={{ fontSize: "14px" }}>
-                  {e.from == userId ? "Debit To" : "Cradit From"}
-
-                  <b>
-                    {" "}
-                    {e.from == userId ? (
-                      <> {e.meta.reciever.Fullname.split(" ")[0]} </>
-                    ) : (
-                      <> {e.meta.sender.fullname.split(" ")[0]} </>
-                    )}{" "}
-                  </b>
-                  {/* reciever */}
-                </span>{" "}
+                 Card Topup
+                </span>{" "} */}
                 <b
                   style={{
                     color: "#0a3d62",
@@ -124,23 +114,15 @@ function Home({ appState, dispNoti }) {
                   borderBottom: "0.5px solid lightgray",
                 }}
               >
-                <small>{e.meta.data.desc}</small> <br />
-                <br />
-                {e.type == "BUZZ REQUEST" && (
-                  <b
-                    style={{
-                      background: "#0a3d62",
-                      color: "white",
-                      padding: "3px 10px",
-                      borderRadius: "5px",
-                      marginTop: "20px",
-                    }}
-                  >
-                    {" "}
-                    BUZZ {e.meta.sender.fullname.split(" ")[0]}
-                    &nbsp;&nbsp; NGN {e.meta.data.amount}
-                  </b>
-                )} 
+                    <div style={{ width: "30%", display: "inline-block", textAlign: "right",background:" " }}>Status</div>
+                    <div style={{ width: "30%", display: "inline-block", textAlign: "left", marginLeft: "15px", color: "green" }}><b>Active</b></div> <br />
+                    
+                     <div style={{ width: "30%", display: "inline-block", textAlign: "right",background:" " }}>Message</div>
+                    <div style={{ width: "30%", display: "inline-block", textAlign: "left", marginLeft: "15px", color: "green" }}><b>Success</b></div> <br />
+                    
+                     <div style={{ width: "30%", display: "inline-block", textAlign: "right",background:" " }}>Ref</div>
+                    <div style={{ width: "30%", display: "inline-block", textAlign: "left",marginLeft:"15px",color:"gray" }}><small>1639929854627</small></div> <br />
+                <br /> 
                   <small>
                     {e.meta.date.day} {e.meta.date.date} {e.meta.date.month},{" "}
                     {e.meta.date.year}
@@ -186,7 +168,7 @@ function Home({ appState, dispNoti }) {
                     >
                       {" "}
                       {compState.loader === false &&
-                        compState.data.length > 0 && <b>Buzz me histories</b>}
+                        compState.data.length > 0 && <b>Topup histories</b>}
                     </div>{" "}
                     <div
                       style={{
