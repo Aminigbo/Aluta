@@ -150,7 +150,7 @@ function Home({ appState, login_suc }) {
                     <Search
                       width="80vw"
                       spellcheck={true}
-                      placeholder="Search for school to tour..."
+                      placeholder="Enter school to tour..."
                       options={actuallSchool}
                       onChange={(option, e) => setCapturedSearch(option)}
                     />{" "}

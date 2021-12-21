@@ -8,7 +8,7 @@ import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
 import { add_wallet, logOut, loginSuc, disp_noti } from "../redux";
 import { cashbackloader } from "../components/loading";
-import { allBuzzMe } from "../functions/models/index";
+import { allTopup } from "../functions/models/index";
 
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -43,7 +43,7 @@ function Home({ appState, dispNoti }) {
       ...compState,
       loader: true,
     });
-    allBuzzMe(user)
+    allTopup(user,'topup')
       .then((res) => {
         console.log(res);
         if (res.error === null) {
@@ -101,7 +101,7 @@ function Home({ appState, dispNoti }) {
                     float: "right",
                   }}
                 >
-                <Naira>{e.meta.data.amount}</Naira>
+                <Naira>{e.amount}</Naira>
                 </b>
                 <br />
               </div>
@@ -115,20 +115,20 @@ function Home({ appState, dispNoti }) {
                 }}
               >
                     <div style={{ width: "30%", display: "inline-block", textAlign: "right",background:" " }}>Status</div>
-                    <div style={{ width: "30%", display: "inline-block", textAlign: "left", marginLeft: "15px", color: "green" }}><b>Active</b></div> <br />
+                    <div style={{ width: "30%", display: "inline-block", textAlign: "left", marginLeft: "15px", color: "green",fontSize:"12px" }}><b>{e.meta.status}</b></div> <br />
                     
                      <div style={{ width: "30%", display: "inline-block", textAlign: "right",background:" " }}>Message</div>
-                    <div style={{ width: "30%", display: "inline-block", textAlign: "left", marginLeft: "15px", color: "green" }}><b>Success</b></div> <br />
+                    <div style={{ width: "30%", display: "inline-block", textAlign: "left", marginLeft: "15px", color: "green",fontSize:"12px" }}><b>{e.meta.message}</b></div> <br />
                     
                      <div style={{ width: "30%", display: "inline-block", textAlign: "right",background:" " }}>Ref</div>
-                    <div style={{ width: "30%", display: "inline-block", textAlign: "left",marginLeft:"15px",color:"gray" }}><small>1639929854627</small></div> <br />
+                    <div style={{ width: "30%", display: "inline-block", textAlign: "left",marginLeft:"15px",color:"gray" }}><small>{e.meta.trxref}</small></div> <br />
                 <br /> 
                   <small>
                     {e.meta.date.day} {e.meta.date.date} {e.meta.date.month},{" "}
                     {e.meta.date.year}
                   </small>{" "}
                   &nbsp;&nbsp;{" "}
-                <small style={{ float: "right" }}>{e.meta.date.time}</small>
+                <small style={{ float: " " }}>{e.meta.date.time}</small>
                 
               </div>
             </div>
@@ -205,7 +205,7 @@ function Home({ appState, dispNoti }) {
                     textAlign: "center",
                   }}
                 >
-                  No buzz me record
+                  No topup record
                 </div>
               )}
               <div

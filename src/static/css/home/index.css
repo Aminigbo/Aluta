@@ -417,7 +417,7 @@ progress { color: #0a3d62; }
       margin-bottom:5px
    }
    .menu{
-      float:right;
+      /* float:right; */
       margin-right:10px;
       margin-top:10px;
       width:900px;
@@ -1733,8 +1733,8 @@ progress { color: #0a3d62; }
       margin-bottom:5px
    }
    .menu{
-      float:right;
-      margin-right:10px;
+      /* float:right; */
+      /* margin-right:10px; */
       margin-top:10px;
       width:900px;
       color:black

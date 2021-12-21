@@ -188,7 +188,7 @@ function Home({ appState, dispNoti }) {
                     {e.meta.date.year}
                   </small>{" "}
                   &nbsp;&nbsp;{" "}
-                  <small style={{ float: "right" }}>{e.meta.date.time}</small>
+                  <small style={{ float: " " }}>{e.meta.date.time}</small>
               </div>
             </div>
             {/* <Divider /> */}

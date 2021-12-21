@@ -16,7 +16,7 @@ import { cashbackloader } from "../components/loading";
 // @=== import success response from worker function
 import { alert } from "../functions/workers_functions/alert";
 import { CheckCircleOutlined, HelpOutlineOutlined } from "@material-ui/icons";
-import { Drawer } from "@mui/material";
+import { Drawer, Link } from "@mui/material";
 const smile = {
   color: "white",
   fontSize: "20px",
@@ -205,10 +205,99 @@ function Home({ appState, login_suc }) {
                   top: "0px",
                   zIndex: "1000",
                   padding: "0px",
+                  
                 }}
               >
                 {" "}
                 <Toppills />
+               <div
+                  style={{
+                    marginTop: "5px",
+                    textAlign: "left",
+                    width: "90%",
+                    marginLeft: "5%",
+                    paddingBottom: "10px",
+                    background:" "
+                  }}
+                  >
+                    
+                    <Link
+                    to="updateprofile"
+                    style={{
+                      marginLeft: "",
+                      fontSize: "15px",
+                      color: "gray",
+                      textDecoration: "none",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {/* <Person style={{ marginLeft: "-4px" }} /> */}
+                    <prf>Profile</prf>
+                    </Link>
+                    
+                  <span
+                    onClick={() => {
+                      // setAllbuzzme(false)
+                      // setAllTopup(FontFaceSetLoadEvent)
+                      history.push("/history");
+                    }}
+                    // to="/cashback-create"
+
+                    style={{
+                      marginLeft: " ",
+                      fontSize: "13px",
+                      color: "#0a3d62",
+                      textDecoration: "none",
+                      padding: "5px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    {/* <ViewAgenda style={{ marginLeft: "-4px" }} /> */}
+                    <cb>Cashbacks</cb>
+                  </span>
+
+                  <span
+                    onClick={() => {
+                      // setAllbuzzme(true);
+                      // setbankSettlement(false)
+                      // setAllTopup(false)
+                      history.push("/buzzhistory");
+                    }}
+                    style={{
+                      marginLeft: "",
+                      fontSize: "13px",
+                      color: "#0a3d62",
+                      textDecoration: "none",
+                      padding: "5px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    {/* <HistoryOutlined style={{ marginLeft: "-4px" }} /> */}
+                    <buzz>Buzz me</buzz>
+                  </span>
+
+                  <span
+                    onClick={() => {
+                      //  setbankSettlement(true);
+                      //    setAllbuzzme(null)
+                      //    setAllTopup(true)
+                      history.push("/topuphistory");
+                    }}
+                    style={{
+                      marginLeft: " ",
+                      fontSize: "13px",
+                      color: "#0a3d62",
+                      textDecoration: "none",
+                      padding: "5px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    {/* <HistoryOutlined style={{ marginLeft: "-4px" }} /> */}
+                    <width>Topup</width>
+                  </span>
+
+                  
+                  </div> 
               </div>{" "}
               <div className=" " style={{ marginTop: "10px" }}>
                 <div className="realtimeParent">
@@ -233,11 +322,29 @@ function Home({ appState, login_suc }) {
                         </div>{" "}
                         <div style={{ marginTop: "10px", color: "gray" }}>
                           <span style={{ fontSize: "17px", color: "gray" }}>
-                            {state.loggedInUser.user.phone}
+                            ****
+                            {state.loggedInUser.user.phone.substring(
+                              state.loggedInUser.user.phone.length - 4
+                            )}  &nbsp;
+                            <CheckCircleOutlined
+                              style={{
+                                color: "#0a3d62",
+                                fontSize: "18px",
+                              }}
+                            />
                           </span>{" "}
                           <br />
                           <span style={{ fontSize: "17px" }}>
-                            {state.loggedInUser.user.email}
+                            ****
+                            {state.loggedInUser.user.email.substring(
+                              state.loggedInUser.user.email.length - 12
+                            )} &nbsp;
+                            <CheckCircleOutlined
+                              style={{
+                                color: "#0a3d62",
+                                fontSize: "18px",
+                              }}
+                            />
                           </span>{" "}
                           <br />
                           {/* <br />
@@ -272,8 +379,9 @@ function Home({ appState, login_suc }) {
                               background: "#f3f3f3",
                               // background:"#121212",
                               borderRadius: "6px",
-                              height: "370px",
+                              height: "380px",
                               position: "relative",
+                              border: "0.5px solid crimson",
                             }}
                           >
                             <HelpOutlineOutlined
@@ -281,7 +389,7 @@ function Home({ appState, login_suc }) {
                                 position: "absolute",
                                 right: "0px",
                                 top: "0px",
-                                color: "crimson",
+                                color: "#0a3d62",
                               }}
                               onClick={() => {
                                 setDrawerState({
@@ -321,7 +429,7 @@ function Home({ appState, login_suc }) {
                                   <option>Voter's card</option>
                                 </select>
 
-                                <label id=" " style={{width:"100%"}}>
+                                <label id=" " style={{ width: "100%" }}>
                                   <input
                                     // onChange={(event) => {
                                     //   preview(event);
@@ -348,7 +456,7 @@ function Home({ appState, login_suc }) {
                                       color: "",
                                     }}
                                   />
-                                </label> 
+                                </label>
 
                                 <input
                                   placeholder="Enter residencial address"
@@ -406,7 +514,7 @@ function Home({ appState, login_suc }) {
                                 <input
                                   placeholder="Enter acoount number"
                                   type="button"
-                                  value="Confirm"
+                                  value="Verify"
                                   style={{
                                     marginTop: "17px",
                                     border: "none",
@@ -613,23 +721,25 @@ function Home({ appState, login_suc }) {
                         </div>{" "}
                       </div>
                       <br />
-                      <button
-                        onClick={() => {
-                          updateBtn();
-                        }}
-                        style={{
-                          margin: "10px 0px",
-                          width: "100%",
-                          padding: "10px",
-                          border: "none",
-                          borderRadius: "6px",
-                          background: "#0a3d62",
-                          color: "white",
-                          outline: "none",
-                        }}
-                      >
-                        UPDATE
-                      </button>
+                      {state.loggedInUser.user.meta.DOB === null && (
+                        <button
+                          onClick={() => {
+                            updateBtn();
+                          }}
+                          style={{
+                            margin: "10px 0px",
+                            width: "100%",
+                            padding: "10px",
+                            border: "none",
+                            borderRadius: "6px",
+                            background: "#0a3d62",
+                            color: "white",
+                            outline: "none",
+                          }}
+                        >
+                          UPDATE
+                        </button>
+                      )}
                     </div>{" "}
                     <br />
                   </div>

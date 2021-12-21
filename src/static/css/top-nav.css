@@ -13,8 +13,8 @@
    }
 
    .top-nav-pills{
-      background-color: lightgray; 
-      padding:8px 5px;
+      /* background-color: lightgray;  */
+      padding:8px 2px;
       border-radius:20px;
       color:#0a3d62
    }

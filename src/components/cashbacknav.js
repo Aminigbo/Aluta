@@ -75,6 +75,7 @@ function Home({ appState, login_suc }) {
         confirmpwderrormsg: "Wrong pin",
       });
       setPwd("");
+      window.navigator.vibrate([200]);
     } else {
       console.log("true");
       setClickToViewPwd(false);
@@ -244,8 +245,9 @@ function Home({ appState, login_suc }) {
       setStates({
         ...compState,
         error: true,
-        errorMsg: "Please provide a valid amount greater than 100 BUZ",
+        errorMsg: "Please provide a valid amount greater than NGN 100.00",
       });
+      window.navigator.vibrate([200]);
     } else if (amountPlusCharge > userWallet) {
       console.log(amountPlusCharge);
       setStates({
@@ -253,7 +255,16 @@ function Home({ appState, login_suc }) {
         error: true,
         errorMsg: "You have insufficient wallet balance",
       });
-    } else {
+      window.navigator.vibrate([200]);
+    } else if (tokenamount > 10000) { 
+      setStates({
+        ...compState,
+        error: true,
+        errorMsg: "Only verified vendors can generate cashback above NGN 10,000.00",
+      });
+      window.navigator.vibrate([200]);
+    }
+    else {
       setDrawerState2({ ...drawerState2, bottom: false });
       setDrawerState({ ...drawerState, bottom: true });
       setAuth(true);

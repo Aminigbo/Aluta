@@ -56,12 +56,11 @@ function Home({ appState, loadFeeds, walletAdd }) {
   const allSCHOOLS = allUniversities();
   const TOUREDSCHOOL = allSCHOOLS.filter((e) => e.label == school)[0];
 
-  
   const [comment, setComment] = useState("");
   const [postToComment, setPostToComment] = useState("");
   const [compState, setStates] = useState({
-  loader:true
-});
+    loader: true,
+  });
 
   const [drawerState, setDrawerState] = React.useState({
     bottom: false,
@@ -72,7 +71,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
 
   React.useEffect((compState) => {
     window.scrollTo(0, 0);
-    setStates({ ...compState, loader: true})
+    setStates({ ...compState, loader: true });
     // setTimeout(() => setStates({ ...compState, loader: false }), 500);
 
     // fetch_feeds()
@@ -101,9 +100,6 @@ function Home({ appState, loadFeeds, walletAdd }) {
       }
     });
   }, []);
-
-  
-
 
   const schoolFeeds = state.feeds.filter((e) => e.poster.school == school);
   function renderFeeds(allFeeds) {
@@ -150,8 +146,6 @@ function Home({ appState, loadFeeds, walletAdd }) {
       history.push(`/reaction/${postToComment}`);
     }
   };
-
-  
 
   const toggleDrawer = (anchor, open, post) => (event) => {
     if (post != false) {
@@ -277,20 +271,24 @@ function Home({ appState, loadFeeds, walletAdd }) {
             {compState.loader != true ? (
               <div className="" style={{ background: " " }}>
                 {renderFeeds(state.feeds)}
+
+                {schoolFeeds.length < 1 && (
+                  <div style={{ textAlign: "center", marginTop: "40%" }}>
+                    No avilable feed from <br /> <b>{school}</b> ! <br />
+                    <br />
+                    <Link style={{ textDecoration: "none" }} to="/tour">
+                      Check other school
+                    </Link>
+                  </div>
+                )}
               </div>
             ) : (
-              <ALLPOSTS loading data={[]}  />
+              <>
+                <ALLPOSTS loading data={[]} />
+                <ALLPOSTS loading data={[]} />
+              </>
             )}
 
-            {schoolFeeds.length < 1 && (
-              <div style={{ textAlign: "center", marginTop: "40%" }}>
-                No avilable feed from <br /> <b>{school}</b> ! <br />
-                <br />
-                <Link style={{ textDecoration: "none" }} to="/tour">
-                  Check other school
-                </Link>
-              </div>
-            )}
             {/* <Pills /> */}
           </div>
           <br />

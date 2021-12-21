@@ -3,7 +3,7 @@ import "../../static/css/top-nav.css";
 import { LinearProgress } from "@material-ui/core";
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import {coinsPercentage} from '../../functions/utils/index'
+import { coinsPercentage } from "../../functions/utils/index";
 import {
   logOut,
   loginSuc,
@@ -25,7 +25,12 @@ import {
   AssignmentReturnedOutlined,
   NotificationsActiveOutlined,
   AccountBalanceWallet,
-} from "@material-ui/icons"; 
+} from "@material-ui/icons";
+import {
+  formatAMPM,
+  daysOfTheWeek,
+  monthsOfTheYear,
+} from "../../functions/utils/index";
 
 import { Drawer, Divider } from "@mui/material";
 
@@ -323,7 +328,14 @@ function Desktopright({
   let pathname = window.location.pathname;
   let split = pathname.split("/")[1];
   let allow = "";
-  if (split == "setschool" || split == "updateprofile") {
+  if (
+    split == "setschool" ||
+    split == "updateprofile" ||
+    split == "updateprofile" ||
+    split == "buzzhistory" ||
+    split == "history" ||
+    split == "topuphistory"
+  ) {
     allow = true;
   } else {
     allow = false;
@@ -363,13 +375,13 @@ function Desktopright({
     console.log(reference);
     let newWallet =
       parseInt(amount) + parseInt(state.loggedInUser.user.meta.wallet);
-    
+
     let dataToUpdate = {
       email: state.loggedInUser.user.email,
       newUser: {
         ...state.loggedInUser.user.meta,
         wallet: newWallet,
-        buzzcoin:coinsPercentage(amount,state.loggedInUser).totalcoin
+        buzzcoin: coinsPercentage(amount, state.loggedInUser).totalcoin,
       },
     };
     let newLoginData = {
@@ -384,9 +396,17 @@ function Desktopright({
     let topupPayload = {
       user: state.loggedInUser.user.id,
       amount,
-      meta: reference,
+      meta: {
+        ...reference,
+        date: {
+          day: daysOfTheWeek(new Date()),
+          month: monthsOfTheYear(),
+          year: new Date().getFullYear(),
+          date: new Date().getDate(),
+          time: formatAMPM(new Date()),
+        },
+      },
     };
-    
 
     updateUserMeta(dataToUpdate)
       .then((res) => {
@@ -397,7 +417,9 @@ function Desktopright({
           setStates({
             ...compState,
             loader: false,
-            alertMsg: `Top up was successful. You have been rewarded with ${coinsPercentage().gained} Buzz coin `,
+            alertMsg: `Top up was successful. You have been rewarded with ${
+              coinsPercentage().gained
+            } Buzz coin `,
           });
         } else {
           setStateAlert(false);
@@ -549,22 +571,24 @@ function Desktopright({
           }}
           className="top-nav-pills-holder"
         >
-          <span
+          <span className="top-nav-pills">
+            <AssignmentReturnedOutlined />
+          </span>
+          <p
             style={{
-              background:
+              borderBottom:
+                split == "cashback" ||
+                (split == "cb" && "#0a3d62") ||
+                (split === "student-cashback" && "1px solid lightgray"),
+              color:
                 split == "cashback" ||
                 (split == "cb" && "#0a3d62") ||
                 (split === "student-cashback" && "#0a3d62"),
-              color:
-                split == "cashback" ||
-                (split == "cb" && "white") ||
-                (split === "student-cashback" && "white"),
             }}
-            className="top-nav-pills"
+            className="top-nav-pills-title"
           >
-            <AssignmentReturnedOutlined />
-          </span>
-          <p className="top-nav-pills-title">Cash Back</p>
+            Cash Back
+          </p>
         </div>
 
         {state.loggedInUser.user.meta.schoolmode !== false ? (
@@ -574,17 +598,19 @@ function Desktopright({
             }}
             className="top-nav-pills-holder"
           >
-            <span
-              style={{
-                background: split == "create" && "#0a3d62",
-                color: split == "create" && "white",
-              }}
-              className="top-nav-pills"
-            >
+            <span className="top-nav-pills">
               {" "}
               <AddBoxOutlined />{" "}
             </span>
-            <p className="top-nav-pills-title">Post</p>
+            <p
+              style={{
+                borderBottom: split == "create" && "1px solid lightgray",
+                color: split == "create" && "#0a3d62",
+              }}
+              className="top-nav-pills-title"
+            >
+              Post
+            </p>
           </div>
         ) : (
           <div
@@ -616,36 +642,38 @@ function Desktopright({
             }}
             className="top-nav-pills-holder"
           >
-            <span
-              style={{
-                background: split == "tour" && "#0a3d62",
-                color: split == "tour" && "white",
-              }}
-              className="top-nav-pills"
-            >
+            <span className="top-nav-pills">
               {" "}
               <EmojiTransportationOutlined />{" "}
             </span>
-            <p className="top-nav-pills-title">Tour</p>
+            <p
+              style={{
+                borderBottom: split == "tour" && "1px solid lightgray",
+                color: split == "tour" && "#0a3d62",
+              }}
+              className="top-nav-pills-title"
+            >
+              Tour
+            </p>
           </div>
         ) : (
           <div
             onClick={() => {
-              history.push("/history");
+              history.push("/updateprofile");
             }}
             className="top-nav-pills-holder"
           >
-            <span
-              style={{
-                background: split == "history" && "#0a3d62",
-                color: split == "history" && "white",
-              }}
+            <span 
               className="top-nav-pills"
             >
               {" "}
               <Person />{" "}
             </span>
-            <p className="top-nav-pills-title">Account</p>
+                <p
+             style={{
+                borderBottom: allow === true && "1px solid lightgray",
+                color: allow === true && "#0a3d62",
+              }}      className="top-nav-pills-title">Account</p>
           </div>
         )}
       </div>

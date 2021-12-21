@@ -25,8 +25,10 @@ import {
   EuroSymbolOutlined,
   MailOutlined,
   AccountBalanceOutlined,
-  AccountCircle
+  AccountCircle,
 } from "@material-ui/icons";
+
+import { FcBusinessman,FcList } from "react-icons/fc";
 
 import avar from "../../static/logos/logo2.png";
 import { cashbackloader } from "../../components/loading";
@@ -132,9 +134,11 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
           style={{ float: "right", marginRight: "30px", color: "#0a3d62" }}
         >
           {/* <DraftsOutlined /> */}
-         <span style={{fontSize:"20px"}}> 🪙 </span>
+          <span style={{ fontSize: "20px" }}> 🪙 </span>
           <br />
-          <small style={{marginLeft:"5px"}} >{state.loggedInUser.user.meta.buzzcoin}</small>
+          <small style={{ marginLeft: "5px" }}>
+            {state.loggedInUser.user.meta.buzzcoin}
+          </small>
         </small>
       </List>
 
@@ -164,10 +168,11 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
             {state.loggedInUser.user.fullname[0]}
           </Avatar>
         </div>
-        &nbsp;&nbsp;<span>Hello, {state.loggedInUser.user.fullname.split(" ")[0]}</span>
+        &nbsp;&nbsp;
+        <span>Hello, {state.loggedInUser.user.fullname.split(" ")[0]}</span>
         <div style={{ textAlign: "center" }}>
           <small style={{ color: "#0a3d62", fontSize: "14px" }}>
-           <b>Ref ID:</b> &nbsp; {state.loggedInUser.user.meta.refId}
+            <b>Ref ID:</b> &nbsp; {state.loggedInUser.user.meta.refId}
           </small>
         </div>
       </List>
@@ -204,7 +209,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
       <List
         onClick={() => {
           setDrawerState({ ...drawerState, ["left"]: false });
-          // history.push("/giveaway");
+          history.push("/giveaway");
         }}
         style={{ padding: "15px", opacity: "" }}
       >
@@ -219,7 +224,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
       <List
         onClick={() => {
           setDrawerState({ ...drawerState, ["left"]: false });
-          // history.push("/events");
+          history.push("/events");
         }}
         style={{ padding: "15px", opacity: "" }}
       >
@@ -355,7 +360,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
               Only verified vendors can withdraw to their banks.
             </div>
           </List>
-          <button
+          {/* <button
             onClick={()=>{
               history.push("/updateprofile")
             }}
@@ -370,7 +375,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
             }}
           >
             Become a vendor
-          </button>
+          </button> */}
         </>
       )}
     </Box>
@@ -447,34 +452,23 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
             style={{
               color: state.notification === true ? "red" : "#0a3d62",
               position: " absolute",
-              right: "60px",
+              right: "65px",
             }}
-          />
-            {state.loggedInUser.user.meta.schoolmode === true && (
-                <AccountCircle
+          />{" "}
+          
+            {state.loggedInUser.user.meta.schoolmode === true && 
+          <FcBusinessman
             onClick={() => {
               dispNoti(false);
-              history.push("/history");
+              history.push("/updateprofile");
             }}
             className="menu"
             style={{
-              color:"#0a3d62",
-              position: " absolute",
-              right: "110px",
+              color: "#0a3d62",
+              fontSize: "30px",
+              marginRight:"30px"
             }}
-          />
-            // <img style={{
-            //   color: state.request === true ? "red" : "#0a3d62",
-            //   position: " absolute",
-            //     right: "120px",
-            //     width: "30px",
-            //     height: "30px",
-            //     borderRadius: "30px",
-            //     top:"30px"
-              
-            // }} src="https://expertphotography.b-cdn.net/wp-content/uploads/2020/08/social-media-profile-photos-3.jpg" />
-            )}
-            
+          />}
           <Dehaze
             style={{ color: "#0a3d62", position: " absolute", right: "10px" }}
             className="menu"

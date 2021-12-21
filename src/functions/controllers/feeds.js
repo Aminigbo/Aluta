@@ -297,7 +297,7 @@ export function ALLPOSTS(props) {
             <CardMedia
               style={{
                 objectFit: "cover",
-                objectPosition: "50% 50%",
+                objectPosition: "90% 10%",
                 maxHeight: "300px",
               }}
               onClick={() => {

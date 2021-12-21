@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import "../static/css/home/index.css";
-
+import Naira from "react-naira";
 import {
   AccountBalanceWallet,
   FiberPin,
@@ -389,7 +389,7 @@ function Home({ appState, login_suc }) {
                       {compState.wallethidden === false ? (
                         <>
                           <b style={{ fontSize: "15px", marginRight: "4px" }}>
-                            NGN {state.loggedInUser.user.meta.buzzmewallet}
+                          <Naira>{state.loggedInUser.user.meta.buzzmewallet}</Naira>
                           </b>{" "}
                           <VisibilityOffOutlined
                             onClick={() => {
@@ -500,7 +500,7 @@ function Home({ appState, login_suc }) {
                         <>
                           {" "}
                           <b style={{ fontSize: "15px", marginRight: "4px" }}>
-                            NGN {state.loggedInUser.user.meta.wallet}
+                            <Naira>{state.loggedInUser.user.meta.wallet}</Naira>
                           </b>{" "}
                           <VisibilityOffOutlined
                             onClick={() => {

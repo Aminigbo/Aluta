@@ -349,6 +349,16 @@ export async function allBuzzMe(userId) {
     .order("id", { ascending: false });
 }
 
+
+// @======== GET ALL Topup
+export async function allTopup(userId) {
+  return new_supabase
+    .from("topup")
+    .select("*")
+    .eq(`user`, userId)
+    .order("id", { ascending: false });
+}
+
 // @========   ALL CASHBACKS
 export async function allCashback(userId) {
   return new_supabase

@@ -1,16 +1,16 @@
-
 import { EuroSymbolOutlined } from "@material-ui/icons";
-export function alert(payload, setStateAlert,sendToDefault) {
+export function alert(payload, setStateAlert, sendToDefault) {
   return (
     <div>
       <div className="realtime">
         <div className="realtimeParent">
           <div
             className="realtimeHeader"
-            style={{
-              background: payload.error == true ? "crimson" : "#0a3d62",
-              color: "white",
-            }}
+            // style={{
+            //   background: payload.error == true ? "crimson" : "#0a3d62",
+            //   color: "white",
+            // }}
+            style={{ background: "white",color:"#0a3d62" }}
           >
             {payload.title}
           </div>
@@ -26,8 +26,8 @@ export function alert(payload, setStateAlert,sendToDefault) {
               }}
               onClick={() => {
                 setStateAlert(null);
-                if(sendToDefault){
-                  sendToDefault()
+                if (sendToDefault) {
+                  sendToDefault();
                 }
               }}
               className="active"
@@ -49,23 +49,23 @@ export function BuzAlert(payload, redirect) {
         <div className="realtimeParent">
           <div
             className="realtimeHeader"
-            style={{
-              background: payload.error == true ? "crimson" : "#0a3d62",
-              color: "white",
-            }}
-          > 
-             <b
-                  style={{
-                    background: "#0a3d62",
-                    color: "white",
-                    padding: "3px 10px",
-                    borderRadius: "5px",
-                    marginTop:"20px"
-                  }}
-                >
-                  {" "}
-                  
-                  NGN  {payload.meta.data.amount}
+            // style={{
+            //   background: payload.error == true ? "crimson" : "#0a3d62",
+            //   color: "white",
+            // }}
+            style={{ background: "white",color:"#0a3d62" }}
+          >
+            <b
+              style={{
+                background: "#0a3d62",
+                color: "white",
+                padding: "3px 10px",
+                borderRadius: "5px",
+                marginTop: "20px",
+              }}
+            >
+              {" "}
+              NGN {payload.meta.data.amount}
             </b>{" "}
             &nbsp; from {payload.meta.sender.fullname}
           </div>
@@ -105,12 +105,13 @@ export function giveawayConfirm(
     <div>
       <div className="realtime">
         <div className="realtimeParent">
-          <div className="realtimeHeader" style={{ background: "lightblue" }}>
-            Confirm Give-away
+          <div className="realtimeHeader" style={{ background: "white",color:"#0a3d62" }}>
+           <b> Confirm Give-away</b>
           </div>
           <div className="realtimeBody" style={{ color: "gray" }}>
-            You are about to Buz {payload.luckyWinner.name} with the sum of{" "}
-            {payload.giveawayData.userGets} as Give-Away
+            You are about to send the sum of
+            {payload.giveawayData.userGets} to{" "}
+            <b> {payload.luckyWinner.name}</b> from your Give-Away
             <br />
             <br />
             <button
@@ -124,11 +125,10 @@ export function giveawayConfirm(
             </button>
             {giveAwayConfirm.miniLoad === true ? (
               <button
-                style={{ background: "#0a3d62",opacity:"0.5" }}
-                
+                style={{ background: "#0a3d62", opacity: "0.5" }}
                 className="active"
               >
-               Confirming....
+                Confirming....
               </button>
             ) : (
               <button
@@ -141,7 +141,7 @@ export function giveawayConfirm(
                   confirm(payload);
                 }}
                 className="active"
-              > 
+              >
                 Confirm
               </button>
             )}
@@ -160,10 +160,11 @@ export function giveawayProceedAlert(payload, compState, setStateAlert) {
         <div className="realtimeParent">
           <div
             className="realtimeHeader"
-            style={{
-              background: payload.error == true ? "crimson" : "#0a3d62",
-              color: "white",
-            }}
+            // style={{
+            //   background: payload.error == true ? "crimson" : "#0a3d62",
+            //   color: "white",
+            // }}
+            style={{ background: "white",color:"#0a3d62" }}
           >
             {payload.title}
           </div>
@@ -180,7 +181,7 @@ export function giveawayProceedAlert(payload, compState, setStateAlert) {
               onClick={() => {
                 setStateAlert({
                   ...compState,
-                  pop:null
+                  pop: null,
                 });
               }}
               className="active"
@@ -193,6 +194,5 @@ export function giveawayProceedAlert(payload, compState, setStateAlert) {
     </div>
   );
 }
-
 
 // @======== WHEN USER ALREADY BENEFITED alreadyBenefited

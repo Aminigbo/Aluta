@@ -76,10 +76,15 @@ function Home({ appState, loadFeeds, disp_signal }) {
       console.log("empty");
     } else {
       setStates({ ...compState, loader: true });
-      addComment(comment, postToComment, setComment, loadFeeds, state,setStates,
-  compState).then(
-        (res) => {}
-      );
+      addComment(
+        comment,
+        postToComment,
+        setComment,
+        loadFeeds,
+        state,
+        setStates,
+        compState
+      ).then((res) => {});
       history.push(`/reaction/${postToComment}`);
     }
   };
@@ -308,7 +313,10 @@ function Home({ appState, loadFeeds, disp_signal }) {
                 )}{" "}
               </>
             ) : (
-              <ALLPOSTS loading data={[]} />
+              <>
+                <ALLPOSTS loading data={[]} />
+                <ALLPOSTS loading data={[]} />
+              </>
             )}
             {/* <Pills /> */}
           </div>

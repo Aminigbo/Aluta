@@ -960,7 +960,7 @@ function Home({ appState, login_suc, logout, set_session }) {
                       setMax("Minimum amount is NGN 100");
                     } else {
                       if (amount > 10000) {
-                        setMax("Maximum amount reached");
+                        setMax("Maximum amount exceeded");
                       } else if (amount > state.loggedInUser.user.meta.wallet) {
                         setMax("Insufficient wallet balance");
                       } else {
@@ -1003,7 +1003,7 @@ function Home({ appState, login_suc, logout, set_session }) {
                       setMax("Minimum amount is NGN 100");
                     } else {
                       if (amount > 10000) {
-                        setMax("Maximum amount reached");
+                        setMax("Maximum amount exceeded");
                       } else if (amount > state.loggedInUser.user.meta.wallet) {
                         setMax("Insufficient wallet balance");
                       } else {
