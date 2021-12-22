@@ -40,7 +40,7 @@ function Home({ appState, login_suc }) {
   if (state.loggedIn === true) {
     userId = state.loggedInUser.user.id;
   }
-
+var QRCode = require('qrcode.react');
   const [compState, setStates] = useState({
     data: [],
     value: "",
@@ -520,6 +520,11 @@ function Home({ appState, login_suc }) {
               </div>{" "}
               <Cashbacknav />
               <div style={{ zIndex: "80000", background: " " }}>
+
+                {/* <div style={{padding:"15px",textAlign:"center"}}>
+                    <QRCode  value="98943" />
+                </div> */}
+
                 {/* @======== START OF RESOLVE BLOCK */}
                 <div
                   style={{
@@ -565,7 +570,8 @@ function Home({ appState, login_suc }) {
                               >
                                 {btn_primary("continue", trigerVerify)}
                                 </div>
-                                <button onClick={()=>{history.push("/scan")}}>Scan</button>
+                                <button onClick={() => { history.push("/scan") }}>Scan</button>
+                                <input type="file" accept="image/*" capture="camera"></input>
                             </div>
                           </>
                         ) : ''}

@@ -23,6 +23,7 @@ function Home({ appState, dispNoti }) {
   let history = useHistory();
   const state = appState;
   let userId = "";
+var QRCode = require('qrcode.react');
 
   if (state.loggedIn === true) {
     userId = state.loggedInUser.user.id;
@@ -175,13 +176,20 @@ function Home({ appState, dispNoti }) {
                      <Naira>{e.meta.amount}</Naira>
                     </span>
                     <br />{" "}
-                    <div style={{ marginTop: "5px" }}>
+                   
+                  </small>
+                )}
+
+                   <div style={{textAlign:"center",margin:"10px 2px"}}>
+                  <QRCode value={e.token} />
+                   <div style={{ marginTop: "5px" }}>
                       <b style={{ fontSize: "16px", color: "#0a3d62" }}>
                         {e.token}{" "}
                       </b>
                     </div>
-                  </small>
-                )}
+                   </div>
+
+                
                 <br /> 
                   <small>
                     {e.meta.date.day} {e.meta.date.date} {e.meta.date.month},{" "}
