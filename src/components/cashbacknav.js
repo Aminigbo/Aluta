@@ -558,7 +558,7 @@ function Home({ appState, login_suc }) {
                   </b>{" "}
                   <br />
                   <small style={{ color: "" }}>
-                    When you click me, i will guide you through generating
+                    When you click me, I will guide you through generating
                     cashback token{" "}
                   </small>
                 </div>

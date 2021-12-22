@@ -25,6 +25,9 @@ import { moveBuzzmeFunds } from "../functions/controllers/movebuzzmefunds";
 import { errorComponent, successComponent } from "../components/error"; // error component for error handling
 // @======== ALLL BUZZME CONTROLLER
 import { getAllBuzz } from "../functions/controllers/allbuzzme";
+// import { IconName } from "react-icons/fc";
+
+
 function Home({ appState, login_suc }) {
   const state = appState;
   let userId = "";
@@ -464,7 +467,7 @@ function Home({ appState, login_suc }) {
                       }}
                     >
                       {" "}
-                      <b> Move to wallet</b>
+                      <b>To wallet </b>
                     </button>
                   </div>
                 </div>

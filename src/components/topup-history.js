@@ -168,7 +168,7 @@ function Home({ appState, dispNoti }) {
                     >
                       {" "}
                       {compState.loader === false &&
-                        compState.data.length > 0 && <b>Topup histories</b>}
+                        compState.data.length > 0 && <b>Topup history</b>}
                     </div>{" "}
                     <div
                       style={{

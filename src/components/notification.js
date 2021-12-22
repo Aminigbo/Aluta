@@ -133,7 +133,7 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
                   }}
                 >
                   <small>{e.meta.data.desc}</small> <br />
-                  {/* {e.type == "BUZZ REQUEST" && (
+                  {e.type == "BUZZ REQUEST" && (
                     <div style={{marginTop:"20px"}}>
                        <b
                       onClick={() => {
@@ -160,7 +160,7 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
                       &nbsp;&nbsp; NGN {e.meta.data.amount}
                       </b>
                       </div>
-                  )}*/}
+                  )}
                   <br />
                   <small>
                     {e.meta.date.day} {e.meta.date.date} {e.meta.date.month},{" "}

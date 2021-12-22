@@ -186,7 +186,7 @@ function Home({ appState, dispNoti }) {
                     >
                       {" "}
                       {compState.loader === false &&
-                        compState.data.length > 0 && <b>Buzz me histories</b>}
+                        compState.data.length > 0 && <b>Buzz me history</b>}
                     </div>{" "}
                     <div
                       style={{

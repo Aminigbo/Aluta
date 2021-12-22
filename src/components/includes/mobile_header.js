@@ -1,7 +1,5 @@
 import "../../static/css/home/index.css";
-import React, { useState } from "react";
-import logo from "../../static/logos/amm.png";
-import am from "../../static/logos/logo-icon.png";
+import React, { useState } from "react"; 
 import { Redirect } from "react-router-dom";
 import { Dehaze, Search } from "@material-ui/icons";
 import { connect } from "react-redux";
@@ -11,21 +9,17 @@ import { syncDB } from "../../functions/models/index";
 import {
   LocalAtm,
   Money,
-  EmojiTransportationOutlined,
-  SettingsOutlined,
+  EmojiTransportationOutlined, 
   EventNote,
-  NotificationsActiveOutlined,
-  DraftsOutlined,
+  NotificationsActiveOutlined, 
   SchoolOutlined,
   FiberManualRecord,
   SignalCellularConnectedNoInternet1BarOutlined,
   FileCopyOutlined,
   LibraryAddCheckOutlined,
   ExitToAppOutlined,
-  EuroSymbolOutlined,
-  MailOutlined,
-  AccountBalanceOutlined,
-  AccountCircle,
+  EuroSymbolOutlined, 
+  AccountBalanceOutlined, 
 } from "@material-ui/icons";
 
 import { FcBusinessman,FcList } from "react-icons/fc";
@@ -172,7 +166,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
         <span>Hello, {state.loggedInUser.user.fullname.split(" ")[0]}</span>
         <div style={{ textAlign: "center" }}>
           <small style={{ color: "#0a3d62", fontSize: "14px" }}>
-            <b>Ref ID:</b> &nbsp; {state.loggedInUser.user.meta.refId}
+            <b>Buzz ID:</b> &nbsp; {state.loggedInUser.user.meta.beneficiaryId}
           </small>
         </div>
       </List>
@@ -332,13 +326,9 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
         }}
         style={{ padding: "15px" }}
       >
-        {compState.copy == true ? (
-          <LibraryAddCheckOutlined style={selected} />
-        ) : (
-          <FileCopyOutlined />
-        )}
+        <b>Ref ID: </b>
         &nbsp;&nbsp;
-        {state.loggedInUser.user.meta.beneficiaryId}
+        {state.loggedInUser.user.meta.refId}
         <b
           style={{ float: "right", marginRight: "10px", color: "orange" }}
           onClick={() => {

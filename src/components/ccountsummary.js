@@ -103,14 +103,14 @@ function Home({ appState }) {
         <div style={{ marginBottom: "28px",marginTop:"10px", border: "1px solid crimson" }} ></div>
 
         <div>
-          <span>Cashback  <FcLeftDown /></span>{" "}
+          <span>Cashback  <FcRightUp /></span>{" "}
           <span style={{ float: "right" }}>
             {buzzState.loading === true ? (
               <small style={{ fontSize: "11px" }}>Fetching.....</small>
             ) : (
                   <>
                     {/* {console.log(cashbackstate)} */}
-                    <b style={{ fontSize: "12px" }}><Naira>{cashbackstate.data.from}</Naira> </b>{" "}
+                    <b style={{ fontSize: "12px" }}><Naira>{cashbackstate.data.to}</Naira> </b>{" "}
                     {console.log(cashbackstate)}
               </>
             )}
@@ -119,14 +119,14 @@ function Home({ appState }) {
         <div style={{ marginBottom: "28px",marginTop:"10px", border: "1px solid #0a3d62" }} ></div>
 
         <div>
-          <span>Cashback  <FcRightUp /></span> {" "}
+          <span>Cashback  <FcLeftDown /></span> {" "}
           <span style={{ float: "right" }}>
             {buzzState.loading === true ? (
               <small style={{ fontSize: "11px" }}>Fetching.....</small>
             ) : (
               <>
                 {" "}
-                <b style={{fontSize:"12px",color:"red"}}><Naira>{cashbackstate.data.to}</Naira> </b> {" "}
+                <b style={{fontSize:"12px",color:"red"}}><Naira>{cashbackstate.data.from}</Naira> </b> {" "}
               </>
             )}
             {/* cashbackstate */}
