@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { Redirect, useHistory, Link } from "react-router-dom";
 import { connect } from "react-redux";
-import "../static/css/home/index.css"; 
+import "../static/css/home/index.css";
 import { confirmPinLockScreen } from "./confirmPinLockScreen";
-import { ViewAgenda } from "@material-ui/icons"; 
+import { ViewAgenda } from "@material-ui/icons";
 import { confirmCashbackCreation } from "../functions/workers_functions/cashback"; // CASHBACK CONTROLLER
-import { Drawer, Divider } from "@mui/material"; 
+import { Drawer, Divider } from "@mui/material";
 import { add_wallet, logOut, loginSuc } from "../redux";
 import { moveBuzzmeFunds } from "../functions/controllers/movebuzzmefunds";
 import { btn_primary, btn_danger } from "../components/buttons";
-import { text_input } from "../components/forms"; 
+import { text_input } from "../components/forms";
 import { cashbackCurrency } from "../components/currency";
 import { cashbackchargecentage } from "../functions/utils/index";
 import { cashbackloader } from "../components/loading";
@@ -20,7 +20,7 @@ import {
   settleCashbackToWallet,
 } from "../functions/controllers/cashback"; // CASHBACK TOKEN CONTROLLER
 import { pinConfirmPop } from "../components/confirmPin";
-import {FcCurrencyExchange} from "react-icons/fc";
+import { FcCurrencyExchange } from "react-icons/fc";
 
 // @======== ALLL BUZZME CONTROLLER
 import { getAllBuzz } from "../functions/controllers/allbuzzme";
@@ -31,6 +31,7 @@ function Home({ appState, login_suc }) {
   if (state.loggedIn === true) {
     userId = state.loggedInUser.user.id;
   }
+  var QRCode = require("qrcode.react");
 
   const [compState, setStates] = useState({
     data: [],
@@ -257,15 +258,15 @@ function Home({ appState, login_suc }) {
         errorMsg: "You have insufficient wallet balance",
       });
       window.navigator.vibrate([200]);
-    } else if (tokenamount > 10000) { 
+    } else if (tokenamount > 10000) {
       setStates({
         ...compState,
         error: true,
-        errorMsg: "Only verified vendors can generate cashback above NGN 10,000.00",
+        errorMsg:
+          "Only verified vendors can generate cashback above NGN 10,000.00",
       });
       window.navigator.vibrate([200]);
-    }
-    else {
+    } else {
       setDrawerState2({ ...drawerState2, bottom: false });
       setDrawerState({ ...drawerState, bottom: true });
       setAuth(true);
@@ -320,7 +321,7 @@ function Home({ appState, login_suc }) {
             width: "100%",
             background: " ",
             marginLeft: "0%",
-            borderRadius:"30px 30px 0px 0px"
+            borderRadius: "30px 30px 0px 0px",
           }}
         >
           <div style={{ textAlign: "center" }}>
@@ -329,7 +330,7 @@ function Home({ appState, login_suc }) {
                 <b>TOKEN GENERATED</b>
                 <div>
                   <small>
-                    Copy the Cashback token generated for you. It is also saved
+                   QR code contains your cashback token. <br /> It is also saved
                     in your cashback history.
                   </small>
                 </div>
@@ -412,7 +413,7 @@ function Home({ appState, login_suc }) {
                 {/* @======== SHOW THE CASH BACK CURRENCY WITH THE GENERATED CODE */}
                 {generatedcode === true && (
                   <>
-                    {" "}
+                    {/* {" "}
                     <div style={{ marginBottom: "20%", marginTop: "30px" }}>
                       {cashbackCurrency(
                         btn_primary,
@@ -428,7 +429,16 @@ function Home({ appState, login_suc }) {
                         true,
                         toggleDrawer
                       )}
-                    </div>{" "}
+                    </div>{" "} */}
+                    <div style={{ textAlign: "center", margin: "10px 2px" }}>
+                      <QRCode value={generatedToken} />
+                      <div style={{ marginTop: "5px" }}>
+                        <b style={{ fontSize: "16px", color: "#0a3d62" }}>
+                          {/* {generatedToken}{" "} */}
+                          SCAN
+                        </b>
+                      </div>
+                    </div>
                   </>
                 )}
 
@@ -523,7 +533,7 @@ function Home({ appState, login_suc }) {
             )}{" "}
           </>
         )}
-       
+
         <div className="mobile">
           <div>
             <div>
@@ -587,10 +597,9 @@ function Home({ appState, login_suc }) {
             </>
           )}
         </div>
- 
+
         <React.Fragment key="bottom">
-            <Drawer
-              
+          <Drawer
             anchor="bottom"
             open={drawerState2["bottom"]}
             onClose={toggleDrawer2("bottom", false, false)}

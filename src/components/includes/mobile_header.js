@@ -21,7 +21,7 @@ import {
   EuroSymbolOutlined, 
   AccountBalanceOutlined, 
 } from "@material-ui/icons";
-
+import { FcRating } from "react-icons/fc";
 import { FcBusinessman,FcList } from "react-icons/fc";
 
 import avar from "../../static/logos/logo2.png";
@@ -124,16 +124,16 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
   const list = () => (
     <Box sx={{ width: 270, height: "400px" }} role="presentation">
       <List>
-        <small
-          style={{ float: "right", marginRight: "30px", color: "#0a3d62" }}
+        <div
+          style={{ float: "right", marginRight: "30px", color: "#0a3d62",textAlign:"center" }}
         >
           {/* <DraftsOutlined /> */}
-          <span style={{ fontSize: "20px" }}> 🪙 </span>
+          <span style={{ fontSize: "20px" }}> <FcRating /></span>
           <br />
           <small style={{ marginLeft: "5px" }}>
             {state.loggedInUser.user.meta.buzzcoin}
           </small>
-        </small>
+        </div>
       </List>
 
       <List

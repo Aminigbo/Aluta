@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import "../static/css/home/index.css";
 
 import Header from "../components/includes/mobile_header.js";
- 
+
 
 import { confirmCashbackCreation } from "../functions/workers_functions/cashback"; // CASHBACK CONTROLLER
 import { Drawer, Divider } from "@mui/material";
@@ -529,6 +529,42 @@ var QRCode = require('qrcode.react');
                     <QRCode  value="98943" />
                 </div> */}
 
+                  {/* <div style={{ zIndex: "80000", background: " " }}>
+                <div
+                  onClick={()=>{history.push("/scan")}}
+                  style={{
+                    width: "90%",
+                    background: "white",
+                    padding: "20px 20px",
+                    marginLeft: "5%",
+                    marginTop: "20px",
+                    borderRadius: "3px",
+                    boxShadow: " 1px 1px 3px #c1cfd9",
+                    backgroundImage:
+                      "linear-gradient(to right,lightgray, #385b74)",
+                    position: "relative", 
+                  }}
+                >
+                  <FcCurrencyExchange
+                    style={{
+                      color: "white",
+                      position: "absolute",
+                      top: "5px",
+                      right: "5px",
+                      fontSize: "40px",
+                    }}
+                  />
+                  <b style={{ fontSize: "18px", color: "#0a3d62" }}>
+                    Generate Cashback token
+                  </b>{" "}
+                  <br />
+                  <small style={{ color: "" }}>
+                    When you click me, I will guide you through generating
+                    cashback token{" "}
+                  </small>
+                </div>
+              </div> */}
+
                 {/* @======== START OF RESOLVE BLOCK */}
                 <div
                   style={{
@@ -572,7 +608,7 @@ var QRCode = require('qrcode.react');
                               <div
                                 style={{ marginTop: "15px", textAlign: "left" }}
                               >
-                                  {btn_primary("continue", trigerVerify)} &nbsp; OR &nbsp;
+                                  {btn_primary("Accept pin", trigerVerify)} &nbsp; OR &nbsp;
                                   {btn_primary("Scan QR", toScan, "special")}
                                 </div> 
                             </div>

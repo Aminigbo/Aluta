@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import "../static/css/home/index.css";
+import { FcRating } from "react-icons/fc";
 
 import Header from "../components/includes/mobile_header.js";
 import Desktopleft from "../components/includes/desktopleft";
@@ -265,7 +266,7 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
                       fontSize: "13px",
                     }}
                   >
-                   <span style={{fontSize:"14px"}}> 🪙 </span> {e.meta.amount}
+                   <span style={{fontSize:"14px"}}> <FcRating /></span> {e.meta.amount}
                   </b>
                   <br />
                   <span style={{ fontSize: "13px" }}>

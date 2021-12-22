@@ -513,7 +513,7 @@ function Desktopright({
             {" "}
             <LocalAtm />{" "}
           </span>
-          <p className="top-nav-pills-title">Buz Me</p>
+          <p className="top-nav-pills-title">Buzz Me</p>
         </div>
 
         {/* <div

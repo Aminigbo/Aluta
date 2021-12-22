@@ -1,8 +1,9 @@
-import { FileCopyOutlined, LibraryAddCheckOutlined } from "@material-ui/icons";
+import { ImQrcode } from "react-icons/im";
+
 let action_btn_success2 = {
   // background:"#1e272e",
-  // backgroundColor: "#0a3d62",
-  backgroundImage: "linear-gradient(to right,lightgray, #385b74)",
+  backgroundColor: "#0a3d62",
+  // backgroundImage: "linear-gradient(to right,lightgray, #385b74)",
   //   background:"#706e3b",
   padding: "2px 14px",
   //   marginLeft: "15px",
@@ -14,8 +15,8 @@ let action_btn_success2 = {
 
 let danger = {
   // background:"#1e272e",
-  // backgroundColor: "crimson",
-  backgroundImage: "linear-gradient(to right,lightgray, crimson)",
+  backgroundColor: "crimson",
+  // backgroundImage: "linear-gradient(to right,lightgray, crimson)",
   //   background:"#706e3b",
   padding: "2px 14px",
   // marginLeft: "15px",
@@ -35,7 +36,7 @@ export function btn_primary(text, callback, copy) {
           }
         }}
         style={{
-          backgroundImage:copy ? "linear-gradient(to right,lightgray, orange" : "linear-gradient(to right,lightgray, #385b74)",
+          backgroundImage:copy ? "linear-gradient(to right,gold, green" : "linear-gradient(to right,lightgray, #385b74)",
           padding: "2px 14px",
           color: "white",
           borderRadius: "3px",
@@ -43,7 +44,7 @@ export function btn_primary(text, callback, copy) {
           border: "none",
         }}
       >
-        {text} 
+        {text} {copy == 'special' && <ImQrcode style={{color:"gold"}}/>}
       </button>
     </>
   );
