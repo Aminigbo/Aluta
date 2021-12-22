@@ -564,7 +564,8 @@ function Home({ appState, login_suc }) {
                                 style={{ marginTop: "15px", textAlign: "left" }}
                               >
                                 {btn_primary("continue", trigerVerify)}
-                              </div>
+                                </div>
+                                <button onClick={()=>{history.push("/scan")}}>Scan</button>
                             </div>
                           </>
                         ) : ''}

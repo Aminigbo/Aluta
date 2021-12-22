@@ -40,7 +40,7 @@ import CbHistory from "./pages/cbHistory";
 import TopupHistory from "./pages/topupHistory";
 import BuzzHistory from "./pages/buzzHistory";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
+import Scan from "./components/qrscan"
 export default function App() {
   return (
     <Provider store={store().store}>
@@ -143,6 +143,9 @@ export default function App() {
               <Route path="/terms">
                 <Terms />
               </Route>
+              <Route path="/scan">
+                <Scan />
+              </Route>
               <Route path="/responsible">
                 <Responsible />
               </Route>
@@ -158,6 +161,7 @@ export default function App() {
               <Route path="/">
                 <Home />
               </Route>
+              
             </Switch>
           </div>
         </Router>
