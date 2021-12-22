@@ -103,7 +103,7 @@ function Home({ appState }) {
         <div style={{ marginBottom: "28px",marginTop:"10px", border: "1px solid crimson" }} ></div>
 
         <div>
-          <span>Cashback  <FcRightUp /></span>{" "}
+          <span>Cashback  <FcLeftDown /></span>{" "}
           <span style={{ float: "right" }}>
             {buzzState.loading === true ? (
               <small style={{ fontSize: "11px" }}>Fetching.....</small>
@@ -119,7 +119,7 @@ function Home({ appState }) {
         <div style={{ marginBottom: "28px",marginTop:"10px", border: "1px solid #0a3d62" }} ></div>
 
         <div>
-          <span>Cashback  <FcLeftDown /></span> {" "}
+          <span>Cashback  <FcRightUp /></span> {" "}
           <span style={{ float: "right" }}>
             {buzzState.loading === true ? (
               <small style={{ fontSize: "11px" }}>Fetching.....</small>
