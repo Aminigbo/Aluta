@@ -51,7 +51,6 @@ function Home({ appState, login_suc }) {
 
   // @========  FUNCTION TO VERIFY pin AND SHOW balance
   const moveBuzzBalance = () => {
-    
     moveBuzzmeFunds(
       state.loggedInUser,
       compState,
@@ -84,9 +83,9 @@ function Home({ appState, login_suc }) {
       });
     } else {
       setStates({
-      ...compState,
-      loader: true,
-    });
+        ...compState,
+        loader: true,
+      });
       moveBuzzBalance();
     }
   }
@@ -160,7 +159,7 @@ function Home({ appState, login_suc }) {
         error = "Wrong pin";
         setpinError("Wrong pin");
         setPin("");
-         window.navigator.vibrate([200]);
+        window.navigator.vibrate([200]);
       }
     }
   };
@@ -348,8 +347,8 @@ function Home({ appState, login_suc }) {
           <> {errorComponent(compState.errorMsg, clearError)} </>
         )}
 
-          {compState.loader === true && <>{cashbackloader()} </>}
-          {}
+        {compState.loader === true && <>{cashbackloader()} </>}
+        {}
 
         <div className="mobile">
           <div>
@@ -389,7 +388,9 @@ function Home({ appState, login_suc }) {
                       {compState.wallethidden === false ? (
                         <>
                           <b style={{ fontSize: "15px", marginRight: "4px" }}>
-                          <Naira>{state.loggedInUser.user.meta.buzzmewallet}</Naira>
+                            <Naira>
+                              {state.loggedInUser.user.meta.buzzmewallet}
+                            </Naira>
                           </b>{" "}
                           <VisibilityOffOutlined
                             onClick={() => {
@@ -440,7 +441,7 @@ function Home({ appState, login_suc }) {
                       moveBuzzmeBalance();
                     }}
                     style={{
-                      // height: "100%",
+                      height: "100%",
                       // background: " #0a3d62",
                       textAlign: "center",
                       display: "inline-block",
@@ -451,9 +452,20 @@ function Home({ appState, login_suc }) {
                       color: " #0a3d62",
                       // borderRadius: "30px 16px",
                       fontSize: "15px",
+                      backgroundImage:
+                        "linear-gradient(to right,lightgray, #385b74)",
                     }}
                   >
-                   <button style={{background:"white",border:"none",outline:"none"}}> <b> Move to wallet</b></button>
+                    <button
+                      style={{
+                        background: "none",
+                        border: "none",
+                        outline: "none",
+                      }}
+                    >
+                      {" "}
+                      <b> Move to wallet</b>
+                    </button>
                   </div>
                 </div>
 
@@ -546,25 +558,21 @@ function Home({ appState, login_suc }) {
                     </div>
 
                     <div
-                      onClick={() => {
-                        // alert("To be completed");
-                      }}
+                      onClick={() => {}}
                       style={{
                         // height: "40px",
-                        background: "#f3f3f3",
+                        // background: "#f3f3f3",
                         textAlign: "center",
                         marginTop: "5px",
                         padding: "3px 0px",
-                        // borderRadius: "30px 16px",
                         color: " #0a3d62",
                         position: "absolute",
                         bottom: "0px",
                         width: "100%",
                         left: "0px",
-                        
                       }}
                     >
-                      <b style={{opacity:"0.1"}}>Move to bank</b>
+                      <small style={{ opacity: "0.4" }}>Withdrawable</small>
                     </div>
                   </div>
 
@@ -602,7 +610,7 @@ function Home({ appState, login_suc }) {
                         padding: "4px 0px",
                       }}
                     >
-                     <b> {state.loggedInUser.user.meta.beneficiaryId}</b>
+                      <b> {state.loggedInUser.user.meta.beneficiaryId}</b>
                     </div>
                     <div
                       onClick={() => {
@@ -618,7 +626,7 @@ function Home({ appState, login_suc }) {
                       }}
                       style={{
                         // height: "40px",
-                        background: " #f3f3f3",
+                        // background: " #f3f3f3",
                         textAlign: "center",
                         marginTop: "5px",
                         padding: "3px 0px",
@@ -631,8 +639,9 @@ function Home({ appState, login_suc }) {
                         left: "0px",
                       }}
                     >
-                      <b>copy</b> &nbsp;&nbsp;
-                      {compState.copy == true ? (
+                      <small style={{ opacity: "0.4" }}>Transaction ID</small>
+                      {/* &nbsp;&nbsp; */}
+                      {/* {compState.copy == true ? (
                         <LibraryAddCheckOutlined
                           style={{
                             fontSize: "24px",
@@ -643,7 +652,7 @@ function Home({ appState, login_suc }) {
                         <FileCopyOutlined
                           style={{ fontSize: "24px", color: "orange" }}
                         />
-                      )}{" "}
+                      )}{" "} */}
                     </div>
                   </div>
                 </div>

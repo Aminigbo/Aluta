@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import "../static/css/home/index.css";
-
+import { FcLeftDown,FcRightUp ,FcBarChart} from "react-icons/fc";
 import { Divider } from "@mui/material";
 import { add_wallet, logOut, loginSuc } from "../redux";
 import Naira from "react-naira";
@@ -68,12 +68,12 @@ function Home({ appState }) {
           border: "0.5px solid #f3f3f3",
         }}
       >
-        <div style={{ marginBottom: "20px" }}>
-          <b>Account basic summary</b>
+        <div style={{ marginBottom: "20px",color:"gray" }}>
+         <FcBarChart style={{fontSize:"35px"}}/> <b>Inflow -  Outflow summary</b> 
         </div>
 
         <div>
-          <span> Buzz IN</span>{" "}
+          <span> Buzz  <FcLeftDown /></span>{" "}
           <span style={{ float: "right" }}>
             {buzzState.loading === true ? (
               <small style={{ fontSize: "11px" }}>Fetching.....</small>
@@ -88,7 +88,7 @@ function Home({ appState }) {
         <div style={{ marginBottom: "28px",marginTop:"10px", border: "1px solid #0a3d62" }} ></div>
 
         <div>
-          <span>Buzz OUT</span>{" "}
+          <span>Buzz  <FcRightUp /></span>{" "}
           <span style={{ float: "right" }}>
             {buzzState.loading === true ? (
               <small style={{ fontSize: "11px" }}>Fetching.....</small>
@@ -103,7 +103,7 @@ function Home({ appState }) {
         <div style={{ marginBottom: "28px",marginTop:"10px", border: "1px solid crimson" }} ></div>
 
         <div>
-          <span>Cashback IN</span>{" "}
+          <span>Cashback  <FcLeftDown /></span>{" "}
           <span style={{ float: "right" }}>
             {buzzState.loading === true ? (
               <small style={{ fontSize: "11px" }}>Fetching.....</small>
@@ -119,14 +119,14 @@ function Home({ appState }) {
         <div style={{ marginBottom: "28px",marginTop:"10px", border: "1px solid #0a3d62" }} ></div>
 
         <div>
-          <span>Cashback OUT</span>{" "}
+          <span>Cashback  <FcRightUp /></span> {" "}
           <span style={{ float: "right" }}>
             {buzzState.loading === true ? (
               <small style={{ fontSize: "11px" }}>Fetching.....</small>
             ) : (
               <>
                 {" "}
-                <b style={{fontSize:"12px",color:"red"}}><Naira>{cashbackstate.data.to}</Naira> </b>{" "}
+                <b style={{fontSize:"12px",color:"red"}}><Naira>{cashbackstate.data.to}</Naira> </b> {" "}
               </>
             )}
             {/* cashbackstate */}

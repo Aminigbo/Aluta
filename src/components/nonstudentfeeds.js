@@ -4,19 +4,7 @@ import { connect } from "react-redux";
 import "../static/css/home/index.css";
 
 import Header from "../components/includes/mobile_header.js";
-import { HistoryOutlined } from "@material-ui/icons";
-
-import {
-  Person,
-  AccountBalanceWallet,
-  FiberPin,
-  EuroSymbolOutlined,
-  FileCopyOutlined,
-  RemoveRedEye,
-  ViewAgenda,
-  LibraryAddCheckOutlined,
-  VisibilityOffOutlined,
-} from "@material-ui/icons";
+ 
 
 import { confirmCashbackCreation } from "../functions/workers_functions/cashback"; // CASHBACK CONTROLLER
 import { Drawer, Divider } from "@mui/material";

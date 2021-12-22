@@ -20,6 +20,7 @@ import {
   settleCashbackToWallet,
 } from "../functions/controllers/cashback"; // CASHBACK TOKEN CONTROLLER
 import { pinConfirmPop } from "../components/confirmPin";
+import {FcCurrencyExchange} from "react-icons/fc";
 
 // @======== ALLL BUZZME CONTROLLER
 import { getAllBuzz } from "../functions/controllers/allbuzzme";
@@ -543,13 +544,13 @@ function Home({ appState, login_suc }) {
                     // height: "110px",
                   }}
                 >
-                  <ViewAgenda
+                  <FcCurrencyExchange
                     style={{
                       color: "white",
                       position: "absolute",
-                      top: "10px",
-                      right: "10px",
-                      fontSize: "30px",
+                      top: "5px",
+                      right: "5px",
+                      fontSize: "40px",
                     }}
                   />
                   <b style={{ fontSize: "18px", color: "#0a3d62" }}>
