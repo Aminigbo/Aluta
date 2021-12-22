@@ -45,6 +45,7 @@ export async function handleVerifyToken(
           loading: false,
           error: false,
           errorMsg: null,
+          resolved:true
         });
       } else {
         setcashbackpinresolved(false);

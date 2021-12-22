@@ -427,6 +427,10 @@ var QRCode = require('qrcode.react');
     );
   };
 
+  const toScan = () => {
+    history.push("/scan")
+  }
+
   return state.loggedIn === false ? (
     <div>
       <Redirect to="/lockout" />
@@ -530,7 +534,7 @@ var QRCode = require('qrcode.react');
                   style={{
                     width: "90%",
                     background: "white",
-                    padding: "40px 20px",
+                    padding: "40px 4px",
                     marginLeft: "5%",
                     marginTop: "20px",
                     // borderRadius: "40px 40px 2px 3px",
@@ -568,10 +572,9 @@ var QRCode = require('qrcode.react');
                               <div
                                 style={{ marginTop: "15px", textAlign: "left" }}
                               >
-                                {btn_primary("continue", trigerVerify)}
-                                </div>
-                                <button onClick={() => { history.push("/scan") }}>Scan</button>
-                                <input type="file" accept="image/*" capture="camera"></input>
+                                  {btn_primary("continue", trigerVerify)} &nbsp; OR &nbsp;
+                                  {btn_primary("Scan QR", toScan, "special")}
+                                </div> 
                             </div>
                           </>
                         ) : ''}

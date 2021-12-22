@@ -144,7 +144,7 @@ var QRCode = require('qrcode.react');
                       <br />
                       <div style={{ marginTop: "5px" }}>
                         <b style={{ fontSize: "16px", color: "#0a3d62" }}>
-                          {e.token}{" "}
+                          {/* {e.token} */}
                         </b>{" "}
                         {/* <FileCopyOutlined
                           onClick={() => {

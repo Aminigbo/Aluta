@@ -9,14 +9,15 @@ import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
 import { add_wallet, logOut, loginSuc } from "../redux";
 import Toppills from "../components/includes/topdesktoppills";
-import { cashbackloader } from "../components/loading";
-import { errorComponent } from "../components/error"; // error component for error handling
+import { cashbackloader } from "../components/loading"; 
 import { btn_primary, btn_danger } from "../components/buttons";
 import {
   handleChashbackGeneration,
   handleVerifyToken,
   settleCashbackToWallet,
 } from "../functions/controllers/cashback"; // CASHBACK TOKEN CONTROLLER
+import { errorComponent, successComponent } from "../components/error"; // error component for error handling
+
 function Home({ appState, login_suc }) {
   let history = useHistory();
   const state = appState;
@@ -40,11 +41,16 @@ function Home({ appState, login_suc }) {
     setStates({
       ...compState,
       loading: false,
+      resolved: false,
     });
   }, []);
   const cancelCashback = () => {
     setcashbackpinresolved(false);
     setValue(null);
+    setStates({
+      ...compState,
+      resolved: false,
+    });
   };
 
   const trigerVerify = (value) => {
@@ -85,13 +91,20 @@ function Home({ appState, login_suc }) {
       setStates({
         result: data,
         loading: true,
+        resolved: true,
       });
-       trigerVerify(data)
+      trigerVerify(data);
     }
   };
   const handleError = (err) => {
     console.error(err);
-  };
+   };
+   
+   // @======== close success pop
+  const closeSuccessPop = () => { 
+     history.push("/")
+   };
+   
 
   return state.loggedIn === false ? (
     <div>
@@ -104,6 +117,15 @@ function Home({ appState, login_suc }) {
       {compState.loading === true && <> {cashbackloader()}</>}
       {compState.error === true && (
         <> {errorComponent(compState.errorMsg, clearError)} </>
+      )}
+      {resolved === true && (
+        <>
+          {" "}
+          {successComponent(
+            "The cashback has been resolved to your wallet successfully",
+            closeSuccessPop
+          )}{" "}
+        </>
       )}
       <>
         <div className="mobile">
@@ -129,18 +151,27 @@ function Home({ appState, login_suc }) {
                 <Toppills />
               </div>{" "}
               <div style={{ zIndex: "80000", background: " " }}>
-                <div style={{ padding: "20px",height:"20px",background:"red" }}>
-                  {compState.error === true ? (
+                <div
+                  style={{
+                    padding: "20px",
+                    height: "",
+                    background: " ",
+                    textAlign: "center",
+                  }}
+                >
+                  {compState.loading === true ? (
                     "Please wait"
                   ) : (
                     <>
-                      <QrReader
-                        style={{ width: "100px",height:"20px" }}
-                        delay={300}
-                        onError={handleError}
-                        onScan={handleScan}
-                        facingMode="environment" 
-                      />
+                      {compState.resolved !== true && (
+                        <QrReader
+                          style={{ width: "100%", height: "" }}
+                          delay={300}
+                          onError={handleError}
+                          onScan={handleScan}
+                          facingMode="environment"
+                        />
+                      )}
                     </>
                   )}
 
