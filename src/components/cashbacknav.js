@@ -327,7 +327,7 @@ function Home({ appState, login_suc }) {
           <div style={{ textAlign: "center" }}>
             {generatedcode !== false && (
               <>
-                <b>TOKEN GENERATED ({generatedToken})</b>
+                <b>TOKEN GENERATED <b style={{color:'#0a3d62',fontSize:"20px"}}>{generatedToken}</b></b>
                 <div>
                   <small>
                    QR code contains your cashback token. <br /> It is also saved
@@ -435,8 +435,9 @@ function Home({ appState, login_suc }) {
                       <div style={{ marginTop: "5px" }}>
                         <b style={{ fontSize: "16px", color: "#0a3d62" }}>
                           {/* {generatedToken}{" "} */}
-                          SCAN
-                        </b>
+                          SCAN 
+                        </b> <br /> <small>or accept pin</small> <br />
+                        <b style={{ color: '#0a3d62', fontSize: "20px" }}>{generatedToken}</b>
                       </div>
                     </div>
                   </>
