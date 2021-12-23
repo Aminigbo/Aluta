@@ -459,6 +459,7 @@ function Home({ appState, login_suc, logout, set_session }) {
       ...state.loggedInUser.user.meta,
       wallet: newBoxerWallet,
     };
+     
 
     let meta = {
       sender: {
@@ -475,15 +476,12 @@ function Home({ appState, login_suc, logout, set_session }) {
       data: {
         amount: parseInt(state.whoRequested.amount),
         desc: `${
-          state.loggedInUser.user.fullname
-        } responded to your buzz request of NGN ${parseInt(
-          state.whoRequested.amount
-        )}`,
+        state.loggedInUser.user.fullname
+      } responded to your buzz request of NGN ${parseInt(
+        state.whoRequested.amount
+      )}   ${desc.substring(0, 101)} "`,
       },
-    };
-
-    console.log(beneficiaryNewData);
-    console.log(newBenefWallet);
+    }; 
 
     new_supabase
       .from("users")
@@ -670,7 +668,7 @@ function Home({ appState, login_suc, logout, set_session }) {
                             if (
                               e.nativeEvent.inputType == "deleteContentBackward"
                             ) {
-                              setDesc(e.target.value);
+                              setDesc(e.target.value.substring(1, 100));
                               setMaxDesc(false);
                             } else {
                               setMaxDesc(true);

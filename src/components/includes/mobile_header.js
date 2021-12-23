@@ -1,5 +1,5 @@
 import "../../static/css/home/index.css";
-import React, { useState } from "react"; 
+import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { Dehaze, Search } from "@material-ui/icons";
 import { connect } from "react-redux";
@@ -9,21 +9,20 @@ import { syncDB } from "../../functions/models/index";
 import {
   LocalAtm,
   Money,
-  EmojiTransportationOutlined, 
+  EmojiTransportationOutlined,
   EventNote,
-  NotificationsActiveOutlined, 
+  NotificationsActiveOutlined,
   SchoolOutlined,
   FiberManualRecord,
   SignalCellularConnectedNoInternet1BarOutlined,
-  FileCopyOutlined,
-  LibraryAddCheckOutlined,
+WhatsappOutlined,
   ExitToAppOutlined,
-  EuroSymbolOutlined, 
-  AccountBalanceOutlined, 
+  EuroSymbolOutlined,
+  AccountBalanceOutlined,
 } from "@material-ui/icons";
 import { FcRating } from "react-icons/fc";
-import { FcBusinessman,FcList } from "react-icons/fc";
-
+import { FcBusinessman, FcList } from "react-icons/fc";
+import { BsWhatsapp } from "react-icons/bs";
 import avar from "../../static/logos/logo2.png";
 import { cashbackloader } from "../../components/loading";
 import {
@@ -48,6 +47,59 @@ const select = {
 
 const selected = {
   color: "mediumseagreen",
+};
+
+const rec_inputs3 = {
+  // margin: "5%",
+  width: "95%",
+  // padding: "10px",
+  border: "5px",
+  height: "50px",
+  border: "0.3px solid lightgrey",
+  // backgroundColor: "#f4f6f7",
+  color: "#4e7a97",
+  outline: "none",
+  fontSize: "13px",
+  resize: "none",
+  marginTop: "-5px",
+  borderRadius: "4px",
+  marginLeft: "2.5%",
+  // paddingRight:"50px"
+};
+
+const rec_inputs2 = {
+  // margin: "5%",
+  width: "50%",
+  padding: "10px",
+  border: "5px",
+  height: "65px",
+  // border: "0.3px solid red",
+  // backgroundColor: "#f4f6f7",
+  color: "#4e7a97",
+  outline: "none",
+  fontSize: "13px",
+  resize: "none",
+  // marginTop: "10px",
+  borderRadius: "4px",
+  // marginLeft: "2.5%",
+  // paddingRight:"50px"
+};
+const wtsappBTN = {
+  // margin: "5%",
+  width: "30%",
+  padding: "0px 5px",
+  border: "5px",
+  height: "50px",
+  // border: "0.3px solid red",
+  backgroundColor: "#25d366",
+  color: "#4e7a97",
+  outline: "none",
+  fontSize: "13px",
+  borderRadius: "0px 4px 5px 0px",
+  float: "right",
+  fontWeight: "bold",
+  color: "white",
+  fontSize:"30px"
 };
 
 function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
@@ -107,6 +159,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
   const [drawerState, setDrawerState] = React.useState({
     bottom: false,
   });
+  const [whatsappMsg, setWhatsappMsg] = useState("");
   const [compState, setStates] = useState("");
 
   const toggleDrawer = (anchor, open, post) => (event) => {
@@ -125,10 +178,18 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
     <Box sx={{ width: 270, height: "400px" }} role="presentation">
       <List>
         <div
-          style={{ float: "right", marginRight: "30px", color: "#0a3d62",textAlign:"center" }}
+          style={{
+            float: "right",
+            marginRight: "30px",
+            color: "#0a3d62",
+            textAlign: "center",
+          }}
         >
           {/* <DraftsOutlined /> */}
-          <span style={{ fontSize: "20px" }}> <FcRating /></span>
+          <span style={{ fontSize: "20px" }}>
+            {" "}
+            <FcRating />
+          </span>
           <br />
           <small style={{ marginLeft: "5px" }}>
             {state.loggedInUser.user.meta.buzzcoin}
@@ -366,6 +427,18 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
           >
             Become a vendor
           </button> */}
+
+          <div style={rec_inputs3}>
+            <textarea
+              onChange={(e) => {
+                setWhatsappMsg(e.target.value);
+              }}
+              value={whatsappMsg}
+              style={rec_inputs2}
+              placeholder="Send us message on whatsapp..."
+            ></textarea>
+            <button onClick={()=>{window.location.href = 'https://wa.me/+2349011684637'}} style={wtsappBTN}><BsWhatsapp /></button>
+          </div> <br />
         </>
       )}
     </Box>
@@ -445,20 +518,20 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
               right: "65px",
             }}
           />{" "}
-          
-            {state.loggedInUser.user.meta.schoolmode === true && 
-          <FcBusinessman
-            onClick={() => {
-              dispNoti(false);
-              history.push("/updateprofile");
-            }}
-            className="menu"
-            style={{
-              color: "#0a3d62",
-              fontSize: "30px",
-              marginRight:"30px"
-            }}
-          />}
+          {state.loggedInUser.user.meta.schoolmode === true && (
+            <FcBusinessman
+              onClick={() => {
+                dispNoti(false);
+                history.push("/updateprofile");
+              }}
+              className="menu"
+              style={{
+                color: "#0a3d62",
+                fontSize: "30px",
+                marginRight: "30px",
+              }}
+            />
+          )}
           <Dehaze
             style={{ color: "#0a3d62", position: " absolute", right: "10px" }}
             className="menu"
