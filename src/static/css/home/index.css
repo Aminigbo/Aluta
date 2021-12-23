@@ -1240,7 +1240,7 @@ progress { color: #0a3d62; }
    height: 100%;
    width: 100%;
    background-color: rgb(0,0,0,0.6);
-   z-index:13000;
+   z-index:23000;
    top:0px;
    left:0px;
 }
@@ -2771,7 +2771,7 @@ progress { color: #0a3d62; }
    height: 100%;
    width: 100%;
    background-color: rgb(0,0,0,0.6);
-   z-index:13000;
+   z-index:23000;
    top:0px;
    left:0px;
 }
