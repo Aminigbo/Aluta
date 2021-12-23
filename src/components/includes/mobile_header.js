@@ -350,7 +350,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
               Only verified vendors can withdraw to their banks.
             </div>
           </List>
-          <button
+          {/* <button
             onClick={()=>{
               history.push("/updateprofile")
             }}
@@ -365,7 +365,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
             }}
           >
             Become a vendor
-          </button>
+          </button> */}
         </>
       )}
     </Box>

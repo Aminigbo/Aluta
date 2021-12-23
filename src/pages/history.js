@@ -98,7 +98,7 @@ const [allTopup, setAllTopup] = useState(false)
                 <div
                   style={{
                     marginTop: "5px",
-                    textAlign: "left",
+                    textAlign: "center",
                     width: "90%",
                     marginLeft: "5%",
                   }}

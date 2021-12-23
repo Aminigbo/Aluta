@@ -98,7 +98,7 @@ function Home({ appState, login_suc }) {
                 <div
                   style={{
                     marginTop: "5px",
-                    textAlign: "left",
+                    textAlign: "center",
                     width: "90%",
                     marginLeft: "5%",
                     paddingBottom: "10px",
@@ -129,7 +129,7 @@ function Home({ appState, login_suc }) {
                     // to="/cashback-create"
 
                     style={{
-                      marginLeft: " ",
+                      marginLeft: "5px",
                       fontSize: "13px",
                       color: "#0a3d62",
                       textDecoration: "none",
@@ -149,7 +149,7 @@ function Home({ appState, login_suc }) {
                       history.push("/buzzhistory");
                     }}
                     style={{
-                      marginLeft: "",
+                      marginLeft: "5px",
                       fontSize: "13px",
                       color: "#0a3d62",
                       textDecoration: "none",
@@ -169,7 +169,7 @@ function Home({ appState, login_suc }) {
                       history.push("/topuphistory");
                     }}
                     style={{
-                      marginLeft: " ",
+                      marginLeft: "5px",
                       fontSize: "15px",
                       color: "gray",
                       textDecoration: "none",

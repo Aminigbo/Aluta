@@ -608,8 +608,7 @@ var QRCode = require('qrcode.react');
                               <div
                                 style={{ marginTop: "15px", textAlign: "left" }}
                               >
-                                  {btn_primary("Accept pin", trigerVerify)} &nbsp; OR &nbsp;
-                                  {btn_primary("Scan QR", toScan, "special")}
+                                  {btn_primary("Accept pin", trigerVerify)} OR {btn_primary("Scan QR", toScan, "special")}
                                 </div> 
                             </div>
                           </>

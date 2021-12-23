@@ -293,26 +293,36 @@ export function cashbackRegEx(benID, phone, email, password, amount) {
 // @======== CASHBACK chargeCENTAGES
 export function cashbackchargecentage(amount) {
   let charge = "";
-  if (amount > 99.99 && amount < 4999) {
+  if (amount > 100 && amount < 5000) {
     charge = 80;
-  } else if (amount > 4999 && amount < 9999) {
+  } else if (amount > 5001 && amount < 10001) {
     charge = 160;
-  } else if (amount > 9999 && amount < 14999) {
+  } else if (amount > 10000 && amount < 15001) {
     charge = 240;
-  } else if (amount > 14999 && amount < 24999) {
+  } else if (amount > 15000 && amount < 20001) {
     charge = 320;
-  } else if (amount > 24999 && amount < 29999) {
+  } else if (amount > 20000 && amount < 25001) {
     charge = 400;
-  } else if (amount > 29999 && amount < 34999) {
+  } else if (amount > 25000 && amount < 30001) {
     charge = 480;
-  } else if (amount > 34999 && amount < 39999) {
+  } else if (amount > 30000 && amount < 35001) {
     charge = 560;
-  } else if (amount > 39999 && amount < 44999) {
+  } else if (amount > 35000 && amount < 40001) {
     charge = 640;
-  } else if (amount > 44999 && amount < 49999) {
+  } else if (amount > 40000 && amount < 45001) {
     charge = 720;
-  } else if (amount > 49999) {
-    charge = 1000;
+  } else if (amount > 45000 && amount < 50001) {
+    charge = 800;
+  } else if (amount > 50000 && amount < 55001) {
+    charge = 880;
+  } else if (amount > 55000 && amount < 60001) {
+    charge = 960;
+  } else if (amount > 60000 && amount < 65001) {
+    charge = 1040;
+  } else if (amount > 65000 && amount < 70001) {
+    charge = 1120;
+  } else if (amount > 70000) {
+    charge = 1500;
   }
   return charge;
 }
@@ -367,11 +377,9 @@ export function monthsOfTheYear() {
 }
 
 export const coinsPercentage = (amount, state) => {
-  console.log(state)
+  console.log(state);
   let coin = (1 * amount) / 100;
-  let newCoin = parseInt(
-    state.user.meta.buzzcoin + parseInt(coin)
-  );
+  let newCoin = parseInt(state.user.meta.buzzcoin + parseInt(coin));
   return {
     totalcoin: newCoin,
     gained: coin,

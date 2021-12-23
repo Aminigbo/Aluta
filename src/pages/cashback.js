@@ -439,6 +439,10 @@ function Home({ appState, login_suc }) {
     );
   };
 
+  const toScan = () => {
+    history.push("/scan")
+  }
+
   return state.loggedIn === false ? (
     <div>
       <Redirect to="/lockout" />
@@ -537,7 +541,7 @@ function Home({ appState, login_suc }) {
                   style={{
                     width: "90%",
                     background: "white",
-                    padding: "40px 20px",
+                    padding: "40px 2px",
                     marginLeft: "5%",
                     marginTop: "20px",
                     // borderRadius: "40px 40px 2px 3px",
@@ -575,7 +579,7 @@ function Home({ appState, login_suc }) {
                               <div
                                 style={{ marginTop: "15px", textAlign: "left" }}
                               >
-                                {btn_primary("continue", trigerVerify)}
+                                  {btn_primary("Accept pin", trigerVerify)} OR {btn_primary("Scan QR", toScan, "special")}
                               </div>
                             </div>
                           </>
