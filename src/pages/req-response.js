@@ -11,7 +11,7 @@ import {
   ArrowBackIosOutlined,
   PeopleAltOutlined,
   PublicOutlined,
-  CloseOutlined
+  CloseOutlined,
 } from "@material-ui/icons";
 import Naira from "react-naira";
 import { Drawer, Divider, alertTitleClasses } from "@mui/material";
@@ -120,8 +120,8 @@ function Home({ appState, login_suc, logout, set_session }) {
     setPin("");
     setAmount(0);
     setDrawerState({ ...drawerState, bottom: false });
-     setStates("")
-     history.push("/notification")
+    setStates("");
+    history.push("/notification");
   };
   const validate = () => {
     const data = {
@@ -167,17 +167,6 @@ function Home({ appState, login_suc, logout, set_session }) {
     }
   };
 
-  const showAmount = () => {
-    return (
-      <>
-        {" "}
-        <b style={{ opacity: "1", color: "#0a3d62", fontSize: "35px" }}>
-          <Naira>{amount}</Naira>
-        </b>
-      </>
-    );
-  };
-
   const pinVal = () => {
     if (pin.length == 1) {
       return (
@@ -186,15 +175,15 @@ function Home({ appState, login_suc, logout, set_session }) {
           <b style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
           </b>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
@@ -207,15 +196,15 @@ function Home({ appState, login_suc, logout, set_session }) {
           <span style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
@@ -228,15 +217,15 @@ function Home({ appState, login_suc, logout, set_session }) {
           <span style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
@@ -249,15 +238,15 @@ function Home({ appState, login_suc, logout, set_session }) {
           <span style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "1", color: "#0a3d62" }}>
             <LockOpenOutlined />
           </span>
@@ -270,15 +259,15 @@ function Home({ appState, login_suc, logout, set_session }) {
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style={{ opacity: "0.4", color: "orange" }}>
             <Lock />
           </span>
@@ -289,27 +278,8 @@ function Home({ appState, login_suc, logout, set_session }) {
 
   React.useEffect(() => {
     set_session(new Date().getTime());
-    let filterOpt = [];
-    fetchUsersOfUniversity(loggedInUserSchool, id)
-      .then((res) => {
-        res.body.map((resp) => {
-          let prepared = {
-            value: resp.meta.beneficiaryId,
-            label: resp.fullname,
-            email: resp.email,
-            phone: resp.phone,
-            id: resp.id,
-          };
-          filterOpt.push(prepared);
-        });
-        console.log(filterOpt);
-        setStates({ ...compState, filterOption: filterOpt });
-      })
-      .catch((error) => {
-        alert("network error");
-      });
-      setDrawerState({ ...drawerState, bottom: true });
-      verifyBeneficiary()
+    setDrawerState({ ...drawerState, bottom: true });
+    verifyBeneficiary();
   }, []);
 
   const buttons = () => {
@@ -349,7 +319,6 @@ function Home({ appState, login_suc, logout, set_session }) {
       );
     });
   };
- 
 
   const [reason, setReason] = useState("");
   const [privacy, setPrivacy] = useState(1);
@@ -364,10 +333,6 @@ function Home({ appState, login_suc, logout, set_session }) {
       i.label.toLowerCase().includes(inputValue.toLowerCase())
     );
   };
-
- 
-  
-  
 
   const appendPin = (e) => {
     //   setpinError("")
@@ -390,6 +355,7 @@ function Home({ appState, login_suc, logout, set_session }) {
   const verify = (newPin) => {
     if (newPin == state.loggedInUser.user.meta.transactionPin) {
       initiateTransaction();
+      // console.log("cool")
     } else {
       // setpinError("Wrong pin");
       setPin("");
@@ -402,7 +368,7 @@ function Home({ appState, login_suc, logout, set_session }) {
 
   //   AUTHENTICATION KEYBOARD
   const authKeyboaard = () => {
-    let pinNumbers = [1, 2, 3, 4, 5, 6, 7, 8, "out", 9, 0, "clear"];
+    let pinNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, "out", 0, "clear"];
     return pinNumbers.map((e) => {
       return (
         <>
@@ -426,8 +392,8 @@ function Home({ appState, login_suc, logout, set_session }) {
               if (e == "clear") {
                 clearPin(e);
               } else if (e == "out") {
-                 history.push("/notification");
-               //  setProceedSend(false);
+                history.push("/notification");
+                //  setProceedSend(false);
               } else {
                 appendPin(e);
               }
@@ -440,49 +406,48 @@ function Home({ appState, login_suc, logout, set_session }) {
     });
   };
 
+  async function verifyBeneficiary() {
+    setStates({ ...compState, loader: true }); //  set loader to true
 
-   async function verifyBeneficiary() {
-    
-        setStates({ ...compState, loader: true }); //  set loader to true
+    new_supabase
+      .from("users")
+      .select("*")
+      // .eq("beneficiaryId", beneficiary)
+      .contains("meta", { beneficiaryId: state.whoRequested.buzzId })
+      .then((resolve) => {
+        if (resolve.data.length > 0) {
+          let beneficiary = resolve.body[0];
+          setverifyError("");
+          setProceedSend(false);
+          setStates({
+            ...compState,
+            loader: false,
+            resolved: true,
+            benef: beneficiary.fullname,
+            benefId: beneficiary.id,
+            benefWallet: beneficiary.meta.buzzmewallet,
+            beneficiaryMeta: beneficiary.meta,
+          });
+          // console.log(beneficiary.id);
+        } else {
+          setverifyError("Beneficiary not found");
+          setStates({ ...compState, loader: false });
+          setbeneficiary("");
+        }
+      })
+      .catch((error) => {
+        setverifyError("Network error");
+        setStates({ ...compState, loader: false });
+      });
+  }
 
-        new_supabase
-          .from("users")
-          .select("*")
-          // .eq("beneficiaryId", beneficiary)
-          .contains("meta", { beneficiaryId: state.whoRequested.buzzId })
-          .then((resolve) => {
-            if (resolve.data.length > 0) {
-              let beneficiary = resolve.body[0];
-              setverifyError("");
-              setProceedSend(false);
-              setStates({
-                ...compState,
-                loader: false,
-                resolved: true,
-                benef: beneficiary.fullname,
-                benefId: beneficiary.id,
-                benefWallet: beneficiary.meta.buzzmewallet,
-                beneficiaryMeta: beneficiary.meta,
-              });
-              console.log(beneficiary.id);
-            } else {
-              setverifyError("Beneficiary not found");
-              setStates({ ...compState, loader: false });
-              setbeneficiary("");
-            }
-          })
-          .catch((error) => {
-            setverifyError("Network error");
-            setStates({ ...compState, loader: false });
-          }); 
-    } 
-
-   
   const initiateTransaction = () => {
     setStates({ ...compState, loader: true });
-    let newBenefWallet = parseInt(state.whoRequested.amount) + parseInt(compState.benefWallet);
+    let newBenefWallet =
+      parseInt(state.whoRequested.amount) + parseInt(compState.benefWallet);
     let newBoxerWallet =
-      parseInt(state.loggedInUser.user.meta.wallet) - parseInt(state.whoRequested.amount);
+      parseInt(state.loggedInUser.user.meta.wallet) -
+      parseInt(state.whoRequested.amount);
 
     let beneficiaryNewData = {
       ...compState.beneficiaryMeta,
@@ -508,12 +473,17 @@ function Home({ appState, login_suc, logout, set_session }) {
         id: compState.benefId,
       },
       data: {
-        amount: parseInt(amount),
-        desc: `NGN ${parseInt(amount)} Buzz alert from ${
+        amount: parseInt(state.whoRequested.amount),
+        desc: `${
           state.loggedInUser.user.fullname
-        }-${new Date().getTime()}`,
+        } responded to your buzz request of NGN ${parseInt(
+          state.whoRequested.amount
+        )}`,
       },
     };
+
+    console.log(beneficiaryNewData);
+    console.log(newBenefWallet);
 
     new_supabase
       .from("users")
@@ -565,7 +535,7 @@ function Home({ appState, login_suc, logout, set_session }) {
                       amount: parseInt(parseInt(state.whoRequested.amount)),
                       desc: resX.body[0].meta.data.desc,
                       balance: state.loggedInUser.user.meta.wallet,
-                    }; 
+                    };
                     send_buzz_alert(smsPayload);
                     login_suc(newUserData);
                     setStateAlert(true);
@@ -577,11 +547,11 @@ function Home({ appState, login_suc, logout, set_session }) {
                       )} to ${compState.benef}`,
                       resolved: false,
                     });
-                  //   setProceedSend(false);
-                  //   setbeneficiary("");
-                  //   setAmount(0);
-                  //   setPin("");
-                  //   setDrawerState({ ...drawerState, bottom: false });
+                    //   setProceedSend(false);
+                    //   setbeneficiary("");
+                    //   setAmount(0);
+                    //   setPin("");
+                    //   setDrawerState({ ...drawerState, bottom: false });
                   });
               });
           });
@@ -609,7 +579,6 @@ function Home({ appState, login_suc, logout, set_session }) {
     msg: compState.alertMsg,
     error: true,
   };
- 
 
   const [drawerState, setDrawerState] = React.useState({
     bottom: false,
@@ -624,8 +593,8 @@ function Home({ appState, login_suc, logout, set_session }) {
       return;
     }
 
-     setDrawerState({ ...drawerState, [anchor]: open });
-     history.push("/notification")
+    setDrawerState({ ...drawerState, [anchor]: open });
+    history.push("/notification");
   };
 
   return (
@@ -635,10 +604,10 @@ function Home({ appState, login_suc, logout, set_session }) {
         {stateAlert === true &&
           alert(successPayload, setStateAlert, sendToDefault)}
         {stateAlert === false && alert(errorPayload, setStateAlert)}
-        {pin == "validated" && <> {cashbackloader()}</>} 
+        {pin == "validated" && <> {cashbackloader()}</>}
 
         {/* {finallySend === true && <>{initiateTransaction()}</>} */}
-
+        {console.log(compState)}
         <React.Fragment key="bottom">
           <Drawer
             anchor="bottom"
@@ -661,107 +630,104 @@ function Home({ appState, login_suc, logout, set_session }) {
                     //   textAlign: "left",
                     background: " ",
                   }}
-                > 
-
-                  <div style={{ color: "crimson" }}>{verifyError}</div> 
+                >
+                  <div style={{ color: "crimson" }}>{verifyError}</div>
+                  <div
+                    style={{
+                      fontSize: " ",
+                      fontWeight: " ",
+                      textAlign: "left",
+                      width: " ",
+                      marginLeft: "",
+                      // background: "#efedc4",
+                      padding: " 10px",
+                    }}
+                  >
+                    <p style={{ fontWeight: "bold" }}>Buzz Me Details</p>
                     <div
                       style={{
-                        fontSize: " ",
-                        fontWeight: " ",
-                        textAlign: "left",
-                        width: " ",
-                        marginLeft: "",
-                        // background: "#efedc4",
-                        padding: " 10px",
+                        boxShadow: " 1px 1px 3px #888888",
+                        padding: "5px 10px",
                       }}
                     >
-                      <p style={{ fontWeight: "bold" }}>Buzz Me Details</p>
-                      <div
-                        style={{
-                          boxShadow: " 1px 1px 3px #888888",
-                          padding: "5px 10px",
-                        }}
-                      >
-                        <spall style={{ fontSize: "11px" }}>
-                          You want to Buzz
-                        </spall>
-                        <div>
-                          <b> {state.whoRequested.name}</b>
-                        </div>
-                        <div style={{ fontWeight: "bold" }}>
-                          <Naira>{parseInt(state.whoRequested.amount)}</Naira>
-                        </div>
-                        {/* <br /> */}
-                        <textarea
-                          onChange={(e) => {
-                            if (desc.length < 100) {
-                              setMaxDesc(false);
+                      <spall style={{ fontSize: "11px" }}>
+                        You want to Buzz
+                      </spall>
+                      <div>
+                        <b> {state.whoRequested.name}</b>
+                      </div>
+                      <div style={{ fontWeight: "bold" }}>
+                        <Naira>{parseInt(state.whoRequested.amount)}</Naira>
+                      </div>
+                      {/* <br /> */}
+                      <textarea
+                        onChange={(e) => {
+                          if (desc.length < 100) {
+                            setMaxDesc(false);
+                            setDesc(e.target.value);
+                          } else {
+                            // setMaxDesc(true)
+                            if (
+                              e.nativeEvent.inputType == "deleteContentBackward"
+                            ) {
                               setDesc(e.target.value);
+                              setMaxDesc(false);
                             } else {
-                              // setMaxDesc(true)
-                              if (
-                                e.nativeEvent.inputType ==
-                                "deleteContentBackward"
-                              ) {
-                                setDesc(e.target.value);
-                                setMaxDesc(false);
-                              } else {
-                                setMaxDesc(true);
-                              }
+                              setMaxDesc(true);
                             }
-                          }}
-                          value={desc}
-                          style={rec_inputs3}
-                          placeholder="Description  e.g  Pay some bills with this little token and remain happy.."
-                        ></textarea>
-                        {maxDesc === true && (
-                          <small style={{ color: "crimson" }}>
-                            maximum reaches
-                          </small>
-                        )}
-                             </div>
-                             {console.log(state)}
-                    </div> 
+                          }
+                        }}
+                        value={desc}
+                        style={rec_inputs3}
+                        placeholder="Description  e.g  Pay some bills with this little token and remain happy.."
+                      ></textarea>
+                      {maxDesc === true && (
+                        <small style={{ color: "crimson" }}>
+                          maximum reaches
+                        </small>
+                      )}
+                    </div>
+                    {/* {console.log(state)} */}
+                  </div>
                 </div>
                 <br />
               </div>
             )}
 
-
             {/* {proceedSend === true && ( */}
+            <div
+              style={{
+                height: " ",
+                //  background: "black",
+                padding: "10px",
+                textAlign: "center",
+              }}
+            >
+              <span>Authenticate </span>
               <div
                 style={{
-                  height: " ",
-                  //  background: "black",
-                  padding: "10px",
-                  textAlign: "center",
+                  padding: "15px",
+                  // background: "black",
+                  color: "white",
+                  //  marginBottom:"5px"
                 }}
               >
-                <span>Authenticate </span>
+                {pinVal()}
+
+                <br />
                 <div
                   style={{
-                    padding: "15px",
-                    // background: "black",
-                    color: "white",
-                    //  marginBottom:"5px"
+                    color: "crimson",
+                    height: "30px",
+                    background: " ",
+                    padding: "5px",
                   }}
                 >
-                  {pinVal()}
-
-                  <br />
-                  <div
-                    style={{
-                      color: "crimson",
-                      height: "30px",
-                      background: " ",
-                      padding: "5px",
-                    }}
-                  >
-                    {pinError}
-                  </div>
+                  {pinError}
                 </div>
-                {authKeyboaard()}
               </div>
+              {authKeyboaard()}
+            </div>
             {/* )} */}
           </Drawer>
         </React.Fragment>

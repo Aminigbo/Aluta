@@ -580,7 +580,7 @@ function Home({ appState, login_suc }) {
                               <div
                                 style={{ marginTop: "15px", textAlign: "left" }}
                               >
-                                  {btn_primary("Accept pin", trigerVerify)}
+                                  {btn_primary("Accept cashback pin", trigerVerify)}
                                   {/* OR {btn_primary("Scan QR", toScan, "special")} */}
                                   <br />
                                 <div

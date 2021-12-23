@@ -26,7 +26,7 @@ import { errorComponent, successComponent } from "../components/error"; // error
 // @======== ALLL BUZZME CONTROLLER
 import { getAllBuzz } from "../functions/controllers/allbuzzme";
 // import { IconName } from "react-icons/fc";
-
+import { MdOutlineArrowForwardIos } from "react-icons/md";
 
 function Home({ appState, login_suc }) {
   const state = appState;
@@ -463,11 +463,12 @@ function Home({ appState, login_suc }) {
                       style={{
                         background: "none",
                         border: "none",
-                        outline: "none",
+                          outline: "none",
+                        color:"#0a3d62"
                       }}
                     >
                       {" "}
-                      <b>To wallet </b>
+                      <b>To wallet <MdOutlineArrowForwardIos style={{color:"#ffaa0f"}}/> <MdOutlineArrowForwardIos style={{color:"#ffaa0f"}}/> </b>
                     </button>
                   </div>
                 </div>
@@ -496,7 +497,7 @@ function Home({ appState, login_suc }) {
                     }}
                   >
                     <AccountBalanceWallet
-                      style={{ margin: "5px", color: "#0a3d62" }}
+                      style={{ margin: "5px", color: "#ffaa0f" }}
                     />
                     <span>Wallet</span>
 
@@ -591,7 +592,7 @@ function Home({ appState, login_suc }) {
                       position: "relative",
                     }}
                   >
-                    <FiberPin style={{ margin: "5px", color: "#0a3d62" }} />
+                    <FiberPin style={{ margin: "5px", color: "#ffaa0f" }} />
                     &nbsp;<span>Buzz ID</span>
                     <div
                       onClick={() => {

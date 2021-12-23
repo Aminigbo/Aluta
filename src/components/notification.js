@@ -164,12 +164,12 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
                       </div>
                   )}
                   <br />
-                  <small>
+                  {/* <small>
                     {e.meta.date.day} {e.meta.date.date} {e.meta.date.month},{" "}
                     {e.meta.date.year}
                   </small>{" "}
                   &nbsp;&nbsp;{" "}
-                  <small style={{ float: "right" }}>{e.meta.date.time}</small>
+                  <small style={{ float: "right" }}>{e.meta.date.time}</small> */}
                 </div>
               </div>
               {/* <Divider /> */}
