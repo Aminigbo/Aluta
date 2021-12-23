@@ -145,6 +145,7 @@ export async function handleChashbackGeneration(
             amountPlusCharge: amountPlusCharge,
             serviceCharge: adminPercentage,
             amount: userTakes,
+            tokenamount:amount,
             name: payload.user.fullname,
             user: metaDataPayload,
             token,
@@ -329,6 +330,9 @@ export async function settleCashbackToWallet(
                 recieverId: res.body[0].user,
                 meta: {
                   amount: res.body[0].meta.amount,
+                  amountPlusCharge:res.body[0].meta.amountPlusCharge,
+                  serviceCharge:res.body[0].meta.serviceCharge,
+                  tokenamount:res.body[0].meta.tokenamount,
                   resolvedby: res2.body[0].meta.to.fullname,
                   token,
                   date: {

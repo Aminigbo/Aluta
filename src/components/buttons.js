@@ -37,7 +37,7 @@ export function btn_primary(text, callback, copy) {
         }}
         style={{
           backgroundImage:copy ? "linear-gradient(to right,gold, green" : "linear-gradient(to right,lightgray, #385b74)",
-          padding: "2px 14px",
+          padding: "2px 5px",
           color: "white",
           borderRadius: "3px",
           float: "  ",

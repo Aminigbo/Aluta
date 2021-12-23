@@ -3,6 +3,7 @@ import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import "../static/css/home/index.css";
 import { FcRating } from "react-icons/fc";
+import Naira from "react-naira";
 
 import Header from "../components/includes/mobile_header.js";
 import Desktopleft from "../components/includes/desktopleft";
@@ -196,7 +197,7 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
                       fontSize: "13px",
                     }}
                   >
-                    NGN {e.meta.amount}
+                    <Naira>{e.meta.tokenamount}</Naira>
                   </b>
                   <br />
                   <span style={{ fontSize: "13px" }}>
@@ -227,11 +228,57 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
                         borderRadius: "5px",
                       }}
                     >
-                      NGN {e.meta.amount}
+                      <Naira>{e.meta.tokenamount}</Naira>
                     </b>{" "}
                     has been resolved by{" "}
                     {e.from == e.to ? "You" : e.meta.resolvedby}
                   </small>{" "}
+
+                  <br /><br />
+                    <small>
+                      <span style={{ color: "crimson" }}>Service charge</span>: &nbsp;
+                      <div
+                        style={{
+                          float: "right",
+                          width: "50%",
+                          textAlign: "left",
+                        }}
+                      >
+                        <Naira>
+                          {e.meta.amountPlusCharge - e.meta.tokenamount}
+                        </Naira>
+                      </div>
+                    </small>{" "}
+                    <br />
+                    <small>
+                      <span style={{ color: "crimson" }}>Amount debited</span>:
+                      &nbsp;
+                      <div
+                        style={{
+                          float: "right",
+                          width: "50%",
+                          textAlign: "left",
+                        }}
+                      >
+                        <Naira>{e.meta.amountPlusCharge}</Naira>
+                      </div>
+                    </small>{" "}
+
+                    <br />
+                    <small>
+                      <span style={{ color: "crimson" }}>Resolved by</span>:
+                      &nbsp;
+                      <div
+                        style={{
+                          float: "right",
+                          width: "50%",
+                          textAlign: "left",
+                        }}
+                      >
+                        <b>{e.from == e.to ? "You" : e.meta.resolvedby}</b>
+                      </div>
+                      </small>
+                  
                   <br /> <br />
                   <small>
                     {e.meta.date.day} {e.meta.date.date} {e.meta.date.month},{" "}

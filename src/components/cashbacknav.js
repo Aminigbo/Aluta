@@ -327,7 +327,7 @@ function Home({ appState, login_suc }) {
           <div style={{ textAlign: "center" }}>
             {generatedcode !== false && (
               <>
-                <b>TOKEN GENERATED</b>
+                <b>TOKEN GENERATED ({generatedToken})</b>
                 <div>
                   <small>
                    QR code contains your cashback token. <br /> It is also saved

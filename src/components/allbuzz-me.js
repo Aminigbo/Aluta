@@ -91,7 +91,7 @@ function Home({ appState, dispNoti }) {
               >
                 <b>{e.type} </b> &nbsp;&nbsp;{" "}
                 <span style={{ fontSize: "14px" }}>
-                  {e.from == userId ? "Debit To" : "Cradit From"}
+                  {e.from == userId ? "Debit To" : "Credit From"}
 
                   <b>
                     {" "}
