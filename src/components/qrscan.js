@@ -9,7 +9,7 @@ import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
 import { add_wallet, logOut, loginSuc } from "../redux";
 import Toppills from "../components/includes/topdesktoppills";
-import { cashbackloader } from "../components/loading"; 
+import { cashbackloader } from "../components/loading";
 import { btn_primary, btn_danger } from "../components/buttons";
 import {
   handleChashbackGeneration,
@@ -17,12 +17,28 @@ import {
   settleCashbackToWallet,
 } from "../functions/controllers/cashback"; // CASHBACK TOKEN CONTROLLER
 import { errorComponent, successComponent } from "../components/error"; // error component for error handling
+import { ImQrcode } from "react-icons/im";
+import { Drawer, Divider } from "@mui/material";
 
 function Home({ appState, login_suc }) {
   let history = useHistory();
   const state = appState;
   const [value, setValue] = useState(null); //TOKEN TO BE VERIFIED
+  const [drawerState, setDrawerState] = React.useState({
+    bottom: false,
+  });
 
+  const toggleDrawer = (anchor, open, post) => (event) => {
+    // console.log("okk");
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setDrawerState({ ...drawerState, [anchor]: open });
+  };
   const [compState, setStates] = useState({
     data: [],
     value: "",
@@ -98,13 +114,14 @@ function Home({ appState, login_suc }) {
   };
   const handleError = (err) => {
     console.error(err);
-   };
-   
-   // @======== close success pop
-  const closeSuccessPop = () => { 
-     history.push("/")
-   };
-   
+  };
+
+  // @======== close success pop
+  const closeSuccessPop = () => {
+    //   history.push("/");
+     setDrawerState({ ...drawerState, bottom: false });
+     setResolved(false)
+  };
 
   return state.loggedIn === false ? (
     <div>
@@ -127,43 +144,45 @@ function Home({ appState, login_suc }) {
           )}{" "}
         </>
       )}
-      <>
-        <div className="mobile">
-          <div className="header_footer">
-            {/* <Footer /> */}
-            <Header />
-          </div>
+      <> 
 
-          <div>
-            <div>
-              <div
-                style={{
-                  textAlign: "center",
-                  marginTop: "10px",
-                  background: " #f4f6f7",
-                  position: "sticky",
-                  top: "0px",
-                  zIndex: "1000",
-                  padding: "0px",
-                }}
-              >
-                {" "}
-                <Toppills />
-              </div>{" "}
-              <div style={{ zIndex: "80000", background: " " }}>
-                <div
-                  style={{
-                    padding: "20px",
-                    height: "",
-                    background: " ",
-                    textAlign: "center",
-                  }}
-                >
-                  {compState.loading === true ? (
-                    "Please wait"
-                  ) : (
-                    <>
-                      {compState.resolved !== true && (
+        <div
+          onClick={() => {
+            // history.push("/scan");
+            setDrawerState({ ...drawerState, bottom: true });
+          }}
+          style={{
+            position: "fixed",
+            height: "55px",
+            width: "55px",
+            background: "white",
+            borderRadius: "55px",
+            bottom: "10px",
+            right: "10px",
+            padding: "10px 13px",
+            boxShadow: " 1px 1px 3px #0a3d62",
+            textAlign: "center",
+          }}
+        >
+          <ImQrcode style={{ fontSize: "25px", color: "#0a3d62" }} />
+          <div style={{ marginTop: "-4px", fontSize: "13px", color: "orange" }}>
+            scan
+          </div>
+        </div>
+
+        <React.Fragment key="bottom">
+          <Drawer
+            anchor="bottom"
+            open={drawerState["bottom"]}
+            onClose={toggleDrawer("bottom", false, false)}
+          >
+            {compState.loading === false && (
+              <>
+                {compState.resolved !== true && (
+                  <>
+                    {cashbackpinresolved !== true && (
+                      <>
+                        {" "}
                         <QrReader
                           style={{ width: "100%", height: "" }}
                           delay={300}
@@ -171,19 +190,19 @@ function Home({ appState, login_suc }) {
                           onScan={handleScan}
                           facingMode="environment"
                         />
-                      )}
-                    </>
-                  )}
+                      </>
+                    )}
+                  </>
+                )}
 
-                  {/* <p>{compState.result}</p> */}
-
-                  {verifyPayload && (
-                    <>
-                      {/* {console.log(verifyPayload.data.isActive)} */}
-                      {cashbackpinresolved === true && (
-                        <>
-                          {verifyPayload.success === true && (
-                            <>
+                {verifyPayload && (
+                  <>
+                    {/* {console.log(verifyPayload.data.isActive)} */}
+                    {cashbackpinresolved === true && (
+                      <>
+                        {verifyPayload.success === true && (
+                          <>
+                            <div style={{ padding: "20px 5px" }}>
                               {" "}
                               {cashbackCurrency(
                                 btn_primary,
@@ -199,17 +218,17 @@ function Home({ appState, login_suc }) {
                                 verifyPayload.data.isActive,
                                 null
                               )}{" "}
-                            </>
-                          )}
-                        </>
-                      )}
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                            </div>
+                          </>
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
+              </>
+            )}
+          </Drawer>
+        </React.Fragment>
 
         <Desktopleft />
         <Desktopright />

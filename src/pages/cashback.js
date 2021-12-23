@@ -5,6 +5,7 @@ import "../static/css/home/index.css";
 
 import Header from "../components/includes/mobile_header.js";
 import { HistoryOutlined } from "@material-ui/icons";
+import { ImQrcode } from "react-icons/im";
 
 import {
   Person,
@@ -579,7 +580,22 @@ function Home({ appState, login_suc }) {
                               <div
                                 style={{ marginTop: "15px", textAlign: "left" }}
                               >
-                                  {btn_primary("Accept pin", trigerVerify)} OR {btn_primary("Scan QR", toScan, "special")}
+                                  {btn_primary("Accept pin", trigerVerify)}
+                                  {/* OR {btn_primary("Scan QR", toScan, "special")} */}
+                                  <br />
+                                <div
+                                  style={{
+                                    fontSize: "",
+                                    color: "gray",
+                                    marginTop: "10px",
+                                  }}
+                                >
+                                  {" "}
+                                  <ImQrcode style={{color:"#0a3d62"}} />{" "}
+                                  <small style={{fontSize:"11px"}}>
+                                    You can also scan to accept cashback
+                                  </small>
+                                </div>
                               </div>
                             </div>
                           </>

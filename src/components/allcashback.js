@@ -123,7 +123,7 @@ function Home({ appState, dispNoti }) {
                       float: "right",
                     }}
                   >
-                    {e.token}
+                    <span style={{fontSize:"11px"}}>Token</span>  {e.token}
                     {/* <sup style={{ color: "crimson", fontSize: "13px" }}>&nbsp;<small>{e.meta.amountPlusCharge - e.meta.tokenamount}</small></sup> */}
                   </b>
                 )}

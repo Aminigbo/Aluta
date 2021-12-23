@@ -4,7 +4,9 @@ import { connect } from "react-redux";
 import "../static/css/home/index.css";
 
 import Header from "../components/includes/mobile_header.js";
+import Footer from "../components/includes/mobile_footer";
 
+import { ImQrcode } from "react-icons/im";
 
 import { confirmCashbackCreation } from "../functions/workers_functions/cashback"; // CASHBACK CONTROLLER
 import { Drawer, Divider } from "@mui/material";
@@ -40,7 +42,7 @@ function Home({ appState, login_suc }) {
   if (state.loggedIn === true) {
     userId = state.loggedInUser.user.id;
   }
-var QRCode = require('qrcode.react');
+  var QRCode = require("qrcode.react");
   const [compState, setStates] = useState({
     data: [],
     value: "",
@@ -428,8 +430,8 @@ var QRCode = require('qrcode.react');
   };
 
   const toScan = () => {
-    history.push("/scan")
-  }
+    history.push("/scan");
+  };
 
   return state.loggedIn === false ? (
     <div>
@@ -524,12 +526,11 @@ var QRCode = require('qrcode.react');
               </div>{" "}
               <Cashbacknav />
               <div style={{ zIndex: "80000", background: " " }}>
-
                 {/* <div style={{padding:"15px",textAlign:"center"}}>
                     <QRCode  value="98943" />
                 </div> */}
 
-                  {/* <div style={{ zIndex: "80000", background: " " }}>
+                {/* <div style={{ zIndex: "80000", background: " " }}>
                 <div
                   onClick={()=>{history.push("/scan")}}
                   style={{
@@ -577,8 +578,16 @@ var QRCode = require('qrcode.react');
                     boxShadow: " 1px 1px 3px #888888",
                     border: "0.5px solid #f3f3f3",
                   }}
+                >
+                  <div
+                    style={{
+                      marginTop: "-25px",
+                      marginBottom: "40px",
+                      textAlign: "center",
+                    }}
                   >
-                    <div style={{marginTop:"-25px",marginBottom:"40px",textAlign:"center"}}>Accept cashback token </div>
+                    Accept cashback token{" "}
+                  </div>
                   <div
                     className=" "
                     style={{
@@ -608,11 +617,31 @@ var QRCode = require('qrcode.react');
                               <div
                                 style={{ marginTop: "15px", textAlign: "left" }}
                               >
-                                  {btn_primary("Accept pin", trigerVerify)} OR {btn_primary("Scan QR", toScan, "special")}
-                                </div> 
+                                {btn_primary(
+                                  "Accept cashback pin",
+                                  trigerVerify
+                                )}
+                                {/* OR {btn_primary("Scan QR", toScan, "special")} */}
+                                <br />
+                                <div
+                                  style={{
+                                    fontSize: "",
+                                    color: "gray",
+                                    marginTop: "10px",
+                                  }}
+                                >
+                                  {" "}
+                                  <ImQrcode style={{color:"#0a3d62"}} />{" "}
+                                  <small style={{fontSize:"11px"}}>
+                                    You can also scan to accept cashback
+                                  </small>
+                                </div>
+                              </div>
                             </div>
                           </>
-                        ) : ''}
+                        ) : (
+                          ""
+                        )}
                       </div>
                     </div>
                   </div>

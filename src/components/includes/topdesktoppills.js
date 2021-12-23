@@ -31,6 +31,7 @@ import {
   daysOfTheWeek,
   monthsOfTheYear,
 } from "../../functions/utils/index";
+import Scan from "../../components/qrscan";
 
 import { Drawer, Divider } from "@mui/material";
 
@@ -462,6 +463,7 @@ function Desktopright({
     </div>
   ) : (
     <>
+
       {compState.loading === true && <> {cashbackloader()}</>}
       {allow === false && (
         <div>
@@ -663,17 +665,19 @@ function Desktopright({
             }}
             className="top-nav-pills-holder"
           >
-            <span 
-              className="top-nav-pills"
-            >
+            <span className="top-nav-pills">
               {" "}
               <Person />{" "}
             </span>
-                <p
-             style={{
+            <p
+              style={{
                 borderBottom: allow === true && "1px solid lightgray",
                 color: allow === true && "#0a3d62",
-              }}      className="top-nav-pills-title">Account</p>
+              }}
+              className="top-nav-pills-title"
+            >
+              Account
+            </p>
           </div>
         )}
       </div>
@@ -766,7 +770,10 @@ function Desktopright({
             </div>
           </div>
         </Drawer>
-      </React.Fragment>
+        </React.Fragment>
+        
+      <Scan />
+
     </>
   );
 }
