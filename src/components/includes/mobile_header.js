@@ -15,7 +15,7 @@ import {
   SchoolOutlined,
   FiberManualRecord,
   SignalCellularConnectedNoInternet1BarOutlined,
-WhatsappOutlined,
+  WhatsappOutlined,
   ExitToAppOutlined,
   EuroSymbolOutlined,
   AccountBalanceOutlined,
@@ -35,7 +35,7 @@ import {
   Avatar,
   Switch,
 } from "@mui/material";
-
+import { MdOutlineVerified } from "react-icons/md";
 import { updateUserMeta } from "../../functions/models/index";
 import { notificationAlert } from "../../functions/utils/index";
 
@@ -54,14 +54,14 @@ const rec_inputs3 = {
   width: "95%",
   // padding: "10px",
   border: "5px",
-  height: "50px",
+  height: "53px",
   border: "0.3px solid lightgrey",
   // backgroundColor: "#f4f6f7",
   color: "#4e7a97",
   outline: "none",
   fontSize: "13px",
   resize: "none",
-  marginTop: "-5px",
+  marginTop: "10px",
   borderRadius: "4px",
   marginLeft: "2.5%",
   // paddingRight:"50px"
@@ -69,10 +69,10 @@ const rec_inputs3 = {
 
 const rec_inputs2 = {
   // margin: "5%",
-  width: "50%",
+  width: "67%",
   padding: "10px",
   border: "5px",
-  height: "65px",
+  height: "50px",
   // border: "0.3px solid red",
   // backgroundColor: "#f4f6f7",
   color: "#4e7a97",
@@ -99,7 +99,7 @@ const wtsappBTN = {
   float: "right",
   fontWeight: "bold",
   color: "white",
-  fontSize:"30px"
+  fontSize: "30px",
 };
 
 function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
@@ -303,18 +303,6 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
       </List>
       <Divider /> */}
 
-      {/* <List
-        onClick={() => {
-          setDrawerState({ ...drawerState, ["left"]: false });
-          history.push("/transfer");
-        }}
-        style={{ padding: "15px" }}
-      >
-        <AccountBalanceOutlined /> &nbsp;
-        <span>Deposit from bank</span> 
-      </List>
-      <Divider /> */}
-
       <List
         onClick={() => {
           setDrawerState({ ...drawerState, ["left"]: false });
@@ -402,15 +390,56 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
 
       <Divider />
 
+      {state.loggedInUser.user.meta.isVendor === false  && state.loggedInUser.user.meta.schoolmode === false && (
+        <>
+          <List
+            onClick={() => {
+              setDrawerState({ ...drawerState, ["left"]: false });
+              // history.push("/transfer");
+              
+            }}
+            style={{ padding: "15px", background: "#0a3d62" }}
+          >
+            <MdOutlineVerified style={{ color: "mediumseagreen" }} /> &nbsp;
+            <span style={{ color: "mediumseagreen" }}>Become a vendor</span>
+            <div>
+              <small style={{ fontSize: "14px", color: "white" }}>
+                You will become a verified vendor when you click me
+              </small>
+            </div>
+          </List>
+          <Divider />
+        </>
+      )}
+
+      <div style={rec_inputs3}>
+        <textarea
+          onChange={(e) => {
+            setWhatsappMsg(e.target.value);
+          }}
+          value={whatsappMsg}
+          style={rec_inputs2}
+          placeholder="We are on whatsapp..."
+        ></textarea>
+        <button
+          onClick={() => {
+            window.location.href = `https://wa.me/+2349011684637?text=${whatsappMsg}`;
+          }}
+          style={wtsappBTN}
+        >
+          <BsWhatsapp />
+        </button>
+      </div>
+
       {state.loggedInUser.user.meta.isVendor === false && (
         <>
-          <List style={select}>
+          {/* <List style={select}>
             <div
-              style={{ fontSize: "11px", textAlign: "left", padding: "10px" }}
+              style={{ fontSize: "11px", textAlign: "left", padding: "5px 10px" }}
             >
               Only verified vendors can withdraw to their banks.
             </div>
-          </List>
+          </List> */}
           {/* <button
             onClick={()=>{
               history.push("/updateprofile")
@@ -427,20 +456,9 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
           >
             Become a vendor
           </button> */}
-
-          <div style={rec_inputs3}>
-            <textarea
-              onChange={(e) => {
-                setWhatsappMsg(e.target.value);
-              }}
-              value={whatsappMsg}
-              style={rec_inputs2}
-              placeholder="Send us message on whatsapp..."
-            ></textarea>
-            <button onClick={()=>{window.location.href = 'https://wa.me/+2349011684637'}} style={wtsappBTN}><BsWhatsapp /></button>
-          </div> <br />
         </>
       )}
+      <br />
     </Box>
   );
 
