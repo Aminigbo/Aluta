@@ -293,9 +293,9 @@ export function cashbackRegEx(benID, phone, email, password, amount) {
 // @======== CASHBACK chargeCENTAGES
 export function cashbackchargecentage(amount) {
   let charge = "";
-  if (amount > 100 && amount < 5000) {
+  if (amount > 99 && amount < 5001) {
     charge = 80;
-  } else if (amount > 5001 && amount < 10001) {
+  } else if (amount > 5000 && amount < 10001) {
     charge = 160;
   } else if (amount > 10000 && amount < 15001) {
     charge = 240;
