@@ -648,33 +648,38 @@ export async function handleCreatePost(
     };
     console.log(act);
 
-    var axios = require("axios");
-    var FormData = require("form-data");
-    var fs = require("fs");
-    var data = new FormData();
-    data.append("postimage", file);
-    data.append(
-      "postId",
-      "1636827070335@e70f1835-37f1-4086-a425-3b2e385ae7dc@1636827070335"
-    );
+    // var axios = require("axios");
+    // var FormData = require("form-data");
+    // var fs = require("fs");
+    // var data = new FormData();
+    // data.append("postimage", file);
+    // data.append(
+    //   "postId",
+    //   "1636827070335@e70f1835-37f1-4086-a425-3b2e385ae7dc@1636827070335"
+    // );
 
-    var config = {
-      method: "post",
-      url: "https://buzz-servre.herokuapp.com/api/v1/make-post/post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
+    // var config = {
+    //   method: "post",
+    //   // url: "https://buzz-servre.herokuapp.com/api/v1/make-post/post",
+    //   url:"http://localhost:2001/api/v1/make-post/post",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   data: data,
+    // };
 
-    axios(config)
-      .then(function (response) {
-        console.log(response.data);
-        alert(response.data.fieldname)
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    // axios(config)
+    //   .then(function (response) {
+    //     console.log(response.data); 
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
+
+    storageInsert(filePath, file).then((res) => {
+      console.log(res)
+      alert("Hello")
+    })
 
     // return storageInsert(filePath, file).then((res) => {
     // @======== restructure insertPayload to include the image key gotten from Supabase
