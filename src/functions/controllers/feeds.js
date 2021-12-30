@@ -678,7 +678,7 @@ export async function handleCreatePost(
 
     storageInsert(filePath, file).then((res) => {
       console.log(res)
-      alert("Hello")
+      alert(res.error)
     })
 
     // return storageInsert(filePath, file).then((res) => {
