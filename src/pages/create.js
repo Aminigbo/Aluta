@@ -193,6 +193,9 @@ function Home({ appState, loadFeeds, disp_draft,login_suc }) {
         var file = dataURLtoFile(response, files.name);
         // console.log(file)
         setBlob({ ...blob, file: file, url2: URL.createObjectURL(file) });
+        
+
+        
         // window.scrollTo(0, document.body.scrollHeight);
         // console.log("scroll")
       })
@@ -267,7 +270,8 @@ function Home({ appState, loadFeeds, disp_draft,login_suc }) {
     </div>
   ) : (
     <div id="body bg">
-      {console.log(state)}
+      {/* {console.log(state)} */}
+      {console.log(blob)}
       {/* {state.realtime.length > 0 && <Realtime />} */}
       {stateAlert === false && alert(errorPayload, setStateAlert)}
       <Realtime />

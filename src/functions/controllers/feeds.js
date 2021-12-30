@@ -463,9 +463,6 @@ export function ALLPOSTS(props) {
   );
 }
 
-
-
-
 // CREATE POST
 export async function handleCreatePost(
   payload,
@@ -503,7 +500,6 @@ export async function handleCreatePost(
   let { wallet } = state.loggedInUser.user.meta;
 
   let eachUserGets = amount / beneficiaries; //AMOUNT EACH BENEFICIARIES GETS
-
 
   // @============ MAKE SURE USERS DONT CREATE GIVEAWAY LES THAN 1000 BUZ
   if (payload.postType == "GIVE AWAY" && amount < 1000) {
@@ -640,43 +636,83 @@ export async function handleCreatePost(
       }
     });
   } else {
-    return storageInsert(filePath, file).then((res) => {
-      // @======== restructure insertPayload to include the image key gotten from Supabase
-      console.log(res);
-      const newDataToUpload = {
+    let act = {
+      filePath,
+      file,
+      newDataToUpload: {
         ...insertPayload,
-        post: { ...insertPayload.post, photo: res.data.Key },
         poster,
         id: postId,
         setPostPrivacy,
-      };
-      alert('res.data.key.stringify()')
-      console.log(newDataToUpload);
-      
-      // @======== INSERT TO DB
-      // return insertFeeds(newDataToUpload).then((insertRes) => {
-      //   // @======== IF THE FEED IS A GIVEAWAY
-      //   if (payload.postType == "GIVE AWAY") {
-      //     return updateUserMeta(payloadExtra).then((debited) => {
-      //       let loginData = {
-      //         user: { ...state.loggedInUser.user, meta: userNewMetaData },
-      //         meta: state.loggedInUser.meta,
-      //       };
-      //       login(loginData);
-      //       if (insertRes.body === null) {
-      //         return failedToUpload(insertRes);
-      //       } else {
-      //         return uploadedSuccessfuly(insertRes);
-      //       }
-      //     });
-      //   } else {
-      //     if (insertRes.body === null) {
-      //       return failedToUpload(insertRes);
-      //     } else {
-      //       return uploadedSuccessfuly(insertRes);
-      //     }
-      //   }
-      // });
-    });
+      },
+    };
+    console.log(act);
+
+    var axios = require("axios");
+    var FormData = require("form-data");
+    var fs = require("fs");
+    var data = new FormData();
+    data.append("postimage", file);
+    data.append(
+      "postId",
+      "1636827070335@e70f1835-37f1-4086-a425-3b2e385ae7dc@1636827070335"
+    );
+
+    var config = {
+      method: "post",
+      url: "https://buzz-servre.herokuapp.com/api/v1/make-post/post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(response.data);
+        alert(response.data.fieldname)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    // return storageInsert(filePath, file).then((res) => {
+    // @======== restructure insertPayload to include the image key gotten from Supabase
+    // console.log(res);
+    // const newDataToUpload = {
+    //   ...insertPayload,
+    //   post: { ...insertPayload.post, photo: res.data.Key },
+    //   poster,
+    //   id: postId,
+    //   setPostPrivacy,
+    // };
+    // alert('res.data.key.stringify()')
+    // console.log(newDataToUpload);
+
+    // @======== INSERT TO DB
+    // return insertFeeds(newDataToUpload).then((insertRes) => {
+    //   // @======== IF THE FEED IS A GIVEAWAY
+    //   if (payload.postType == "GIVE AWAY") {
+    //     return updateUserMeta(payloadExtra).then((debited) => {
+    //       let loginData = {
+    //         user: { ...state.loggedInUser.user, meta: userNewMetaData },
+    //         meta: state.loggedInUser.meta,
+    //       };
+    //       login(loginData);
+    //       if (insertRes.body === null) {
+    //         return failedToUpload(insertRes);
+    //       } else {
+    //         return uploadedSuccessfuly(insertRes);
+    //       }
+    //     });
+    //   } else {
+    //     if (insertRes.body === null) {
+    //       return failedToUpload(insertRes);
+    //     } else {
+    //       return uploadedSuccessfuly(insertRes);
+    //     }
+    //   }
+    // });
+    // });
   }
 }
