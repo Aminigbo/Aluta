@@ -62,7 +62,7 @@ export async function addComment(
       avater: user.avater,
     };
     const comment_id =
-      code(state.loggedInUser.meta.access_token + new Date().getTime()) +
+      code(state.loggedInUser.meta.password + new Date().getTime()) +
       new Date().getTime();
     const post = actualPost.id;
     const meta = {

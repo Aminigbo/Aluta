@@ -2783,6 +2783,7 @@ progress { color: #0a3d62; }
    /* height:200px; */
    background-color: white;
    left:35%;
+   z-index:23000;
 }
 
 .realtimeHeader{

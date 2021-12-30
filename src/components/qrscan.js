@@ -92,6 +92,7 @@ function Home({ appState, login_suc }) {
       login_suc,
       setResolved
     );
+     setDrawerState({ ...drawerState, bottom: false });
   };
 
   const clearError = () => {
@@ -120,7 +121,8 @@ function Home({ appState, login_suc }) {
   const closeSuccessPop = () => {
     //   history.push("/");
      setDrawerState({ ...drawerState, bottom: false });
-     setResolved(false)
+    setResolved(false)
+    setcashbackpinresolved(true)
   };
 
   return state.loggedIn === false ? (

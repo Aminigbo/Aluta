@@ -546,7 +546,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
               style={{
                 color: "#0a3d62",
                 fontSize: "30px",
-                marginRight: "30px",
+                marginRight: "45px",
               }}
             />
           )}

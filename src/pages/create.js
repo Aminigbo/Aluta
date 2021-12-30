@@ -150,17 +150,17 @@ function Home({ appState, loadFeeds, disp_draft,login_suc }) {
         }
       }, 1000);
       handleCreatePost(postBody, state, loadFeeds, disp_draft, login_suc).then((res) => {
-        if (res.success == true) {
-          document.getElementById("progressBar").value = 100;
-          history.push("/");
-        } else {
-          setStateAlert(false);
-          setStates({
-            ...compState,
-            loader: false,
-            alertMsg: res.message,
-          });
-        }
+        // if (res.success == true) {
+        //   document.getElementById("progressBar").value = 100;
+        //   history.push("/");
+        // } else {
+        //   setStateAlert(false);
+        //   setStates({
+        //     ...compState,
+        //     loader: false,
+        //     alertMsg: res.message,
+        //   });
+        // }
       });
     }
   };

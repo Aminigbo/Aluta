@@ -463,6 +463,9 @@ export function ALLPOSTS(props) {
   );
 }
 
+
+
+
 // CREATE POST
 export async function handleCreatePost(
   payload,
@@ -647,31 +650,33 @@ export async function handleCreatePost(
         id: postId,
         setPostPrivacy,
       };
+      alert('res.data.key.stringify()')
       console.log(newDataToUpload);
+      
       // @======== INSERT TO DB
-      return insertFeeds(newDataToUpload).then((insertRes) => {
-        // @======== IF THE FEED IS A GIVEAWAY
-        if (payload.postType == "GIVE AWAY") {
-          return updateUserMeta(payloadExtra).then((debited) => {
-            let loginData = {
-              user: { ...state.loggedInUser.user, meta: userNewMetaData },
-              meta: state.loggedInUser.meta,
-            };
-            login(loginData);
-            if (insertRes.body === null) {
-              return failedToUpload(insertRes);
-            } else {
-              return uploadedSuccessfuly(insertRes);
-            }
-          });
-        } else {
-          if (insertRes.body === null) {
-            return failedToUpload(insertRes);
-          } else {
-            return uploadedSuccessfuly(insertRes);
-          }
-        }
-      });
+      // return insertFeeds(newDataToUpload).then((insertRes) => {
+      //   // @======== IF THE FEED IS A GIVEAWAY
+      //   if (payload.postType == "GIVE AWAY") {
+      //     return updateUserMeta(payloadExtra).then((debited) => {
+      //       let loginData = {
+      //         user: { ...state.loggedInUser.user, meta: userNewMetaData },
+      //         meta: state.loggedInUser.meta,
+      //       };
+      //       login(loginData);
+      //       if (insertRes.body === null) {
+      //         return failedToUpload(insertRes);
+      //       } else {
+      //         return uploadedSuccessfuly(insertRes);
+      //       }
+      //     });
+      //   } else {
+      //     if (insertRes.body === null) {
+      //       return failedToUpload(insertRes);
+      //     } else {
+      //       return uploadedSuccessfuly(insertRes);
+      //     }
+      //   }
+      // });
     });
   }
 }

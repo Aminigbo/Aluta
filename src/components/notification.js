@@ -48,8 +48,10 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
       loader: true,
     });
     fetchUserProfile(user).then((resX) => {
-      console.log(resX.body[0].meta);
-      const newUserData = {
+      // console.log(resX.body[0].meta);
+      
+      if(resX.body && resX.body.length > 0){
+        const newUserData = {
         user: {
           ...state.loggedInUser.user,
           meta: resX.body[0].meta,
@@ -58,6 +60,9 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
       };
       // console.log(newUserData)
       login_suc(newUserData);
+      } else {
+        console.log(resX)
+      }
     });
     fetchNotification(user)
       .then((res) => {
