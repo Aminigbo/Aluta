@@ -310,6 +310,7 @@ export function ALLPOSTS(props) {
               alt="image"
             />
           )}
+          {console.log(data.post.photo)}
         </div>
       )}
 
@@ -662,8 +663,8 @@ export async function handleCreatePost(
 
     var config = {
       method: "post",
-      // url: "https://buzz-servre.herokuapp.com/api/v1/make-post/post",
-      url: "http://localhost:2001/api/v1/make-post/post",
+      url: "https://buzz-servre.herokuapp.com/api/v1/make-post/post",
+      // url: "http://localhost:2001/api/v1/make-post/post",
       headers: {
         "Content-Type": "application/json",
       },
