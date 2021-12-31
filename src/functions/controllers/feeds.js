@@ -470,8 +470,10 @@ export async function handleCreatePost(
   state,
   loadFeeds,
   disp_draft,
-  login
-  , setStateAlert, setStates, compState,
+  login,
+  setStateAlert,
+  setStates,
+  compState,
   history
 ) {
   let sessionEmail = state.loggedInUser.user.email;
@@ -576,28 +578,15 @@ export async function handleCreatePost(
   };
 
   // @======== FAILED TO UPLOAD RESPONSE
-  function failedToUpload(res) {
-    // console.log(res);
-    state.draft.push(newPayload);
-    disp_draft(state.draft);
-    return error(
-      "Your operation could not be completed due to network error. Your post has been save to draft."
-    );
-  }
-
-  // @======== UPLOADED SUCCESSFULY
-  function uploadedSuccessfuly(res) {
-    let newData = {
-      ...res.body[0].data,
-      likes: [],
-      unlikes: [],
-      comments: [],
-      success: true,
-    };
-    state.feeds.push(newData);
-    loadFeeds(state.feeds);
-    return success({ success: true });
-  }
+  function failedToUpload() {
+    setStateAlert(false);
+    setStates({
+      ...compState,
+      loader: false,
+      alertMsg:
+        "Your operation could not be completed due to network error. Your post has been save to draft",
+    });
+  } 
 
   let file = "";
   let fileExt = "";
@@ -611,9 +600,9 @@ export async function handleCreatePost(
     filePath = `${fileName}`;
   }
 
-  // @======== CHECK IF USER IS POSTING WITH IMAGE
-  if (payload.post.file === undefined) {
-    // @======== INSERT TO DB
+
+  // @======== INSERT FUNCTION 
+  const insertFunction = (insertPayload) => {
     return insertFeeds(insertPayload).then((insertRes) => {
       // console.log(insertRes);
       // @======== IF THE FEED IS A GIVEAWAY
@@ -625,19 +614,27 @@ export async function handleCreatePost(
           };
           login(loginData);
           if (insertRes.body === null) {
-            return failedToUpload(insertRes);
+            failedToUpload();
           } else {
-            return uploadedSuccessfuly(insertRes);
+            // return uploadedSuccessfuly(insertRes);
+            history.push("/");
           }
         });
       } else {
         if (insertRes.body === null) {
-          return failedToUpload(insertRes);
+         failedToUpload();
         } else {
-          return uploadedSuccessfuly(insertRes);
+          // return uploadedSuccessfuly(insertRes);
+          history.push("/");
         }
       }
     });
+  }
+
+  // @======== CHECK IF USER IS POSTING WITH IMAGE
+  if (payload.post.file === undefined) {
+    // @======== INSERT TO DB
+     insertFunction(insertPayload)
   } else {
     let act = {
       filePath,
@@ -648,18 +645,13 @@ export async function handleCreatePost(
         id: postId,
         setPostPrivacy,
       },
-    };
-    console.log(act);
+    }; 
 
     var axios = require("axios");
     var FormData = require("form-data");
     var fs = require("fs");
     var data = new FormData();
-    data.append("postimage", file);
-    data.append(
-      "postId",
-      "1636827070335@e70f1835-37f1-4086-a425-3b2e385ae7dc@1636827070335"
-    );
+    data.append("postimage", file); 
 
     var config = {
       method: "post",
@@ -674,99 +666,20 @@ export async function handleCreatePost(
     axios(config)
       .then(function (response) {
         console.log(response.data);
-        // @======== restructure insertPayload to include the image key gotten from Supabase 
-      const newDataToUpload = {
-        ...insertPayload,
-        post: { ...insertPayload.post, photo: response.data },
-        poster,
-        id: postId,
-        setPostPrivacy,
-        };
-        console.log(newDataToUpload)
+        // @======== restructure insertPayload to include the image key gotten from Supabase
+        const newDataToUpload = {
+          ...insertPayload,
+          post: { ...insertPayload.post, photo: response.data },
+          poster,
+          id: postId,
+          setPostPrivacy,
+        }; 
 
-      // @======== INSERT TO DB
-      return insertFeeds(newDataToUpload).then((insertRes) => {
-        console.log(insertRes)
-        // @======== IF THE FEED IS A GIVEAWAY
-        if (payload.postType == "GIVE AWAY") {
-          return updateUserMeta(payloadExtra).then((debited) => { 
-            console.log(debited)
-            let loginData = {
-              user: { ...state.loggedInUser.user, meta: userNewMetaData },
-              meta: state.loggedInUser.meta,
-            };
-            login(loginData);
-            if (insertRes.body === null) {
-              // return failedToUpload(insertRes);
-               setStateAlert(false);
-                setStates({
-                  ...compState,
-                  loader: false,
-                  alertMsg:'Your operation could not be completed due to network error. Your post has been save to draft',
-                });
-            } else {
-              // return uploadedSuccessfuly(insertRes);
-            history.push("/")
-
-            }
-          });
-        } else {
-          if (insertRes.body === null) { 
-            // return failedToUpload(insertRes);
-             setStateAlert(false);
-                setStates({
-                  ...compState,
-                  loader: false,
-                  alertMsg:'Your operation could not be completed due to network error. Your post has been save to draft',
-                });
-          } else { 
-            // return uploadedSuccessfuly(insertRes);
-            history.push("/")
-          }
-        }
-      });
+        // @======== INSERT TO DB
+        insertFunction(newDataToUpload)
       })
       .catch(function (error) {
-        console.log(error);
-      });
-
-    // return storageInsert(filePath, file).then((res) => {
-    //   // @======== restructure insertPayload to include the image key gotten from Supabase
-    //   console.log(res);
-    //   const newDataToUpload = {
-    //     ...insertPayload,
-    //     post: { ...insertPayload.post, photo: res.data.Key },
-    //     poster,
-    //     id: postId,
-    //     setPostPrivacy,
-    //   };
-    //   alert("res.data.key.stringify()");
-    //   console.log(newDataToUpload);
-
-    //   // @======== INSERT TO DB
-    //   return insertFeeds(newDataToUpload).then((insertRes) => {
-    //     // @======== IF THE FEED IS A GIVEAWAY
-    //     if (payload.postType == "GIVE AWAY") {
-    //       return updateUserMeta(payloadExtra).then((debited) => {
-    //         let loginData = {
-    //           user: { ...state.loggedInUser.user, meta: userNewMetaData },
-    //           meta: state.loggedInUser.meta,
-    //         };
-    //         login(loginData);
-    //         if (insertRes.body === null) {
-    //           return failedToUpload(insertRes);
-    //         } else {
-    //           return uploadedSuccessfuly(insertRes);
-    //         }
-    //       });
-    //     } else {
-    //       if (insertRes.body === null) {
-    //         return failedToUpload(insertRes);
-    //       } else {
-    //         return uploadedSuccessfuly(insertRes);
-    //       }
-    //     }
-    //   });
-    // });
+        failedToUpload();
+      }); 
   }
 }

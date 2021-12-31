@@ -73,7 +73,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
   const [compState, setStates] = useState("");
   const [giveaway, setGiveaway] = useState({
     amount: null,
-    delaysecond: null,
+    // delaysecond: null,
     beneficiaries: null,
     beneficiariesList: [],
   });
@@ -96,8 +96,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
     let type = "";
     if (
       (postType == "GIVE AWAY" && giveaway.beneficiaries == null) ||
-      giveaway.amount == null ||
-      giveaway.delaysecond == null
+      giveaway.amount == null  
     ) {
     } else {
       type = postType;
@@ -126,7 +125,6 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
         time: new Date(),
         text: postText,
         file: blob.file,
-        file2: blob.file2,
         photo,
         meta: {
           event,
@@ -167,29 +165,11 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
         compState,
         history
       );
-      //   .then(
-      //   (res) => {
-      //     console.log(res)
-      //     if (res.success == true) {
-      //       document.getElementById("progressBar").value = 100;
-      //       history.push("/");
-      //     } else {
-      //       setStateAlert(false);
-      //       setStates({
-      //         ...compState,
-      //         loader: false,
-      //         alertMsg: res.message,
-      //       });
-      //     }
-      //   }
-      // );
     }
   };
 
   const preview = (event) => {
     let files = event.target.files[0];
-    // console.log(files);
-    // <input type="file" id="upload"/>
     let image = document.getElementById("upload");
 
     var imageResize = new ImageResize();
@@ -490,23 +470,24 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                   >
                     <div
                       style={{
-                        width: "95%",
-                        background: "  ",
+                        width: "100%",
+                        background: "",
                         display: "inline-block",
                         height: " ",
                         padding: "10px",
-                        textAlign: "left",
+                        textAlign: "center",
                       }}
                     >
                       <FormControl
                         id="postArea1"
                         variant="standard"
-                        sx={{ m: 0, minWidth: 230 }}
+                        sx={{ m: 0, minWidth: 40 }}
                       >
-                        <TextField
+                          <TextField
+                            style={{width:"140px",marginRight:"20px"}}
                           id="postArea1"
                           value={giveaway.amount}
-                          label="How much to giveaway"
+                          label="Giveaway amount"
                           variant="standard"
                           onChange={(e) => {
                             setGiveaway({
@@ -515,7 +496,39 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                             });
                           }}
                         />
+                        </FormControl>
+                        
+
+                        <FormControl
+                        id="postArea1"
+                        variant="standard"
+                        sx={{ m: 0, minWidth: 120 }}
+                      >
+                        <InputLabel id="demo-simple-select-label">
+                          Beneficiaries
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={giveaway.beneficiaries}
+                          label="Age"
+                          onChange={(e) => {
+                            setGiveaway({
+                              ...giveaway,
+                              beneficiaries: e.target.value,
+                            });
+                          }}
+                        >
+                          <MenuItem value={1}>1</MenuItem>
+                          <MenuItem value={2}>2</MenuItem>
+                          <MenuItem value={5}>5</MenuItem>
+                          <MenuItem value={10}>10</MenuItem>
+                          <MenuItem value={20}>20</MenuItem>
+                          <MenuItem value={50}>50</MenuItem>
+                        </Select>
                       </FormControl>
+
+                        
                     </div>
 
                     <div
@@ -528,7 +541,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                         textAlign: "left",
                       }}
                     >
-                      <FormControl
+                      {/* <FormControl
                         id="postArea1"
                         variant="standard"
                         sx={{ m: 0, minWidth: 135 }}
@@ -555,10 +568,10 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                           <MenuItem value={20}>20</MenuItem>
                           <MenuItem value={50}>50</MenuItem>
                         </Select>
-                      </FormControl>
+                      </FormControl> */}
                     </div>
 
-                    <div
+                    {/* <div
                       style={{
                         width: "35%",
                         background: "",
@@ -593,7 +606,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                           <MenuItem value={60}>60</MenuItem>
                         </Select>
                       </FormControl>
-                    </div>
+                    </div> */}
                   </Box>
                 )}
 
