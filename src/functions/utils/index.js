@@ -1,7 +1,8 @@
 import md5 from "md5";
 
-export const API_URL =
-  "https://qwtxgoxfoytosibklxtt.supabase.in/storage/v1/object/public";
+export const API_URL ='https://buzz-servre.herokuapp.com/images/tickets/'
+  // 'http://localhost:2001/images/tickets/'
+  // "https://qwtxgoxfoytosibklxtt.supabase.in/storage/v1/object/public";
 
 export const error = (msg) => {
   return {

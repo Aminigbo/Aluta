@@ -470,6 +470,8 @@ export async function handleCreatePost(
   loadFeeds,
   disp_draft,
   login
+  , setStateAlert, setStates, compState,
+  history
 ) {
   let sessionEmail = state.loggedInUser.user.email;
   let { gender, school } = state.loggedInUser.user.meta;
@@ -574,7 +576,7 @@ export async function handleCreatePost(
 
   // @======== FAILED TO UPLOAD RESPONSE
   function failedToUpload(res) {
-    console.log(res);
+    // console.log(res);
     state.draft.push(newPayload);
     disp_draft(state.draft);
     return error(
@@ -612,7 +614,7 @@ export async function handleCreatePost(
   if (payload.post.file === undefined) {
     // @======== INSERT TO DB
     return insertFeeds(insertPayload).then((insertRes) => {
-      console.log(insertRes);
+      // console.log(insertRes);
       // @======== IF THE FEED IS A GIVEAWAY
       if (payload.postType == "GIVE AWAY") {
         return updateUserMeta(payloadExtra).then((debited) => {
@@ -648,76 +650,122 @@ export async function handleCreatePost(
     };
     console.log(act);
 
-    // var axios = require("axios");
-    // var FormData = require("form-data");
-    // var fs = require("fs");
-    // var data = new FormData();
-    // data.append("postimage", file);
-    // data.append(
-    //   "postId",
-    //   "1636827070335@e70f1835-37f1-4086-a425-3b2e385ae7dc@1636827070335"
-    // );
+    var axios = require("axios");
+    var FormData = require("form-data");
+    var fs = require("fs");
+    var data = new FormData();
+    data.append("postimage", file);
+    data.append(
+      "postId",
+      "1636827070335@e70f1835-37f1-4086-a425-3b2e385ae7dc@1636827070335"
+    );
 
-    // var config = {
-    //   method: "post",
-    //   // url: "https://buzz-servre.herokuapp.com/api/v1/make-post/post",
-    //   url:"http://localhost:2001/api/v1/make-post/post",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   data: data,
-    // };
+    var config = {
+      method: "post",
+      // url: "https://buzz-servre.herokuapp.com/api/v1/make-post/post",
+      url: "http://localhost:2001/api/v1/make-post/post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
 
-    // axios(config)
-    //   .then(function (response) {
-    //     console.log(response.data); 
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+    axios(config)
+      .then(function (response) {
+        console.log(response.data);
+        // @======== restructure insertPayload to include the image key gotten from Supabase 
+      const newDataToUpload = {
+        ...insertPayload,
+        post: { ...insertPayload.post, photo: response.data },
+        poster,
+        id: postId,
+        setPostPrivacy,
+        };
+        console.log(newDataToUpload)
 
-    storageInsert(filePath, file).then((res) => {
-      console.log(res)
-      alert(res.error)
-    })
+      // @======== INSERT TO DB
+      return insertFeeds(newDataToUpload).then((insertRes) => {
+        console.log(insertRes)
+        // @======== IF THE FEED IS A GIVEAWAY
+        if (payload.postType == "GIVE AWAY") {
+          return updateUserMeta(payloadExtra).then((debited) => { 
+            console.log(debited)
+            let loginData = {
+              user: { ...state.loggedInUser.user, meta: userNewMetaData },
+              meta: state.loggedInUser.meta,
+            };
+            login(loginData);
+            if (insertRes.body === null) {
+              // return failedToUpload(insertRes);
+               setStateAlert(false);
+                setStates({
+                  ...compState,
+                  loader: false,
+                  alertMsg:'Your operation could not be completed due to network error. Your post has been save to draft',
+                });
+            } else {
+              // return uploadedSuccessfuly(insertRes);
+            history.push("/")
+
+            }
+          });
+        } else {
+          if (insertRes.body === null) { 
+            // return failedToUpload(insertRes);
+             setStateAlert(false);
+                setStates({
+                  ...compState,
+                  loader: false,
+                  alertMsg:'Your operation could not be completed due to network error. Your post has been save to draft',
+                });
+          } else { 
+            // return uploadedSuccessfuly(insertRes);
+            history.push("/")
+          }
+        }
+      });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
     // return storageInsert(filePath, file).then((res) => {
-    // @======== restructure insertPayload to include the image key gotten from Supabase
-    // console.log(res);
-    // const newDataToUpload = {
-    //   ...insertPayload,
-    //   post: { ...insertPayload.post, photo: res.data.Key },
-    //   poster,
-    //   id: postId,
-    //   setPostPrivacy,
-    // };
-    // alert('res.data.key.stringify()')
-    // console.log(newDataToUpload);
+    //   // @======== restructure insertPayload to include the image key gotten from Supabase
+    //   console.log(res);
+    //   const newDataToUpload = {
+    //     ...insertPayload,
+    //     post: { ...insertPayload.post, photo: res.data.Key },
+    //     poster,
+    //     id: postId,
+    //     setPostPrivacy,
+    //   };
+    //   alert("res.data.key.stringify()");
+    //   console.log(newDataToUpload);
 
-    // @======== INSERT TO DB
-    // return insertFeeds(newDataToUpload).then((insertRes) => {
-    //   // @======== IF THE FEED IS A GIVEAWAY
-    //   if (payload.postType == "GIVE AWAY") {
-    //     return updateUserMeta(payloadExtra).then((debited) => {
-    //       let loginData = {
-    //         user: { ...state.loggedInUser.user, meta: userNewMetaData },
-    //         meta: state.loggedInUser.meta,
-    //       };
-    //       login(loginData);
+    //   // @======== INSERT TO DB
+    //   return insertFeeds(newDataToUpload).then((insertRes) => {
+    //     // @======== IF THE FEED IS A GIVEAWAY
+    //     if (payload.postType == "GIVE AWAY") {
+    //       return updateUserMeta(payloadExtra).then((debited) => {
+    //         let loginData = {
+    //           user: { ...state.loggedInUser.user, meta: userNewMetaData },
+    //           meta: state.loggedInUser.meta,
+    //         };
+    //         login(loginData);
+    //         if (insertRes.body === null) {
+    //           return failedToUpload(insertRes);
+    //         } else {
+    //           return uploadedSuccessfuly(insertRes);
+    //         }
+    //       });
+    //     } else {
     //       if (insertRes.body === null) {
     //         return failedToUpload(insertRes);
     //       } else {
     //         return uploadedSuccessfuly(insertRes);
     //       }
-    //     });
-    //   } else {
-    //     if (insertRes.body === null) {
-    //       return failedToUpload(insertRes);
-    //     } else {
-    //       return uploadedSuccessfuly(insertRes);
     //     }
-    //   }
-    // });
+    //   });
     // });
   }
 }

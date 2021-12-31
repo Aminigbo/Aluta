@@ -204,8 +204,8 @@ export async function insertFeeds(payload) {
 // @======== INSERT INTO BUCKET
 export async function storageInsert(filePath, file) {
   return new_supabase.storage.from("posts").upload(filePath, file, {
-    // cacheControl: "3600",
-    // upsert: false,
+    cacheControl: "3600",
+    upsert: false,
   });
 }
 

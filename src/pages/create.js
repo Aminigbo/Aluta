@@ -9,7 +9,9 @@ import Desktopright from "../components/includes/desktopright";
 import Pills from "../components/includes/desktoppillsholder";
 import Toppills from "../components/includes/topdesktoppills";
 import Realtime from "../components/includes/realtime";
-import { draft, disp_feeds, add_wallet ,loginSuc} from "../redux";
+import { draft, disp_feeds, add_wallet, loginSuc } from "../redux";
+import { cashbackloader } from "../components/loading";
+
 import {
   fetchFeeds,
   ALLPOSTS,
@@ -63,7 +65,7 @@ import {
 // @=== import success response from worker function
 import { alert } from "../functions/workers_functions/alert";
 
-function Home({ appState, loadFeeds, disp_draft,login_suc }) {
+function Home({ appState, loadFeeds, disp_draft, login_suc }) {
   const [postText, setPostText] = useState("");
   const [blob, setBlob] = useState("");
   const [postType, setPostType] = useState("POST");
@@ -124,6 +126,7 @@ function Home({ appState, loadFeeds, disp_draft,login_suc }) {
         time: new Date(),
         text: postText,
         file: blob.file,
+        file2: blob.file2,
         photo,
         meta: {
           event,
@@ -133,41 +136,59 @@ function Home({ appState, loadFeeds, disp_draft,login_suc }) {
       time: new Date(),
     };
     if (blob == "" && postText == "") {
-      console.log("dont post");
+      // console.log("dont post");
     } else {
-      var timeleft = 75;
-      var downloadTimer = setInterval(function () {
-        if (timeleft > 96) {
-          clearInterval(downloadTimer);
-        } else {
-          if (document.getElementById("progressBar") == null) {
-            clearInterval(downloadTimer);
-          } else {
-            document.getElementById("progressBar").value = timeleft;
-          }
+      // var timeleft = 75;
+      // var downloadTimer = setInterval(function () {
+      //   if (timeleft > 96) {
+      //     clearInterval(downloadTimer);
+      //   } else {
+      //     if (document.getElementById("progressBar") == null) {
+      //       clearInterval(downloadTimer);
+      //     } else {
+      //       document.getElementById("progressBar").value = timeleft;
+      //     }
 
-          timeleft += 15;
-        }
-      }, 1000);
-      handleCreatePost(postBody, state, loadFeeds, disp_draft, login_suc).then((res) => {
-        // if (res.success == true) {
-        //   document.getElementById("progressBar").value = 100;
-        //   history.push("/");
-        // } else {
-        //   setStateAlert(false);
-        //   setStates({
-        //     ...compState,
-        //     loader: false,
-        //     alertMsg: res.message,
-        //   });
-        // }
+      //     timeleft += 15;
+      //   }
+      // }, 1000);
+      setStates({
+        ...compState,
+        loader: true,
       });
+      handleCreatePost(
+        postBody,
+        state,
+        loadFeeds,
+        disp_draft,
+        login_suc,
+        setStateAlert,
+        setStates,
+        compState,
+        history
+      );
+      //   .then(
+      //   (res) => {
+      //     console.log(res)
+      //     if (res.success == true) {
+      //       document.getElementById("progressBar").value = 100;
+      //       history.push("/");
+      //     } else {
+      //       setStateAlert(false);
+      //       setStates({
+      //         ...compState,
+      //         loader: false,
+      //         alertMsg: res.message,
+      //       });
+      //     }
+      //   }
+      // );
     }
   };
 
   const preview = (event) => {
     let files = event.target.files[0];
-    console.log(files);
+    // console.log(files);
     // <input type="file" id="upload"/>
     let image = document.getElementById("upload");
 
@@ -191,11 +212,14 @@ function Home({ appState, loadFeeds, disp_draft,login_suc }) {
 
         //Usage example:
         var file = dataURLtoFile(response, files.name);
-        // console.log(file)
-        setBlob({ ...blob, file: file, url2: URL.createObjectURL(file) });
-        
+        // console.log(response)
+        setBlob({
+          ...blob,
+          file: file,
+          file2: response,
+          url2: URL.createObjectURL(file),
+        });
 
-        
         // window.scrollTo(0, document.body.scrollHeight);
         // console.log("scroll")
       })
@@ -246,9 +270,9 @@ function Home({ appState, loadFeeds, disp_draft,login_suc }) {
     //   loadFeeds(posts)
 
     if (!("geolocation" in navigator)) {
-      console.log("dont support");
+      // console.log("dont support");
     } else {
-      console.log("supports");
+      // console.log("supports");
     }
   }, []);
 
@@ -271,7 +295,7 @@ function Home({ appState, loadFeeds, disp_draft,login_suc }) {
   ) : (
     <div id="body bg">
       {/* {console.log(state)} */}
-      {console.log(blob)}
+      {/* {console.log(blob)} */}
       {/* {state.realtime.length > 0 && <Realtime />} */}
       {stateAlert === false && alert(errorPayload, setStateAlert)}
       <Realtime />
@@ -306,12 +330,13 @@ function Home({ appState, loadFeeds, disp_draft,login_suc }) {
 
             <div>
               {compState.loading === true && (
-                <progress
-                  style={{ width: "100%", borderRadius: "0px", height: "5px" }}
-                  value="40"
-                  max="100"
-                  id="progressBar"
-                ></progress>
+                // <progress
+                //   style={{ width: "100%", borderRadius: "0px", height: "5px" }}
+                //   value="40"
+                //   max="100"
+                //   id="progressBar"
+                // ></progress>
+                <>{cashbackloader()} </>
               )}
               <div
                 style={{
@@ -335,7 +360,7 @@ function Home({ appState, loadFeeds, disp_draft,login_suc }) {
                         e.target.value = e.target.value;
                       }
                       setPostText(e.target.value);
-                      console.log(postText.length);
+                      // console.log(postText.length);
                     }}
                     //  onKeyUp={(e) => {
                     //    do_resize(e.target);
@@ -648,7 +673,7 @@ function Home({ appState, loadFeeds, disp_draft,login_suc }) {
                   </Box>
                 )}
 
-                {console.log(postType)}
+                {/* {console.log(postType)} */}
 
                 <div
                   id="postArea1"
@@ -820,7 +845,7 @@ const mapDispatchToProps = (dispatch, encoded) => {
     disp_draft: (payload) => dispatch(draft(payload)),
     loadFeeds: (payload) => dispatch(disp_feeds(payload)),
     walletAdd: (wallet) => dispatch(add_wallet(wallet)),
-     login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
+    login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
   };
 };
 
