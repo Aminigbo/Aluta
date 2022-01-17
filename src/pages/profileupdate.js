@@ -64,7 +64,7 @@ function Home({ appState, login_suc }) {
 
   const month = () => {
     let mins = [];
-    for (let i = 1; i < 32; i++) {
+    for (let i = 1; i < 13; i++) {
       mins.push(i);
     }
     // console.log(mins);

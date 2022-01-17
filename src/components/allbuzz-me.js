@@ -142,11 +142,13 @@ function Home({ appState, dispNoti }) {
                   </b>
                 )} 
                   <small>
-                    {e.meta.date.day} {e.meta.date.date} {e.meta.date.month},{" "}
-                    {e.meta.date.year}
+                   {e.meta.date && <> {e.meta.date.day} {e.meta.date.date} {e.meta.date.month},{" "}
+                    {e.meta.date.year}</>}
                   </small>{" "}
                   &nbsp;&nbsp;{" "}
-                <small style={{ float: " " }}>{e.meta.date.time}</small>
+                <small style={{ float: " " }}>
+                   {e.meta.date && <> {e.meta.date.time}</>}
+                  </small>
                 
               </div>
             </div>

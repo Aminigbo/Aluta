@@ -101,6 +101,7 @@ function Home({ appState, loadFeeds, disp_signal }) {
   };
 
   React.useEffect((compState) => {
+    window.scrollTo(0, 0);
     // setStates({ ...compState, loader: true });
     // setTimeout(() => setStates({ ...compState, loader: false }), 500);
 

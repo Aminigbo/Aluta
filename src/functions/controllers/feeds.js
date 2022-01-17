@@ -193,7 +193,7 @@ export function ALLPOSTS(props) {
     label = `GIVE AWAY  -  NGN ${data.post.meta.giveaway.amount}`;
   } else if (data.postType == "POST") {
   } else if (data.postType == "EVENT") {
-    label = `EVENT  -   ${data.post.meta.event.date} |  ${data.post.meta.event.time}`;
+    label = `${data.post.meta.event.date} |  ${data.post.meta.event.time}`;
   }
   return (
     <Card
@@ -259,7 +259,15 @@ export function ALLPOSTS(props) {
                 {/* {commentDuration(data.post.time)} */}
               </span>
               .<PublicOutlined style={{ fontSize: "15px" }} /> <br />
-              <b style={{ color: "black", fontSize: "14px" }}>{label}</b> <br />
+              <b style={{ color: "black", fontSize: "14px" }}>
+                {data.postType == "EVENT" && (
+                  <div>
+                    <b>{data.post.meta.event.title && data.post.meta.event.title}</b>
+                  </div>
+                )}
+                {label}
+              </b>{" "}
+              <br />
             </>
           )
         }
@@ -586,7 +594,7 @@ export async function handleCreatePost(
       alertMsg:
         "Your operation could not be completed due to network error. Your post has been save to draft",
     });
-  } 
+  }
 
   let file = "";
   let fileExt = "";
@@ -600,8 +608,7 @@ export async function handleCreatePost(
     filePath = `${fileName}`;
   }
 
-
-  // @======== INSERT FUNCTION 
+  // @======== INSERT FUNCTION
   const insertFunction = (insertPayload) => {
     return insertFeeds(insertPayload).then((insertRes) => {
       // console.log(insertRes);
@@ -622,19 +629,19 @@ export async function handleCreatePost(
         });
       } else {
         if (insertRes.body === null) {
-         failedToUpload();
+          failedToUpload();
         } else {
           // return uploadedSuccessfuly(insertRes);
           history.push("/");
         }
       }
     });
-  }
+  };
 
   // @======== CHECK IF USER IS POSTING WITH IMAGE
   if (payload.post.file === undefined) {
     // @======== INSERT TO DB
-     insertFunction(insertPayload)
+    insertFunction(insertPayload);
   } else {
     let act = {
       filePath,
@@ -645,13 +652,13 @@ export async function handleCreatePost(
         id: postId,
         setPostPrivacy,
       },
-    }; 
+    };
 
     var axios = require("axios");
     var FormData = require("form-data");
     var fs = require("fs");
     var data = new FormData();
-    data.append("postimage", file); 
+    data.append("postimage", file);
 
     var config = {
       method: "post",
@@ -673,13 +680,13 @@ export async function handleCreatePost(
           poster,
           id: postId,
           setPostPrivacy,
-        }; 
+        };
 
         // @======== INSERT TO DB
-        insertFunction(newDataToUpload)
+        insertFunction(newDataToUpload);
       })
       .catch(function (error) {
         failedToUpload();
-      }); 
+      });
   }
 }
