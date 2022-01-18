@@ -50,7 +50,7 @@ const selected = {
 };
 
 const rec_inputs3 = {
-  // margin: "5%",
+  marginBottom: "5%",
   width: "95%",
   // padding: "10px",
   border: "5px",
@@ -226,9 +226,14 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
         &nbsp;&nbsp;
         <span>Hello, {state.loggedInUser.user.fullname.split(" ")[0]}</span>
         <div style={{ textAlign: "center" }}>
-          <small style={{ color: "#0a3d62", fontSize: "14px" }}>
+          <div style={{ color: "#0a3d62", fontSize: "14px" }}>
             <b>Buzz ID:</b> &nbsp; {state.loggedInUser.user.meta.beneficiaryId}
-          </small>
+          </div>
+
+          <div style={{ color: "#0a3d62", fontSize: "14px" }}>
+            <b>REFE. ID:</b> &nbsp; {state.loggedInUser.user.meta.refId}
+          </div>
+
         </div>
       </List>
       <Divider />
@@ -366,29 +371,37 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
 
       <List
         onClick={() => {
-          setStates({ ...compState, copy: true });
-          if (navigator && navigator.clipboard && state.loggedIn === true) {
-            navigator.clipboard.writeText(
-              state.loggedInUser.user.meta.beneficiaryId
-            );
-          }
-        }}
-        style={{ padding: "15px" }}
-      >
-        <b>Ref ID: </b>
-        &nbsp;&nbsp;
-        {state.loggedInUser.user.meta.refId}
-        <b
-          style={{ float: "right", marginRight: "10px", color: "orange" }}
-          onClick={() => {
             log_out();
           }}
-        >
-          <ExitToAppOutlined />
-        </b>
+        style={{ padding: "15px" }}
+      >
+        <ExitToAppOutlined style={{color:"orange"}}/>
+        &nbsp;&nbsp;
+        Sign out
+         
       </List>
 
       <Divider />
+
+      <div style={rec_inputs3}>
+        <textarea
+          onChange={(e) => {
+            setWhatsappMsg(e.target.value);
+          }}
+          value={whatsappMsg}
+          style={rec_inputs2}
+          placeholder="We are on whatsapp..."
+        ></textarea>
+        <button
+          onClick={() => {
+            window.location.href = `https://wa.me/+2349011684637?text=${whatsappMsg}`;
+          }}
+          style={wtsappBTN}
+        >
+          <BsWhatsapp />
+        </button>
+      </div>
+
 
       {state.loggedInUser.user.meta.isVendor === false  && state.loggedInUser.user.meta.schoolmode === false && (
         <>
@@ -412,24 +425,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
         </>
       )}
 
-      <div style={rec_inputs3}>
-        <textarea
-          onChange={(e) => {
-            setWhatsappMsg(e.target.value);
-          }}
-          value={whatsappMsg}
-          style={rec_inputs2}
-          placeholder="We are on whatsapp..."
-        ></textarea>
-        <button
-          onClick={() => {
-            window.location.href = `https://wa.me/+2349011684637?text=${whatsappMsg}`;
-          }}
-          style={wtsappBTN}
-        >
-          <BsWhatsapp />
-        </button>
-      </div>
+      
 
       {state.loggedInUser.user.meta.isVendor === false && (
         <>
@@ -457,8 +453,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
             Become a vendor
           </button> */}
         </>
-      )}
-      <br />
+      )} 
     </Box>
   );
 

@@ -49,19 +49,19 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
     });
     fetchUserProfile(user).then((resX) => {
       // console.log(resX.body[0].meta);
-      
-      if(resX.body && resX.body.length > 0){
+
+      if (resX.body && resX.body.length > 0) {
         const newUserData = {
-        user: {
-          ...state.loggedInUser.user,
-          meta: resX.body[0].meta,
-        },
-        meta: state.loggedInUser.meta,
-      };
-      // console.log(newUserData)
-      login_suc(newUserData);
+          user: {
+            ...state.loggedInUser.user,
+            meta: resX.body[0].meta,
+          },
+          meta: state.loggedInUser.meta,
+        };
+        // console.log(newUserData)
+        login_suc(newUserData);
       } else {
-        console.log(resX)
+        console.log(resX);
       }
     });
     fetchNotification(user)
@@ -140,34 +140,56 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
                   }}
                 >
                   <small>{e.meta.data.desc}</small> <br />
-                  {e.type == "BUZZ REQUEST" && (
-                    <div style={{marginTop:"20px"}}>
-                       <b
-                      onClick={() => {
-                        console.log("Hello"); 
+                  {e.type == "BUZZ REQUEST" && <>
+                  
+                    {e.isRead === false ? (
+                      <>
+                        <div style={{ marginTop: "20px" }}>
+                          <b
+                            onClick={() => {
+                              console.log("Hello");
 
-                        let data = {
-                          buzzId: e.meta.sender.beneficiaryId,
-                          name: e.meta.sender.fullname,
-                          desc: e.meta.data.desc,
-                          amount: e.meta.data.amount,
-                        };
-                        dispWho(data);
-                        history.push("/req-response");
-                      }}
-                      style={{
-                        background: "#0a3d62",
-                        color: "white",
-                        padding: "3px 10px",
-                        borderRadius: "5px", 
-                      }}
-                    >
-                      {" "}
-                      {e.meta.sender.fullname.split(" ")[0]}
-                      &nbsp;&nbsp; NGN {e.meta.data.amount}
-                      </b>
+                              let data = {
+                                id: e.id,
+                                buzzId: e.meta.sender.beneficiaryId,
+                                name: e.meta.sender.fullname,
+                                desc: e.meta.data.desc,
+                                amount: e.meta.data.amount,
+                              };
+                              dispWho(data);
+                              history.push("/req-response");
+                            }}
+                            style={{
+                              background: "#0a3d62",
+                              color: "white",
+                              padding: "3px 10px",
+                              borderRadius: "5px",
+                            }}
+                          >
+                            {" "}
+                            {e.meta.sender.fullname.split(" ")[0]}
+                            &nbsp;&nbsp; NGN {e.meta.data.amount}
+                          </b>
+                        </div>
+                      </>
+                    ) :
+                      <div style={{ marginTop: "20px" }}>
+                        <b
+                          style={{
+                            background: "lightgray",
+                            color: "black",
+                            padding: "3px 10px",
+                            borderRadius: "5px",
+                          }}
+                        >
+                          {" "}
+                          Buzzed {e.meta.sender.fullname.split(" ")[0]}
+                          &nbsp;&nbsp; NGN {e.meta.data.amount}
+                        </b>
                       </div>
-                  )}
+                    }
+                  
+                  </>}
                   <br />
                   {/* <small>
                     {e.meta.date.day} {e.meta.date.date} {e.meta.date.month},{" "}
@@ -238,52 +260,51 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
                     has been resolved by{" "}
                     {e.from == e.to ? "You" : e.meta.resolvedby}
                   </small>{" "}
-
-                  <br /><br />
-                    <small>
-                      <span style={{ color: "crimson" }}>Service charge</span>: &nbsp;
-                      <div
-                        style={{
-                          float: "right",
-                          width: "50%",
-                          textAlign: "left",
-                        }}
-                      >
-                        <Naira>
-                          {e.meta.amountPlusCharge - e.meta.tokenamount}
-                        </Naira>
-                      </div>
-                    </small>{" "}
-                    <br />
-                    <small>
-                      <span style={{ color: "crimson" }}>Amount debited</span>:
-                      &nbsp;
-                      <div
-                        style={{
-                          float: "right",
-                          width: "50%",
-                          textAlign: "left",
-                        }}
-                      >
-                        <Naira>{e.meta.amountPlusCharge}</Naira>
-                      </div>
-                    </small>{" "}
-
-                    <br />
-                    <small>
-                      <span style={{ color: "crimson" }}>Resolved by</span>:
-                      &nbsp;
-                      <div
-                        style={{
-                          float: "right",
-                          width: "50%",
-                          textAlign: "left",
-                        }}
-                      >
-                        <b>{e.from == e.to ? "You" : e.meta.resolvedby}</b>
-                      </div>
-                      </small>
-                  
+                  <br />
+                  <br />
+                  <small>
+                    <span style={{ color: "crimson" }}>Service charge</span>:
+                    &nbsp;
+                    <div
+                      style={{
+                        float: "right",
+                        width: "50%",
+                        textAlign: "left",
+                      }}
+                    >
+                      <Naira>
+                        {e.meta.amountPlusCharge - e.meta.tokenamount}
+                      </Naira>
+                    </div>
+                  </small>{" "}
+                  <br />
+                  <small>
+                    <span style={{ color: "crimson" }}>Amount debited</span>:
+                    &nbsp;
+                    <div
+                      style={{
+                        float: "right",
+                        width: "50%",
+                        textAlign: "left",
+                      }}
+                    >
+                      <Naira>{e.meta.amountPlusCharge}</Naira>
+                    </div>
+                  </small>{" "}
+                  <br />
+                  <small>
+                    <span style={{ color: "crimson" }}>Resolved by</span>:
+                    &nbsp;
+                    <div
+                      style={{
+                        float: "right",
+                        width: "50%",
+                        textAlign: "left",
+                      }}
+                    >
+                      <b>{e.from == e.to ? "You" : e.meta.resolvedby}</b>
+                    </div>
+                  </small>
                   <br /> <br />
                   <small>
                     {e.meta.date.day} {e.meta.date.date} {e.meta.date.month},{" "}
@@ -318,16 +339,17 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
                       fontSize: "13px",
                     }}
                   >
-                   <span style={{fontSize:"14px"}}> <FcRating /></span> {e.meta.amount}
+                    <span style={{ fontSize: "14px" }}>
+                      {" "}
+                      <FcRating />
+                    </span>{" "}
+                    {e.meta.amount}
                   </b>
                   <br />
                   <span style={{ fontSize: "13px" }}>
                     {" "}
                     By
-                    <b>
-                      {" "}
-                      {/* {e.meta.from.split(" ")[0]} */}
-                    </b>
+                    <b> {/* {e.meta.from.split(" ")[0]} */}</b>
                   </span>{" "}
                   <br />
                 </div>
@@ -341,7 +363,7 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
                   }}
                 >
                   <small>
-                    You have received {" "}
+                    You have received{" "}
                     <b
                       style={{
                         color: "#0a3d62",
@@ -349,7 +371,7 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
                         borderRadius: "5px",
                       }}
                     >
-                       {e.meta.amount} Buzz coin(s)
+                      {e.meta.amount} Buzz coin(s)
                     </b>{" "}
                     as referrer bonus from {e.meta.from}'s cashback transaction
                   </small>{" "}

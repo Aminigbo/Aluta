@@ -459,7 +459,6 @@ function Home({ appState, login_suc, logout, set_session }) {
       ...state.loggedInUser.user.meta,
       wallet: newBoxerWallet,
     };
-     
 
     let meta = {
       sender: {
@@ -476,12 +475,12 @@ function Home({ appState, login_suc, logout, set_session }) {
       data: {
         amount: parseInt(state.whoRequested.amount),
         desc: `${
-        state.loggedInUser.user.fullname
-      } responded to your buzz request of NGN ${parseInt(
-        state.whoRequested.amount
-      )}   ${desc.substring(0, 101)} "`,
+          state.loggedInUser.user.fullname
+        } responded to your buzz request of NGN ${parseInt(
+          state.whoRequested.amount
+        )}   ${desc.substring(0, 101)} "`,
       },
-    }; 
+    };
 
     new_supabase
       .from("users")
@@ -525,31 +524,37 @@ function Home({ appState, login_suc, logout, set_session }) {
                     },
                   ])
                   .then((resX) => {
-                    let smsPayload = {
-                      phone: [
-                        `+234${resX.body[0].meta.reciever.beneficiaryID}`,
-                      ],
-                      sender: resX.body[0].meta.sender.fullname,
-                      amount: parseInt(parseInt(state.whoRequested.amount)),
-                      desc: resX.body[0].meta.data.desc,
-                      balance: state.loggedInUser.user.meta.wallet,
-                    };
-                    send_buzz_alert(smsPayload);
-                    login_suc(newUserData);
-                    setStateAlert(true);
-                    setStates({
-                      ...compState,
-                      loader: false,
-                      alertMsg: `Yeahh!!!  you buzzed NGN ${parseInt(
-                        state.whoRequested.amount
-                      )} to ${compState.benef}`,
-                      resolved: false,
-                    });
-                    //   setProceedSend(false);
-                    //   setbeneficiary("");
-                    //   setAmount(0);
-                    //   setPin("");
-                    //   setDrawerState({ ...drawerState, bottom: false });
+                    new_supabase
+                      .from("notifications")
+                      .update({ isRead: true })
+                      .eq("id", state.whoRequested.id)
+                      .then((resXXs) => {
+                        let smsPayload = {
+                          phone: [
+                            `+234${resX.body[0].meta.reciever.beneficiaryID}`,
+                          ],
+                          sender: resX.body[0].meta.sender.fullname,
+                          amount: parseInt(parseInt(state.whoRequested.amount)),
+                          desc: resX.body[0].meta.data.desc,
+                          balance: state.loggedInUser.user.meta.wallet,
+                        };
+                        send_buzz_alert(smsPayload);
+                        login_suc(newUserData);
+                        setStateAlert(true);
+                        setStates({
+                          ...compState,
+                          loader: false,
+                          alertMsg: `Yeahh!!!  you buzzed NGN ${parseInt(
+                            state.whoRequested.amount
+                          )} to ${compState.benef}`,
+                          resolved: false,
+                        });
+                        //   setProceedSend(false);
+                        //   setbeneficiary("");
+                        //   setAmount(0);
+                        //   setPin("");
+                        //   setDrawerState({ ...drawerState, bottom: false });
+                      });
                   });
               });
           });

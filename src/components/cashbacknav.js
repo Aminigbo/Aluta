@@ -21,6 +21,7 @@ import {
 } from "../functions/controllers/cashback"; // CASHBACK TOKEN CONTROLLER
 import { pinConfirmPop } from "../components/confirmPin";
 import { FcCurrencyExchange } from "react-icons/fc";
+import { GiTakeMyMoney } from "react-icons/gi";
 
 // @======== ALLL BUZZME CONTROLLER
 import { getAllBuzz } from "../functions/controllers/allbuzzme";
@@ -555,9 +556,9 @@ function Home({ appState, login_suc }) {
                     // height: "110px",
                   }}
                 >
-                  <FcCurrencyExchange
+                  <GiTakeMyMoney
                     style={{
-                      color: "white",
+                      color: "orange",
                       position: "absolute",
                       top: "5px",
                       right: "5px",

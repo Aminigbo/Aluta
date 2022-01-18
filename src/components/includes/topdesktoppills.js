@@ -294,11 +294,13 @@ function Desktopright({
     fetchUserProfile(userId).then(res => {
       if (res.body == null || res.body.length < 1) {
         
-        if (res.body == null && res.error.message == 'JWT expired') {
+        if (res.body == null && res.error.message == 'JWT expired' || res.error.message == 'FetchError: Network request failed') {
           
         } else {
           logout("HARD")
         history.push("/login")
+          // console.log("Hard logout")
+          // console.log(res)
         }
       } else {
         if (res.body[0].meta.isActive !== true) {
@@ -312,6 +314,8 @@ function Desktopright({
 
       }
       console.log(res)
+    }).catch(err => {
+      console.log(err)
     })
     // if(state.loggedIn == true ){
     //   setInterval(() => checkSession(logout, set_session, state), 5000);
