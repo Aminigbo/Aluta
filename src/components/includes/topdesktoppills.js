@@ -294,7 +294,7 @@ function Desktopright({
     fetchUserProfile(userId).then(res => {
       if (res.body == null || res.body.length < 1) {
         
-        if (res.body == null && res.error.message == 'JWT expired' || res.error.message == 'FetchError: Network request failed') {
+        if (res.body == null && res.error.message == 'JWT expired') {
           
         } else {
           logout("HARD")
@@ -315,7 +315,7 @@ function Desktopright({
       }
       console.log(res)
     }).catch(err => {
-      console.log(err)
+      logout()
     })
     // if(state.loggedIn == true ){
     //   setInterval(() => checkSession(logout, set_session, state), 5000);
