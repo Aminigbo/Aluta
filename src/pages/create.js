@@ -155,21 +155,21 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
       // }, 1000);
 
       console.log(values)
-      // setStates({
-      //   ...compState,
-      //   loader: true,
-      // });
-      // handleCreatePost(
-      //   postBody,
-      //   state,
-      //   loadFeeds,
-      //   disp_draft,
-      //   login_suc,
-      //   setStateAlert,
-      //   setStates,
-      //   compState,
-      //   history
-      // );
+      setStates({
+        ...compState,
+        loader: true,
+      });
+      handleCreatePost(
+        postBody,
+        state,
+        loadFeeds,
+        disp_draft,
+        login_suc,
+        setStateAlert,
+        setStates,
+        compState,
+        history
+      );
     }
   };
 
