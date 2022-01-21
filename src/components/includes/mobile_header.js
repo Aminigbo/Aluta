@@ -233,7 +233,6 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
           <div style={{ color: "#0a3d62", fontSize: "14px" }}>
             <b>REFE. ID:</b> &nbsp; {state.loggedInUser.user.meta.refId}
           </div>
-
         </div>
       </List>
       <Divider />
@@ -371,14 +370,12 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
 
       <List
         onClick={() => {
-            log_out();
-          }}
+          log_out();
+        }}
         style={{ padding: "15px" }}
       >
-        <ExitToAppOutlined style={{color:"orange"}}/>
-        &nbsp;&nbsp;
-        Sign out
-         
+        <ExitToAppOutlined style={{ color: "orange" }} />
+        &nbsp;&nbsp; Sign out
       </List>
 
       <Divider />
@@ -402,30 +399,27 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
         </button>
       </div>
 
-
-      {state.loggedInUser.user.meta.isVendor === false  && state.loggedInUser.user.meta.schoolmode === false && (
-        <>
-          <List
-            onClick={() => {
-              setDrawerState({ ...drawerState, ["left"]: false });
-              // history.push("/transfer");
-              
-            }}
-            style={{ padding: "15px", background: "#0a3d62" }}
-          >
-            <MdOutlineVerified style={{ color: "mediumseagreen" }} /> &nbsp;
-            <span style={{ color: "mediumseagreen" }}>Become a vendor</span>
-            <div>
-              <small style={{ fontSize: "14px", color: "white" }}>
-                You will become a verified vendor when you click me
-              </small>
-            </div>
-          </List>
-          <Divider />
-        </>
-      )}
-
-      
+      {state.loggedInUser.user.meta.isVendor === false &&
+        state.loggedInUser.user.meta.schoolmode === false && (
+          <>
+            <List
+              onClick={() => {
+                setDrawerState({ ...drawerState, ["left"]: false });
+                // history.push("/transfer");
+              }}
+              style={{ padding: "15px", background: "#0a3d62" }}
+            >
+              <MdOutlineVerified style={{ color: "mediumseagreen" }} /> &nbsp;
+              <span style={{ color: "mediumseagreen" }}>Become a vendor</span>
+              <div>
+                <small style={{ fontSize: "14px", color: "white" }}>
+                  You will become a verified vendor when you click me
+                </small>
+              </div>
+            </List>
+            <Divider />
+          </>
+        )}
 
       {state.loggedInUser.user.meta.isVendor === false && (
         <>
@@ -453,7 +447,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
             Become a vendor
           </button> */}
         </>
-      )} 
+      )}
     </Box>
   );
 
@@ -502,14 +496,17 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
             {/* <img alt="Aluta Meter" style={{width:"70px"}}  src={logo}/>  */}
             {/* <img alt="Aluta Meter" style={{ width: "60px" }} src={am} /> */}
             <div
-              style={{ marginLeft: "15px", fontSize: "35px", color: "#0a3d62" }}
-            >
+              style={{ marginLeft: "15px", fontSize: "20px", color: "#0a3d62" }}
+              >
+                {state.loggedInUser.user.meta.schoolmode === false && <>  <small style={{fontSize:"18px"}}>Welcome back,</small> <br /> </> }
+             
               <b>
-                B
+                {state.loggedInUser.user.fullname.split(" ")[0]}
+                {/* B
                 <EuroSymbolOutlined
                   style={{ transform: "rotateZ(-90deg)", fontSize: "35px" }}
                 />
-                zz
+                zz */}
               </b>
             </div>
           </ListItemAvatar>{" "}

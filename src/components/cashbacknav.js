@@ -540,7 +540,7 @@ function Home({ appState, login_suc }) {
           <div>
             <div>
               <div style={{ zIndex: "80000", background: " " }}>
-                <div
+                <button
                   onClick={toggleDrawer2("bottom", true)}
                   style={{
                     width: "90%",
@@ -548,8 +548,8 @@ function Home({ appState, login_suc }) {
                     padding: "20px 20px",
                     marginLeft: "5%",
                     marginTop: "20px",
-                    borderRadius: "3px",
-                    boxShadow: " 1px 1px 3px #c1cfd9",
+                    borderRadius: "10px",
+                    boxShadow: " 1px 1px 3px orange",
                     backgroundImage:
                       "linear-gradient(to right,lightgray, #385b74)",
                     position: "relative",
@@ -560,20 +560,20 @@ function Home({ appState, login_suc }) {
                     style={{
                       color: "orange",
                       position: "absolute",
-                      top: "5px",
-                      right: "5px",
+                      top: "1px",
+                      right: "1px",
                       fontSize: "40px",
                     }}
                   />
-                  <b style={{ fontSize: "18px", color: "#0a3d62" }}>
+                  <b style={{ fontSize: "20px", color: "#0a3d62"  }}>
                     Generate Cashback token
                   </b>{" "}
-                  <br />
-                  <small style={{ color: "" }}>
-                    When you click me, I will guide you through generating
+                  <br /> <br />
+                  <small style={{ color: "",fontSize:"18px" }}>
+                    Click to generate
                     cashback token{" "}
                   </small>
-                </div>
+                </button>
               </div>
             </div>
           </div>

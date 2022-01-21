@@ -586,7 +586,7 @@ function Home({ appState, login_suc }) {
                       textAlign: "center",
                     }}
                   >
-                    Accept cashback token{" "}
+                    <b>Accept cashback token</b> {" "}
                   </div>
                   <div
                     className=" "
@@ -632,7 +632,7 @@ function Home({ appState, login_suc }) {
                                 >
                                   {" "}
                                   <ImQrcode style={{color:"#0a3d62"}} />{" "}
-                                  <small style={{fontSize:"11px"}}>
+                                  <small style={{fontSize:"14px"}}>
                                     You can also scan to accept cashback
                                   </small>
                                 </div>
