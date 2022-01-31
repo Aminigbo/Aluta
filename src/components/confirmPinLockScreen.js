@@ -64,7 +64,7 @@ export function confirmPinLockScreen(
             confirmpwderrormsg: "",
           });
           setPin("");
-          // setDrawerState({ ...drawerState, bottom: false });
+          setDrawerState({ ...drawerState, bottom: false });
             setDrawerState2({ ...drawerState2, bottom: true });
           console.log("hello");
           setInitiateCreate(true);

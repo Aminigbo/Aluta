@@ -182,7 +182,7 @@ export async function handleChashbackGeneration(
               setGeneratedToken(token);
               setInitiateCreate(false);
               setGeneratedcode(true);
-              setPin(null);
+              setPin("");
               console.log(generateSMSPayload);
               generate_cashback(generateSMSPayload);
 
