@@ -297,10 +297,9 @@ function Desktopright({
         if (res.body == null && res.error.message == 'JWT expired') {
           
         } else {
-          logout("HARD")
-        history.push("/login")
-          // console.log("Hard logout")
-          // console.log(res)
+        //   logout("HARD")
+        // history.push("/login") 
+          window.location.reload();
         }
       } else {
         if (res.body[0].meta.isActive !== true) {
