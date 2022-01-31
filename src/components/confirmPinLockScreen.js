@@ -23,7 +23,8 @@ export function confirmPinLockScreen(
   state,
   setInitiateCreate,
     drawerState2,
-    setDrawerState2
+  setDrawerState2,
+    setAuth
 ) {
   let error = "";
 
@@ -63,10 +64,13 @@ export function confirmPinLockScreen(
             confirmpwderrormsg: "",
           });
           setPin("");
-          setDrawerState({ ...drawerState, bottom: false });
+          // setDrawerState({ ...drawerState, bottom: false });
             setDrawerState2({ ...drawerState2, bottom: true });
           console.log("hello");
           setInitiateCreate(true);
+          if(setAuth){
+            setAuth(false)
+          }
         } else {
           error = "Wrong pin";
           setpinError("Wrong pin");

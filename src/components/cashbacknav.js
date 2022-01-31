@@ -328,11 +328,16 @@ function Home({ appState, login_suc }) {
           <div style={{ textAlign: "center" }}>
             {generatedcode !== false && (
               <>
-                <b>TOKEN GENERATED <b style={{color:'#0a3d62',fontSize:"20px"}}>{generatedToken}</b></b>
+                <b>
+                  TOKEN GENERATED{" "}
+                  <b style={{ color: "#0a3d62", fontSize: "20px" }}>
+                    {generatedToken}
+                  </b>
+                </b>
                 <div>
                   <small>
-                   QR code contains your cashback token. <br /> It is also saved
-                    in your cashback history.
+                    QR code contains your cashback token. <br /> It is also
+                    saved in your cashback history.
                   </small>
                 </div>
               </>
@@ -436,9 +441,12 @@ function Home({ appState, login_suc }) {
                       <div style={{ marginTop: "5px" }}>
                         <b style={{ fontSize: "16px", color: "#0a3d62" }}>
                           {/* {generatedToken}{" "} */}
-                          SCAN 
-                        </b> <br /> <small>or accept pin</small> <br />
-                        <b style={{ color: '#0a3d62', fontSize: "20px" }}>{generatedToken}</b>
+                          SCAN
+                        </b>{" "}
+                        <br /> <small>or accept pin</small> <br />
+                        <b style={{ color: "#0a3d62", fontSize: "20px" }}>
+                          {generatedToken}
+                        </b>
                       </div>
                     </div>
                   </>
@@ -565,13 +573,12 @@ function Home({ appState, login_suc }) {
                       fontSize: "40px",
                     }}
                   />
-                  <b style={{ fontSize: "20px", color: "#0a3d62"  }}>
+                  <b style={{ fontSize: "20px", color: "#0a3d62" }}>
                     Generate Cashback token
                   </b>{" "}
                   <br /> <br />
-                  <small style={{ color: "",fontSize:"18px" }}>
-                    Click to generate
-                    cashback token{" "}
+                  <small style={{ color: "", fontSize: "18px" }}>
+                    Click to generate cashback token{" "}
                   </small>
                 </button>
               </div>
