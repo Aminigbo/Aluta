@@ -269,8 +269,7 @@ function Register({ appState, login_suc, walletAdd }) {
             onChange={(e) => {
               setRef(e.target.value);
             }}
-            value={ref}
-            required
+            value={ref} 
             label="Referrer  (Optional)"
             type="text"
             variant="standard"

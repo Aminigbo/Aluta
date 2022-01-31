@@ -341,7 +341,7 @@ function Home({ appState, dispNoti }) {
         <div className="mobile">
           <div>
             <div>
-              <div
+              {/* <div
                 style={{
                   textAlign: "left",
                   marginTop: "10px",
@@ -358,7 +358,7 @@ function Home({ appState, dispNoti }) {
                 {compState.loader === false && compState.data.length > 0 && (
                   <b>Cashback history</b>
                 )}
-              </div>{" "}
+              </div>{" "} */}
               {compState.loader != true &&
                 compState.data !== null &&
                 compState.data.length > 0 && (

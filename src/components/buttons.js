@@ -18,12 +18,13 @@ let danger = {
   backgroundColor: "crimson",
   // backgroundImage: "linear-gradient(to right,lightgray, crimson)",
   //   background:"#706e3b",
-  padding: "2px 14px",
+  padding: "5px 14px",
   // marginLeft: "15px",
   color: "white",
   borderRadius: "3px",
   float: "",
   border: "none",
+  height: "40px",
 };
 
 export function btn_primary(text, callback, copy) {
@@ -36,15 +37,16 @@ export function btn_primary(text, callback, copy) {
           }
         }}
         style={{
-          backgroundImage:copy ? "linear-gradient(to right,gold, green" : "linear-gradient(to right,lightgray, #385b74)",
-          padding: "5px 5px",
+          background: "#385b74",
+          padding: "5px 14px",
           color: "white",
           borderRadius: "3px",
           float: "  ",
           border: "none",
+          height: "40px",
         }}
       >
-        {text} {copy == 'special' && <ImQrcode style={{color:"gold"}}/>}
+        {text} {copy == "special" && <ImQrcode style={{ color: "gold" }} />}
       </button>
     </>
   );

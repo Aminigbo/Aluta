@@ -74,7 +74,7 @@ function Home({ appState, login_suc }) {
         <> {errorComponent(compState.errorMsg, clearError)} </>
       )}
       <>
-        <div className="mobile">
+        <div className="mobile"  style={{ background: "#385b74" }}>
           <div className="header_footer">
             {/* <Footer /> */}
             <Header />
@@ -86,7 +86,7 @@ function Home({ appState, login_suc }) {
                 style={{
                   textAlign: "center",
                   marginTop: "10px",
-                  background: " #f4f6f7",
+                  background: "#385b74",
                   position: "sticky",
                   top: "0px",
                   zIndex: "1000",
@@ -111,7 +111,7 @@ function Home({ appState, login_suc }) {
                     style={{
                       marginLeft: "",
                       fontSize: "13px",
-                      color: "#0a3d62",
+                      color: "white",
                       textDecoration: "none",
                       
                     }}
@@ -131,7 +131,7 @@ function Home({ appState, login_suc }) {
                     style={{
                       marginLeft: "5px",
                       fontSize: "13px",
-                      color: "#0a3d62",
+                      color: "white",
                       textDecoration: "none",
                       padding: "5px",
                       borderRadius: "5px",
@@ -151,7 +151,7 @@ function Home({ appState, login_suc }) {
                     style={{
                       marginLeft: "5px",
                       fontSize: "15px",
-                      color: "gray",
+                      color: "orange",
                       textDecoration: "none",
                       padding: "5px",
                        borderRadius: "5px",
@@ -172,7 +172,7 @@ function Home({ appState, login_suc }) {
                     style={{
                       marginLeft: "5px",
                       fontSize: "13px",
-                      color: "#0a3d62",
+                      color: "white",
                       textDecoration: "none",
                       padding: "5px",
                       borderRadius: "5px",
@@ -185,7 +185,12 @@ function Home({ appState, login_suc }) {
                   
                   </div> 
               </div>{" "}
-              <div style={{ zIndex: "80000", background: " " }}>
+              <div style={{
+                  zIndex: "80000",
+                  background: "#f4f6f7",
+                  padding: "20px 0px",
+                  borderRadius: "30px 30px 0px 0px",
+                }}>
                 <Allbuzzme />
               </div>
             </div>

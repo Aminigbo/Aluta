@@ -16,11 +16,12 @@
       /* background-color: lightgray;  */
       padding:8px 2px;
       border-radius:20px;
-      color:#0a3d62
+      /* color:#0a3d62 */
+      color:white
    }
 
 .top-nav-pills-title{
-      color:gray;
+      color:lightgray;
       font-size: 10px;
       margin-top:6px; 
    }

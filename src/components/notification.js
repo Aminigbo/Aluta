@@ -4,8 +4,9 @@ import { connect } from "react-redux";
 import "../static/css/home/index.css";
 import { FcRating } from "react-icons/fc";
 import Naira from "react-naira";
+import { MdClear } from "react-icons/md";
 
-import Header from "../components/includes/mobile_header.js";
+// import Header from "../components/includes/mobile_header.js";
 import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
 import {
@@ -19,7 +20,7 @@ import { cashbackloader } from "../components/loading";
 import { fetchNotification, fetchUserProfile } from "../functions/models/index";
 
 import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
+// import Divider from "@mui/material/Divider";
 import { EuroSymbolOutlined } from "@material-ui/icons";
 const smile = {
   color: "white",
@@ -140,56 +141,56 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
                   }}
                 >
                   <small>{e.meta.data.desc}</small> <br />
-                  {e.type == "BUZZ REQUEST" && <>
-                  
-                    {e.isRead === false ? (
-                      <>
+                  {e.type == "BUZZ REQUEST" && (
+                    <>
+                      {e.isRead === false ? (
+                        <>
+                          <div style={{ marginTop: "20px" }}>
+                            <b
+                              onClick={() => {
+                                console.log("Hello");
+
+                                let data = {
+                                  id: e.id,
+                                  buzzId: e.meta.sender.beneficiaryId,
+                                  name: e.meta.sender.fullname,
+                                  desc: e.meta.data.desc,
+                                  amount: e.meta.data.amount,
+                                };
+                                dispWho(data);
+                                history.push("/req-response");
+                              }}
+                              style={{
+                                background: "#0a3d62",
+                                color: "white",
+                                padding: "3px 10px",
+                                borderRadius: "5px",
+                              }}
+                            >
+                              {" "}
+                              {e.meta.sender.fullname.split(" ")[0]}
+                              &nbsp;&nbsp; NGN {e.meta.data.amount}
+                            </b>
+                          </div>
+                        </>
+                      ) : (
                         <div style={{ marginTop: "20px" }}>
                           <b
-                            onClick={() => {
-                              console.log("Hello");
-
-                              let data = {
-                                id: e.id,
-                                buzzId: e.meta.sender.beneficiaryId,
-                                name: e.meta.sender.fullname,
-                                desc: e.meta.data.desc,
-                                amount: e.meta.data.amount,
-                              };
-                              dispWho(data);
-                              history.push("/req-response");
-                            }}
                             style={{
-                              background: "#0a3d62",
-                              color: "white",
+                              background: "lightgray",
+                              color: "black",
                               padding: "3px 10px",
                               borderRadius: "5px",
                             }}
                           >
                             {" "}
-                            {e.meta.sender.fullname.split(" ")[0]}
+                            Buzzed {e.meta.sender.fullname.split(" ")[0]}
                             &nbsp;&nbsp; NGN {e.meta.data.amount}
                           </b>
                         </div>
-                      </>
-                    ) :
-                      <div style={{ marginTop: "20px" }}>
-                        <b
-                          style={{
-                            background: "lightgray",
-                            color: "black",
-                            padding: "3px 10px",
-                            borderRadius: "5px",
-                          }}
-                        >
-                          {" "}
-                          Buzzed {e.meta.sender.fullname.split(" ")[0]}
-                          &nbsp;&nbsp; NGN {e.meta.data.amount}
-                        </b>
-                      </div>
-                    }
-                  
-                  </>}
+                      )}
+                    </>
+                  )}
                   <br />
                   {/* <small>
                     {e.meta.date.day} {e.meta.date.date} {e.meta.date.month},{" "}
@@ -401,9 +402,18 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
       <>
         {compState.loader === true && <> {cashbackloader()}</>}
         <div className="mobile">
-          <div className="header_footer">
-            {/* <Footer /> */}
-            <Header />
+          <div
+            className="header_footer"
+            style={{ paddingLeft: "15px", paddingTop: "10px" }}
+          >
+            <b
+              onClick={() => {
+                history.push("/");
+              }}
+              style={{ fontSize: "30px" }}
+            >
+              <MdClear />
+            </b>
           </div>
 
           <div>
@@ -411,7 +421,7 @@ function Home({ appState, dispNoti, login_suc, dispWho }) {
               <div
                 style={{
                   textAlign: "left",
-                  marginTop: "10px",
+                  marginTop: "5px",
                   background: " #f4f6f7",
                   position: "sticky",
                   top: "0px",

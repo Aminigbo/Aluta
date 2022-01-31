@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { Redirect, useHistory, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import "../static/css/home/index.css";
-
-import Header from "../components/includes/mobile_header.js";
-import Footer from "../components/includes/mobile_footer";
+import Toppills from "../components/includes/topdesktoppills";
+import header from "./header";
+// import Footer from "../components/includes/mobile_footer";
+import Scan from "../components/qrscan";
 
 import { ImQrcode } from "react-icons/im";
 
@@ -19,7 +20,7 @@ import { add_wallet, logOut, loginSuc } from "../redux";
 import { moveBuzzmeFunds } from "../functions/controllers/movebuzzmefunds";
 import { btn_primary, btn_danger } from "../components/buttons";
 import { text_input } from "../components/forms";
-import Toppills from "../components/includes/topdesktoppills";
+// import Toppills from "../components/includes/topdesktoppills";
 import { cashbackCurrency } from "../components/currency";
 import { cashbackchargecentage } from "../functions/utils/index";
 import { cashbackloader } from "../components/loading";
@@ -502,183 +503,34 @@ function Home({ appState, login_suc }) {
             )}{" "}
           </>
         )}
-        <div className="mobile">
-          <div className="header_footer">
-            {/* <Footer /> */}
-            <Header />
-          </div>
-
+        <div className="mobile" style={{ background: "#385b74" }}>
+          {/* <header /> */}
+          {header()}
+          <div
+            style={{
+              textAlign: "center",
+              // marginTop: "10px",
+              background: "#385b74",
+              position: "sticky",
+              top: "0px",
+              zIndex: "1100",
+              padding: "0px",
+            }}
+          >
+            {" "}
+            <Toppills />
+          </div>{" "}
           <div>
             <div>
+              {/* <Cashbacknav /> */}
               <div
                 style={{
-                  textAlign: "center",
-                  marginTop: "10px",
-                  background: " #f4f6f7",
-                  position: "sticky",
-                  top: "0px",
-                  zIndex: "1100",
-                  padding: "0px",
+                  zIndex: "80000",
+                  background: "#f4f6f7",
+                  padding: "20px 0px",
+                  borderRadius: "30px 30px 0px 0px",
                 }}
-              >
-                {" "}
-                <Toppills />
-              </div>{" "}
-              <Cashbacknav />
-              <div style={{ zIndex: "80000", background: " " }}>
-                {/* <div style={{padding:"15px",textAlign:"center"}}>
-                    <QRCode  value="98943" />
-                </div> */}
-
-                {/* <div style={{ zIndex: "80000", background: " " }}>
-                <div
-                  onClick={()=>{history.push("/scan")}}
-                  style={{
-                    width: "90%",
-                    background: "white",
-                    padding: "20px 20px",
-                    marginLeft: "5%",
-                    marginTop: "20px",
-                    borderRadius: "3px",
-                    boxShadow: " 1px 1px 3px #c1cfd9",
-                    backgroundImage:
-                      "linear-gradient(to right,lightgray, #385b74)",
-                    position: "relative", 
-                  }}
-                >
-                  <FcCurrencyExchange
-                    style={{
-                      color: "white",
-                      position: "absolute",
-                      top: "5px",
-                      right: "5px",
-                      fontSize: "40px",
-                    }}
-                  />
-                  <b style={{ fontSize: "18px", color: "#0a3d62" }}>
-                    Generate Cashback token
-                  </b>{" "}
-                  <br />
-                  <small style={{ color: "" }}>
-                    When you click me, I will guide you through generating
-                    cashback token{" "}
-                  </small>
-                </div>
-              </div> */}
-
-                {/* @======== START OF RESOLVE BLOCK */}
-                <div
-                  style={{
-                    width: "90%",
-                    background: "white",
-                    padding: "40px 4px",
-                    marginLeft: "5%",
-                    marginTop: "20px",
-                    // borderRadius: "40px 40px 2px 3px",
-                    boxShadow: " 1px 1px 3px #888888",
-                    border: "0.5px solid #f3f3f3",
-                  }}
-                >
-                  <div
-                    style={{
-                      marginTop: "-25px",
-                      marginBottom: "40px",
-                      textAlign: "center",
-                    }}
-                  >
-                    <b>Accept cashback token</b> {" "}
-                  </div>
-                  <div
-                    className=" "
-                    style={{
-                      marginTop: "15px",
-                      width: "90%",
-                      background: " ",
-                      marginLeft: "5%",
-                    }}
-                  >
-                    <div className=" ">
-                      <div className=" ">
-                        {cashbackpinresolved !== true ? (
-                          <>
-                            <div
-                              style={{
-                                marginTop: "-30px",
-                                textAlign: "center",
-                              }}
-                            >
-                              {text_input(
-                                "Enter cashback token",
-                                value,
-                                "number",
-                                setValue
-                              )}
-                              <br />
-                              <div
-                                style={{ marginTop: "15px", textAlign: "left" }}
-                              >
-                                {btn_primary(
-                                  "Accept cashback pin",
-                                  trigerVerify
-                                )}
-                                {/* OR {btn_primary("Scan QR", toScan, "special")} */}
-                                <br />
-                                <div
-                                  style={{
-                                    fontSize: "",
-                                    color: "gray",
-                                    marginTop: "10px",
-                                  }}
-                                >
-                                  {" "}
-                                  <ImQrcode style={{color:"#0a3d62"}} />{" "}
-                                  <small style={{fontSize:"14px"}}>
-                                    You can also scan to accept cashback
-                                  </small>
-                                </div>
-                              </div>
-                            </div>
-                          </>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                  {/* @======== SHOW THE CASH BACK CURRENCY WITH THE GENERATED CODE */}
-                  {verifyPayload && (
-                    <>
-                      {/* {console.log(verifyPayload.data.isActive)} */}
-                      {cashbackpinresolved === true && (
-                        <>
-                          {verifyPayload.success === true && (
-                            <>
-                              {" "}
-                              {cashbackCurrency(
-                                btn_primary,
-                                btn_danger,
-                                cancelCashback,
-                                confirmCashback,
-                                null,
-                                setStates,
-                                compState,
-                                verifyPayload.data.meta.token,
-                                verifyPayload.data.meta.name,
-                                verifyPayload.data.meta.amount,
-                                verifyPayload.data.isActive,
-                                null
-                              )}{" "}
-                            </>
-                          )}
-                        </>
-                      )}
-                    </>
-                  )}
-                </div>
-                {/* @======== RESOLVE CASHBACK TOKEN ENDS */}
-
-                {/* @======== SHOW SIDE BUZZ ME WALLET */}
-                {/* <Lockscreen /> */}
+              > 
                 <Balance />
 
                 {/* <Cashbackdrawal /> */}
@@ -701,7 +553,8 @@ function Home({ appState, login_suc }) {
         </React.Fragment>
 
         <Desktopleft />
-        <Desktopright />
+          <Desktopright />
+          {/* <Scan /> */}
       </>
     </div>
   );

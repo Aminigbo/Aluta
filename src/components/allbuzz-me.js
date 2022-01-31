@@ -175,7 +175,7 @@ function Home({ appState, dispNoti }) {
                 compState.data !== null &&
                 compState.data.length > 0 && (
                   <>
-                    <div
+                    {/* <div
                       style={{
                         textAlign: "left",
                         marginTop: "10px",
@@ -189,7 +189,7 @@ function Home({ appState, dispNoti }) {
                       {" "}
                       {compState.loader === false &&
                         compState.data.length > 0 && <b>Buzz me history</b>}
-                    </div>{" "}
+                    </div>{" "} */}
                     <div
                       style={{
                         width: "90%",

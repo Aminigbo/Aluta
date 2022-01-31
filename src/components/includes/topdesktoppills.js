@@ -589,12 +589,12 @@ function Desktopright({
             style={{
               borderBottom:
                 split == "cashback" ||
-                (split == "cb" && "#0a3d62") ||
-                (split === "student-cashback" && "1px solid lightgray"),
+                (split == "cb" && "orange") ||
+                (split === "student-cashback" && "1px solid orange"),
               color:
                 split == "cashback" ||
-                (split == "cb" && "#0a3d62") ||
-                (split === "student-cashback" && "#0a3d62"),
+                (split == "cb" && "orange") ||
+                (split === "student-cashback" && "orange"),
             }}
             className="top-nav-pills-title"
           >
@@ -680,8 +680,8 @@ function Desktopright({
             </span>
             <p
               style={{
-                borderBottom: allow === true && "1px solid lightgray",
-                color: allow === true && "#0a3d62",
+                borderBottom: allow === true && "1px solid orange",
+                color: allow === true && "orange",
               }}
               className="top-nav-pills-title"
             >

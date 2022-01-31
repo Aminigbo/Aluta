@@ -8,7 +8,7 @@ import QrReader from "react-qr-reader";
 import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
 import { add_wallet, logOut, loginSuc } from "../redux";
-import Toppills from "../components/includes/topdesktoppills";
+// import Toppills from "../components/includes/topdesktoppills";
 import { cashbackloader } from "../components/loading";
 import { btn_primary, btn_danger } from "../components/buttons";
 import {
@@ -18,7 +18,15 @@ import {
 } from "../functions/controllers/cashback"; // CASHBACK TOKEN CONTROLLER
 import { errorComponent, successComponent } from "../components/error"; // error component for error handling
 import { ImQrcode } from "react-icons/im";
+import { MdClear } from "react-icons/md";
 import { Drawer, Divider } from "@mui/material";
+import { MdGridGoldenratio } from "react-icons/md";
+
+import Box from "@mui/material/Box";
+import SpeedDial from "@mui/material/SpeedDial";
+import SpeedDialIcon from "@mui/material/SpeedDialIcon";
+import SpeedDialAction from "@mui/material/SpeedDialAction"; 
+import EditIcon from "@mui/icons-material/Edit";
 
 function Home({ appState, login_suc }) {
   let history = useHistory();
@@ -92,7 +100,7 @@ function Home({ appState, login_suc }) {
       login_suc,
       setResolved
     );
-     setDrawerState({ ...drawerState, bottom: false });
+    setDrawerState({ ...drawerState, bottom: false });
   };
 
   const clearError = () => {
@@ -120,9 +128,9 @@ function Home({ appState, login_suc }) {
   // @======== close success pop
   const closeSuccessPop = () => {
     //   history.push("/");
-     setDrawerState({ ...drawerState, bottom: false });
-    setResolved(false)
-    setcashbackpinresolved(true)
+    setDrawerState({ ...drawerState, bottom: false });
+    setResolved(false);
+    setcashbackpinresolved(true);
   };
 
   return state.loggedIn === false ? (
@@ -146,11 +154,9 @@ function Home({ appState, login_suc }) {
           )}{" "}
         </>
       )}
-      <> 
-
-        <div
-          onClick={() => {
-            // history.push("/scan");
+      <>
+        {/* <div
+          onClick={() => { 
             setDrawerState({ ...drawerState, bottom: true });
           }}
           style={{
@@ -170,7 +176,44 @@ function Home({ appState, login_suc }) {
           <div style={{ marginTop: "-4px", fontSize: "13px", color: "orange" }}>
             scan
           </div>
-        </div>
+        </div> */}
+
+        <Box
+          style={{
+            background: " ",
+            transform: "translateZ(0px)",
+            flexGrow: 1,
+            position: "fixed",
+            bottom: "10px",
+            right: "10px",
+            padding: "10px 13px",
+          }}
+        >
+          <SpeedDial
+            ariaLabel="SpeedDial openIcon example"
+            sx={{ background: " ", color: "white" }}
+            icon={
+              <SpeedDialIcon
+                sx={{ background: " ", color: "white" }}
+                openIcon={<MdClear style={{fontSize:"25px"}} />}
+              />
+            }
+          >
+            <SpeedDialAction
+              onClick={() => {
+                setDrawerState({ ...drawerState, bottom: true });
+              }}
+              sx={{ background: "#385b74", color: "white" }}
+              icon={<ImQrcode />}
+              tooltipTitle="Scan"
+            />
+            <SpeedDialAction
+              sx={{ background: "#385b74", color: "white" }}
+              icon={<MdGridGoldenratio />}
+              tooltipTitle="Create"
+            />
+          </SpeedDial>
+        </Box>
 
         <React.Fragment key="bottom">
           <Drawer
