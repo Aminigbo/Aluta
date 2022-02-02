@@ -29,6 +29,8 @@ import {
   Skeleton,
   TextareaAutosize,
 } from "@mui/material";
+import { MdWest } from "react-icons/md";
+
 import "../static/css/feed.css";
 import { List, Drawer, Box, Avatar, Typography } from "@mui/material";
 import { addComment } from "../functions/controllers/comments"; // importing all the comment controllers
@@ -196,7 +198,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
       <checkSession />
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Aluta Meter</title>
+        <title>Buzz pay</title>
         <link rel="icon" href={logo} />
       </Helmet>
 
@@ -214,10 +216,18 @@ function Home({ appState, loadFeeds, walletAdd }) {
                 position: "sticky",
                 top: "0px",
                 zIndex: "1000",
-                padding: "0px  ",
+                padding: "0px 9px ",
               }}
             >
-              <Toppills />
+              {/* <Toppills /> */}
+              <b
+                onClick={() => {
+                  history.goBack();
+                }}
+                style={{ fontSize: "30px" }}
+              >
+                <MdWest />
+              </b>
             </div>
 
             {allGiveAwayPosts.length > 0 && (
@@ -241,15 +251,19 @@ function Home({ appState, loadFeeds, walletAdd }) {
                 {renderFeeds(state.feeds)}
 
                 {allGiveAwayPosts.length < 1 && (
-                  <div style={{textAlign:"center", marginTop:"40%"}}>No avilable event !  <br /><br />
-                      <Link style={{ textDecoration: "none" }} to="/create" >Create one</Link>
-                    </div>
+                  <div style={{ textAlign: "center", marginTop: "40%" }}>
+                    No avilable event ! <br />
+                    <br />
+                    <Link style={{ textDecoration: "none" }} to="/create-event">
+                      Create one
+                    </Link>
+                  </div>
                 )}
               </div>
             ) : (
               <ALLPOSTS loading />
             )}
-          </div> 
+          </div>
         </div>
       </div>
 

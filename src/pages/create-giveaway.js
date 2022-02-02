@@ -70,7 +70,7 @@ import { alert } from "../functions/workers_functions/alert";
 function Home({ appState, loadFeeds, disp_draft, login_suc }) {
   const [postText, setPostText] = useState("");
   const [blob, setBlob] = useState("");
-  const [postType, setPostType] = useState("POST");
+  const [postType, setPostType] = useState("GIVE AWAY");
   const [stateAlert, setStateAlert] = useState("");
   const [compState, setStates] = useState("");
   const [giveaway, setGiveaway] = useState({
@@ -221,17 +221,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
     setBlob("");
   };
 
-  let placeholder = "";
-  if (postType == "POOL") {
-    placeholder = "Write a description of your pool";
-  } else if (postType == "EVENT") {
-    placeholder = "Describe your event here...";
-  } else if (postType == "GIVE AWAY") {
-    placeholder = "Describe your give away here..";
-  } else {
-    placeholder = "What is happening on campus???";
-  }
-
+  let placeholder = "Describe your give away here.."; 
   let history = useHistory();
   const state = appState;
 
@@ -441,7 +431,8 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
               }}
               style={{ fontSize: "30px" }}
             >
-              <MdWest />
+                          <MdWest /> 
+                          <b style={{fontSize:"20px",marginLeft:"50px",color:"gray"}}>Create giveaway</b>
             </b>
             </div>
 
@@ -585,8 +576,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                       {/* <img style={{width:"50%"}} src = {url} /> */}
                     </>
                   )}
-                </div>
-                {postType == "GIVE AWAY" && (
+                </div> 
                   <Box
                     id="postArea1"
                     style={{
@@ -673,170 +663,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                         textAlign: "left",
                       }}
                     ></div>
-                  </Box>
-                )}
-                {/* !@=======  IF POST TYPE IS EVENT */}
-                {postType == "EVENT" && (
-                  <>
-                    <Box
-                      id="postArea1"
-                      style={{
-                        marginBottom: "10px",
-                        textAlign: " ",
-                        background: "rgb(240, 240, 240)",
-                        width: "100%",
-                        // marginLeft: "1%",
-                      }}
-                      component="form"
-                      sx={{
-                        "& > :not(style)": { m: 1, width: "10ch" },
-                      }}
-                      noValidate
-                      autoComplete="on"
-                    >
-                      <div
-                        style={{
-                          width: "100%",
-                          background: " ",
-                          // display: "inline-block",
-                          height: " ",
-                          padding: "10px",
-                          textAlign: "left",
-                        }}
-                      >
-                        <FormControl
-                          id="postArea1"
-                          variant="standard"
-                          sx={{ m: 0, minWidth: 40 }}
-                        >
-                          <TextField
-                            style={{ width: "140px", marginRight: "20px" }}
-                            id="postArea1"
-                            value={event.title}
-                            label="Event title"
-                            variant="standard"
-                            onChange={(e) => {
-                              setEvent({
-                                ...event,
-                                title: e.target.value,
-                              });
-                            }}
-                          />
-                        </FormControl>
-
-                        <FormControl
-                          id="postArea1"
-                          variant="standard"
-                          sx={{ m: 0, minWidth: 100 }}
-                        >
-                          <InputLabel id="demo-simple-select-label">
-                            Category
-                          </InputLabel>
-                          <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={giveaway.beneficiaries}
-                            label="Age"
-                            onChange={(e) => {
-                              setGiveaway({
-                                ...giveaway,
-                                category: e.target.value,
-                              });
-                            }}
-                          >
-                            <MenuItem value="comedy">COMEDY</MenuItem>
-                            <MenuItem value="music">MUSIC</MenuItem>
-                            <MenuItem value="talk show">TALK SHOW</MenuItem>
-                            <MenuItem value="tech event">TECH EVENT</MenuItem>
-                            <MenuItem value="concert">CONCERT</MenuItem>
-                            <MenuItem value="festival">FESTIVAL</MenuItem>
-                          </Select>
-                        </FormControl>
-                      </div>  
-
-                      <div
-                        style={{
-                          width: "40%",
-                          background: " ",
-                          display: "inline-block",
-                          height: " ",
-                          padding: "10px",
-                          textAlign: "left",
-                        }}
-                      >
-                        <small>Event date </small>
-                        <input
-                          onChange={(e) => {
-                            setEvent({
-                              ...event,
-                              date: e.target.value,
-                            });
-                          }}
-                          style={{
-                            width: "100%",
-                            border: "none",
-                            background: "rgb(240, 240, 240)",
-                            color: "#0a3d62",
-                          }}
-                          type="date"
-                        />
-                      </div>
-
-                      <div
-                        style={{
-                          width: "40%",
-                          background: " ",
-                          display: "inline-block",
-                          height: " ",
-                          padding: "10px",
-                          textAlign: "left",
-                        }}
-                      >
-                        <small>Event time </small>
-                        <input
-                          onChange={(e) => {
-                            setEvent({
-                              ...event,
-                              time: e.target.value,
-                            });
-                          }}
-                          style={{
-                            width: "100%",
-                            border: "none",
-                            background: "rgb(240, 240, 240)",
-                            color: "#0a3d62",
-                          }}
-                          type="time"
-                        />
-                      </div>
-                   
-
-                        <div style={{ padding: "10px", background: " ", width: "100%" }}>
-                          <div style={{ marginBottom: "5px" }}><span>SET TICKET CATEGORIES</span> &nbsp;<span> (optional)</span> </div>
-                          {console.log(values)}
-                      {values.map((item, index) => (
-                        <TicketCategory
-                          values={item}
-                          index={index}
-                          handleChildChange={handleChildChange}
-                          handleChildChange_cost={handleChildChange_cost}
-                          handleChildChange_qty={handleChildChange_qty}
-                          key={index}
-                        />
-                        
-                      ))} 
-                      <Button
-                        onClick={() => {
-                          addChild();
-                        }}
-                      >
-                        +
-                      </Button>{" "}
-                    </div>
-                        <br />
-                      </Box>
-                  </>
-                )}
+                  </Box> 
                 {/* @====  EVENT TICKET CATEGORIES */}
 
                 {/* {console.log(postType)} */}
@@ -847,7 +674,8 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                     borderBottom: "0.5px solid lightgray",
                     marginTop: "-10px",
                     paddingBottom: "5px",
-                    fontSize: "10px",
+                     fontSize: "10px",
+                    textAlign:"center"
                   }}
                 >
                   <>
@@ -879,75 +707,8 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                             <AddPhotoAlternateOutlined id="postArea1" />{" "}
                           </label>
                         </span>
-                        <p className="top-nav-pills-title">Add </p>
-                      </div>
-
-                      <div
-                        id="postArea1"
-                        className="top-nav-pills-holder"
-                        onClick={() => {
-                          setPostType("GIVE AWAY");
-                        }}
-                      >
-                        <span
-                          id="postArea1"
-                          style={{
-                            background:
-                              postType == "GIVE AWAY" ? "#0a3d62" : "",
-                            color: postType == "GIVE AWAY" ? "white" : "",
-                          }}
-                          className="top-nav-pills"
-                        >
-                          {" "}
-                          <LocalAtm id="postArea1" />{" "}
-                        </span>
-                        <p className="top-nav-pills-title">Give away</p>
-                      </div>
-
-                      {/* <div
-                        onClick={() => {
-                          setPostType("POOL");
-                        }}
-                        id="postArea1"
-                        className="top-nav-pills-holder"
-                      >
-                        <span
-                          id="postArea1"
-                          style={{
-                            background: postType == "POOL" ? "#0a3d62" : "",
-                            color: postType == "POOL" ? "white" : "",
-                          }}
-                          className="top-nav-pills"
-                        >
-                          {" "}
-                          <HowToVoteOutlined id="postArea1" />{" "}
-                        </span>
-                        <p id="postArea1" className="top-nav-pills-title">
-                          {" "}
-                          Pool
-                        </p>
-                      </div> */}
-
-                      <div
-                        onClick={() => {
-                          setPostType("EVENT");
-                        }}
-                        id="postArea1"
-                        className="top-nav-pills-holder"
-                      >
-                        <span
-                          id="postArea1"
-                          style={{
-                            background: postType == "EVENT" ? "#0a3d62" : "",
-                            color: postType == "EVENT" ? "white" : "",
-                          }}
-                          className="top-nav-pills"
-                        >
-                          {" "}
-                          <EventNoteOutlined id="postArea1" />{" "}
-                        </span>
-                        <p className="top-nav-pills-title"> Event</p>
-                        </div>
+                        <p className="top-nav-pills-title">Add Photo </p>
+                      </div> 
                         
 
                         
@@ -981,7 +742,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                           </span>
                           <p className="top-nav-pills-title"> MAKE POST</p>
                         </div>
-                      )}
+                                   )} 
                     </div>
                   </>
 

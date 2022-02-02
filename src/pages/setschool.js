@@ -100,7 +100,10 @@ function Home({ appState, login_suc }) {
       ) : (
         <>
           {compState.loading === true && <>{cashbackloader()} </>}
-          <div className="mobile">
+          <div
+            className="mobile"
+            style={{ background: "#385b74", height: "100vh" }}
+          >
             <div className="header_footer">
               {/* <Footer /> */}
               <Header />
@@ -112,7 +115,7 @@ function Home({ appState, login_suc }) {
                   style={{
                     textAlign: "center",
                     marginTop: "10px",
-                    background: " #f4f6f7",
+                    background: "#385b74",
                     position: "sticky",
                     top: "0px",
                     zIndex: "1000",
@@ -123,22 +126,23 @@ function Home({ appState, login_suc }) {
                   <Toppills />
                 </div>{" "}
                 <div className=" " style={{ marginTop: "10px" }}>
+                  <br />
+                  <br />
                   <div className="realtimeParent">
-                    {/* <div className="realtimeHeader" style={smile}>
-                  Add your university
-                </div> */}
                     <div className="realtimeBody">
                       <b>
                         {" "}
                         Welcome {state.loggedInUser.user.fullname.split(" ")[0]}
                       </b>
-                      <div style={{fontSize:"12px"}}>
-                        Smart Campus helps you get in touch with your.
-                        schoolmates
-                      </div> 
-                      <div className="description" style={{color:"orange", marginTop: "10px",}}>
+                      <div style={{ fontSize: "12px" }}>
+                        Smart Campus helps you get in touch with your happenings around Nigerian Universities
+                      </div>
+                      <div
+                        className="description"
+                        style={{ color: "orange", marginTop: "10px" }}
+                      >
                         You can turn this off in your menu section
-                      </div>{" "}
+                      </div>{" "}<br />
                       <div
                         style={{
                           marginTop: "5px",

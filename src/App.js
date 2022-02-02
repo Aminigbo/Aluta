@@ -8,7 +8,8 @@ import Login from "./pages/login";
 import Reset from "./pages/reset_pwd";
 import Create from "./pages/create";
 import Register from "./pages/register";
-
+import Create_giveaway from "./pages/create-giveaway";
+import Create_event from "./pages/create-event"
 import "bootstrap/dist/css/bootstrap.min.css";
 import Tour from "./pages/tour.js";
 import Events from "./pages/events.js";
@@ -56,6 +57,12 @@ export default function App() {
               </Route>
               <Route path="/create">
                 <Create />
+              </Route>
+              <Route path="/create-giveaway">
+                <Create_giveaway />
+              </Route>
+              <Route path="/create-event">
+                <Create_event />
               </Route>
               <Route path="/register">
                 <Register />

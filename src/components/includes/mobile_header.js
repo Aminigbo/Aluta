@@ -500,7 +500,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
               >
                 {state.loggedInUser.user.meta.schoolmode === false && <>  <small style={{fontSize:"18px",color:"lightgray"}}>Welcome back,</small> <br /> </> }
              
-              <b style={{color:"white"}}>
+              <b style={{color: state.loggedInUser.user.meta.schoolmode === true ? '#385b74' : 'white' ,}}>
                 {state.loggedInUser.user.fullname.split(" ")[0]}
                 {/* B
                 <EuroSymbolOutlined
@@ -523,7 +523,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
             }}
             className="menu"
             style={{
-              color: state.notification === true ? "orange" : "white",
+              color: state.notification === true ? "orange" : state.loggedInUser.user.meta.schoolmode === true ? '#385b74' : 'white',
               position: " absolute",
               right: "65px",
             }}
@@ -543,7 +543,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
             />
           )}
           <Dehaze
-            style={{ color: "white", position: " absolute", right: "10px" }}
+              style={{ color: state.loggedInUser.user.meta.schoolmode === true ? '#385b74' : 'white' , position: " absolute", right: "10px" }}
             className="menu"
             onClick={toggleDrawer("left", true)}
           />
