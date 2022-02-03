@@ -441,7 +441,16 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
               }}
               style={{ fontSize: "30px" }}
             >
-              <MdWest />
+                  <MdWest />
+                   <b
+                  style={{
+                    fontSize: "20px",
+                    marginLeft: "65px",
+                    color: "gray",
+                  }}
+                >
+                  Create post
+                </b>
             </b>
             </div>
 
@@ -879,14 +888,15 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                             <AddPhotoAlternateOutlined id="postArea1" />{" "}
                           </label>
                         </span>
-                        <p className="top-nav-pills-title">Add </p>
+                        <p className="top-nav-pills-title">Add photo</p>
                       </div>
 
                       <div
                         id="postArea1"
                         className="top-nav-pills-holder"
                         onClick={() => {
-                          setPostType("GIVE AWAY");
+                          // setPostType("GIVE AWAY");
+                          history.push("/create-giveaway")
                         }}
                       >
                         <span
@@ -902,35 +912,12 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                           <LocalAtm id="postArea1" />{" "}
                         </span>
                         <p className="top-nav-pills-title">Give away</p>
-                      </div>
-
-                      {/* <div
-                        onClick={() => {
-                          setPostType("POOL");
-                        }}
-                        id="postArea1"
-                        className="top-nav-pills-holder"
-                      >
-                        <span
-                          id="postArea1"
-                          style={{
-                            background: postType == "POOL" ? "#0a3d62" : "",
-                            color: postType == "POOL" ? "white" : "",
-                          }}
-                          className="top-nav-pills"
-                        >
-                          {" "}
-                          <HowToVoteOutlined id="postArea1" />{" "}
-                        </span>
-                        <p id="postArea1" className="top-nav-pills-title">
-                          {" "}
-                          Pool
-                        </p>
-                      </div> */}
+                      </div> 
 
                       <div
                         onClick={() => {
-                          setPostType("EVENT");
+                          // setPostType("EVENT");
+                            history.push("/create-event")
                         }}
                         id="postArea1"
                         className="top-nav-pills-holder"

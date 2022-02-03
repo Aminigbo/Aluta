@@ -3,7 +3,7 @@ import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import "../static/css/home/index.css";
 
-import header from "../components/header.js";
+import {headers} from "../components/header.js";
 // import { LinearProgress } from "@material-ui/core";
 import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
@@ -192,7 +192,7 @@ function Home({ appState, login_suc }) {
           <div className="header_footer">
             {console.log(compState)}
               {/* <Header /> */}
-              {header()}
+              {headers()}
               <div
             style={{
               textAlign: "center",

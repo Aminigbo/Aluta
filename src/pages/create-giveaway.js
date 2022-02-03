@@ -13,6 +13,7 @@ import { draft, disp_feeds, add_wallet, loginSuc } from "../redux";
 import { cashbackloader } from "../components/loading";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { MdWest } from "react-icons/md";
+import { errorComponent, successComponent } from "../components/error"; // error component for error handling
 
 import {
   fetchFeeds,
@@ -155,7 +156,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
       //   }
       // }, 1000);
 
-      console.log(values)
+      console.log(values);
       setStates({
         ...compState,
         loader: true,
@@ -170,7 +171,17 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
         setStates,
         compState,
         history
-      );
+      ).then((res) => {
+        console.log(res);
+        if (res != undefined && res.success === false) {
+          setStates({
+            ...compState,
+            alertMsg: res.message,
+            loader: false,
+          })
+          setStateAlert(false)
+        }
+      });
     }
   };
 
@@ -221,13 +232,13 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
     setBlob("");
   };
 
-  let placeholder = "Describe your give away here.."; 
+  let placeholder = "Describe your give away here..";
   let history = useHistory();
   const state = appState;
 
   ALLPOSTS.propTypes = {
     loading: PropTypes.bool,
-  }; 
+  };
 
   React.useEffect((compState) => {
     window.scrollTo(0, 0);
@@ -258,15 +269,15 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
   };
 
   // @==============   EVENT TABLE CATEGORIES
-  const [values, setValues] = useState([ {
-        category: "",
-        picked: 0,
-  },]);
+  const [values, setValues] = useState([
+    {
+      category: "",
+      picked: 0,
+    },
+  ]);
   // const [tktCat, settktcat] = useState("")
   // const [tktAmt, settktamt] = useState("")
   // const [tktQty, set] = useState("")
-
-
 
   const TicketCategory = ({
     // values,
@@ -276,7 +287,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
     handleChildChange_cost,
     handleChildChange_qty,
   }) => {
-    console.log(index)
+    console.log(index);
     return (
       <>
         <Row style={{ marginBottom: "20px", padding: "" }}>
@@ -290,7 +301,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                 borderRadius: "4px",
                 padding: "0px 4px",
               }}
-              onChange={(e) => { 
+              onChange={(e) => {
                 handleChildChange(e, index);
               }}
               type="text"
@@ -340,14 +351,15 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
     let exact = newValue[indx];
     let modifiedExact = { ...exact, category: value };
     newValue.splice(indx, 1, modifiedExact);
-    console.log(newValue)
+    console.log(newValue);
 
-    console.log(newValue)
+    console.log(newValue);
     // console.log(values)
-    setValues(newValue)
+    setValues(newValue);
     setStates({
-      ...compState, unit:1
-    })
+      ...compState,
+      unit: 1,
+    });
 
     // setValues((prev) => ({ ...prev, category: newValue }));
   };
@@ -358,7 +370,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
     let exact = newValue[indx];
     let modifiedExact = { ...exact, cost: value };
     newValue.splice(indx, 1, modifiedExact);
-    console.log(newValue)
+    console.log(newValue);
 
     setValues(newValue);
   };
@@ -369,7 +381,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
     let exact = newValue[indx];
     let modifiedExact = { ...exact, quantity: value };
     newValue.splice(indx, 1, modifiedExact);
-    console.log(newValue)
+    console.log(newValue);
 
     // setValues((prev) => ({ ...prev, category: newValue }));
   };
@@ -379,11 +391,12 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
     newValue.push({
       category: "",
       picked: 0,
-    }); 
+    });
     setValues(newValue);
     setStates({
-      ...compState, unit:1
-    })
+      ...compState,
+      unit: 1,
+    });
   };
 
   return state.loggedIn === false ? (
@@ -392,9 +405,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
     </div>
   ) : (
     <div id="body bg">
-      {/* {console.log(state)} */}
-      {/* {console.log(blob)} */}
-      {/* {state.realtime.length > 0 && <Realtime />} */}
+      
       {stateAlert === false && alert(errorPayload, setStateAlert)}
       <Realtime />
 
@@ -402,7 +413,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
       <checkSession />
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Aluta-Mate</title>
+        <title>Buzz Pay</title>
         <link rel="icon" href={logo} />
       </Helmet>
 
@@ -420,20 +431,28 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                 position: "sticky",
                 top: "0px",
                 zIndex: "1000",
-                  padding: "0px  9px",
-                marginBottom:"20px"
+                padding: "0px  9px",
+                marginBottom: "20px",
               }}
             >
-                {/* <Toppills /> */}
-                 <b
-              onClick={() => {
-                history.goBack();
-              }}
-              style={{ fontSize: "30px" }}
-            >
-                          <MdWest /> 
-                          <b style={{fontSize:"20px",marginLeft:"50px",color:"gray"}}>Create giveaway</b>
-            </b>
+              {/* <Toppills /> */}
+              <b
+                onClick={() => {
+                  history.goBack();
+                }}
+                style={{ fontSize: "30px" }}
+              >
+                <MdWest />
+                <b
+                  style={{
+                    fontSize: "20px",
+                    marginLeft: "50px",
+                    color: "gray",
+                  }}
+                >
+                  Create giveaway
+                </b>
+              </b>
             </div>
 
             <div>
@@ -576,94 +595,94 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                       {/* <img style={{width:"50%"}} src = {url} /> */}
                     </>
                   )}
-                </div> 
-                  <Box
-                    id="postArea1"
+                </div>
+                <Box
+                  id="postArea1"
+                  style={{
+                    marginBottom: "10px",
+                    textAlign: "center",
+                    background: "rgb(240, 240, 240)",
+                    width: "98%",
+                    marginLeft: "1%",
+                  }}
+                  component="form"
+                  sx={{
+                    "& > :not(style)": { m: 1, width: "10ch" },
+                  }}
+                  noValidate
+                  autoComplete="on"
+                >
+                  <div
                     style={{
-                      marginBottom: "10px",
+                      width: "100%",
+                      background: "",
+                      display: "inline-block",
+                      height: " ",
+                      padding: "10px",
                       textAlign: "center",
-                      background: "rgb(240, 240, 240)",
-                      width: "98%",
-                      marginLeft: "1%",
                     }}
-                    component="form"
-                    sx={{
-                      "& > :not(style)": { m: 1, width: "10ch" },
-                    }}
-                    noValidate
-                    autoComplete="on"
                   >
-                    <div
-                      style={{
-                        width: "100%",
-                        background: "",
-                        display: "inline-block",
-                        height: " ",
-                        padding: "10px",
-                        textAlign: "center",
-                      }}
+                    <FormControl
+                      id="postArea1"
+                      variant="standard"
+                      sx={{ m: 0, minWidth: 40 }}
                     >
-                      <FormControl
+                      <TextField
+                        style={{ width: "140px", marginRight: "20px" }}
                         id="postArea1"
+                        value={giveaway.amount}
+                        label="Giveaway amount"
                         variant="standard"
-                        sx={{ m: 0, minWidth: 40 }}
-                      >
-                        <TextField
-                          style={{ width: "140px", marginRight: "20px" }}
-                          id="postArea1"
-                          value={giveaway.amount}
-                          label="Giveaway amount"
-                          variant="standard"
-                          onChange={(e) => {
-                            setGiveaway({
-                              ...giveaway,
-                              amount: e.target.value,
-                            });
-                          }}
-                        />
-                      </FormControl>
+                        onChange={(e) => {
+                          setGiveaway({
+                            ...giveaway,
+                            amount: e.target.value,
+                          });
+                        }}
+                      />
+                    </FormControl>
 
-                      <FormControl
-                        id="postArea1"
-                        variant="standard"
-                        sx={{ m: 0, minWidth: 120 }}
+                    <FormControl
+                      id="postArea1"
+                      variant="standard"
+                      sx={{ m: 0, minWidth: 120 }}
+                    >
+                      <InputLabel id="demo-simple-select-label">
+                        Beneficiaries
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={giveaway.beneficiaries}
+                        label="Age"
+                        onChange={(e) => {
+                          setGiveaway({
+                            ...giveaway,
+                            beneficiaries: e.target.value,
+                          });
+                        }}
                       >
-                        <InputLabel id="demo-simple-select-label">
-                          Beneficiaries
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={giveaway.beneficiaries}
-                          label="Age"
-                          onChange={(e) => {
-                            setGiveaway({
-                              ...giveaway,
-                              beneficiaries: e.target.value,
-                            });
-                          }}
-                        >
-                          <MenuItem value={1}>1</MenuItem>
-                          <MenuItem value={2}>2</MenuItem>
-                          <MenuItem value={5}>5</MenuItem>
-                          <MenuItem value={10}>10</MenuItem>
-                          <MenuItem value={20}>20</MenuItem>
-                          <MenuItem value={50}>50</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </div>
+                        <MenuItem value={1}>1</MenuItem>
+                        <MenuItem value={2}>2</MenuItem>
+                        <MenuItem value={5}>5</MenuItem>
+                        <MenuItem value={10}>10</MenuItem>
+                        <MenuItem value={20}>20</MenuItem>
+                        <MenuItem value={50}>50</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
 
-                    <div
-                      style={{
-                        width: "40%",
-                        background: "",
-                        display: "inline-block",
-                        height: " ",
-                        padding: "10px 0px",
-                        textAlign: "left",
-                      }}
-                    ></div>
-                  </Box> 
+                  <div
+                    style={{
+                      width: "40%",
+                      background: "",
+                      display: "inline-block",
+                      height: " ",
+                      padding: "10px 0px",
+                      textAlign: "left",
+                    }}
+                  ></div>
+                </Box>
                 {/* @====  EVENT TICKET CATEGORIES */}
 
                 {/* {console.log(postType)} */}
@@ -674,8 +693,8 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                     borderBottom: "0.5px solid lightgray",
                     marginTop: "-10px",
                     paddingBottom: "5px",
-                     fontSize: "10px",
-                    textAlign:"center"
+                    fontSize: "10px",
+                    textAlign: "center",
                   }}
                 >
                   <>
@@ -704,14 +723,55 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                               type="file"
                               style={{ display: "none" }}
                             />
-                            <AddPhotoAlternateOutlined id="postArea1" />{" "}
+                            <AddPhotoAlternateOutlined style={{color:"#0a3d62"}} id="postArea1" />{" "}
                           </label>
                         </span>
-                        <p className="top-nav-pills-title">Add Photo </p>
-                      </div> 
+                        <p style={{color:"#0a3d62"}} className="top-nav-pills-title">Add Photo </p>
+                        </div>
                         
+                         <div
+                        onClick={() => {
+                          // setPostType("EVENT");
+                            history.push("/create-event")
+                        }}
+                        id="postArea1"
+                        className="top-nav-pills-holder"
+                      >
+                        <span
+                          id="postArea1"
+                          style={{
+                            background:"",
+                            color:"#0a3d62",
+                          }}
+                          className="top-nav-pills"
+                        >
+                          {" "}
+                          <EventNoteOutlined id="postArea1" />{" "}
+                        </span>
+                        <p className="top-nav-pills-title"> Event</p>
+                        </div>
 
-                        
+                        <div
+                        id="postArea1"
+                        className="top-nav-pills-holder"
+                        onClick={() => {
+                          // setPostType("GIVE AWAY");
+                          // history.push("/create-giveaway")
+                        }}
+                      >
+                        <span
+                          id="postArea1"
+                          style={{
+                            background:"#0a3d62",
+                            color:"white",
+                          }}
+                          className="top-nav-pills"
+                        >
+                          {" "}
+                          <LocalAtm id="postArea1" />{" "}
+                        </span>
+                        <p className="top-nav-pills-title">Give away</p>
+                      </div> 
 
                       {allowSend == true && (
                         <div
@@ -719,7 +779,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                             makePost();
                             setStates({
                               ...compState,
-                              loading: true,
+                              // loading: true,
                             });
                             window.scrollTo(0, 0);
                           }}
@@ -727,7 +787,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                             marginLeft: "20px",
                             float: "",
                             color: "#0a3d62",
-                            background:" "
+                            background: " ",
                           }}
                           id="postArea1"
                           className="top-nav-pills-holder"
@@ -742,7 +802,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                           </span>
                           <p className="top-nav-pills-title"> MAKE POST</p>
                         </div>
-                                   )} 
+                      )}
                     </div>
                   </>
 

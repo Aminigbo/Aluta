@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Redirect, useHistory, Link } from "react-router-dom";
 import { connect } from "react-redux";
-import "../static/css/home/index.css";
-
-import Header from "../components/includes/mobile_header.js";
+import "../static/css/home/index.css"; 
+// import {headerALT, headers} from  "../components/includes/mobile_header.js";
 import { HistoryOutlined } from "@material-ui/icons";
 import { ImQrcode } from "react-icons/im";
-import header from "../components/header";
+import {headerALT, headers} from "../components/header";
 import {
   Person,
   AccountBalanceWallet,
@@ -513,13 +512,14 @@ function Home({ appState, login_suc }) {
             )}{" "}
           </>
         )}
-        <div className="mobile" style={{ background: "#385b74" }}>
-          {header()}
+        <div className="mobile" style={{ background: state.loggedInUser.user.meta.schoolmode === true ? "":"#385b74" }}>
+           
+            {state.loggedInUser.user.meta.schoolmode === true ? <>{headerALT()}</> : <> {headers()}</>}
           <div
             style={{
               textAlign: "center",
               // marginTop: "10px",
-              background: "#385b74",
+              background: state.loggedInUser.user.meta.schoolmode === true ? "": "#385b74",
               position: "sticky",
               top: "0px",
               zIndex: "1100",

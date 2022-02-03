@@ -3,7 +3,7 @@ import { Redirect, useHistory, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import "../static/css/home/index.css";
 import Toppills from "../components/includes/topdesktoppills";
-import header from "./header";
+import {headers} from "./header";
 // import Footer from "../components/includes/mobile_footer";
 import Scan from "../components/qrscan";
 
@@ -505,7 +505,7 @@ function Home({ appState, login_suc }) {
         )}
         <div className="mobile" style={{ background: "#385b74" }}>
           {/* <header /> */}
-          {header()}
+          {headers()}
           <div
             style={{
               textAlign: "center",

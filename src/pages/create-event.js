@@ -794,11 +794,57 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                               type="file"
                               style={{ display: "none" }}
                             />
-                            <AddPhotoAlternateOutlined id="postArea1" />{" "}
+                            <AddPhotoAlternateOutlined style={{color:"#0a3d62"}} id="postArea1" />{" "}
                           </label>
                         </span>
-                        <p className="top-nav-pills-title">Add </p>
-                      </div>
+                        <p style={{color:"#0a3d62"}} className="top-nav-pills-title">Add photo</p>
+                        </div>
+                        
+                        <div
+                        onClick={() => {
+                          // setPostType("EVENT");
+                            // history.push("/create-event")
+                        }}
+                        id="postArea1"
+                        className="top-nav-pills-holder"
+                      >
+                        <span
+                          id="postArea1"
+                          style={{
+                            background:"#0a3d62",
+                            color:"white",
+                          }}
+                          className="top-nav-pills"
+                        >
+                          {" "}
+                          <EventNoteOutlined   id="postArea1" />{" "}
+                        </span>
+                        <p style={{color:"#0a3d62"}} className="top-nav-pills-title"> Event</p>
+                        </div>
+
+                        <div
+                        id="postArea1"
+                        className="top-nav-pills-holder"
+                        onClick={() => {
+                          // setPostType("GIVE AWAY");
+                          history.push("/create-giveaway")
+                        }}
+                      >
+                        <span
+                          id="postArea1"
+                          style={{
+                            background:
+                              postType == "GIVE AWAY" ? "#0a3d62" : "",
+                            color: postType == "GIVE AWAY" ? "white" : "",
+                          }}
+                          className="top-nav-pills"
+                        >
+                          {" "}
+                          <LocalAtm style={{color:"#0a3d62"}} id="postArea1" />{" "}
+                        </span>
+                        <p style={{color:"#0a3d62"}} className="top-nav-pills-title">Give away</p>
+                      </div> 
+
 
                       {allowSend == true && (
                         <div
