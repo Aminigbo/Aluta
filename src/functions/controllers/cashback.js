@@ -93,7 +93,7 @@ export async function handleChashbackGeneration(
   let amount = payload.amount;
   let amountPlusCharge = payload.amountPlusCharge;
   let extraCharge = amountPlusCharge - amount;
-  let adminPercentage = (35 * extraCharge) / 100;
+  let adminPercentage = (12.5 * extraCharge) / 100;
 
   let userTakes = amountPlusCharge - adminPercentage;
 

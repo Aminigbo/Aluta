@@ -512,14 +512,14 @@ function Home({ appState, login_suc }) {
             )}{" "}
           </>
         )}
-        <div className="mobile" style={{ background: state.loggedInUser.user.meta.schoolmode === true ? "":"#385b74" }}>
+        <div className="mobile" style={{ background: state.loggedInUser.user.meta.schoolmode === true ? "#385b74":"#385b74" }}>
            
             {state.loggedInUser.user.meta.schoolmode === true ? <>{headerALT()}</> : <> {headers()}</>}
           <div
             style={{
               textAlign: "center",
               // marginTop: "10px",
-              background: state.loggedInUser.user.meta.schoolmode === true ? "": "#385b74",
+              background: state.loggedInUser.user.meta.schoolmode === true ? "#385b74": "#385b74",
               position: "sticky",
               top: "0px",
               zIndex: "1100",

@@ -496,11 +496,11 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
             {/* <img alt="Aluta Meter" style={{width:"70px"}}  src={logo}/>  */}
             {/* <img alt="Aluta Meter" style={{ width: "60px" }} src={am} /> */}
             <div
-              style={{ marginLeft: "15px", fontSize: "20px", color: "#0a3d62" }}
+              style={{ marginLeft: "15px", fontSize: "20px", color: "" }}
               >
                 {state.loggedInUser.user.meta.schoolmode === false && <>  <small style={{fontSize:"18px",color:"lightgray"}}>Welcome back,</small> <br /> </> }
              
-              <b style={{color:"#385b74"}}>
+              <b style={{color: state.loggedInUser.user.meta.schoolmode === true ? 'white' : 'white' ,}}>
                 {state.loggedInUser.user.fullname.split(" ")[0]}
                 {/* B
                 <EuroSymbolOutlined
@@ -523,7 +523,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
             }}
             className="menu"
             style={{
-              color: state.notification === true ? "orange" : "#385b74",
+              color: state.notification === true ? "orange" : state.loggedInUser.user.meta.schoolmode === true ? 'white' : 'white',
               position: " absolute",
               right: "65px",
             }}
@@ -543,7 +543,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
             />
           )}
           <Dehaze
-            style={{ color: "#385b74", position: " absolute", right: "10px" }}
+              style={{ color: state.loggedInUser.user.meta.schoolmode === true ? 'white' : 'white' , position: " absolute", right: "10px" }}
             className="menu"
             onClick={toggleDrawer("left", true)}
           />
@@ -567,7 +567,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
           <>
             <div
               style={{
-                color: "#0a3d62",
+                color: "white",
                 fontSize: "15px",
                 marginTop: "-40px",
                 padding: "0px 13px",
