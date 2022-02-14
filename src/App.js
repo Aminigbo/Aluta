@@ -41,7 +41,8 @@ import CbHistory from "./pages/cbHistory";
 import TopupHistory from "./pages/topupHistory";
 import BuzzHistory from "./pages/buzzHistory";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Scan from "./components/qrscan"
+import Scan from "./components/qrscan";
+import Splash from "./pages/spash"
 export default function App() {
   return (
     <Provider store={store().store}>
@@ -51,6 +52,9 @@ export default function App() {
             <Switch>
               <Route path="/login">
                 <Login />
+              </Route>
+              <Route path="/splash">
+                <Splash />
               </Route>
               <Route path="/reset">
                 <Reset />

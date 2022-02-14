@@ -30,10 +30,19 @@ import {
 
   // load all feeds
   FEED,
+  SPLASH,
 
   // ========================== ADMIN
   ADMIN_WITHDRAWAL_REQUEST,
 } from "./type";
+
+export const splash_screen = () => {
+  return {
+    type: SPLASH,
+  };
+};
+
+
 
 export const loginError = (error) => {
   return {

@@ -205,82 +205,8 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out,disph }) {
           Login
         </div>
 
-        <form className="form" noValidate autoComplete="off">
-          <br />
-          <br />
-          <TextField
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            value={email}
-            required
-            id="input"
-            label="Enter email address"
-            type="email"
-            variant="standard"
-          />
-          <br />
-          <br />
-          <TextField
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            value={password}
-            required
-            id="input"
-            label="Enter password"
-            type="password"
-            variant="standard"
-          />{" "}
-          <br />
-          <div
-            onClick={() => {
-              history.push("/reset");
-            }}
-            style={{
-              float: "right",
-              marginTop: "7px",
-              cursor: "pointer",
-              marginRight: "15px",
-              color: "#0a3d62",
-            }}
-          >
-            <span style={{ color: "#0a3d62" }}>Forgot Password?</span>
-          </div>
-          <br />
-          <br />
-          <button
-            type="button"
-            style={{
-              background: "#0a3d62",
-              color: "white",
-              border: "none",
-              outline: "none",
-              padding: "7px 50px",
-              margin: "10px",
-              borderRadius: "6px",
-            }}
-            onClick={(e) => {
-              login();
-            }}
-          >
-            {" "}
-            Login{" "}
-          </button>
-          <div class="option">
-            <br />
-            <span>Don't have an account? </span>{" "}
-            <Link
-              onClick={(e) => {
-                reroute();
-              }}
-              className="action"
-              to="/register"
-            >
-              {" "}
-              <b style={{ color: "#0a3d62" }}>Register</b>
-            </Link>
-          </div>
+        <form className="form" noValidate autoComplete="off" style={{}}>
+        
         </form>
       </div>
     </div>
