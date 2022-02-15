@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "../static/css/auth/login.css";
 import { connect } from "react-redux";
 import { TextField, Button } from "@material-ui/core";
+import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
+
 import { Link } from "react-router-dom";
 import { Redirect, useHistory } from "react-router-dom";
 import { loginSuc, add_wallet, disp_session, logOut, splash_screen } from "../redux";
@@ -153,26 +155,13 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out, disph }) 
 
   return (
     <div className=" " style={{ backgroundColor: "#f4f6f7", height: "100%", position: "fixed", top: "0px", left: "0px", width: "100%" }}>
+      {/* {state.splsh === true && <> {history.push("/login")} </>} */}
       <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
         <div style={{
           position: "absolute", top: "6%", width: "100%", padding: "10px", left: "0px"
-        }}>
-          {/* <Paper
-            square
-            elevation={0}
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              height: 50,
-              pl: 2,
-              bgcolor: 'background.default',
-            }}
-          >
-            <Typography>{steps[activeStep].label}</Typography>
-          </Paper> */}
+        }}> 
 
-          <Box sx={{ height: 255, maxWidth: 400, width: '100%', p: 2 }}>
-            {/* {steps[activeStep].description} */}
+          <Box sx={{ height: 255, maxWidth: 400, width: '100%', p: 2 }}> 
 
             <div style={{ padding: "30px 0px", color: "#0a3d62", textAlign: "center", fontSize: "26px", fontWeight: "bold" }}>
               {steps[activeStep].label}
@@ -198,6 +187,9 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out, disph }) 
               color: "white", fontWeight: "bold", fontSize: "23px"
             }}>
             {steps[activeStep].bottom}
+            &nbsp;&nbsp; 
+            <ArrowForwardIosOutlinedIcon />
+            <ArrowForwardIosOutlinedIcon />
           </span>
         </div>
         {console.log(steps[activeStep])}
