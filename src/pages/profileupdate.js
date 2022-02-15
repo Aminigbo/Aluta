@@ -3,7 +3,7 @@ import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import "../static/css/home/index.css";
 
-import Header from "../components/includes/mobile_header.js";
+import {headers} from "../components/header.js";
 // import { LinearProgress } from "@material-ui/core";
 import Desktopleft from "../components/includes/desktopleft";
 import Desktopright from "../components/includes/desktopright";
@@ -188,29 +188,26 @@ function Home({ appState, login_suc }) {
         {stateAlert === null && <span>{history.push("/")}</span>}
         {stateAlert === true && alert(successPayload, setStateAlert)}
         {stateAlert === false && alert(errorPayload, setStateAlert)}
-        <div className="mobile">
+        <div className="mobile"  style={{ background: "#385b74" }}>
           <div className="header_footer">
             {console.log(compState)}
-            <Header />
-          </div>
-
-          <div>
-            <div>
+              {/* <Header /> */}
+              {headers()}
               <div
-                style={{
-                  textAlign: "center",
-                  marginTop: "10px",
-                  background: " #f4f6f7",
-                  position: "sticky",
-                  top: "0px",
-                  zIndex: "1000",
-                  padding: "0px",
-                  
-                }}
-              >
-                {" "}
+            style={{
+              textAlign: "center",
+              // marginTop: "10px",
+              background: "#385b74",
+              position: "sticky",
+              top: "0px",
+              zIndex: "1100",
+              padding: "0px",
+            }}
+          >
+            {" "}
                 <Toppills />
-               <div
+                
+                <div
                   style={{
                     marginTop: "5px",
                     textAlign: "center",
@@ -226,7 +223,7 @@ function Home({ appState, login_suc }) {
                     style={{
                       marginLeft: "",
                       fontSize: "15px",
-                      color: "gray",
+                      color: "orange",
                       textDecoration: "none",
                       fontWeight: "bold",
                     }}
@@ -246,7 +243,7 @@ function Home({ appState, login_suc }) {
                     style={{
                       marginLeft: "5px",
                       fontSize: "13px",
-                      color: "#0a3d62",
+                      color: "white",
                       textDecoration: "none",
                       padding: "5px",
                       borderRadius: "5px",
@@ -266,7 +263,7 @@ function Home({ appState, login_suc }) {
                     style={{
                       marginLeft: "5px",
                       fontSize: "13px",
-                      color: "#0a3d62",
+                      color: "white",
                       textDecoration: "none",
                       padding: "5px",
                       borderRadius: "5px",
@@ -286,7 +283,7 @@ function Home({ appState, login_suc }) {
                     style={{
                       marginLeft: "5px",
                       fontSize: "13px",
-                      color: "#0a3d62",
+                      color: "white",
                       textDecoration: "none",
                       padding: "5px",
                       borderRadius: "5px",
@@ -298,8 +295,17 @@ function Home({ appState, login_suc }) {
 
                   
                   </div> 
-              </div>{" "}
-              <div className=" " style={{ marginTop: "10px" }}>
+          </div>{" "}
+          </div>
+
+          <div>
+            <div> 
+              <div className=" "  style={{
+                  zIndex: "80000",
+                  background: "#f4f6f7",
+                  padding: "20px 0px",
+                  borderRadius: "30px 30px 0px 0px",
+                }}>
                 <div className="realtimeParent">
                   {/* <div className="realtimeHeader" style={smile}>
                     Update your profile

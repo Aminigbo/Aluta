@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Redirect, useHistory, Link } from "react-router-dom";
 import { connect } from "react-redux";
-import "../static/css/home/index.css";
-
-import Header from "../components/includes/mobile_header.js";
+import "../static/css/home/index.css"; 
+// import {headerALT, headers} from  "../components/includes/mobile_header.js";
 import { HistoryOutlined } from "@material-ui/icons";
 import { ImQrcode } from "react-icons/im";
-
+import {headerALT, headers} from "../components/header";
 import {
   Person,
   AccountBalanceWallet,
@@ -441,8 +440,8 @@ function Home({ appState, login_suc }) {
   };
 
   const toScan = () => {
-    history.push("/scan")
-  }
+    history.push("/scan");
+  };
 
   return state.loggedIn === false ? (
     <div>
@@ -513,31 +512,36 @@ function Home({ appState, login_suc }) {
             )}{" "}
           </>
         )}
-        <div className="mobile">
-          <div className="header_footer">
-            {/* <Footer /> */}
-            <Header />
-          </div>
-
+        <div className="mobile" style={{ background: state.loggedInUser.user.meta.schoolmode === true ? "#385b74":"#385b74" }}>
+           
+            {state.loggedInUser.user.meta.schoolmode === true ? <>{headerALT()}</> : <> {headers()}</>}
+          <div
+            style={{
+              textAlign: "center",
+              // marginTop: "10px",
+              background: state.loggedInUser.user.meta.schoolmode === true ? "#385b74": "#385b74",
+              position: "sticky",
+              top: "0px",
+              zIndex: "1100",
+              padding: "0px",
+            }}
+          >
+            {" "}
+            <Toppills />
+          </div>{" "}
           <div>
             <div>
               <div
                 style={{
-                  textAlign: "center",
-                  marginTop: "10px",
-                  background: " #f4f6f7",
-                  position: "sticky",
-                  top: "0px",
-                  zIndex: "1100",
-                  padding: "0px",
+                  zIndex: "80000",
+                  background: "#f4f6f7",
+                  padding: "20px 0px",
+                  borderRadius: "30px 30px 0px 0px",
                 }}
               >
-                {" "}
-                <Toppills />
-              </div>{" "}
-              <Cashbacknav />
-              <div style={{ zIndex: "80000", background: " " }}>
                 {/* @======== START OF RESOLVE BLOCK */}
+                <Cashbacknav />
+
                 <div
                   style={{
                     width: "90%",
@@ -549,8 +553,16 @@ function Home({ appState, login_suc }) {
                     boxShadow: " 1px 1px 3px #888888",
                     border: "0.5px solid #f3f3f3",
                   }}
+                >
+                  <div
+                    style={{
+                      marginTop: "-25px",
+                      marginBottom: "40px",
+                      textAlign: "center",
+                    }}
                   >
-                    <div style={{marginTop:"-25px",marginBottom:"40px",textAlign:"center"}}>Accept cashback token </div>
+                    Accept cashback token{" "}
+                  </div>
                   <div
                     className=" "
                     style={{
@@ -580,9 +592,12 @@ function Home({ appState, login_suc }) {
                               <div
                                 style={{ marginTop: "15px", textAlign: "left" }}
                               >
-                                  {btn_primary("Accept cashback pin", trigerVerify)}
-                                  {/* OR {btn_primary("Scan QR", toScan, "special")} */}
-                                  <br />
+                                {btn_primary(
+                                  "Accept cashback pin",
+                                  trigerVerify
+                                )}
+                                {/* OR {btn_primary("Scan QR", toScan, "special")} */}
+                                <br />
                                 <div
                                   style={{
                                     fontSize: "",
@@ -591,8 +606,8 @@ function Home({ appState, login_suc }) {
                                   }}
                                 >
                                   {" "}
-                                  <ImQrcode style={{color:"#0a3d62"}} />{" "}
-                                  <small style={{fontSize:"11px"}}>
+                                  <ImQrcode style={{ color: "#0a3d62" }} />{" "}
+                                  <small style={{ fontSize: "11px" }}>
                                     You can also scan to accept cashback
                                   </small>
                                 </div>

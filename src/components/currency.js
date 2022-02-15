@@ -25,16 +25,17 @@ export function cashbackCurrency(
     <>
       <div
         style={{
-          marginTop: "-10px",
-          width: "90%",
-          marginLeft: "5%",
+          marginTop: "-30px",
+          width: "96%",
+          marginLeft: "2%",
           backgroundColor: " ",
           textAlign: "center",
         }}
       >
         <div
           style={{
-            background: "#efedc4",
+            // background: "#efedc4",
+            background:"#385b74",
             //   borderRadius: "4px",
             height: "150px",
             marginTop: "40px",
@@ -46,32 +47,34 @@ export function cashbackCurrency(
               // background: "lightgray",
               //  borderRadius: "4px",
               height: "100%",
-              border: "2px solid #d3cf7a",
+              // border: "2px solid #d3cf7a",
               position: "relative",
             }}
           >
             {/* Jazz LET, fantasy */}
             {/* OCR A Std, monospace */}
-            <b
+
+            {/* <b
               style={{
                 position: "absolute",
                 top: "2px",
                 left: "4px",
-                fontSize: "14px",
+                fontSize: "19px",
                 fontFamily: "OCR A Std, monospace",
                 color: "#706e3b",
               }}
             >
               NGN {amount}
-            </b>
+            </b> */}
             <b
               style={{
                 position: "absolute",
                 top: "1px",
-                right: "4px",
-                fontSize: "14px",
+                left: "4px",
+                fontSize: "19px",
                 fontFamily: "Comic Sans MS, Comic Sans, cursive",
-                color: "#706e3b",
+                // color: "#706e3b",
+                color:"orange"
               }}
             >
               Cashback
@@ -84,7 +87,8 @@ export function cashbackCurrency(
                 left: "4px",
                 fontSize: "13px",
                 fontFamily: "OCR A Std, monospace",
-                color: "#706e3b",
+                // color: "#706e3b",
+                color:"orange"
               }}
             >
               @{user}
@@ -98,7 +102,8 @@ export function cashbackCurrency(
                 right: "4px",
                 fontSize: "13px",
                 fontFamily: "OCR A Std, monospace",
-                color: "#706e3b",
+                // color: "#706e3b",
+                color:"orange"
               }}
             >
              VALID
@@ -109,7 +114,9 @@ export function cashbackCurrency(
                 right: "4px",
                 fontSize: "13px",
                 fontFamily: "OCR A Std, monospace",
-                color: "crimson",
+                // color: "crimson",
+                color:"orange"
+
               }}
             >
              INVALID
@@ -137,8 +144,14 @@ export function cashbackCurrency(
                     navigator.clipboard.writeText(generatedToken);
                   }
                 }}
-                style={{ color: "#706e3b", marginTop: "25px", background: "#706e3b" }}
+                style={{ color: "#706e3b", marginTop: "10px", background: "",height:"60px",position:"relative" }}
               >
+                <div style={{ color: "#706e3b", top: "10px", borderTop: "0.5px dotted orange", position: "absolute", height: "20px", width: "100%", left: "0px" }}></div>
+                <div  style={{ color: "#706e3b", top: "20px", borderTop: "0.5px dotted orange",position:"absolute",height:"20px",width:"100%",left:"0px" }}></div>
+                <div  style={{ color: "#706e3b", top: "30px", borderTop: "0.5px dotted orange",position:"absolute",height:"20px",width:"100%",left:"0px" }}></div>
+                <div  style={{ color: "#706e3b", top: "40px", borderTop: "0.5px dotted orange",position:"absolute",height:"20px",width:"100%",left:"0px" }}></div>
+                <div  style={{ color: "#706e3b", top: "50px", borderTop: "0.5px dotted orange",position:"absolute",height:"20px",width:"100%",left:"0px" }}></div>
+
                 <b
                   style={{
                    
@@ -159,7 +172,7 @@ export function cashbackCurrency(
                       />
                     )} */}
                   </>
-                ): <b style={{fontSize:"20px"}}>NGN {amount}</b> }
+                ): <b style={{fontSize:"30px",zIndex:"10000",position:"absolute",top:"7px",width:"100%",textAlign:"center",left:"0px"}}>NGN {amount}</b> }
                 </b>{" "}
                
               </div>
@@ -181,7 +194,8 @@ export function cashbackCurrency(
             <>
               {" "}
               {btn_primary("Cash In", confirmCashback)}
-              <div style={{width:"50%",display:"inline-block",marginLeft:"10px"}}>{btn_danger("Cancel", cancelCashback)}{" "}</div>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             {btn_danger("Cancel", cancelCashback)}
             </>
           )}
 

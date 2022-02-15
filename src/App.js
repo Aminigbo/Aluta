@@ -8,7 +8,8 @@ import Login from "./pages/login";
 import Reset from "./pages/reset_pwd";
 import Create from "./pages/create";
 import Register from "./pages/register";
-
+import Create_giveaway from "./pages/create-giveaway";
+import Create_event from "./pages/create-event"
 import "bootstrap/dist/css/bootstrap.min.css";
 import Tour from "./pages/tour.js";
 import Events from "./pages/events.js";
@@ -40,7 +41,8 @@ import CbHistory from "./pages/cbHistory";
 import TopupHistory from "./pages/topupHistory";
 import BuzzHistory from "./pages/buzzHistory";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Scan from "./components/qrscan"
+import Scan from "./components/qrscan";
+import Splash from "./pages/spash"
 export default function App() {
   return (
     <Provider store={store().store}>
@@ -51,11 +53,20 @@ export default function App() {
               <Route path="/login">
                 <Login />
               </Route>
+              <Route path="/splash">
+                <Splash />
+              </Route>
               <Route path="/reset">
                 <Reset />
               </Route>
               <Route path="/create">
                 <Create />
+              </Route>
+              <Route path="/create-giveaway">
+                <Create_giveaway />
+              </Route>
+              <Route path="/create-event">
+                <Create_event />
               </Route>
               <Route path="/register">
                 <Register />

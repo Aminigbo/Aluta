@@ -33,7 +33,8 @@ import {
    ADMIN_WITHDRAWAL_REQUEST,
 
    // new test category
-   FEED
+   FEED,
+   SPLASH
 } from './type'
 
 
@@ -55,7 +56,8 @@ const initialState = {
    session: '', 
    withdrawal: [],
    feeds: [],
-   signal:"",
+   signal: "",
+   splsh:false,
    
    // admin withdrawal request noti
    withdrawal_request_noti: [], 
@@ -92,6 +94,14 @@ const reducer = (state = initialState, action) => {
          loggedIn:true,
          loggedInUser:action.userMetadata
       }
+
+      case SPLASH:
+      return {
+         ...state,
+         splsh:true,
+      }
+
+
       case LOG_OUT:
       return {
          ...state,

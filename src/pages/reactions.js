@@ -567,7 +567,7 @@ function Home({ appState, loadFeeds, disp_allWhoBenefited, startLoading }) {
       <checkSession />
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Aluta Meter</title>
+        <title>Buzz Pay</title>
         <link rel="icon" href={logo} />
       </Helmet>
 
@@ -583,14 +583,14 @@ function Home({ appState, loadFeeds, disp_allWhoBenefited, startLoading }) {
             <div
               style={{
                 marginTop: "10px",
-                background: " #f4f6f7",
+                background: " #385b74",
                 position: "sticky",
                 top: "0px",
                 zIndex: "1000",
                 padding: "0px",
               }}
             >
-              <b style={{ color: "#0a3d62", padding: "0px 10px" }}>{school}</b>
+              <b style={{ color: "white", padding: "0px 10px" }}>{school}</b>
 
               <Toppills />
             </div>

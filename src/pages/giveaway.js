@@ -13,6 +13,8 @@ import { logOut, disp_feeds, add_wallet } from "../redux";
 import { fetchFeeds, ALLPOSTS } from "../functions/controllers/feeds";
 import { Helmet } from "react-helmet";
 import logo from "../static/logos/logo2.png";
+import { MdWest } from "react-icons/md";
+
 import {
   FavoriteBorderOutlined,
   CommentOutlined,
@@ -196,7 +198,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
       <checkSession />
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Aluta Meter</title>
+        <title>Buzz Pay</title>
         <link rel="icon" href={logo} />
       </Helmet>
 
@@ -214,10 +216,17 @@ function Home({ appState, loadFeeds, walletAdd }) {
                 position: "sticky",
                 top: "0px",
                 zIndex: "1000",
-                padding: "0px  ",
+                padding: "0px 9px ",
               }}
             >
-              <Toppills />
+                <b
+              onClick={() => {
+                history.goBack();
+              }}
+              style={{ fontSize: "30px" }}
+            >
+              <MdWest />
+            </b>
             </div>
 
             {allGiveAwayPosts.length > 0 && (
@@ -242,7 +251,7 @@ function Home({ appState, loadFeeds, walletAdd }) {
 
                 {allGiveAwayPosts.length < 1 && (
                              <div style={{ textAlign: "center", marginTop: "40%" }}>No avilable give away ! <br /><br />
-                                <Link style={{textDecoration:"none"}} to="/create" >Create one</Link>
+                                <Link style={{textDecoration:"none"}} to="/create-giveaway" >Create one</Link>
                   
                              </div>
                 )}

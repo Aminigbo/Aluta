@@ -91,7 +91,7 @@ const wtsappBTN = {
   border: "5px",
   height: "50px",
   // border: "0.3px solid red",
-  backgroundColor: "#25d366",
+  backgroundColor: "#385b74",
   color: "#4e7a97",
   outline: "none",
   fontSize: "13px",
@@ -407,7 +407,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
                 setDrawerState({ ...drawerState, ["left"]: false });
                 // history.push("/transfer");
               }}
-              style={{ padding: "15px", background: "#0a3d62" }}
+              style={{ padding: "15px", background: "#385b74" }}
             >
               <MdOutlineVerified style={{ color: "mediumseagreen" }} /> &nbsp;
               <span style={{ color: "mediumseagreen" }}>Become a vendor</span>
@@ -498,9 +498,9 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
             <div
               style={{ marginLeft: "15px", fontSize: "20px", color: "#0a3d62" }}
               >
-                {state.loggedInUser.user.meta.schoolmode === false && <>  <small style={{fontSize:"18px"}}>Welcome back,</small> <br /> </> }
+                {state.loggedInUser.user.meta.schoolmode === false && <>  <small style={{fontSize:"18px",color:"lightgray"}}>Welcome back,</small> <br /> </> }
              
-              <b>
+              <b style={{color: state.loggedInUser.user.meta.schoolmode === true ? '#385b74' : 'white' ,}}>
                 {state.loggedInUser.user.fullname.split(" ")[0]}
                 {/* B
                 <EuroSymbolOutlined
@@ -523,7 +523,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
             }}
             className="menu"
             style={{
-              color: state.notification === true ? "red" : "#0a3d62",
+              color: state.notification === true ? "orange" : state.loggedInUser.user.meta.schoolmode === true ? '#385b74' : 'white',
               position: " absolute",
               right: "65px",
             }}
@@ -543,7 +543,7 @@ function Header({ appState, log_out, login_suc, dispNoti, dispRequest }) {
             />
           )}
           <Dehaze
-            style={{ color: "#0a3d62", position: " absolute", right: "10px" }}
+              style={{ color: state.loggedInUser.user.meta.schoolmode === true ? '#385b74' : 'white' , position: " absolute", right: "10px" }}
             className="menu"
             onClick={toggleDrawer("left", true)}
           />

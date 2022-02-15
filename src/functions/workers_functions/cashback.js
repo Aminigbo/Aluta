@@ -26,12 +26,12 @@ export function confirmCashbackCreation(
             </div>
             <br />
             <div style={{ textAlign: "left " }}>
-              {btn_danger("Cancel", cancel)}
               {compState.miniLoad === true ? (
                 <> {btn_primary("Confirming", null)} </>
               ) : (
                 <> {btn_primary("Confirm", confirm)} </>
-              )}
+              )} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              {btn_danger("Cancel", cancel)}
             </div>
           </div>
         </div>

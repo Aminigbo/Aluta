@@ -213,7 +213,7 @@ function Home({ appState, loadFeeds, disp_signal }) {
         <link rel="icon" href={logo} />
       </Helmet>
 
-      <div className="mobile">
+      <div className="mobile"  style={{ background: "#f4f6f7", height: "" }}>
         <div className="header_footer">
           {/* <Footer /> */}
           <Header />
@@ -223,7 +223,7 @@ function Home({ appState, loadFeeds, disp_signal }) {
             <div
               style={{
                 marginTop: "10px",
-                background: " #f4f6f7",
+                background: "#f4f6f7",
                 position: "sticky",
                 top: "0px",
                 zIndex: "1000",

@@ -361,118 +361,6 @@ function Home({ appState, login_suc }) {
 
                 {/* @======== SHOW SIDE BUZZ ME WALLET */}
 
-                <div
-                  style={{
-                    width: "90%",
-                    height: "60px",
-                    background: "white",
-                    boxShadow: " 1px 1px 3px #888888",
-                    // border: "2px solid #f3f3f3",
-                    marginBottom: "20px",
-                    marginTop: "20px",
-                    marginLeft: "5%",
-                    position: "relative",
-                  }}
-                >
-                  {/* <FiberPin style={{ margin: "5px", color: "#0a3d62" }} /> */}
-                  <div
-                    style={{
-                      height: "100%",
-                      background: " ",
-                      textAlign: "center",
-                      display: "inline-block",
-                      padding: "4px 0px",
-                      position: "absolute",
-                      width: "45%",
-                    }}
-                  >
-                    <span>Buzz me balance</span> <br />
-                    <b>
-                      {compState.wallethidden === false ? (
-                        <>
-                          <b style={{ fontSize: "15px", marginRight: "4px" }}>
-                            <Naira>
-                              {state.loggedInUser.user.meta.buzzmewallet}
-                            </Naira>
-                          </b>{" "}
-                          <VisibilityOffOutlined
-                            onClick={() => {
-                              setStates({
-                                ...compState,
-                                wallethidden: true,
-                              });
-                            }}
-                            style={{
-                              fontSize: "17px",
-                              color: "#0a3d62",
-                              // float: "right",
-                              marginLeft: "15px",
-                            }}
-                          />
-                        </>
-                      ) : (
-                        <>
-                          {clickToViewPwd === false && (
-                            <>
-                              <b
-                                style={{
-                                  fontSize: "7px",
-                                  marginRight: "4px",
-                                  color: "gray",
-                                }}
-                              >
-                                ⚫ ⚫ ⚫ ⚫
-                              </b>
-                              <RemoveRedEye
-                                onClick={toggleDrawer("bottom", true)}
-                                style={{
-                                  fontSize: "17px",
-                                  color: "#0a3d62",
-                                  float: " ",
-                                  marginLeft: "20px",
-                                }}
-                              />
-                            </>
-                          )}
-                        </>
-                      )}
-                    </b>
-                  </div>
-
-                  <div
-                    onClick={() => {
-                      moveBuzzmeBalance();
-                    }}
-                    style={{
-                      height: "100%",
-                      // background: " #0a3d62",
-                      textAlign: "center",
-                      display: "inline-block",
-                      padding: "18px 0px",
-                      position: "absolute",
-                      width: "45%",
-                      right: "0px",
-                      color: " #0a3d62",
-                      // borderRadius: "30px 16px",
-                      fontSize: "15px",
-                      backgroundImage:
-                        "linear-gradient(to right,lightgray, #385b74)",
-                    }}
-                  >
-                    <button
-                      style={{
-                        background: "none",
-                        border: "none",
-                          outline: "none",
-                        color:"#0a3d62"
-                      }}
-                    >
-                      {" "}
-                      <b>To wallet <MdOutlineArrowForwardIos style={{color:"#ffaa0f"}}/> <MdOutlineArrowForwardIos style={{color:"#ffaa0f"}}/> </b>
-                    </button>
-                  </div>
-                </div>
-
                 {/* account balance and beneficiary id */}
                 <div
                   style={{
@@ -658,6 +546,126 @@ function Home({ appState, login_suc }) {
                         />
                       )}{" "} */}
                     </div>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    width: "90%",
+                    height: "60px",
+                    background: "white",
+                    boxShadow: " 1px 1px 3px #888888",
+                    // border: "2px solid #f3f3f3",
+                    marginBottom: "20px",
+                    marginTop: "20px",
+                    marginLeft: "5%",
+                    position: "relative",
+                  }}
+                >
+                  {/* <FiberPin style={{ margin: "5px", color: "#0a3d62" }} /> */}
+                  <div
+                    style={{
+                      height: "100%",
+                      background: " ",
+                      textAlign: "center",
+                      display: "inline-block",
+                      padding: "4px 0px",
+                      position: "absolute",
+                      width: "45%",
+                    }}
+                  >
+                    <span>Buzz me balance</span> <br />
+                    <b>
+                      {compState.wallethidden === false ? (
+                        <>
+                          <b style={{ fontSize: "15px", marginRight: "4px" }}>
+                            <Naira>
+                              {state.loggedInUser.user.meta.buzzmewallet}
+                            </Naira>
+                          </b>{" "}
+                          <VisibilityOffOutlined
+                            onClick={() => {
+                              setStates({
+                                ...compState,
+                                wallethidden: true,
+                              });
+                            }}
+                            style={{
+                              fontSize: "17px",
+                              color: "#0a3d62",
+                              // float: "right",
+                              marginLeft: "15px",
+                            }}
+                          />
+                        </>
+                      ) : (
+                        <>
+                          {clickToViewPwd === false && (
+                            <>
+                              <b
+                                style={{
+                                  fontSize: "7px",
+                                  marginRight: "4px",
+                                  color: "gray",
+                                }}
+                              >
+                                ⚫ ⚫ ⚫ ⚫
+                              </b>
+                              <RemoveRedEye
+                                onClick={toggleDrawer("bottom", true)}
+                                style={{
+                                  fontSize: "17px",
+                                  color: "#0a3d62",
+                                  float: " ",
+                                  marginLeft: "20px",
+                                }}
+                              />
+                            </>
+                          )}
+                        </>
+                      )}
+                    </b>
+                  </div>
+
+                  <div
+                    onClick={() => {
+                      moveBuzzmeBalance();
+                    }}
+                    style={{
+                      height: "100%",
+                      // background: " #0a3d62",
+                      textAlign: "center",
+                      display: "inline-block",
+                      padding: "18px 0px",
+                      position: "absolute",
+                      width: "45%",
+                      right: "0px",
+                      color: " #0a3d62",
+                      // borderRadius: "30px 16px",
+                      fontSize: "15px",
+                      backgroundImage:
+                        "linear-gradient(to right,lightgray, #385b74)",
+                    }}
+                  >
+                    <button
+                      style={{
+                        background: "none",
+                        border: "none",
+                        outline: "none",
+                        color: "#0a3d62",
+                      }}
+                    >
+                      {" "}
+                      <b>
+                        To wallet{" "}
+                        <MdOutlineArrowForwardIos
+                          style={{ color: "#ffaa0f" }}
+                        />{" "}
+                        <MdOutlineArrowForwardIos
+                          style={{ color: "#ffaa0f" }}
+                        />{" "}
+                      </b>
+                    </button>
                   </div>
                 </div>
               </div>

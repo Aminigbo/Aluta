@@ -13,6 +13,7 @@ import { draft, disp_feeds, add_wallet, loginSuc } from "../redux";
 import { cashbackloader } from "../components/loading";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { MdWest } from "react-icons/md";
+import { errorComponent, successComponent } from "../components/error"; // error component for error handling
 
 import {
   fetchFeeds,
@@ -70,7 +71,7 @@ import { alert } from "../functions/workers_functions/alert";
 function Home({ appState, loadFeeds, disp_draft, login_suc }) {
   const [postText, setPostText] = useState("");
   const [blob, setBlob] = useState("");
-  const [postType, setPostType] = useState("POST");
+  const [postType, setPostType] = useState("GIVE AWAY");
   const [stateAlert, setStateAlert] = useState("");
   const [compState, setStates] = useState("");
   const [giveaway, setGiveaway] = useState({
@@ -155,7 +156,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
       //   }
       // }, 1000);
 
-      console.log(values)
+      console.log(values);
       setStates({
         ...compState,
         loader: true,
@@ -170,7 +171,17 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
         setStates,
         compState,
         history
-      );
+      ).then((res) => {
+        console.log(res);
+        if (res != undefined && res.success === false) {
+          setStates({
+            ...compState,
+            alertMsg: res.message,
+            loader: false,
+          })
+          setStateAlert(false)
+        }
+      });
     }
   };
 
@@ -221,23 +232,13 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
     setBlob("");
   };
 
-  let placeholder = "";
-  if (postType == "POOL") {
-    placeholder = "Write a description of your pool";
-  } else if (postType == "EVENT") {
-    placeholder = "Describe your event here...";
-  } else if (postType == "GIVE AWAY") {
-    placeholder = "Describe your give away here..";
-  } else {
-    placeholder = "What is happening on campus???";
-  }
-
+  let placeholder = "Describe your give away here..";
   let history = useHistory();
   const state = appState;
 
   ALLPOSTS.propTypes = {
     loading: PropTypes.bool,
-  }; 
+  };
 
   React.useEffect((compState) => {
     window.scrollTo(0, 0);
@@ -268,15 +269,15 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
   };
 
   // @==============   EVENT TABLE CATEGORIES
-  const [values, setValues] = useState([ {
-        category: "",
-        picked: 0,
-  },]);
+  const [values, setValues] = useState([
+    {
+      category: "",
+      picked: 0,
+    },
+  ]);
   // const [tktCat, settktcat] = useState("")
   // const [tktAmt, settktamt] = useState("")
   // const [tktQty, set] = useState("")
-
-
 
   const TicketCategory = ({
     // values,
@@ -286,7 +287,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
     handleChildChange_cost,
     handleChildChange_qty,
   }) => {
-    console.log(index)
+    console.log(index);
     return (
       <>
         <Row style={{ marginBottom: "20px", padding: "" }}>
@@ -300,7 +301,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                 borderRadius: "4px",
                 padding: "0px 4px",
               }}
-              onChange={(e) => { 
+              onChange={(e) => {
                 handleChildChange(e, index);
               }}
               type="text"
@@ -350,14 +351,15 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
     let exact = newValue[indx];
     let modifiedExact = { ...exact, category: value };
     newValue.splice(indx, 1, modifiedExact);
-    console.log(newValue)
+    console.log(newValue);
 
-    console.log(newValue)
+    console.log(newValue);
     // console.log(values)
-    setValues(newValue)
+    setValues(newValue);
     setStates({
-      ...compState, unit:1
-    })
+      ...compState,
+      unit: 1,
+    });
 
     // setValues((prev) => ({ ...prev, category: newValue }));
   };
@@ -368,7 +370,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
     let exact = newValue[indx];
     let modifiedExact = { ...exact, cost: value };
     newValue.splice(indx, 1, modifiedExact);
-    console.log(newValue)
+    console.log(newValue);
 
     setValues(newValue);
   };
@@ -379,7 +381,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
     let exact = newValue[indx];
     let modifiedExact = { ...exact, quantity: value };
     newValue.splice(indx, 1, modifiedExact);
-    console.log(newValue)
+    console.log(newValue);
 
     // setValues((prev) => ({ ...prev, category: newValue }));
   };
@@ -389,11 +391,12 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
     newValue.push({
       category: "",
       picked: 0,
-    }); 
+    });
     setValues(newValue);
     setStates({
-      ...compState, unit:1
-    })
+      ...compState,
+      unit: 1,
+    });
   };
 
   return state.loggedIn === false ? (
@@ -402,9 +405,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
     </div>
   ) : (
     <div id="body bg">
-      {/* {console.log(state)} */}
-      {/* {console.log(blob)} */}
-      {/* {state.realtime.length > 0 && <Realtime />} */}
+      
       {stateAlert === false && alert(errorPayload, setStateAlert)}
       <Realtime />
 
@@ -412,7 +413,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
       <checkSession />
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Aluta-Mate</title>
+        <title>Buzz Pay</title>
         <link rel="icon" href={logo} />
       </Helmet>
 
@@ -430,28 +431,28 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                 position: "sticky",
                 top: "0px",
                 zIndex: "1000",
-                  padding: "0px  9px",
-                marginBottom:"20px"
+                padding: "0px  9px",
+                marginBottom: "20px",
               }}
             >
-                {/* <Toppills /> */}
-                 <b
-              onClick={() => {
-                history.goBack();
-              }}
-              style={{ fontSize: "30px" }}
-            >
-                  <MdWest />
-                   <b
+              {/* <Toppills /> */}
+              <b
+                onClick={() => {
+                  history.goBack();
+                }}
+                style={{ fontSize: "30px" }}
+              >
+                <MdWest />
+                <b
                   style={{
                     fontSize: "20px",
-                    marginLeft: "65px",
+                    marginLeft: "50px",
                     color: "gray",
                   }}
                 >
-                  Create post
+                  Create giveaway
                 </b>
-            </b>
+              </b>
             </div>
 
             <div>
@@ -595,257 +596,93 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                     </>
                   )}
                 </div>
-                {postType == "GIVE AWAY" && (
-                  <Box
-                    id="postArea1"
+                <Box
+                  id="postArea1"
+                  style={{
+                    marginBottom: "10px",
+                    textAlign: "center",
+                    background: "rgb(240, 240, 240)",
+                    width: "98%",
+                    marginLeft: "1%",
+                  }}
+                  component="form"
+                  sx={{
+                    "& > :not(style)": { m: 1, width: "10ch" },
+                  }}
+                  noValidate
+                  autoComplete="on"
+                >
+                  <div
                     style={{
-                      marginBottom: "10px",
+                      width: "100%",
+                      background: "",
+                      display: "inline-block",
+                      height: " ",
+                      padding: "10px",
                       textAlign: "center",
-                      background: "rgb(240, 240, 240)",
-                      width: "98%",
-                      marginLeft: "1%",
                     }}
-                    component="form"
-                    sx={{
-                      "& > :not(style)": { m: 1, width: "10ch" },
-                    }}
-                    noValidate
-                    autoComplete="on"
                   >
-                    <div
-                      style={{
-                        width: "100%",
-                        background: "",
-                        display: "inline-block",
-                        height: " ",
-                        padding: "10px",
-                        textAlign: "center",
-                      }}
-                    >
-                      <FormControl
-                        id="postArea1"
-                        variant="standard"
-                        sx={{ m: 0, minWidth: 40 }}
-                      >
-                        <TextField
-                          style={{ width: "140px", marginRight: "20px" }}
-                          id="postArea1"
-                          value={giveaway.amount}
-                          label="Giveaway amount"
-                          variant="standard"
-                          onChange={(e) => {
-                            setGiveaway({
-                              ...giveaway,
-                              amount: e.target.value,
-                            });
-                          }}
-                        />
-                      </FormControl>
-
-                      <FormControl
-                        id="postArea1"
-                        variant="standard"
-                        sx={{ m: 0, minWidth: 120 }}
-                      >
-                        <InputLabel id="demo-simple-select-label">
-                          Beneficiaries
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={giveaway.beneficiaries}
-                          label="Age"
-                          onChange={(e) => {
-                            setGiveaway({
-                              ...giveaway,
-                              beneficiaries: e.target.value,
-                            });
-                          }}
-                        >
-                          <MenuItem value={1}>1</MenuItem>
-                          <MenuItem value={2}>2</MenuItem>
-                          <MenuItem value={5}>5</MenuItem>
-                          <MenuItem value={10}>10</MenuItem>
-                          <MenuItem value={20}>20</MenuItem>
-                          <MenuItem value={50}>50</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </div>
-
-                    <div
-                      style={{
-                        width: "40%",
-                        background: "",
-                        display: "inline-block",
-                        height: " ",
-                        padding: "10px 0px",
-                        textAlign: "left",
-                      }}
-                    ></div>
-                  </Box>
-                )}
-                {/* !@=======  IF POST TYPE IS EVENT */}
-                {postType == "EVENT" && (
-                  <>
-                    <Box
+                    <FormControl
                       id="postArea1"
-                      style={{
-                        marginBottom: "10px",
-                        textAlign: " ",
-                        background: "rgb(240, 240, 240)",
-                        width: "100%",
-                        // marginLeft: "1%",
-                      }}
-                      component="form"
-                      sx={{
-                        "& > :not(style)": { m: 1, width: "10ch" },
-                      }}
-                      noValidate
-                      autoComplete="on"
+                      variant="standard"
+                      sx={{ m: 0, minWidth: 40 }}
                     >
-                      <div
-                        style={{
-                          width: "100%",
-                          background: " ",
-                          // display: "inline-block",
-                          height: " ",
-                          padding: "10px",
-                          textAlign: "left",
+                      <TextField
+                        style={{ width: "140px", marginRight: "20px" }}
+                        id="postArea1"
+                        value={giveaway.amount}
+                        label="Giveaway amount"
+                        variant="standard"
+                        onChange={(e) => {
+                          setGiveaway({
+                            ...giveaway,
+                            amount: e.target.value,
+                          });
+                        }}
+                      />
+                    </FormControl>
+
+                    <FormControl
+                      id="postArea1"
+                      variant="standard"
+                      sx={{ m: 0, minWidth: 120 }}
+                    >
+                      <InputLabel id="demo-simple-select-label">
+                        Beneficiaries
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={giveaway.beneficiaries}
+                        label="Age"
+                        onChange={(e) => {
+                          setGiveaway({
+                            ...giveaway,
+                            beneficiaries: e.target.value,
+                          });
                         }}
                       >
-                        <FormControl
-                          id="postArea1"
-                          variant="standard"
-                          sx={{ m: 0, minWidth: 40 }}
-                        >
-                          <TextField
-                            style={{ width: "140px", marginRight: "20px" }}
-                            id="postArea1"
-                            value={event.title}
-                            label="Event title"
-                            variant="standard"
-                            onChange={(e) => {
-                              setEvent({
-                                ...event,
-                                title: e.target.value,
-                              });
-                            }}
-                          />
-                        </FormControl>
+                        <MenuItem value={1}>1</MenuItem>
+                        <MenuItem value={2}>2</MenuItem>
+                        <MenuItem value={5}>5</MenuItem>
+                        <MenuItem value={10}>10</MenuItem>
+                        <MenuItem value={20}>20</MenuItem>
+                        <MenuItem value={50}>50</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
 
-                        <FormControl
-                          id="postArea1"
-                          variant="standard"
-                          sx={{ m: 0, minWidth: 100 }}
-                        >
-                          <InputLabel id="demo-simple-select-label">
-                            Category
-                          </InputLabel>
-                          <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={giveaway.beneficiaries}
-                            label="Age"
-                            onChange={(e) => {
-                              setGiveaway({
-                                ...giveaway,
-                                category: e.target.value,
-                              });
-                            }}
-                          >
-                            <MenuItem value="comedy">COMEDY</MenuItem>
-                            <MenuItem value="music">MUSIC</MenuItem>
-                            <MenuItem value="talk show">TALK SHOW</MenuItem>
-                            <MenuItem value="tech event">TECH EVENT</MenuItem>
-                            <MenuItem value="concert">CONCERT</MenuItem>
-                            <MenuItem value="festival">FESTIVAL</MenuItem>
-                          </Select>
-                        </FormControl>
-                      </div>  
-
-                      <div
-                        style={{
-                          width: "40%",
-                          background: " ",
-                          display: "inline-block",
-                          height: " ",
-                          padding: "10px",
-                          textAlign: "left",
-                        }}
-                      >
-                        <small>Event date </small>
-                        <input
-                          onChange={(e) => {
-                            setEvent({
-                              ...event,
-                              date: e.target.value,
-                            });
-                          }}
-                          style={{
-                            width: "100%",
-                            border: "none",
-                            background: "rgb(240, 240, 240)",
-                            color: "#0a3d62",
-                          }}
-                          type="date"
-                        />
-                      </div>
-
-                      <div
-                        style={{
-                          width: "40%",
-                          background: " ",
-                          display: "inline-block",
-                          height: " ",
-                          padding: "10px",
-                          textAlign: "left",
-                        }}
-                      >
-                        <small>Event time </small>
-                        <input
-                          onChange={(e) => {
-                            setEvent({
-                              ...event,
-                              time: e.target.value,
-                            });
-                          }}
-                          style={{
-                            width: "100%",
-                            border: "none",
-                            background: "rgb(240, 240, 240)",
-                            color: "#0a3d62",
-                          }}
-                          type="time"
-                        />
-                      </div>
-                   
-
-                        <div style={{ padding: "10px", background: " ", width: "100%" }}>
-                          <div style={{ marginBottom: "5px" }}><span>SET TICKET CATEGORIES</span> &nbsp;<span> (optional)</span> </div>
-                          {console.log(values)}
-                      {values.map((item, index) => (
-                        <TicketCategory
-                          values={item}
-                          index={index}
-                          handleChildChange={handleChildChange}
-                          handleChildChange_cost={handleChildChange_cost}
-                          handleChildChange_qty={handleChildChange_qty}
-                          key={index}
-                        />
-                        
-                      ))} 
-                      <Button
-                        onClick={() => {
-                          addChild();
-                        }}
-                      >
-                        +
-                      </Button>{" "}
-                    </div>
-                        <br />
-                      </Box>
-                  </>
-                )}
+                  <div
+                    style={{
+                      width: "40%",
+                      background: "",
+                      display: "inline-block",
+                      height: " ",
+                      padding: "10px 0px",
+                      textAlign: "left",
+                    }}
+                  ></div>
+                </Box>
                 {/* @====  EVENT TICKET CATEGORIES */}
 
                 {/* {console.log(postType)} */}
@@ -857,6 +694,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                     marginTop: "-10px",
                     paddingBottom: "5px",
                     fontSize: "10px",
+                    textAlign: "center",
                   }}
                 >
                   <>
@@ -885,36 +723,13 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                               type="file"
                               style={{ display: "none" }}
                             />
-                            <AddPhotoAlternateOutlined id="postArea1" />{" "}
+                            <AddPhotoAlternateOutlined style={{color:"#0a3d62"}} id="postArea1" />{" "}
                           </label>
                         </span>
-                        <p className="top-nav-pills-title">Add photo</p>
-                      </div>
-
-                      <div
-                        id="postArea1"
-                        className="top-nav-pills-holder"
-                        onClick={() => {
-                          // setPostType("GIVE AWAY");
-                          history.push("/create-giveaway")
-                        }}
-                      >
-                        <span
-                          id="postArea1"
-                          style={{
-                            background:
-                              postType == "GIVE AWAY" ? "#0a3d62" : "",
-                            color: postType == "GIVE AWAY" ? "white" : "",
-                          }}
-                          className="top-nav-pills"
-                        >
-                          {" "}
-                          <LocalAtm id="postArea1" />{" "}
-                        </span>
-                        <p className="top-nav-pills-title">Give away</p>
-                      </div> 
-
-                      <div
+                        <p style={{color:"#0a3d62"}} className="top-nav-pills-title">Add Photo </p>
+                        </div>
+                        
+                         <div
                         onClick={() => {
                           // setPostType("EVENT");
                             history.push("/create-event")
@@ -925,8 +740,8 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                         <span
                           id="postArea1"
                           style={{
-                            background: postType == "EVENT" ? "#0a3d62" : "",
-                            color: postType == "EVENT" ? "white" : "",
+                            background:"",
+                            color:"#0a3d62",
                           }}
                           className="top-nav-pills"
                         >
@@ -935,9 +750,28 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                         </span>
                         <p className="top-nav-pills-title"> Event</p>
                         </div>
-                        
 
-                        
+                        <div
+                        id="postArea1"
+                        className="top-nav-pills-holder"
+                        onClick={() => {
+                          // setPostType("GIVE AWAY");
+                          // history.push("/create-giveaway")
+                        }}
+                      >
+                        <span
+                          id="postArea1"
+                          style={{
+                            background:"#0a3d62",
+                            color:"white",
+                          }}
+                          className="top-nav-pills"
+                        >
+                          {" "}
+                          <LocalAtm id="postArea1" />{" "}
+                        </span>
+                        <p className="top-nav-pills-title">Give away</p>
+                      </div> 
 
                       {allowSend == true && (
                         <div
@@ -945,7 +779,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                             makePost();
                             setStates({
                               ...compState,
-                              loading: true,
+                              // loading: true,
                             });
                             window.scrollTo(0, 0);
                           }}
@@ -953,7 +787,7 @@ function Home({ appState, loadFeeds, disp_draft, login_suc }) {
                             marginLeft: "20px",
                             float: "",
                             color: "#0a3d62",
-                            background:" "
+                            background: " ",
                           }}
                           id="postArea1"
                           className="top-nav-pills-holder"

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { TextField, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { Redirect, useHistory } from "react-router-dom";
-import { loginSuc, add_wallet, disp_session, logOut } from "../redux";
+import { loginSuc, add_wallet, disp_session, logOut,splash_screen } from "../redux";
 import { supabase } from "../functions/configs/index";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import loaderImg from "../static/logos/animation.gif";
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
+function Login({ appState, login_suc, walletAdd, set_session, log_out,disph }) {
   // initialize supabase
   const new_supabase = supabase();
   let history = useHistory();
@@ -173,6 +173,7 @@ function Login({ appState, login_suc, walletAdd, set_session, log_out }) {
     </div>
   ) : (
     <div className="bg">
+       {state.splsh === false && <> {history.push("/splash")} </>}
       {compState.loader === true && <>{cashbackloader()} </>}
       {stateAlert === true && alert(successPayload, setStateAlert)}
       {stateAlert === false && alert(errorPayload, setStateAlert)}
@@ -299,6 +300,8 @@ const mapDispatchToProps = (dispatch, encoded) => {
     walletAdd: (wallet) => dispatch(add_wallet(wallet)),
     set_session: (time) => dispatch(disp_session(time)),
     log_out: () => dispatch(logOut()),
+    disph: () => dispatch(splash_screen()),
+    
   };
 };
 

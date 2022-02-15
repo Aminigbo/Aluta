@@ -56,3 +56,5 @@ export const FEED = "FEED"
 // ===================================================
 
 export const ADMIN_WITHDRAWAL_REQUEST = "ADMIN_WITHDRAWAL_REQUEST"
+
+export const SPLASH =  "SPLASH"

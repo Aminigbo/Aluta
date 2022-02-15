@@ -144,7 +144,7 @@ function Desktopright({
       // call a async function to reset the userpin in the database
       updateUserMeta(payload)
         .then((res) => {
-          if (res.success == true) {
+          if (res.success == true) { 
             login_suc(data);
             setStateAlert(true);
             setStates({
@@ -291,32 +291,30 @@ function Desktopright({
     //   loading:true
     // })
     sub();
-    fetchUserProfile(userId).then(res => {
-      if (res.body == null || res.body.length < 1) {
-        
-        if (res.body == null && res.error.message == 'JWT expired') {
-          
+    fetchUserProfile(userId)
+      .then((res) => {
+        if (res.body == null || res.body.length < 1) {
+          if (res.body == null && res.error.message == "JWT expired") {
+          } else {
+            //   logout("HARD")
+            // history.push("/login")
+            // window.location.reload();
+          }
         } else {
-          logout("HARD")
-        history.push("/login")
-          // console.log("Hard logout")
-          // console.log(res)
+          if (res.body[0].meta.isActive !== true) {
+            history.push(`/otp/${res.body[0].phone}`);
+          } else {
+            setStates({
+              ...compState,
+              loading: false,
+            });
+          }
         }
-      } else {
-        if (res.body[0].meta.isActive !== true) {
-           history.push(`/otp/${res.body[0].phone}`)
-        } else {
-           setStates({
-      ...compState,
-      loading:false
-    })
-        }
-
-      }
-      console.log(res)
-    }).catch(err => {
-      logout()
-    })
+        console.log(res);
+      })
+      .catch((err) => {
+        logout();
+      });
     // if(state.loggedIn == true ){
     //   setInterval(() => checkSession(logout, set_session, state), 5000);
     // }
@@ -472,7 +470,7 @@ function Desktopright({
     </div>
   ) : (
     <>
-
+      {state.splsh === false && <> {history.push("/splash")} </>}
       {compState.loading === true && <> {cashbackloader()}</>}
       {allow === false && (
         <div>
@@ -500,11 +498,30 @@ function Desktopright({
           }}
           className="top-nav-pills-holder"
         >
-          <span className="top-nav-pills">
+          <span
+            style={{
+              color:
+                state.loggedInUser.user.meta.schoolmode === true
+                  ? "#0a3d62"
+                  : "white",
+            }}
+            className="top-nav-pills"
+          >
             {" "}
             <HomeOutlined />{" "}
           </span>
-          <p className="top-nav-pills-title"> Home</p>
+          <p
+            style={{
+              color:
+                state.loggedInUser.user.meta.schoolmode === true
+                  ? "#0a3d62"
+                  : "white",
+            }}
+            className="top-nav-pills-title"
+          >
+            {" "}
+            Home
+          </p>
         </div>
 
         <div
@@ -516,15 +533,27 @@ function Desktopright({
         >
           <span
             style={{
-              background: split == "transfer" && "#0a3d62",
-              color: split == "transfer" && "white",
+              color:
+                state.loggedInUser.user.meta.schoolmode === true
+                  ? "#0a3d62"
+                  : "white",
             }}
             className="top-nav-pills"
           >
             {" "}
             <LocalAtm />{" "}
           </span>
-          <p className="top-nav-pills-title">Buzz Me</p>
+          <p
+            style={{
+              color:
+                state.loggedInUser.user.meta.schoolmode === true
+                  ? "#0a3d62"
+                  : "white",
+            }}
+            className="top-nav-pills-title"
+          >
+            Buzz Me
+          </p>
         </div>
 
         {/* <div
@@ -580,21 +609,35 @@ function Desktopright({
               console.log("go to cashback");
             }
           }}
+          style={{
+            color:
+              state.loggedInUser.user.meta.schoolmode === true
+                ? "#0a3d62"
+                : "white",
+          }}
           className="top-nav-pills-holder"
         >
-          <span className="top-nav-pills">
+          <span
+            style={{
+              color:
+                state.loggedInUser.user.meta.schoolmode === true
+                  ? "#0a3d62"
+                  : "white",
+            }}
+            className="top-nav-pills"
+          >
             <AssignmentReturnedOutlined />
           </span>
           <p
             style={{
               borderBottom:
                 split == "cashback" ||
-                (split == "cb" && "#0a3d62") ||
-                (split === "student-cashback" && "1px solid lightgray"),
+                (split == "cb" && "orange") ||
+                (split === "student-cashback" && "1px solid orange"),
               color:
                 split == "cashback" ||
-                (split == "cb" && "#0a3d62") ||
-                (split === "student-cashback" && "#0a3d62"),
+                (split == "cb" && "orange") ||
+                (split === "student-cashback" && "orange"),
             }}
             className="top-nav-pills-title"
           >
@@ -609,7 +652,15 @@ function Desktopright({
             }}
             className="top-nav-pills-holder"
           >
-            <span className="top-nav-pills">
+            <span
+              className="top-nav-pills"
+              style={{
+                color:
+                  state.loggedInUser.user.meta.schoolmode === true
+                    ? "#0a3d62"
+                    : "white",
+              }}
+            >
               {" "}
               <AddBoxOutlined />{" "}
             </span>
@@ -630,8 +681,10 @@ function Desktopright({
           >
             <span
               style={{
-                background: split == "listmart" && "#0a3d62",
-                color: split == "listmart" && "white",
+                color:
+                  state.loggedInUser.user.meta.schoolmode === true
+                    ? "#0a3d62"
+                    : "white",
               }}
               className="top-nav-pills"
               // nonstudentfeed
@@ -640,7 +693,17 @@ function Desktopright({
               {/* <StorefrontOutlined />{" "} */}
               <AccountBalanceWallet />
             </span>
-            <p className="top-nav-pills-title">Add cash</p>
+            <p
+              style={{
+                color:
+                  state.loggedInUser.user.meta.schoolmode === true
+                    ? "#0a3d62"
+                    : "white",
+              }}
+              className="top-nav-pills-title"
+            >
+              Add cash
+            </p>
           </div>
         )}
 
@@ -653,7 +716,15 @@ function Desktopright({
             }}
             className="top-nav-pills-holder"
           >
-            <span className="top-nav-pills">
+            <span
+              style={{
+                color:
+                  state.loggedInUser.user.meta.schoolmode === true
+                    ? "#0a3d62"
+                    : "white",
+              }}
+              className="top-nav-pills"
+            >
               {" "}
               <EmojiTransportationOutlined />{" "}
             </span>
@@ -674,14 +745,24 @@ function Desktopright({
             }}
             className="top-nav-pills-holder"
           >
-            <span className="top-nav-pills">
+            <span
+              className="top-nav-pills"
+              style={{
+                color:
+                  state.loggedInUser.user.meta.schoolmode === true
+                    ? "#0a3d62"
+                    : "white",
+              }}
+            >
               {" "}
               <Person />{" "}
             </span>
             <p
               style={{
-                borderBottom: allow === true && "1px solid lightgray",
-                color: allow === true && "#0a3d62",
+                color:
+                  state.loggedInUser.user.meta.schoolmode === true
+                    ? "#0a3d62"
+                    : "white",
               }}
               className="top-nav-pills-title"
             >
@@ -779,10 +860,9 @@ function Desktopright({
             </div>
           </div>
         </Drawer>
-        </React.Fragment>
-        
-      <Scan />
+      </React.Fragment>
 
+      <Scan />
     </>
   );
 }
