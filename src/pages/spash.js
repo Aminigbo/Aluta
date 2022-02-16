@@ -11,7 +11,7 @@ import { supabase } from "../functions/configs/index";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import loaderImg from "../static/logos/animation.gif";
 import One from "../static/images/splash/1.svg";
-import Two from "../static/images/splash/2.svg";
+import Two from "../static/images/avater/ads1.jpg";
 import Three from "../static/images/splash/3.svg";
 import Four from "../static/images/splash/4.svg";
 import { Helmet } from "react-helmet";
@@ -19,7 +19,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import md5 from "md5";
 
 
-
+import Slider from 'react-animated-slider';
+import 'react-animated-slider/build/horizontal.css';
 
 
 
