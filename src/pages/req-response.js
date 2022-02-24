@@ -112,6 +112,9 @@ function Home({ appState, login_suc, logout, set_session }) {
   const [stateAlert, setStateAlert] = useState("");
   const [actionType, setActiontype] = useState(null); // set treu if action type is send else set false if action type is request
   const [maxDesc, setMaxDesc] = useState(false);
+
+  //  set amount to respond
+  const [resAmount, setResAmount] = useState(parseInt(state.whoRequested.amount));
   // @==== RESET ALL STATE UON SUCCESS
   const sendToDefault = () => {
     setProceedSend(false);
@@ -334,15 +337,22 @@ function Home({ appState, login_suc, logout, set_session }) {
     );
   };
 
+  const [error, setError] = useState("")
   const appendPin = (e) => {
+    if (resAmount.length < 1 || resAmount < 100) {
+      setError("Enter amount above NGN99")
+    } else {
+      setError("")
+      let newPin = pin + e;
+      if (pin.length !== 4) {
+        setPin(newPin);
+      }
+      if (newPin.length == 4) {
+        verify(newPin);
+      }
+    }
     //   setpinError("")
-    let newPin = pin + e;
-    if (pin.length !== 4) {
-      setPin(newPin);
-    }
-    if (newPin.length == 4) {
-      verify(newPin);
-    }
+
     //  console.log(newPin)
   };
 
@@ -444,10 +454,10 @@ function Home({ appState, login_suc, logout, set_session }) {
   const initiateTransaction = () => {
     setStates({ ...compState, loader: true });
     let newBenefWallet =
-      parseInt(state.whoRequested.amount) + parseInt(compState.benefWallet);
+      parseInt(resAmount) + parseInt(compState.benefWallet);
     let newBoxerWallet =
       parseInt(state.loggedInUser.user.meta.wallet) -
-      parseInt(state.whoRequested.amount);
+      parseInt(resAmount);
 
     let beneficiaryNewData = {
       ...compState.beneficiaryMeta,
@@ -473,12 +483,11 @@ function Home({ appState, login_suc, logout, set_session }) {
         id: compState.benefId,
       },
       data: {
-        amount: parseInt(state.whoRequested.amount),
-        desc: `${
-          state.loggedInUser.user.fullname
-        } responded to your buzz request of NGN ${parseInt(
-          state.whoRequested.amount
-        )}   ${desc.substring(0, 101)} "`,
+        amount: parseInt(resAmount),
+        desc: `${state.loggedInUser.user.fullname
+          } responded to your buzz request of NGN ${parseInt(
+            resAmount
+          )}   ${desc.substring(0, 101)} "`,
       },
     };
 
@@ -534,7 +543,7 @@ function Home({ appState, login_suc, logout, set_session }) {
                             `+234${resX.body[0].meta.reciever.beneficiaryID}`,
                           ],
                           sender: resX.body[0].meta.sender.fullname,
-                          amount: parseInt(parseInt(state.whoRequested.amount)),
+                          amount: parseInt(parseInt(resAmount)),
                           desc: resX.body[0].meta.data.desc,
                           balance: state.loggedInUser.user.meta.wallet,
                         };
@@ -545,7 +554,7 @@ function Home({ appState, login_suc, logout, set_session }) {
                           ...compState,
                           loader: false,
                           alertMsg: `Yeahh!!!  you buzzed NGN ${parseInt(
-                            state.whoRequested.amount
+                            resAmount
                           )} to ${compState.benef}`,
                           resolved: false,
                         });
@@ -659,8 +668,32 @@ function Home({ appState, login_suc, logout, set_session }) {
                       <div>
                         <b> {state.whoRequested.name}</b>
                       </div>
-                      <div style={{ fontWeight: "bold" }}>
-                        <Naira>{parseInt(state.whoRequested.amount)}</Naira>
+                      <div style={{ fontWeight: "bold", padding: "10px 0px" }}>
+                        <small>Amount: </small> <br />
+                        <input
+                        placeholder="Enter amount"
+                          onChange={(e) => {
+                            setResAmount(e.target.value);
+                            setError("")
+                          }}
+                          value={resAmount}
+                          type="text" style={{ padding: "6px", borderRadius: "5px", border: "0.1px solid grey" }} />
+                        {/* {parseInt(state.whoRequested.amount)} */}
+
+                        <div
+                          style={{
+                            height: " ",
+                            //  background: "black",
+                            // padding: "10px",
+                            // textAlign: "center",
+                            color: "red"
+                          }}
+                        >
+                          <span style={{ color: "crimson",fontWeight:"light" }}> {error}</span>
+
+
+                        </div>
+
                       </div>
                       {/* <br /> */}
                       <textarea
@@ -698,6 +731,7 @@ function Home({ appState, login_suc, logout, set_session }) {
             )}
 
             {/* {proceedSend === true && ( */}
+
             <div
               style={{
                 height: " ",
@@ -706,6 +740,7 @@ function Home({ appState, login_suc, logout, set_session }) {
                 textAlign: "center",
               }}
             >
+
               <span>Authenticate </span>
               <div
                 style={{
