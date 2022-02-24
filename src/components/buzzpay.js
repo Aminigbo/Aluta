@@ -960,17 +960,21 @@ function Home({ appState, login_suc, logout, set_session }) {
                     if (amount < 100) {
                       setMax("Minimum amount is NGN 100");
                     } else {
-                      // if (amount > 10000) {
-                      //   setMax("Maximum amount exceeded");
-                      // } else 
-                      if (amount > state.loggedInUser.user.meta.wallet) {
-                        setMax("Insufficient wallet balance");
-                      } else {
+                      if (amount > 10000) {
+                        setMax("Maximum amount exceeded");
+                      } else 
+//                       if (amount > state.loggedInUser.user.meta.wallet) {
+//                         setMax("Insufficient wallet balance");
+//                       } else {
+//                         setMax("");
+//                         setActiontype(false);
+//                         setDrawerState({ ...drawerState, bottom: true });
+//                         setMax("");
+//                       }
                         setMax("");
                         setActiontype(false);
                         setDrawerState({ ...drawerState, bottom: true });
                         setMax("");
-                      }
                     }
                   }}
                   type="button"
