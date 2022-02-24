@@ -394,14 +394,15 @@ function Home({ appState, login_suc, logout, set_session }) {
   };
 
   const proceedAuthForRequest = () => {
-    if (reason.length < 10) {
-      setStateAlert(false);
-      setStates({
-        ...compState,
-        loader: false,
-        alertMsg: "Please give a clear reason for your request",
-      });
-    } else if (privacy == 1 && sendTo.length < 1) {
+    // if (reason.length < 10) {
+    //   setStateAlert(false);
+    //   setStates({
+    //     ...compState,
+    //     loader: false,
+    //     alertMsg: "Please give a clear reason for your request",
+    //   });
+    // } else 
+    if (privacy == 1 && sendTo.length < 1) {
       setStateAlert(false);
       setStates({
         ...compState,
@@ -961,8 +962,6 @@ function Home({ appState, login_suc, logout, set_session }) {
                     } else {
                       if (amount > 10000) {
                         setMax("Maximum amount exceeded");
-                      } else if (amount > state.loggedInUser.user.meta.wallet) {
-                        setMax("Insufficient wallet balance");
                       } else {
                         setMax("");
                         setActiontype(false);
