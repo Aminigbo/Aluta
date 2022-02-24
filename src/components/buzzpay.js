@@ -1418,7 +1418,7 @@ const mapDispatchToProps = (dispatch, encoded) => {
     logout: (type) => dispatch(logOut(type)),
     login_suc: (userMetadata) => dispatch(loginSuc(userMetadata)),
     set_session: (time) => dispatch(disp_session(time)),
-  }
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
